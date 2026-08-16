@@ -49,6 +49,11 @@ EXPECTED = {
         "dataset_sha256": "0e53fb3d05fb60569a4109da05b66d93c1158f734495e0126a55cf195c41653a",
         "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
     },
+    "hard_preservation_smoke_v7.json": {
+        "config_sha256": "787649d577e3978311c968b9d886ae2188a2a6ff9fcc7f6c00e79f5bfb896c08",
+        "dataset_sha256": "ac07e10f1e04ca8ddec74aefc8df9b00475f7fc9c57345ff98182dd8e4c8bae9",
+        "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+    },
 }
 EXPECTED_SPLITS = {
     "format_contract_smoke_v1.json": {"train": 102, "validation": 26},
@@ -57,6 +62,7 @@ EXPECTED_SPLITS = {
     "semantic_arithmetic_smoke_v4.json": {"train": 160, "validation": 32},
     "semantic_arithmetic_smoke_v5.json": {"train": 160, "validation": 32},
     "arithmetic_process_smoke_v6.json": {"train": 160, "validation": 32},
+    "hard_preservation_smoke_v7.json": {"train": 160, "validation": 32},
 }
 
 
@@ -131,6 +137,37 @@ def main() -> None:
             raise SystemExit(
                 "v6 generation budget must exceed target length including EOS"
             )
+    if config_path.name == "hard_preservation_smoke_v7.json":
+        expected_families = {
+            "train": {
+                "capability_preservation_choice": 40,
+                "capability_preservation_numeric": 80,
+                "semantic_arithmetic_process": 40,
+            },
+            "validation": {
+                "capability_preservation_choice": 8,
+                "capability_preservation_numeric": 16,
+                "semantic_arithmetic_process": 8,
+            },
+        }
+        for split, expected_counts in expected_families.items():
+            actual_counts = Counter(
+                sample.task_family
+                for sample in samples
+                if sample.split == split
+            )
+            if dict(sorted(actual_counts.items())) != expected_counts:
+                raise SystemExit(
+                    f"v7 family counts differ for {split}: {actual_counts}"
+                )
+        if examples_seen != 80 or unique_examples_seen != 80:
+            raise SystemExit("v7 must expose exactly 80 unique train samples")
+        if max(target_lengths) >= config.generation_max_new_tokens:
+            raise SystemExit(
+                "v7 generation budget must exceed target length including EOS"
+            )
+        if dataset.get("policy", {}).get("sealed_canary_used_for_training") is not False:
+            raise SystemExit("v7 dataset must exclude the sealed canary")
 
     model_config = AutoConfig.from_pretrained(model_path, local_files_only=True)
     if model_config.model_type != "qwen3_5":

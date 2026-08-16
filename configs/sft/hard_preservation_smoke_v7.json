@@ -1,0 +1,27 @@
+{
+  "batch_size": 1,
+  "dataset_path": "../nano-data-pipeline/datasets/hard_preservation_mix_v5.json",
+  "dtype": "float32",
+  "experiment_id": "hard-preservation-sft-smoke-v7",
+  "generation_max_new_tokens": 128,
+  "gradient_accumulation_steps": 4,
+  "learning_rate": 0.0002,
+  "lora_alpha": 16,
+  "lora_dropout": 0.0,
+  "lora_r": 8,
+  "lora_targets": [
+    "q_proj",
+    "v_proj",
+    "gate_proj",
+    "up_proj",
+    "down_proj"
+  ],
+  "max_length": 192,
+  "max_steps": 20,
+  "model_path": "../../models/Qwen3.5-4B",
+  "output_dir": "artifacts/hard-preservation-sft-smoke-v7",
+  "schema_version": "nano_train_sft_smoke_v1",
+  "seed": 20260816,
+  "warmup_steps": 2,
+  "weight_decay": 0.0
+}

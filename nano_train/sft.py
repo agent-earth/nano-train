@@ -102,6 +102,7 @@ def evaluate_exact(
         rows.append(
             {
                 "sample_id": sample.sample_id,
+                "task_family": sample.task_family,
                 "target": sample.target,
                 "output": generated,
                 "exact": generated == sample.target,
@@ -110,6 +111,24 @@ def evaluate_exact(
         )
     exact = sum(row["exact"] for row in rows)
     semantic_exact = sum(row["semantic_valid"] for row in rows)
+    by_family = {}
+    for family in sorted({str(row["task_family"]) for row in rows}):
+        subset = [row for row in rows if row["task_family"] == family]
+        by_family[family] = {
+            "samples": len(subset),
+            "exact": sum(row["exact"] for row in subset),
+            "semantic_exact": sum(
+                row["semantic_valid"] for row in subset
+            ),
+            "exact_failure_sample_ids": [
+                row["sample_id"] for row in subset if not row["exact"]
+            ],
+            "semantic_failure_sample_ids": [
+                row["sample_id"]
+                for row in subset
+                if not row["semantic_valid"]
+            ],
+        }
     return (
         {
             "samples": len(rows),
@@ -123,6 +142,7 @@ def evaluate_exact(
             "semantic_failure_sample_ids": [
                 row["sample_id"] for row in rows if not row["semantic_valid"]
             ],
+            "by_family": by_family,
         },
         rows,
     )
