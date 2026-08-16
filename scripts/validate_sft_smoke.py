@@ -54,6 +54,11 @@ EXPECTED = {
         "dataset_sha256": "ac07e10f1e04ca8ddec74aefc8df9b00475f7fc9c57345ff98182dd8e4c8bae9",
         "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
     },
+    "hard_preservation_smoke_v8.json": {
+        "config_sha256": "1d74ff3fb8a6bd9d87a63d73d19af6b3f21dde4831742bfe7681a9628556039e",
+        "dataset_sha256": "ac07e10f1e04ca8ddec74aefc8df9b00475f7fc9c57345ff98182dd8e4c8bae9",
+        "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+    },
 }
 EXPECTED_SPLITS = {
     "format_contract_smoke_v1.json": {"train": 102, "validation": 26},
@@ -63,6 +68,7 @@ EXPECTED_SPLITS = {
     "semantic_arithmetic_smoke_v5.json": {"train": 160, "validation": 32},
     "arithmetic_process_smoke_v6.json": {"train": 160, "validation": 32},
     "hard_preservation_smoke_v7.json": {"train": 160, "validation": 32},
+    "hard_preservation_smoke_v8.json": {"train": 160, "validation": 32},
 }
 
 
@@ -137,7 +143,10 @@ def main() -> None:
             raise SystemExit(
                 "v6 generation budget must exceed target length including EOS"
             )
-    if config_path.name == "hard_preservation_smoke_v7.json":
+    if config_path.name in {
+        "hard_preservation_smoke_v7.json",
+        "hard_preservation_smoke_v8.json",
+    }:
         expected_families = {
             "train": {
                 "capability_preservation_choice": 40,
@@ -160,8 +169,42 @@ def main() -> None:
                 raise SystemExit(
                     f"v7 family counts differ for {split}: {actual_counts}"
                 )
-        if examples_seen != 80 or unique_examples_seen != 80:
-            raise SystemExit("v7 must expose exactly 80 unique train samples")
+        expected_exposure = {
+            "hard_preservation_smoke_v7.json": 80,
+            "hard_preservation_smoke_v8.json": 160,
+        }[config_path.name]
+        if (
+            examples_seen != expected_exposure
+            or unique_examples_seen != expected_exposure
+        ):
+            raise SystemExit(
+                f"{config_path.name} must expose exactly "
+                f"{expected_exposure} unique train samples"
+            )
+        exposed_family_counts = Counter(
+            train_samples[index].task_family
+            for index in visited_indices
+        )
+        expected_exposed_families = {
+            "hard_preservation_smoke_v7.json": {
+                "capability_preservation_choice": 20,
+                "capability_preservation_numeric": 42,
+                "semantic_arithmetic_process": 18,
+            },
+            "hard_preservation_smoke_v8.json": {
+                "capability_preservation_choice": 40,
+                "capability_preservation_numeric": 80,
+                "semantic_arithmetic_process": 40,
+            },
+        }[config_path.name]
+        if (
+            dict(sorted(exposed_family_counts.items()))
+            != expected_exposed_families
+        ):
+            raise SystemExit(
+                f"{config_path.name} exposure differs: "
+                f"{exposed_family_counts}"
+            )
         if max(target_lengths) >= config.generation_max_new_tokens:
             raise SystemExit(
                 "v7 generation budget must exceed target length including EOS"
