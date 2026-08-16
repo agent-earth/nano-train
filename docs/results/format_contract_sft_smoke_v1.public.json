@@ -1,0 +1,112 @@
+{
+  "artifacts": {
+    "adapter_sha256": "26247565058e52c0a1c0e104704d4442c719dfcea922fc604fbf3e7832c51452",
+    "generations_sha256": "b7959ec7c072c6e5932acb8f9cb25e78c80dd0e1e5776bbd6e21d7125f8cc709",
+    "metrics_sha256": "3c99f9094a08dd980f428707e59146fea662a6dddb536d0da48ded8e7b7c41f3"
+  },
+  "baseline_validation": {
+    "accuracy": 0.8846153846153846,
+    "exact": 23,
+    "failure_sample_ids": [
+      "synthetic-2955d82deeaebe02f4c2",
+      "synthetic-394d6e79efb7be5e7902",
+      "synthetic-472290ff0823300389df"
+    ],
+    "samples": 26
+  },
+  "configuration": {
+    "dtype": "float16",
+    "effective_batch_size": 4,
+    "learning_rate": 0.0002,
+    "lora_alpha": 16,
+    "lora_r": 8,
+    "lora_targets": [
+      "q_proj",
+      "v_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "max_steps": 20,
+    "seed": 20260816,
+    "train_samples": 102,
+    "validation_samples": 26
+  },
+  "decision": {
+    "accepted": false,
+    "benchmark_evaluation_allowed": false,
+    "finite_loss": false,
+    "loss_decreased": false,
+    "memory_below_28_gib": true,
+    "next_action": "Preserve v1 artifacts, add non-finite fail-fast, diagnose the first optimizer update, and pre-register a separate v2.",
+    "rl_allowed": false,
+    "validation_exact_26_of_26": false
+  },
+  "dependencies": {
+    "accelerate": "1.14.0",
+    "peft": "0.20.0",
+    "python": "3.11.2",
+    "torch": "2.10.0+cu128",
+    "transformers": "5.12.1"
+  },
+  "experiment_id": "format-contract-sft-smoke-v1",
+  "hardware": {
+    "gpu_name": "Tesla V100-SXM2-32GB",
+    "peak_allocated_gib": 10.109052181243896
+  },
+  "identity": {
+    "config_sha256": "09bbf842ea2a335e283385eeea18d352f9311dc5747e86da9be9b58bfdae2d93",
+    "dataset_id": "format-contract-analog-v1",
+    "dataset_sha256": "46f2128f219db7011d5db95b5ca3a97029b57f5ac959e194860b4c0f4ba3ad53",
+    "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670"
+  },
+  "optimization": {
+    "attempted_steps": 20,
+    "finite_loss_curve": [
+      {
+        "learning_rate": 0.0001,
+        "loss": 0.14826078992336988,
+        "step": 1
+      }
+    ],
+    "finite_steps": 1,
+    "first_nonfinite_step": 2,
+    "runner_fail_fast_enforced": false
+  },
+  "passed": false,
+  "post_sft_validation": {
+    "accuracy": 0.0,
+    "exact": 0,
+    "failure_sample_ids": [
+      "synthetic-083e1a5fa9d9ed6e3c4d",
+      "synthetic-0e91118b39569e2b2303",
+      "synthetic-1576d9772c757e72fc07",
+      "synthetic-170f6daadaf5d688f5f0",
+      "synthetic-2135f27497171e2528dc",
+      "synthetic-2955d82deeaebe02f4c2",
+      "synthetic-394d6e79efb7be5e7902",
+      "synthetic-44572e857bf78453f696",
+      "synthetic-46d8cdaabb8b86b5a41a",
+      "synthetic-472290ff0823300389df",
+      "synthetic-7290dd6ac30c86b01834",
+      "synthetic-87802f9378a44a67f13d",
+      "synthetic-8b4c0ed054297bf6479c",
+      "synthetic-8fcd69e4583228c050ce",
+      "synthetic-900e39a01398eb6e08b8",
+      "synthetic-97dcf90d85e06530d309",
+      "synthetic-a5660fd4243b3f110bbe",
+      "synthetic-aaecbbe9f0df9331be43",
+      "synthetic-b5682ba65f69b8730b17",
+      "synthetic-b61747360e6de4ba0ece",
+      "synthetic-c8de852295ffeff3d594",
+      "synthetic-d5005d9ed02195882ad8",
+      "synthetic-d53c9cc39d76933a586d",
+      "synthetic-db1039faf1f1b223cfb5",
+      "synthetic-e90038d9ea906e8f6ef4",
+      "synthetic-ed334bb423fbecccdd4b"
+    ],
+    "samples": 26
+  },
+  "pre_registration_revision": "990b695",
+  "schema_version": "nano_train_public_sft_smoke_v1"
+}
