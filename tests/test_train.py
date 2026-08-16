@@ -79,6 +79,19 @@ class TrainTests(unittest.TestCase):
         self.assertEqual(config.dtype, "float32")
         self.assertEqual(config.max_steps, 20)
 
+    def test_v3_changes_only_dataset_identity_fields(self):
+        v2 = load_sft_smoke_config(
+            "configs/sft/format_contract_smoke_v2.json"
+        )
+        v3 = load_sft_smoke_config(
+            "configs/sft/format_contract_smoke_v3.json"
+        )
+        excluded = {"experiment_id", "dataset_path", "output_dir"}
+        for field in v2.__dataclass_fields__:
+            if field in excluded:
+                continue
+            self.assertEqual(getattr(v2, field), getattr(v3, field), field)
+
     def test_tokenize_masks_prompt_and_keeps_assistant(self):
         dataset = {
             "samples": [
