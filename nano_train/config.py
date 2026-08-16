@@ -61,8 +61,8 @@ def validate_sft_smoke_config(config: SFTSmokeConfig) -> None:
     ):
         if getattr(config, name) <= 0:
             raise ValueError(f"{name} must be positive")
-    if config.max_steps > 20:
-        raise ValueError("smoke run may not exceed 20 optimizer steps")
+    if config.max_steps > 40:
+        raise ValueError("smoke run may not exceed 40 optimizer steps")
     if config.max_length > 256:
         raise ValueError("smoke max_length may not exceed 256")
     if config.learning_rate <= 0:
