@@ -65,3 +65,29 @@ CUDA_VISIBLE_DEVICES=3 PYTHONPATH=. ../.venv/bin/python \
   scripts/validate_sft_adapter.py \
   --config configs/sft/hard_preservation_smoke_v8.json
 ```
+
+## Result
+
+V8 is stable but fails the unchanged local gate:
+
+- aggregate exact / semantic is 21/32 / 21/32;
+- numeric is 9/16, below required 10/16;
+- choice is 4/8, below required 5/8;
+- process is 8/8;
+- all 40 losses and all 224 FP32 adapter tensors are finite;
+- early/late five-step loss means are 0.197267 / 0.040788;
+- independent reload reproduces aggregate and family metrics;
+- peak training memory is 20.17 GiB;
+- zero post outputs reach the 128-token cap.
+
+Relative to v7, aggregate semantic gains 2, numeric gains 3, choice loses 1,
+and process is unchanged. The full-coverage dose tradeoff blocks promotion.
+
+Do not run the sealed canary, full suite, merge, scale-up, or RL. The next
+separately pre-registered interpolation may change only `max_steps` from 40 to
+30 while preserving all data and gates.
+
+Public result:
+
+- `docs/results/hard_preservation_sft_smoke_v8.md`;
+- `docs/results/hard_preservation_sft_smoke_v8.public.json`.
