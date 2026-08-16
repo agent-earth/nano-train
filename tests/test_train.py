@@ -180,6 +180,21 @@ class TrainTests(unittest.TestCase):
         self.assertEqual(v7.max_steps, 20)
         self.assertEqual(v7.generation_max_new_tokens, 128)
 
+    def test_v8_changes_only_step_count_and_identity(self):
+        v7 = load_sft_smoke_config(
+            "configs/sft/hard_preservation_smoke_v7.json"
+        )
+        v8 = load_sft_smoke_config(
+            "configs/sft/hard_preservation_smoke_v8.json"
+        )
+        excluded = {"experiment_id", "output_dir", "max_steps"}
+        for field in v7.__dataclass_fields__:
+            if field in excluded:
+                continue
+            self.assertEqual(getattr(v7, field), getattr(v8, field), field)
+        self.assertEqual(v7.max_steps, 20)
+        self.assertEqual(v8.max_steps, 40)
+
     def test_tokenize_masks_prompt_and_keeps_assistant(self):
         dataset = {
             "samples": [
