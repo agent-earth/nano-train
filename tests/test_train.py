@@ -30,6 +30,7 @@ from scripts.run_generation_budget_audit import (
     validate_contract as validate_audit_contract,
     verify_identity as verify_audit_identity,
 )
+from scripts.build_lora_delta_composition import compose_pair
 
 
 class FakeTokenizer:
@@ -52,6 +53,25 @@ class FakeTokenizer:
 
 
 class TrainTests(unittest.TestCase):
+    def test_exact_lora_delta_composition(self):
+        a_left = torch.tensor([[1.0, 2.0], [3.0, 4.0]])
+        b_left = torch.tensor([[1.0, 0.0], [0.0, 2.0]])
+        a_right = torch.tensor([[2.0, 1.0], [0.0, 3.0]])
+        b_right = torch.tensor([[0.5, 1.0], [2.0, 0.0]])
+        a, b = compose_pair(
+            a_left,
+            b_left,
+            a_right,
+            b_right,
+            preservation_weight=0.75,
+            capability_weight=0.25,
+        )
+        actual = b @ a
+        expected = 0.75 * (2 * b_left @ a_left) + 0.25 * (
+            2 * b_right @ a_right
+        )
+        self.assertTrue(torch.equal(actual, expected))
+
     def test_config_rejects_non_smoke_step_count(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "config.json"

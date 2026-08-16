@@ -1,0 +1,19 @@
+{
+  "adapter_output": "artifacts/composition/v11-v15-75-25-v1/adapter",
+  "capability_adapter": "artifacts/schedule-isolation-preservation-sft-smoke-v15/adapter",
+  "capability_adapter_tree_sha256": "d7ed4de2d613de424c6240148703e5656e73c5a323ad59f930d8c9cb8972b660",
+  "capability_weight": 0.25,
+  "dataset_path": "../nano-data-pipeline/datasets/targeted_preservation_mix_v6.json",
+  "dataset_sha256": "ab51a1be5f45d7f71796fbf98ef6cce83ff9cb0f0a756fed01cb1e7aea55651d",
+  "evaluation_output": "artifacts/composition/v11-v15-75-25-v1/evaluation.json",
+  "experiment_id": "v11-v15-exact-lora-composition-75-25-v1",
+  "generation_max_new_tokens": 128,
+  "max_length": 192,
+  "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+  "model_path": "../../models/Qwen3.5-4B",
+  "preservation_adapter": "artifacts/targeted-preservation-sft-smoke-v11/adapter",
+  "preservation_adapter_tree_sha256": "87248908918b06c2d28ff68efd4f0b1ff92ca8bf8b7588e1c7e81a85eb7da852",
+  "preservation_weight": 0.75,
+  "receipt_output": "artifacts/composition/v11-v15-75-25-v1/composition_receipt.json",
+  "schema_version": "nano_train_lora_composition_smoke_v1"
+}
