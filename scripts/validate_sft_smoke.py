@@ -89,6 +89,11 @@ EXPECTED = {
         "dataset_sha256": "9f79b1cf5af9fa4b36c7507318b32991692f253d2210b5b6ed70a44bee940f2d",
         "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
     },
+    "schedule_isolation_preservation_smoke_v15.json": {
+        "config_sha256": "413cff6c370c69a9ef6ac9d4ebef32bf3f695ecd14f02c9f105da2893f63230d",
+        "dataset_sha256": "2bb712de519149d776b1c346466ee49d20017f1065aa3d1b44ae59eb6f5b973a",
+        "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+    },
 }
 EXPECTED_SPLITS = {
     "format_contract_smoke_v1.json": {"train": 102, "validation": 26},
@@ -111,6 +116,10 @@ EXPECTED_SPLITS = {
         "validation": 32,
     },
     "packing_isolation_preservation_smoke_v14.json": {
+        "train": 160,
+        "validation": 32,
+    },
+    "schedule_isolation_preservation_smoke_v15.json": {
         "train": 160,
         "validation": 32,
     },
@@ -197,6 +206,7 @@ def main() -> None:
         "failure_targeted_preservation_smoke_v12.json",
         "percentage_isolation_preservation_smoke_v13.json",
         "packing_isolation_preservation_smoke_v14.json",
+        "schedule_isolation_preservation_smoke_v15.json",
     }:
         expected_families = {
             "train": {
@@ -229,6 +239,7 @@ def main() -> None:
             "failure_targeted_preservation_smoke_v12.json": 128,
             "percentage_isolation_preservation_smoke_v13.json": 128,
             "packing_isolation_preservation_smoke_v14.json": 128,
+            "schedule_isolation_preservation_smoke_v15.json": 128,
         }[config_path.name]
         if (
             examples_seen != expected_exposure
@@ -279,6 +290,11 @@ def main() -> None:
                 "semantic_arithmetic_process": 32,
             },
             "packing_isolation_preservation_smoke_v14.json": {
+                "capability_preservation_choice": 30,
+                "capability_preservation_numeric": 66,
+                "semantic_arithmetic_process": 32,
+            },
+            "schedule_isolation_preservation_smoke_v15.json": {
                 "capability_preservation_choice": 30,
                 "capability_preservation_numeric": 66,
                 "semantic_arithmetic_process": 32,
@@ -500,6 +516,37 @@ def main() -> None:
             )
             if exposed != 5:
                 raise SystemExit(f"v14 must expose 5 packing rows, got {exposed}")
+        if config_path.name == "schedule_isolation_preservation_smoke_v15.json":
+            base = load_analog_dataset(
+                ROOT
+                / "../nano-data-pipeline/datasets/"
+                "targeted_preservation_mix_v6.json"
+            )
+            if (
+                [row for row in dataset["samples"] if row["split"] == "validation"]
+                != [row for row in base["samples"] if row["split"] == "validation"]
+            ):
+                raise SystemExit("v15 development rows must equal v6")
+            if (
+                dataset.get("source", {}).get("replacement_count") != 8
+                or dataset.get("source", {}).get("replacement_family_counts")
+                != {"weighted_recurring_schedule_total": 8}
+                or dataset.get("policy", {}).get(
+                    "independent_holdout_used_for_training"
+                )
+                is not False
+            ):
+                raise SystemExit("v15 schedule-isolation boundary is invalid")
+            rows_by_id = {
+                row["sample_id"]: row for row in dataset["samples"]
+            }
+            exposed = sum(
+                rows_by_id[train_samples[index].sample_id]["generation_rule"]
+                == "failure_targeted_weighted_recurring_schedule_total_v7"
+                for index in visited_indices
+            )
+            if exposed != 7:
+                raise SystemExit(f"v15 must expose 7 schedule rows, got {exposed}")
 
     model_config = AutoConfig.from_pretrained(model_path, local_files_only=True)
     if model_config.model_type != "qwen3_5":

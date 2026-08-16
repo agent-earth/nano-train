@@ -276,6 +276,18 @@ class TrainTests(unittest.TestCase):
             if field not in excluded:
                 self.assertEqual(getattr(v11, field), getattr(v14, field), field)
 
+    def test_v15_changes_only_dataset_identity_fields(self):
+        v11 = load_sft_smoke_config(
+            "configs/sft/targeted_preservation_smoke_v11.json"
+        )
+        v15 = load_sft_smoke_config(
+            "configs/sft/schedule_isolation_preservation_smoke_v15.json"
+        )
+        excluded = {"experiment_id", "dataset_path", "output_dir"}
+        for field in v11.__dataclass_fields__:
+            if field not in excluded:
+                self.assertEqual(getattr(v11, field), getattr(v15, field), field)
+
     def test_tokenize_masks_prompt_and_keeps_assistant(self):
         dataset = {
             "samples": [
