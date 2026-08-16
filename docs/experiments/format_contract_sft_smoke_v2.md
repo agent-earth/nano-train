@@ -78,3 +78,29 @@ PYTHONPATH=. ../.venv/bin/python scripts/validate_sft_smoke.py \
 CUDA_VISIBLE_DEVICES=3 PYTHONPATH=. ../.venv/bin/python -m nano_train.cli \
   sft-smoke --config configs/sft/format_contract_smoke_v2.json
 ```
+
+## Result
+
+v2 is numerically stable but fails the full smoke acceptance rule:
+
+- all 20 optimizer-step losses are finite;
+- baseline validation: 23/26;
+- post-SFT validation: 25/26;
+- 224/224 saved FP32 LoRA tensors are finite;
+- independent adapter reload reproduces 25/26;
+- peak training memory: 18.14 GiB;
+- initial loss: 0.149361;
+- minimum loss: 0.016843;
+- final loss: 0.247657.
+
+FP32 fixes v1's first-backward instability and improves validation by two
+cases. The remaining failure is a two-step arithmetic-precedence numeric
+example: output format is valid, but the answer is semantically wrong.
+
+The run does not reach 26/26 and final sampled loss is not below initial
+sampled loss. Do not evaluate the adapter on benchmarks, merge it, scale data,
+or start RL. Preserve it as a stable but incomplete smoke and pre-register a
+small data/curriculum ablation.
+
+- [`docs/results/format_contract_sft_smoke_v2.md`](../results/format_contract_sft_smoke_v2.md)
+- [`docs/results/format_contract_sft_smoke_v2.public.json`](../results/format_contract_sft_smoke_v2.public.json)
