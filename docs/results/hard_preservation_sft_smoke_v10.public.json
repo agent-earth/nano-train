@@ -1,0 +1,646 @@
+{
+  "adapter_validation": {
+    "dtype_counts": {
+      "torch.float32": 224
+    },
+    "nonfinite_tensors": 0,
+    "reload_peak_allocated_gib": 15.810230731964111,
+    "reload_success": true,
+    "reload_validation": {
+      "accuracy": 0.6875,
+      "by_family": {
+        "capability_preservation_choice": {
+          "exact": 5,
+          "exact_failure_sample_ids": [
+            "synthetic-1a7b299fb729cd67bd71",
+            "synthetic-cb1b63a543f33dcb72fe",
+            "synthetic-d3902d28ebf8554f0c6a"
+          ],
+          "samples": 8,
+          "semantic_exact": 5,
+          "semantic_failure_sample_ids": [
+            "synthetic-1a7b299fb729cd67bd71",
+            "synthetic-cb1b63a543f33dcb72fe",
+            "synthetic-d3902d28ebf8554f0c6a"
+          ]
+        },
+        "capability_preservation_numeric": {
+          "exact": 9,
+          "exact_failure_sample_ids": [
+            "synthetic-33e0eb52e48e0c3d5634",
+            "synthetic-3c3b215d2977ecf9e2db",
+            "synthetic-3d1e1bb4aabc306febd9",
+            "synthetic-6ff963588953d733c5a3",
+            "synthetic-b84be4098f2c5fba218a",
+            "synthetic-c3daf536f8bd333e8555",
+            "synthetic-ded38e17d41cc5a613da"
+          ],
+          "samples": 16,
+          "semantic_exact": 9,
+          "semantic_failure_sample_ids": [
+            "synthetic-33e0eb52e48e0c3d5634",
+            "synthetic-3c3b215d2977ecf9e2db",
+            "synthetic-3d1e1bb4aabc306febd9",
+            "synthetic-6ff963588953d733c5a3",
+            "synthetic-b84be4098f2c5fba218a",
+            "synthetic-c3daf536f8bd333e8555",
+            "synthetic-ded38e17d41cc5a613da"
+          ]
+        },
+        "semantic_arithmetic_process": {
+          "exact": 8,
+          "exact_failure_sample_ids": [],
+          "samples": 8,
+          "semantic_exact": 8,
+          "semantic_failure_sample_ids": []
+        }
+      },
+      "exact": 22,
+      "failure_sample_ids": [
+        "synthetic-1a7b299fb729cd67bd71",
+        "synthetic-33e0eb52e48e0c3d5634",
+        "synthetic-3c3b215d2977ecf9e2db",
+        "synthetic-3d1e1bb4aabc306febd9",
+        "synthetic-6ff963588953d733c5a3",
+        "synthetic-b84be4098f2c5fba218a",
+        "synthetic-c3daf536f8bd333e8555",
+        "synthetic-cb1b63a543f33dcb72fe",
+        "synthetic-d3902d28ebf8554f0c6a",
+        "synthetic-ded38e17d41cc5a613da"
+      ],
+      "samples": 32,
+      "semantic_accuracy": 0.6875,
+      "semantic_exact": 22,
+      "semantic_failure_sample_ids": [
+        "synthetic-1a7b299fb729cd67bd71",
+        "synthetic-33e0eb52e48e0c3d5634",
+        "synthetic-3c3b215d2977ecf9e2db",
+        "synthetic-3d1e1bb4aabc306febd9",
+        "synthetic-6ff963588953d733c5a3",
+        "synthetic-b84be4098f2c5fba218a",
+        "synthetic-c3daf536f8bd333e8555",
+        "synthetic-cb1b63a543f33dcb72fe",
+        "synthetic-d3902d28ebf8554f0c6a",
+        "synthetic-ded38e17d41cc5a613da"
+      ]
+    },
+    "tensor_count": 224
+  },
+  "artifacts": {
+    "adapter_sha256": "a0b13668ba5034b155a8aecdc8f45df039f7580773c6b9ff86f2f3727917495d",
+    "generations_sha256": "404969c874612ac04321c3c502be530846974e2a63cfe20e29928899ba4e3b8a",
+    "metrics_sha256": "902f4982ba3e44e90486c7c36b14f9326f544d7bae55c386c13e123cfc40dcad",
+    "reload_validation_sha256": "3b6774babd02256141bb5983d1cc41fea4f878460c46b49a6a7fed5d3c3f7b48"
+  },
+  "baseline_validation": {
+    "accuracy": 0.25,
+    "by_family": {
+      "capability_preservation_choice": {
+        "exact": 2,
+        "exact_failure_sample_ids": [
+          "synthetic-0e85915fc657932c5e67",
+          "synthetic-131282e9564acfa56afc",
+          "synthetic-1a7b299fb729cd67bd71",
+          "synthetic-8d42bc65194f32bcdd8e",
+          "synthetic-cb1b63a543f33dcb72fe",
+          "synthetic-d3902d28ebf8554f0c6a"
+        ],
+        "samples": 8,
+        "semantic_exact": 2,
+        "semantic_failure_sample_ids": [
+          "synthetic-0e85915fc657932c5e67",
+          "synthetic-131282e9564acfa56afc",
+          "synthetic-1a7b299fb729cd67bd71",
+          "synthetic-8d42bc65194f32bcdd8e",
+          "synthetic-cb1b63a543f33dcb72fe",
+          "synthetic-d3902d28ebf8554f0c6a"
+        ]
+      },
+      "capability_preservation_numeric": {
+        "exact": 0,
+        "exact_failure_sample_ids": [
+          "synthetic-0709234d9cb212370701",
+          "synthetic-33e0eb52e48e0c3d5634",
+          "synthetic-3c3b215d2977ecf9e2db",
+          "synthetic-3d1e1bb4aabc306febd9",
+          "synthetic-4e05b5f9c88b88acf4b2",
+          "synthetic-6acb64d64d214f6dc7a2",
+          "synthetic-6ff963588953d733c5a3",
+          "synthetic-806ef83ba2912d38c746",
+          "synthetic-926e2a5acdb5db04b881",
+          "synthetic-935daa9738c039fcbb0f",
+          "synthetic-ace9ddd7bfd07e20ce96",
+          "synthetic-b84be4098f2c5fba218a",
+          "synthetic-c3daf536f8bd333e8555",
+          "synthetic-cea6bc124f10a7665e68",
+          "synthetic-ded38e17d41cc5a613da",
+          "synthetic-ffba3e636d5c7eb11e9c"
+        ],
+        "samples": 16,
+        "semantic_exact": 0,
+        "semantic_failure_sample_ids": [
+          "synthetic-0709234d9cb212370701",
+          "synthetic-33e0eb52e48e0c3d5634",
+          "synthetic-3c3b215d2977ecf9e2db",
+          "synthetic-3d1e1bb4aabc306febd9",
+          "synthetic-4e05b5f9c88b88acf4b2",
+          "synthetic-6acb64d64d214f6dc7a2",
+          "synthetic-6ff963588953d733c5a3",
+          "synthetic-806ef83ba2912d38c746",
+          "synthetic-926e2a5acdb5db04b881",
+          "synthetic-935daa9738c039fcbb0f",
+          "synthetic-ace9ddd7bfd07e20ce96",
+          "synthetic-b84be4098f2c5fba218a",
+          "synthetic-c3daf536f8bd333e8555",
+          "synthetic-cea6bc124f10a7665e68",
+          "synthetic-ded38e17d41cc5a613da",
+          "synthetic-ffba3e636d5c7eb11e9c"
+        ]
+      },
+      "semantic_arithmetic_process": {
+        "exact": 6,
+        "exact_failure_sample_ids": [
+          "synthetic-744ddaafd028c5f0db87",
+          "synthetic-c26d5d53c869fc6169eb"
+        ],
+        "samples": 8,
+        "semantic_exact": 6,
+        "semantic_failure_sample_ids": [
+          "synthetic-744ddaafd028c5f0db87",
+          "synthetic-c26d5d53c869fc6169eb"
+        ]
+      }
+    },
+    "exact": 8,
+    "failure_sample_ids": [
+      "synthetic-0709234d9cb212370701",
+      "synthetic-0e85915fc657932c5e67",
+      "synthetic-131282e9564acfa56afc",
+      "synthetic-1a7b299fb729cd67bd71",
+      "synthetic-33e0eb52e48e0c3d5634",
+      "synthetic-3c3b215d2977ecf9e2db",
+      "synthetic-3d1e1bb4aabc306febd9",
+      "synthetic-4e05b5f9c88b88acf4b2",
+      "synthetic-6acb64d64d214f6dc7a2",
+      "synthetic-6ff963588953d733c5a3",
+      "synthetic-744ddaafd028c5f0db87",
+      "synthetic-806ef83ba2912d38c746",
+      "synthetic-8d42bc65194f32bcdd8e",
+      "synthetic-926e2a5acdb5db04b881",
+      "synthetic-935daa9738c039fcbb0f",
+      "synthetic-ace9ddd7bfd07e20ce96",
+      "synthetic-b84be4098f2c5fba218a",
+      "synthetic-c26d5d53c869fc6169eb",
+      "synthetic-c3daf536f8bd333e8555",
+      "synthetic-cb1b63a543f33dcb72fe",
+      "synthetic-cea6bc124f10a7665e68",
+      "synthetic-d3902d28ebf8554f0c6a",
+      "synthetic-ded38e17d41cc5a613da",
+      "synthetic-ffba3e636d5c7eb11e9c"
+    ],
+    "samples": 32,
+    "semantic_accuracy": 0.25,
+    "semantic_exact": 8,
+    "semantic_failure_sample_ids": [
+      "synthetic-0709234d9cb212370701",
+      "synthetic-0e85915fc657932c5e67",
+      "synthetic-131282e9564acfa56afc",
+      "synthetic-1a7b299fb729cd67bd71",
+      "synthetic-33e0eb52e48e0c3d5634",
+      "synthetic-3c3b215d2977ecf9e2db",
+      "synthetic-3d1e1bb4aabc306febd9",
+      "synthetic-4e05b5f9c88b88acf4b2",
+      "synthetic-6acb64d64d214f6dc7a2",
+      "synthetic-6ff963588953d733c5a3",
+      "synthetic-744ddaafd028c5f0db87",
+      "synthetic-806ef83ba2912d38c746",
+      "synthetic-8d42bc65194f32bcdd8e",
+      "synthetic-926e2a5acdb5db04b881",
+      "synthetic-935daa9738c039fcbb0f",
+      "synthetic-ace9ddd7bfd07e20ce96",
+      "synthetic-b84be4098f2c5fba218a",
+      "synthetic-c26d5d53c869fc6169eb",
+      "synthetic-c3daf536f8bd333e8555",
+      "synthetic-cb1b63a543f33dcb72fe",
+      "synthetic-cea6bc124f10a7665e68",
+      "synthetic-d3902d28ebf8554f0c6a",
+      "synthetic-ded38e17d41cc5a613da",
+      "synthetic-ffba3e636d5c7eb11e9c"
+    ]
+  },
+  "configuration": {
+    "dtype": "float32",
+    "effective_batch_size": 4,
+    "examples_seen": 128,
+    "family_examples_seen": {
+      "capability_preservation_choice": 30,
+      "capability_preservation_numeric": 66,
+      "semantic_arithmetic_process": 32
+    },
+    "generation_max_new_tokens": 128,
+    "learning_rate": 0.0002,
+    "lora_alpha": 16,
+    "lora_r": 8,
+    "lora_targets": [
+      "q_proj",
+      "v_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "max_length": 192,
+    "max_steps": 32,
+    "seed": 20260816,
+    "train_samples": 160,
+    "training_coverage_equivalents": 0.8,
+    "unique_examples_seen": 128,
+    "warmup_steps": 2
+  },
+  "data_revision": "204b053",
+  "decision": {
+    "accepted_local_smoke": false,
+    "adapter_reload_passed": true,
+    "aggregate_semantic_at_least_24": false,
+    "every_family_improved": true,
+    "family_improvement_checks": {
+      "capability_preservation_choice": true,
+      "capability_preservation_numeric": true,
+      "semantic_arithmetic_process": true
+    },
+    "family_targets": {
+      "capability_preservation_choice": true,
+      "capability_preservation_numeric": false,
+      "semantic_arithmetic_process": true
+    },
+    "full_benchmark_allowed": false,
+    "max_steps_interpolation_exhausted": true,
+    "memory_below_28_gib": true,
+    "merge_allowed": false,
+    "moving_average_loss_decreased": true,
+    "next_action": "Stop max-step interpolation because v10 exactly matches v9. Keep choice and process strata frozen, analyze the seven persistent numeric failures, and pre-register a new non-evaluation numeric-data intervention. Do not run the sealed canary, full suite, merge, scale, or RL.",
+    "numerical_stability_passed": true,
+    "rl_allowed": false,
+    "scale_allowed": false,
+    "sealed_canary_allowed": false,
+    "strict_exact_at_least_22": true,
+    "zero_capped_outputs": true
+  },
+  "dependencies": {
+    "accelerate": "1.14.0",
+    "peft": "0.20.0",
+    "python": "3.11.2",
+    "torch": "2.10.0+cu128",
+    "transformers": "5.12.1"
+  },
+  "dose_curve": {
+    "only_max_steps_changed": true,
+    "v10": {
+      "aggregate_exact": 22,
+      "aggregate_semantic": 22,
+      "family_semantic": {
+        "capability_preservation_choice": 5,
+        "capability_preservation_numeric": 9,
+        "semantic_arithmetic_process": 8
+      },
+      "max_steps": 32
+    },
+    "v10_validation_identical_to_v9": true,
+    "v7": {
+      "aggregate_exact": 19,
+      "aggregate_semantic": 19,
+      "family_semantic": {
+        "capability_preservation_choice": 5,
+        "capability_preservation_numeric": 6,
+        "semantic_arithmetic_process": 8
+      },
+      "max_steps": 20
+    },
+    "v8": {
+      "aggregate_exact": 21,
+      "aggregate_semantic": 21,
+      "family_semantic": {
+        "capability_preservation_choice": 4,
+        "capability_preservation_numeric": 9,
+        "semantic_arithmetic_process": 8
+      },
+      "max_steps": 40
+    },
+    "v9": {
+      "aggregate_exact": 22,
+      "aggregate_semantic": 22,
+      "family_semantic": {
+        "capability_preservation_choice": 5,
+        "capability_preservation_numeric": 9,
+        "semantic_arithmetic_process": 8
+      },
+      "max_steps": 30
+    }
+  },
+  "experiment_id": "hard-preservation-sft-smoke-v10",
+  "generation_budget_audit": {
+    "baseline": {
+      "maximum_output_tokens": 96,
+      "outputs_at_generation_cap": 0,
+      "token_histogram": {
+        "3": 8,
+        "42": 1,
+        "44": 3,
+        "53": 1,
+        "54": 1,
+        "55": 1,
+        "60": 1,
+        "61": 1,
+        "64": 2,
+        "76": 1,
+        "77": 2,
+        "83": 1,
+        "84": 5,
+        "87": 1,
+        "88": 1,
+        "91": 1,
+        "96": 1
+      }
+    },
+    "generation_max_new_tokens": 128,
+    "post_sft": {
+      "maximum_output_tokens": 64,
+      "outputs_at_generation_cap": 0,
+      "token_histogram": {
+        "3": 8,
+        "27": 5,
+        "28": 2,
+        "31": 1,
+        "33": 3,
+        "36": 4,
+        "37": 1,
+        "42": 1,
+        "44": 3,
+        "62": 1,
+        "64": 3
+      }
+    }
+  },
+  "hardware": {
+    "gpu_name": "Tesla V100-SXM2-32GB",
+    "peak_allocated_gib": 20.174123287200928
+  },
+  "identity": {
+    "config_sha256": "49c5d50572bb568235fd25e4ad5882b381facc795e6131196423f829985c8910",
+    "dataset_id": "hard-preservation-mix-v5",
+    "dataset_sha256": "ac07e10f1e04ca8ddec74aefc8df9b00475f7fc9c57345ff98182dd8e4c8bae9",
+    "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670"
+  },
+  "optimization": {
+    "all_losses_finite": true,
+    "early_five_step_mean": 0.1972630547825247,
+    "failure_receipt_exists": false,
+    "late_five_step_mean": 0.024580460331890208,
+    "late_mean_below_early_mean": true,
+    "loss_curve": [
+      {
+        "learning_rate": 0.0001,
+        "loss": 0.3587319515645504,
+        "step": 1
+      },
+      {
+        "learning_rate": 0.0002,
+        "loss": 0.3024822026491165,
+        "step": 2
+      },
+      {
+        "learning_rate": 0.0002,
+        "loss": 0.0736927546095103,
+        "step": 3
+      },
+      {
+        "learning_rate": 0.00019333333333333333,
+        "loss": 0.1412500636652112,
+        "step": 4
+      },
+      {
+        "learning_rate": 0.0001866666666666667,
+        "loss": 0.1101583014242351,
+        "step": 5
+      },
+      {
+        "learning_rate": 0.00018,
+        "loss": 0.14889345271512866,
+        "step": 6
+      },
+      {
+        "learning_rate": 0.00017333333333333334,
+        "loss": 0.26721701100905193,
+        "step": 7
+      },
+      {
+        "learning_rate": 0.0001666666666666667,
+        "loss": 0.10544011706952006,
+        "step": 8
+      },
+      {
+        "learning_rate": 0.00016,
+        "loss": 0.25132034212583676,
+        "step": 9
+      },
+      {
+        "learning_rate": 0.00015333333333333334,
+        "loss": 0.08698422322049737,
+        "step": 10
+      },
+      {
+        "learning_rate": 0.0001466666666666667,
+        "loss": 0.12438530832878314,
+        "step": 11
+      },
+      {
+        "learning_rate": 0.00014,
+        "loss": 0.022949192236410454,
+        "step": 12
+      },
+      {
+        "learning_rate": 0.00013333333333333337,
+        "loss": 0.23714259251573822,
+        "step": 13
+      },
+      {
+        "learning_rate": 0.00012666666666666666,
+        "loss": 0.07322162024502177,
+        "step": 14
+      },
+      {
+        "learning_rate": 0.00012,
+        "loss": 0.098786029353505,
+        "step": 15
+      },
+      {
+        "learning_rate": 0.00011333333333333334,
+        "loss": 0.004582817418850027,
+        "step": 16
+      },
+      {
+        "learning_rate": 0.00010666666666666667,
+        "loss": 0.0005878566262254026,
+        "step": 17
+      },
+      {
+        "learning_rate": 0.0001,
+        "loss": 0.09406148089692579,
+        "step": 18
+      },
+      {
+        "learning_rate": 9.333333333333334e-05,
+        "loss": 0.06372074421778962,
+        "step": 19
+      },
+      {
+        "learning_rate": 8.666666666666667e-05,
+        "loss": 0.11281464161584154,
+        "step": 20
+      },
+      {
+        "learning_rate": 8e-05,
+        "loss": 0.09286240383516997,
+        "step": 21
+      },
+      {
+        "learning_rate": 7.333333333333334e-05,
+        "loss": 0.005162750221643364,
+        "step": 22
+      },
+      {
+        "learning_rate": 6.666666666666668e-05,
+        "loss": 0.04698100881796563,
+        "step": 23
+      },
+      {
+        "learning_rate": 6.0000000000000015e-05,
+        "loss": 0.0002743790428212378,
+        "step": 24
+      },
+      {
+        "learning_rate": 5.333333333333335e-05,
+        "loss": 0.0013332847734091047,
+        "step": 25
+      },
+      {
+        "learning_rate": 4.666666666666666e-05,
+        "loss": 0.09517964491533348,
+        "step": 26
+      },
+      {
+        "learning_rate": 3.999999999999999e-05,
+        "loss": 0.10607467028239626,
+        "step": 27
+      },
+      {
+        "learning_rate": 3.333333333333333e-05,
+        "loss": 0.025862996913929237,
+        "step": 28
+      },
+      {
+        "learning_rate": 2.6666666666666663e-05,
+        "loss": 0.0005803602198284352,
+        "step": 29
+      },
+      {
+        "learning_rate": 1.9999999999999995e-05,
+        "loss": 0.016617887702977896,
+        "step": 30
+      },
+      {
+        "learning_rate": 1.3333333333333332e-05,
+        "loss": 0.029635364121077146,
+        "step": 31
+      },
+      {
+        "learning_rate": 6.666666666666666e-06,
+        "loss": 0.05020569270163833,
+        "step": 32
+      }
+    ],
+    "minimum_loss": 0.0002743790428212378,
+    "steps": 32
+  },
+  "passed": false,
+  "post_sft_validation": {
+    "accuracy": 0.6875,
+    "by_family": {
+      "capability_preservation_choice": {
+        "exact": 5,
+        "exact_failure_sample_ids": [
+          "synthetic-1a7b299fb729cd67bd71",
+          "synthetic-cb1b63a543f33dcb72fe",
+          "synthetic-d3902d28ebf8554f0c6a"
+        ],
+        "samples": 8,
+        "semantic_exact": 5,
+        "semantic_failure_sample_ids": [
+          "synthetic-1a7b299fb729cd67bd71",
+          "synthetic-cb1b63a543f33dcb72fe",
+          "synthetic-d3902d28ebf8554f0c6a"
+        ]
+      },
+      "capability_preservation_numeric": {
+        "exact": 9,
+        "exact_failure_sample_ids": [
+          "synthetic-33e0eb52e48e0c3d5634",
+          "synthetic-3c3b215d2977ecf9e2db",
+          "synthetic-3d1e1bb4aabc306febd9",
+          "synthetic-6ff963588953d733c5a3",
+          "synthetic-b84be4098f2c5fba218a",
+          "synthetic-c3daf536f8bd333e8555",
+          "synthetic-ded38e17d41cc5a613da"
+        ],
+        "samples": 16,
+        "semantic_exact": 9,
+        "semantic_failure_sample_ids": [
+          "synthetic-33e0eb52e48e0c3d5634",
+          "synthetic-3c3b215d2977ecf9e2db",
+          "synthetic-3d1e1bb4aabc306febd9",
+          "synthetic-6ff963588953d733c5a3",
+          "synthetic-b84be4098f2c5fba218a",
+          "synthetic-c3daf536f8bd333e8555",
+          "synthetic-ded38e17d41cc5a613da"
+        ]
+      },
+      "semantic_arithmetic_process": {
+        "exact": 8,
+        "exact_failure_sample_ids": [],
+        "samples": 8,
+        "semantic_exact": 8,
+        "semantic_failure_sample_ids": []
+      }
+    },
+    "exact": 22,
+    "failure_sample_ids": [
+      "synthetic-1a7b299fb729cd67bd71",
+      "synthetic-33e0eb52e48e0c3d5634",
+      "synthetic-3c3b215d2977ecf9e2db",
+      "synthetic-3d1e1bb4aabc306febd9",
+      "synthetic-6ff963588953d733c5a3",
+      "synthetic-b84be4098f2c5fba218a",
+      "synthetic-c3daf536f8bd333e8555",
+      "synthetic-cb1b63a543f33dcb72fe",
+      "synthetic-d3902d28ebf8554f0c6a",
+      "synthetic-ded38e17d41cc5a613da"
+    ],
+    "samples": 32,
+    "semantic_accuracy": 0.6875,
+    "semantic_exact": 22,
+    "semantic_failure_sample_ids": [
+      "synthetic-1a7b299fb729cd67bd71",
+      "synthetic-33e0eb52e48e0c3d5634",
+      "synthetic-3c3b215d2977ecf9e2db",
+      "synthetic-3d1e1bb4aabc306febd9",
+      "synthetic-6ff963588953d733c5a3",
+      "synthetic-b84be4098f2c5fba218a",
+      "synthetic-c3daf536f8bd333e8555",
+      "synthetic-cb1b63a543f33dcb72fe",
+      "synthetic-d3902d28ebf8554f0c6a",
+      "synthetic-ded38e17d41cc5a613da"
+    ]
+  },
+  "pre_registration_revision": "528f7aa",
+  "schema_version": "nano_train_public_sft_smoke_v10",
+  "wall_seconds": 308.0056502819061
+}
