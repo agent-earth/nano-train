@@ -10,7 +10,11 @@ from unittest import mock
 import torch
 
 from nano_train.config import load_sft_smoke_config
-from nano_train.continuation import normalized_anchor_penalty
+from nano_train.continuation import (
+    load_config as load_continuation_config,
+    normalized_anchor_penalty,
+    validate_choice_replay_contract,
+)
 from nano_train.data import (
     TokenizedSample,
     collate_samples,
@@ -64,6 +68,66 @@ class TrainTests(unittest.TestCase):
             anchor_norm_squared,
         )
         self.assertEqual(float(penalty.detach()), 5.0)
+
+    def test_choice_replay_contract_records_all_rule_exposures(self):
+        rules = [
+            "preservation_host_count_choice_v5",
+            "preservation_sequential_fraction_choice_v5",
+            "preservation_participant_average_choice_v5",
+        ]
+        samples = [
+            {
+                "sample_id": f"train-{index}",
+                "split": "train",
+                "task_family": "capability_preservation_choice",
+                "format_family": "final_choice",
+                "generation_rule": rules[index % len(rules)],
+            }
+            for index in range(40)
+        ]
+        samples.extend(
+            {
+                "sample_id": f"validation-{index}",
+                "split": "validation",
+                "task_family": "capability_preservation_numeric",
+                "format_family": "final_numeric",
+            }
+            for index in range(32)
+        )
+        dataset = {
+            "dataset_id": "generic-choice-replay-v11",
+            "policy": {
+                "contains_benchmark_content": False,
+                "contains_model_outputs": False,
+                "contains_teacher_outputs": False,
+                "sealed_canary_used_for_training": False,
+                "independent_holdout_used_for_training": False,
+                "benchmark_feedback_used_for_training": False,
+            },
+            "samples": samples,
+        }
+        exposure = validate_choice_replay_contract(
+            dataset,
+            seed=20260816,
+            examples_seen=16,
+        )
+        self.assertEqual(exposure["examples_seen"], 16)
+        self.assertEqual(set(exposure["generation_rule_counts"]), set(rules))
+
+    def test_choice_replay_config_is_frozen(self):
+        source = Path(
+            "configs/continuation/anchored_v1_choice_replay_v2.json"
+        )
+        raw = json.loads(source.read_text(encoding="utf-8"))
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "config.json"
+            path.write_text(json.dumps(raw), encoding="utf-8")
+            config = load_continuation_config(path)
+            self.assertEqual(config.max_steps, 4)
+            raw["learning_rate"] = 0.00005
+            path.write_text(json.dumps(raw), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "learning_rate"):
+                load_continuation_config(path)
 
     def test_exact_lora_delta_composition(self):
         a_left = torch.tensor([[1.0, 2.0], [3.0, 4.0]])

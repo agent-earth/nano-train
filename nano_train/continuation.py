@@ -60,17 +60,93 @@ def load_config(path: str | Path) -> AnchoredContinuationConfig:
     if set(raw) != expected:
         raise ValueError("anchored continuation config fields differ")
     config = AnchoredContinuationConfig(**raw)
-    if config.schema_version != "nano_train_anchored_continuation_v1":
+    if config.schema_version not in {
+        "nano_train_anchored_continuation_v1",
+        "nano_train_anchored_continuation_v2",
+    }:
         raise ValueError("unsupported anchored continuation schema")
     if config.dtype != "float32":
         raise ValueError("anchored continuation is frozen to FP32")
     if config.train_lora_a or not config.train_lora_b:
         raise ValueError("anchored continuation must train only LoRA B")
-    if config.max_steps != 8 or config.warmup_steps != 1:
-        raise ValueError("anchored continuation is frozen to 8 steps / warmup 1")
     if config.anchor_penalty_coefficient != 1.0:
         raise ValueError("anchor penalty coefficient is frozen to 1.0")
+    if config.schema_version == "nano_train_anchored_continuation_v1":
+        if config.max_steps != 8 or config.warmup_steps != 1:
+            raise ValueError(
+                "v1 anchored continuation is frozen to 8 steps / warmup 1"
+            )
+    else:
+        expected_v2 = {
+            "experiment_id": "anchored-v1-choice-replay-continuation-v2",
+            "max_steps": 4,
+            "batch_size": 1,
+            "gradient_accumulation_steps": 4,
+            "learning_rate": 0.000025,
+            "weight_decay": 0.0,
+            "warmup_steps": 1,
+        }
+        for field, expected_value in expected_v2.items():
+            if getattr(config, field) != expected_value:
+                raise ValueError(
+                    f"v2 anchored continuation freezes {field}="
+                    f"{expected_value}"
+                )
     return config
+
+
+def validate_choice_replay_contract(
+    dataset: dict[str, Any],
+    *,
+    seed: int,
+    examples_seen: int,
+) -> dict[str, Any]:
+    if dataset.get("dataset_id") != "generic-choice-replay-v11":
+        raise ValueError("v2 continuation requires generic choice replay v11")
+    policy = dataset.get("policy", {})
+    if (
+        policy.get("contains_benchmark_content") is not False
+        or policy.get("contains_model_outputs") is not False
+        or policy.get("contains_teacher_outputs") is not False
+        or policy.get("sealed_canary_used_for_training") is not False
+        or policy.get("independent_holdout_used_for_training") is not False
+        or policy.get("benchmark_feedback_used_for_training") is not False
+    ):
+        raise ValueError("choice replay evidence boundary differs")
+    train = [
+        sample for sample in dataset["samples"] if sample["split"] == "train"
+    ]
+    validation = [
+        sample
+        for sample in dataset["samples"]
+        if sample["split"] == "validation"
+    ]
+    if len(train) != 40 or len(validation) != 32:
+        raise ValueError("choice replay split counts differ")
+    if any(
+        sample.get("task_family") != "capability_preservation_choice"
+        or sample.get("format_family") != "final_choice"
+        for sample in train
+    ):
+        raise ValueError("choice replay train rows are not choice-only")
+    order = _batch_order(train, seed)
+    exposed = [train[order[index]] for index in range(examples_seen)]
+    rule_counts: dict[str, int] = {}
+    for sample in exposed:
+        rule = str(sample.get("generation_rule", ""))
+        rule_counts[rule] = rule_counts.get(rule, 0) + 1
+    expected_rules = {
+        "preservation_host_count_choice_v5",
+        "preservation_sequential_fraction_choice_v5",
+        "preservation_participant_average_choice_v5",
+    }
+    if set(rule_counts) != expected_rules:
+        raise ValueError("choice replay exposure does not cover all rules")
+    return {
+        "examples_seen": len(exposed),
+        "sample_ids": [str(sample["sample_id"]) for sample in exposed],
+        "generation_rule_counts": rule_counts,
+    }
 
 
 def normalized_anchor_penalty(
@@ -108,6 +184,17 @@ def run(config: AnchoredContinuationConfig) -> dict[str, Any]:
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token = tokenizer.eos_token
     dataset = load_analog_dataset(dataset_path)
+    training_exposure = None
+    if config.schema_version == "nano_train_anchored_continuation_v2":
+        training_exposure = validate_choice_replay_contract(
+            dataset,
+            seed=config.seed,
+            examples_seen=(
+                config.max_steps
+                * config.batch_size
+                * config.gradient_accumulation_steps
+            ),
+        )
     samples = tokenize_samples(dataset, tokenizer, max_length=config.max_length)
     train = [sample for sample in samples if sample.split == "train"]
     validation = [sample for sample in samples if sample.split == "validation"]
@@ -268,6 +355,8 @@ def run(config: AnchoredContinuationConfig) -> dict[str, Any]:
         "wall_seconds": time.time() - started,
         "failure_receipt_exists": (output_root / "failure.json").exists(),
     }
+    if training_exposure is not None:
+        result["training_exposure"] = training_exposure
     (output_root / "generations.json").write_text(
         json.dumps(
             {"baseline": baseline_rows, "post": post_rows},
