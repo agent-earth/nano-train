@@ -3,6 +3,8 @@ from __future__ import annotations
 import argparse
 import json
 
+from nano_train.continuation import load_config as load_continuation_config
+from nano_train.continuation import run as run_continuation
 from nano_train.config import load_sft_smoke_config
 from nano_train.sft import run_sft_smoke
 
@@ -16,9 +18,14 @@ def main() -> None:
 
     run = subparsers.add_parser("sft-smoke")
     run.add_argument("--config", required=True)
+    continuation = subparsers.add_parser("anchored-continuation")
+    continuation.add_argument("--config", required=True)
 
     args = parser.parse_args()
-    config = load_sft_smoke_config(args.config)
+    if args.command == "anchored-continuation":
+        result = run_continuation(load_continuation_config(args.config))
+    else:
+        config = load_sft_smoke_config(args.config)
     if args.command == "validate-config":
         result = {
             "ok": True,
@@ -29,7 +36,7 @@ def main() -> None:
                 config.batch_size * config.gradient_accumulation_steps
             ),
         }
-    else:
+    elif args.command == "sft-smoke":
         result = run_sft_smoke(config)
     print(json.dumps(result, indent=2, sort_keys=True))
 

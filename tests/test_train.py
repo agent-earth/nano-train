@@ -10,6 +10,7 @@ from unittest import mock
 import torch
 
 from nano_train.config import load_sft_smoke_config
+from nano_train.continuation import normalized_anchor_penalty
 from nano_train.data import (
     TokenizedSample,
     collate_samples,
@@ -53,6 +54,17 @@ class FakeTokenizer:
 
 
 class TrainTests(unittest.TestCase):
+    def test_normalized_anchor_penalty(self):
+        parameter = torch.nn.Parameter(torch.tensor([3.0, 5.0]))
+        anchor = torch.tensor([1.0, 1.0])
+        anchor_norm_squared = (anchor**2).sum()
+        penalty = normalized_anchor_penalty(
+            [parameter],
+            [anchor],
+            anchor_norm_squared,
+        )
+        self.assertEqual(float(penalty.detach()), 5.0)
+
     def test_exact_lora_delta_composition(self):
         a_left = torch.tensor([[1.0, 2.0], [3.0, 4.0]])
         b_left = torch.tensor([[1.0, 0.0], [0.0, 2.0]])
