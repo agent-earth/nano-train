@@ -79,6 +79,11 @@ EXPECTED = {
         "dataset_sha256": "b9dcbec512831a3f2c96e7db5abf4a0750420f26a28cc0f2a27699661f79aa23",
         "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
     },
+    "percentage_isolation_preservation_smoke_v13.json": {
+        "config_sha256": "98057d4ea24e3d24ada9d98c0dd5af14fc1f08bb07436e1a33bd479a4131686e",
+        "dataset_sha256": "0ae81bb4c385703592946b5c75971b39cbb388b02a76fafa477e53e55756bc9c",
+        "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+    },
 }
 EXPECTED_SPLITS = {
     "format_contract_smoke_v1.json": {"train": 102, "validation": 26},
@@ -93,6 +98,10 @@ EXPECTED_SPLITS = {
     "hard_preservation_smoke_v10.json": {"train": 160, "validation": 32},
     "targeted_preservation_smoke_v11.json": {"train": 160, "validation": 32},
     "failure_targeted_preservation_smoke_v12.json": {
+        "train": 160,
+        "validation": 32,
+    },
+    "percentage_isolation_preservation_smoke_v13.json": {
         "train": 160,
         "validation": 32,
     },
@@ -177,6 +186,7 @@ def main() -> None:
         "hard_preservation_smoke_v10.json",
         "targeted_preservation_smoke_v11.json",
         "failure_targeted_preservation_smoke_v12.json",
+        "percentage_isolation_preservation_smoke_v13.json",
     }:
         expected_families = {
             "train": {
@@ -207,6 +217,7 @@ def main() -> None:
             "hard_preservation_smoke_v10.json": 128,
             "targeted_preservation_smoke_v11.json": 128,
             "failure_targeted_preservation_smoke_v12.json": 128,
+            "percentage_isolation_preservation_smoke_v13.json": 128,
         }[config_path.name]
         if (
             examples_seen != expected_exposure
@@ -247,6 +258,11 @@ def main() -> None:
                 "semantic_arithmetic_process": 32,
             },
             "failure_targeted_preservation_smoke_v12.json": {
+                "capability_preservation_choice": 30,
+                "capability_preservation_numeric": 66,
+                "semantic_arithmetic_process": 32,
+            },
+            "percentage_isolation_preservation_smoke_v13.json": {
                 "capability_preservation_choice": 30,
                 "capability_preservation_numeric": 66,
                 "semantic_arithmetic_process": 32,
@@ -374,6 +390,69 @@ def main() -> None:
                 is not False
             ):
                 raise SystemExit("v12 independent holdout boundary is invalid")
+        if config_path.name == "percentage_isolation_preservation_smoke_v13.json":
+            base_path = (
+                ROOT
+                / "../nano-data-pipeline/datasets/"
+                "targeted_preservation_mix_v6.json"
+            )
+            base = load_analog_dataset(base_path)
+            if (
+                [
+                    sample
+                    for sample in dataset["samples"]
+                    if sample["split"] == "validation"
+                ]
+                != [
+                    sample
+                    for sample in base["samples"]
+                    if sample["split"] == "validation"
+                ]
+            ):
+                raise SystemExit("v13 development rows must be byte-identical to v6")
+            if (
+                dataset.get("source", {}).get("replacement_count") != 8
+                or dataset.get("source", {}).get("replacement_family_counts")
+                != {"percentage_increase_total_composition": 8}
+                or dataset.get("policy", {}).get(
+                    "independent_holdout_used_for_training"
+                )
+                is not False
+            ):
+                raise SystemExit("v13 percentage-isolation boundary is invalid")
+            rows_by_id = {
+                sample["sample_id"]: sample for sample in dataset["samples"]
+            }
+            exposed_percentage = sum(
+                rows_by_id[train_samples[index].sample_id]["generation_rule"]
+                == (
+                    "failure_targeted_"
+                    "percentage_increase_total_composition_v7"
+                )
+                for index in visited_indices
+            )
+            if exposed_percentage != 7:
+                raise SystemExit(
+                    f"v13 must expose 7 percentage rows, got "
+                    f"{exposed_percentage}"
+                )
+            holdout_receipt = json.loads(
+                (
+                    ROOT
+                    / "../nano-harness/configs/generated/"
+                    "qwen35_independent_holdout_v1_selection.json"
+                ).read_text(encoding="utf-8")
+            )
+            if (
+                holdout_receipt.get("summary", {}).get("history_overlap") != 0
+                or holdout_receipt.get("policy", {}).get("training_eligible")
+                is not False
+                or holdout_receipt.get("policy", {}).get(
+                    "prompts_loaded_before_evaluation"
+                )
+                is not False
+            ):
+                raise SystemExit("v13 independent holdout boundary is invalid")
 
     model_config = AutoConfig.from_pretrained(model_path, local_files_only=True)
     if model_config.model_type != "qwen3_5":
