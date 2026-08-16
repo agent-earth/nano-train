@@ -1,0 +1,275 @@
+{
+  "artifacts": {
+    "adapter_tree_sha256": "a3ad49aff01a1fd05c7f357dfef587fbb25a1cc2b4cb1d35988895c060c7f4de",
+    "generations_sha256": "0a32a565056fe24e75834b92c0ce93379b322c68ffad547621b3491aebbe462c",
+    "metrics_sha256": "cc671ce1ec055709a27a683bc91097dd9d52943e332f0ad4f14288a67ab800dc",
+    "reload_validation_sha256": "c5506c8dca5a4e13ab437f242b637bd495da4c6ff0f070df38ea907f01abf453"
+  },
+  "baseline_validation": {
+    "accuracy": 0.6875,
+    "by_family": {
+      "capability_preservation_choice": {
+        "exact": 6,
+        "exact_failure_sample_ids": [
+          "synthetic-1a7b299fb729cd67bd71",
+          "synthetic-cb1b63a543f33dcb72fe"
+        ],
+        "samples": 8,
+        "semantic_exact": 6,
+        "semantic_failure_sample_ids": [
+          "synthetic-1a7b299fb729cd67bd71",
+          "synthetic-cb1b63a543f33dcb72fe"
+        ]
+      },
+      "capability_preservation_numeric": {
+        "exact": 8,
+        "exact_failure_sample_ids": [
+          "synthetic-33e0eb52e48e0c3d5634",
+          "synthetic-3c3b215d2977ecf9e2db",
+          "synthetic-3d1e1bb4aabc306febd9",
+          "synthetic-6ff963588953d733c5a3",
+          "synthetic-926e2a5acdb5db04b881",
+          "synthetic-b84be4098f2c5fba218a",
+          "synthetic-c3daf536f8bd333e8555",
+          "synthetic-ded38e17d41cc5a613da"
+        ],
+        "samples": 16,
+        "semantic_exact": 11,
+        "semantic_failure_sample_ids": [
+          "synthetic-33e0eb52e48e0c3d5634",
+          "synthetic-3c3b215d2977ecf9e2db",
+          "synthetic-6ff963588953d733c5a3",
+          "synthetic-c3daf536f8bd333e8555",
+          "synthetic-ded38e17d41cc5a613da"
+        ]
+      },
+      "semantic_arithmetic_process": {
+        "exact": 8,
+        "exact_failure_sample_ids": [],
+        "samples": 8,
+        "semantic_exact": 8,
+        "semantic_failure_sample_ids": []
+      }
+    },
+    "exact": 22,
+    "failure_sample_ids": [
+      "synthetic-1a7b299fb729cd67bd71",
+      "synthetic-33e0eb52e48e0c3d5634",
+      "synthetic-3c3b215d2977ecf9e2db",
+      "synthetic-3d1e1bb4aabc306febd9",
+      "synthetic-6ff963588953d733c5a3",
+      "synthetic-926e2a5acdb5db04b881",
+      "synthetic-b84be4098f2c5fba218a",
+      "synthetic-c3daf536f8bd333e8555",
+      "synthetic-cb1b63a543f33dcb72fe",
+      "synthetic-ded38e17d41cc5a613da"
+    ],
+    "samples": 32,
+    "semantic_accuracy": 0.78125,
+    "semantic_exact": 25,
+    "semantic_failure_sample_ids": [
+      "synthetic-1a7b299fb729cd67bd71",
+      "synthetic-33e0eb52e48e0c3d5634",
+      "synthetic-3c3b215d2977ecf9e2db",
+      "synthetic-6ff963588953d733c5a3",
+      "synthetic-c3daf536f8bd333e8555",
+      "synthetic-cb1b63a543f33dcb72fe",
+      "synthetic-ded38e17d41cc5a613da"
+    ]
+  },
+  "case_delta": {
+    "changed_rows": [
+      {
+        "baseline_exact": false,
+        "baseline_output": "FINAL: A",
+        "post_exact": false,
+        "post_output": "FINAL: C",
+        "sample_id": "synthetic-cb1b63a543f33dcb72fe",
+        "target": "FINAL: B",
+        "task_family": "capability_preservation_choice"
+      }
+    ],
+    "exact_labels_changed": 0,
+    "outputs_changed": 1,
+    "semantic_labels_changed": 0
+  },
+  "data_revision": "744965a",
+  "decision": {
+    "accepted_local_smoke": false,
+    "further_choice_replay_dose_search_allowed": false,
+    "independent_holdout_allowed": false,
+    "merge_allowed": false,
+    "next_action": "Reject supervised choice replay at the frozen dose and preserve anchored-v1. Replan toward a separately pre-registered generic contract-aware harness intervention; do not tune replay dose on this development split.",
+    "prior_full_suite_allowed": false,
+    "rl_allowed": false,
+    "scale_allowed": false,
+    "sealed_canary_allowed": false
+  },
+  "evaluation_boundary": {
+    "independent_holdout_prompts_loaded": false,
+    "independent_holdout_references_loaded": false,
+    "independent_holdout_run": false,
+    "independent_quality_claim_allowed": false,
+    "local_role": "development_gate_only",
+    "prior_full_suite_run": false,
+    "sealed_canary_run": false
+  },
+  "experiment_id": "anchored-v1-choice-replay-continuation-v2",
+  "identity": {
+    "adapter_tree_sha256": "a3ad49aff01a1fd05c7f357dfef587fbb25a1cc2b4cb1d35988895c060c7f4de",
+    "anchor_adapter_tree_sha256": "d29963cbd9284fe9a21de690babecbb34ed3fbbedd16d5d780daaf8abc45bc82",
+    "config_sha256": "afb70e3c2a7008bc4c6175ed1d988a5d99b14465320a2c18918848728bfaad16",
+    "dataset_id": "generic-choice-replay-v11",
+    "dataset_sha256": "4657e96af9f9d1b81bfdb5fac6a29c31baf24b23d7753508aafdea5603ffd80d",
+    "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670"
+  },
+  "local_gate": {
+    "all_lora_b_changed": true,
+    "all_tensors_finite": true,
+    "baseline_reproduces_anchored_v1": true,
+    "choice_at_least_7": false,
+    "lora_a_unchanged": true,
+    "no_failure_receipt": true,
+    "numeric_at_least_11": true,
+    "process_equals_8": true,
+    "relative_b_drift_at_most_0_06": true,
+    "reload_matches_training": true,
+    "semantic_at_least_25": true,
+    "strict_at_least_22": true
+  },
+  "method": {
+    "anchor_penalty_coefficient": 1.0,
+    "effective_batch_size": 4,
+    "examples_seen": 16,
+    "frozen_lora_a": true,
+    "generation_rule_counts": {
+      "preservation_host_count_choice_v5": 5,
+      "preservation_participant_average_choice_v5": 4,
+      "preservation_sequential_fraction_choice_v5": 7
+    },
+    "learning_rate": 2.5e-05,
+    "max_steps": 4,
+    "relative_drift_l2": 0.051038512226515134,
+    "trainable_lora_b_only": true,
+    "trainable_parameters": 5963776
+  },
+  "optimization": {
+    "all_metrics_finite": true,
+    "failure_receipt_exists": false,
+    "loss_curve": [
+      {
+        "anchor_penalty": 0.0,
+        "ce_loss": 0.05508392104457016,
+        "learning_rate": 2.5e-05,
+        "step": 1,
+        "total_loss": 0.05508392104457016
+      },
+      {
+        "anchor_penalty": 0.0003614660818129778,
+        "ce_loss": 0.20621020533144474,
+        "learning_rate": 2.5e-05,
+        "step": 2,
+        "total_loss": 0.20657167583703995
+      },
+      {
+        "anchor_penalty": 0.0008481094846501946,
+        "ce_loss": 0.006880824936160934,
+        "learning_rate": 1.666666666666667e-05,
+        "step": 3,
+        "total_loss": 0.007728934288024902
+      },
+      {
+        "anchor_penalty": 0.0011917249066755176,
+        "ce_loss": 0.08442205528990598,
+        "learning_rate": 8.333333333333335e-06,
+        "step": 4,
+        "total_loss": 0.08561377978185192
+      }
+    ],
+    "training_peak_allocated_gib": 18.257105350494385,
+    "wall_seconds": 146.638334274292
+  },
+  "passed": false,
+  "post_validation": {
+    "accuracy": 0.6875,
+    "by_family": {
+      "capability_preservation_choice": {
+        "exact": 6,
+        "exact_failure_sample_ids": [
+          "synthetic-1a7b299fb729cd67bd71",
+          "synthetic-cb1b63a543f33dcb72fe"
+        ],
+        "samples": 8,
+        "semantic_exact": 6,
+        "semantic_failure_sample_ids": [
+          "synthetic-1a7b299fb729cd67bd71",
+          "synthetic-cb1b63a543f33dcb72fe"
+        ]
+      },
+      "capability_preservation_numeric": {
+        "exact": 8,
+        "exact_failure_sample_ids": [
+          "synthetic-33e0eb52e48e0c3d5634",
+          "synthetic-3c3b215d2977ecf9e2db",
+          "synthetic-3d1e1bb4aabc306febd9",
+          "synthetic-6ff963588953d733c5a3",
+          "synthetic-926e2a5acdb5db04b881",
+          "synthetic-b84be4098f2c5fba218a",
+          "synthetic-c3daf536f8bd333e8555",
+          "synthetic-ded38e17d41cc5a613da"
+        ],
+        "samples": 16,
+        "semantic_exact": 11,
+        "semantic_failure_sample_ids": [
+          "synthetic-33e0eb52e48e0c3d5634",
+          "synthetic-3c3b215d2977ecf9e2db",
+          "synthetic-6ff963588953d733c5a3",
+          "synthetic-c3daf536f8bd333e8555",
+          "synthetic-ded38e17d41cc5a613da"
+        ]
+      },
+      "semantic_arithmetic_process": {
+        "exact": 8,
+        "exact_failure_sample_ids": [],
+        "samples": 8,
+        "semantic_exact": 8,
+        "semantic_failure_sample_ids": []
+      }
+    },
+    "exact": 22,
+    "failure_sample_ids": [
+      "synthetic-1a7b299fb729cd67bd71",
+      "synthetic-33e0eb52e48e0c3d5634",
+      "synthetic-3c3b215d2977ecf9e2db",
+      "synthetic-3d1e1bb4aabc306febd9",
+      "synthetic-6ff963588953d733c5a3",
+      "synthetic-926e2a5acdb5db04b881",
+      "synthetic-b84be4098f2c5fba218a",
+      "synthetic-c3daf536f8bd333e8555",
+      "synthetic-cb1b63a543f33dcb72fe",
+      "synthetic-ded38e17d41cc5a613da"
+    ],
+    "samples": 32,
+    "semantic_accuracy": 0.78125,
+    "semantic_exact": 25,
+    "semantic_failure_sample_ids": [
+      "synthetic-1a7b299fb729cd67bd71",
+      "synthetic-33e0eb52e48e0c3d5634",
+      "synthetic-3c3b215d2977ecf9e2db",
+      "synthetic-6ff963588953d733c5a3",
+      "synthetic-c3daf536f8bd333e8555",
+      "synthetic-cb1b63a543f33dcb72fe",
+      "synthetic-ded38e17d41cc5a613da"
+    ]
+  },
+  "pre_registration_revision": "277b46f",
+  "pre_registration_tree": "818dcce54a6fff99d8a20bf14dded061a4e06d42",
+  "schema_version": "nano_train_public_anchored_choice_replay_v2",
+  "validation": {
+    "a_tensors_changed": 0,
+    "b_tensors_changed": 112,
+    "nonfinite_tensors": 0,
+    "reload_matches_training": true,
+    "reload_peak_allocated_gib": 15.810230731964111
+  }
+}
