@@ -75,3 +75,32 @@ CUDA_VISIBLE_DEVICES=3 PYTHONPATH=. ../.venv/bin/python \
   `181bc26725ff55fbf929cb09ca9484207ef73fcd20780a17c5702755a40ca0bb`;
 - holdout selection receipt SHA256:
   `33239ffc09965981088c7de0af2a98e072e3c02ac9219795dd325b603c990e1d`.
+
+## Result
+
+V13 is stable but fails the frozen local gate:
+
+- aggregate exact / semantic is 22/32 / 23/32;
+- numeric exact / semantic is 9/16 / 10/16;
+- choice is 5/8 and process is 8/8;
+- all 32 losses and all 224 FP32 adapter tensors are finite;
+- early/late five-step loss means are 0.204367 / 0.012033;
+- independent reload reproduces aggregate, family metrics, and failure IDs;
+- peak training memory is 20.17 GiB;
+- zero post outputs reach the 128-token cap.
+
+Relative to v11, the seven isolated percentage exposures fix zero semantic
+cases and regress three: two numeric and one choice. Aggregate semantic falls
+from 26/32 to 23/32. Packing and schedule rows are absent, while
+choice/process/targeted-host exposure is unchanged.
+
+The percentage family is harmful at this frozen dose. Stop this family and do
+not conduct post-hoc smaller-dose search on the same development split.
+
+Reject v13 and preserve v11. Do not run the canary, prior full suite, or
+independent holdout. The holdout remains unread.
+
+Public result:
+
+- `docs/results/percentage_isolation_preservation_sft_smoke_v13.md`;
+- `docs/results/percentage_isolation_preservation_sft_smoke_v13.public.json`.
