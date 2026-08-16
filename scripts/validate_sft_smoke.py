@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 from collections import Counter
 from pathlib import Path
@@ -17,16 +18,32 @@ from nano_train.sft import sha256_file
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / "configs/sft/format_contract_smoke_v1.json"
 EXPECTED = {
-    "config_sha256": "09bbf842ea2a335e283385eeea18d352f9311dc5747e86da9be9b58bfdae2d93",
-    "dataset_sha256": "46f2128f219db7011d5db95b5ca3a97029b57f5ac959e194860b4c0f4ba3ad53",
-    "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670"
+    "format_contract_smoke_v1.json": {
+        "config_sha256": "09bbf842ea2a335e283385eeea18d352f9311dc5747e86da9be9b58bfdae2d93",
+        "dataset_sha256": "46f2128f219db7011d5db95b5ca3a97029b57f5ac959e194860b4c0f4ba3ad53",
+        "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+    },
+    "format_contract_smoke_v2.json": {
+        "config_sha256": "62cc5189cb048fd1a2b4070ffdd27b0a18c3363df1ae8dfa244a381401646207",
+        "dataset_sha256": "46f2128f219db7011d5db95b5ca3a97029b57f5ac959e194860b4c0f4ba3ad53",
+        "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+    },
 }
 
 
 def main() -> None:
-    config = load_sft_smoke_config(CONFIG)
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--config",
+        default="configs/sft/format_contract_smoke_v1.json",
+    )
+    args = parser.parse_args()
+    config_path = (ROOT / args.config).resolve()
+    if config_path.name not in EXPECTED:
+        raise SystemExit(f"no frozen identity for config: {config_path.name}")
+    expected_identity = EXPECTED[config_path.name]
+    config = load_sft_smoke_config(config_path)
     dataset_path = (ROOT / config.dataset_path).resolve()
     model_path = (ROOT / config.model_path).resolve()
     dataset = load_analog_dataset(dataset_path)
@@ -62,12 +79,14 @@ def main() -> None:
         raise SystemExit(f"unexpected LoRA targets: {targets}")
 
     actual = {
-        "config_sha256": sha256_file(CONFIG),
+        "config_sha256": sha256_file(config_path),
         "dataset_sha256": sha256_file(dataset_path),
         "model_config_sha256": sha256_file(model_path / "config.json"),
     }
-    if actual != EXPECTED:
-        raise SystemExit(f"identity mismatch: actual={actual}, expected={EXPECTED}")
+    if actual != expected_identity:
+        raise SystemExit(
+            f"identity mismatch: actual={actual}, expected={expected_identity}"
+        )
 
     print(
         json.dumps(

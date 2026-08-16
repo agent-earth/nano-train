@@ -72,6 +72,13 @@ class TrainTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "20 optimizer steps"):
                 load_sft_smoke_config(path)
 
+    def test_config_accepts_float32_smoke(self):
+        config = load_sft_smoke_config(
+            "configs/sft/format_contract_smoke_v2.json"
+        )
+        self.assertEqual(config.dtype, "float32")
+        self.assertEqual(config.max_steps, 20)
+
     def test_tokenize_masks_prompt_and_keeps_assistant(self):
         dataset = {
             "samples": [

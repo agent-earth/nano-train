@@ -48,8 +48,8 @@ def load_sft_smoke_config(path: str | Path) -> SFTSmokeConfig:
 def validate_sft_smoke_config(config: SFTSmokeConfig) -> None:
     if config.schema_version != "nano_train_sft_smoke_v1":
         raise ValueError("unsupported SFT smoke schema")
-    if config.dtype != "float16":
-        raise ValueError("V100 SFT smoke must use float16")
+    if config.dtype not in {"float16", "float32"}:
+        raise ValueError("V100 SFT smoke dtype must be float16 or float32")
     for name in (
         "max_length",
         "max_steps",
