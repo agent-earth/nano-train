@@ -84,3 +84,29 @@ PYTHONPATH=. ../.venv/bin/python scripts/validate_sft_smoke.py \
 CUDA_VISIBLE_DEVICES=3 PYTHONPATH=. ../.venv/bin/python -m nano_train.cli \
   sft-smoke --config configs/sft/semantic_arithmetic_smoke_v4.json
 ```
+
+## Result
+
+V4 is numerically stable and directionally improves semantic arithmetic, but
+it fails the frozen acceptance thresholds:
+
+- baseline strict exact is 3/32 and post-SFT strict exact is 10/32;
+- baseline semantic valid is 4/32 and post-SFT semantic valid is 10/32;
+- all 20 losses and all 224 FP32 adapter tensors are finite;
+- early and late five-step mean losses are 0.124278 and 0.078391;
+- independent reload reproduces strict exact and semantic valid at 10/32;
+- peak training memory is 18.65 GiB.
+
+The post-SFT failure taxonomy is 13 CALC/FINAL mismatches, 8 execution
+mismatches, 1 invalid trace, and 10 semantic-valid cases. The run exposes 80
+examples for 160 training samples, or 0.50 train-set equivalents.
+
+The adapter is rejected because semantic valid is below 32/32 and strict exact
+is below 30/32. Benchmark evaluation, merge, scale-up, and RL remain
+unauthorized. Preserve this negative evidence and pre-register one
+full-coverage run that changes only `max_steps` from 20 to 40.
+
+Public result:
+
+- `docs/results/semantic_arithmetic_sft_smoke_v4.md`;
+- `docs/results/semantic_arithmetic_sft_smoke_v4.public.json`.
