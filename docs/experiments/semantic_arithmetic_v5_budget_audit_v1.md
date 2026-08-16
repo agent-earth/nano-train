@@ -63,3 +63,25 @@ CUDA_VISIBLE_DEVICES=3 PYTHONPATH=. ../.venv/bin/python \
   scripts/run_generation_budget_audit.py \
   --config configs/audits/semantic_arithmetic_v5_budget_audit_v1.json
 ```
+
+## Result
+
+At 48 generated tokens, the base model remains 3/32 strict exact and 4/32
+semantic valid. The unchanged v5 adapter reaches 14/32 on both metrics, versus
+the official 12/32 at 32 tokens.
+
+The unchanged adapter emits at most 37 tokens and has zero outputs at the
+48-token cap. Its failure taxonomy becomes 14 semantic-valid and 18 arithmetic
+execution mismatches, with zero CALC/FINAL mismatches and zero invalid traces.
+Of the 13 official CALC/FINAL mismatches, 2 become valid and 11 become complete
+but arithmetically wrong traces. The one invalid official trace also becomes a
+complete arithmetic execution mismatch.
+
+Truncation is material but not the primary bottleneck. No training occurred,
+the adapter was not modified, and official v5 remains 12/32. Benchmark
+evaluation, merge, scale-up, and RL remain unauthorized.
+
+Public result:
+
+- `docs/results/semantic_arithmetic_v5_budget_audit_v1.md`;
+- `docs/results/semantic_arithmetic_v5_budget_audit_v1.public.json`.
