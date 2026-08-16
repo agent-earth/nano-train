@@ -1,0 +1,205 @@
+{
+  "adapter_validation": {
+    "dtype_counts": {
+      "torch.float32": 224
+    },
+    "nonfinite_tensors": 0,
+    "reload_peak_allocated_gib": 15.80893325805664,
+    "reload_success": true,
+    "reload_validation": {
+      "accuracy": 0.9615384615384616,
+      "exact": 25,
+      "failure_sample_ids": [
+        "synthetic-db1039faf1f1b223cfb5"
+      ],
+      "samples": 26
+    },
+    "tensor_count": 224
+  },
+  "artifacts": {
+    "adapter_sha256": "f02e7b9ae551649b6057e28e81a93f8b5166d0f1cf6780077ba7355ebddabf31",
+    "generations_sha256": "907708b992238ef10ed186dd85928160fc51dcd5df733c1362ac3fcd394b0bf9",
+    "metrics_sha256": "91a6999e60e5580fe4bfbbedc07f7b7845d4b51c33464334a2c33dd08fafa2dd",
+    "reload_validation_sha256": "c8f6dfa5319e5e502196d41ee87573ec5c95e59dffeb787b3a1a833d8bc3d292"
+  },
+  "baseline_validation": {
+    "accuracy": 0.8846153846153846,
+    "exact": 23,
+    "failure_sample_ids": [
+      "synthetic-2955d82deeaebe02f4c2",
+      "synthetic-394d6e79efb7be5e7902",
+      "synthetic-472290ff0823300389df"
+    ],
+    "samples": 26
+  },
+  "configuration": {
+    "dtype": "float32",
+    "effective_batch_size": 4,
+    "learning_rate": 0.0002,
+    "lora_alpha": 16,
+    "lora_r": 8,
+    "lora_targets": [
+      "q_proj",
+      "v_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "max_steps": 20,
+    "seed": 20260816,
+    "train_samples": 102,
+    "validation_samples": 26
+  },
+  "decision": {
+    "accepted": false,
+    "adapter_reload_passed": true,
+    "benchmark_evaluation_allowed": false,
+    "final_loss_below_initial": false,
+    "memory_below_28_gib": true,
+    "next_action": "Preserve v2 as a stable but incomplete smoke. Diagnose the remaining two-step semantic error and pre-register a small data/curriculum ablation before any benchmark evaluation.",
+    "numerical_stability_passed": true,
+    "rl_allowed": false,
+    "validation_exact_26_of_26": false,
+    "validation_improved": true
+  },
+  "dependencies": {
+    "accelerate": "1.14.0",
+    "peft": "0.20.0",
+    "python": "3.11.2",
+    "torch": "2.10.0+cu128",
+    "transformers": "5.12.1"
+  },
+  "experiment_id": "format-contract-sft-smoke-v2",
+  "hardware": {
+    "gpu_name": "Tesla V100-SXM2-32GB",
+    "peak_allocated_gib": 18.1417498588562
+  },
+  "identity": {
+    "config_sha256": "62cc5189cb048fd1a2b4070ffdd27b0a18c3363df1ae8dfa244a381401646207",
+    "dataset_id": "format-contract-analog-v1",
+    "dataset_sha256": "46f2128f219db7011d5db95b5ca3a97029b57f5ac959e194860b4c0f4ba3ad53",
+    "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670"
+  },
+  "optimization": {
+    "all_losses_finite": true,
+    "failure_receipt_exists": false,
+    "final_loss": 0.24765708728227764,
+    "final_loss_below_initial": false,
+    "initial_loss": 0.14936144649982452,
+    "loss_curve": [
+      {
+        "learning_rate": 0.0001,
+        "loss": 0.14936144649982452,
+        "step": 1
+      },
+      {
+        "learning_rate": 0.0002,
+        "loss": 0.24230229165186756,
+        "step": 2
+      },
+      {
+        "learning_rate": 0.0002,
+        "loss": 0.1686111788294511,
+        "step": 3
+      },
+      {
+        "learning_rate": 0.00018888888888888888,
+        "loss": 0.139006027020514,
+        "step": 4
+      },
+      {
+        "learning_rate": 0.00017777777777777779,
+        "loss": 0.05838275735732168,
+        "step": 5
+      },
+      {
+        "learning_rate": 0.0001666666666666667,
+        "loss": 0.2993130000795645,
+        "step": 6
+      },
+      {
+        "learning_rate": 0.00015555555555555556,
+        "loss": 0.19683209684444591,
+        "step": 7
+      },
+      {
+        "learning_rate": 0.00014444444444444444,
+        "loss": 0.14619359595963033,
+        "step": 8
+      },
+      {
+        "learning_rate": 0.00013333333333333337,
+        "loss": 0.1325945364224026,
+        "step": 9
+      },
+      {
+        "learning_rate": 0.00012222222222222224,
+        "loss": 0.15932034483194002,
+        "step": 10
+      },
+      {
+        "learning_rate": 0.00011111111111111112,
+        "loss": 0.1382805803041265,
+        "step": 11
+      },
+      {
+        "learning_rate": 0.0001,
+        "loss": 0.052702016168041155,
+        "step": 12
+      },
+      {
+        "learning_rate": 8.888888888888889e-05,
+        "loss": 0.17063923261775926,
+        "step": 13
+      },
+      {
+        "learning_rate": 7.777777777777777e-05,
+        "loss": 0.07371791835976182,
+        "step": 14
+      },
+      {
+        "learning_rate": 6.666666666666668e-05,
+        "loss": 0.13850477738196787,
+        "step": 15
+      },
+      {
+        "learning_rate": 5.555555555555556e-05,
+        "loss": 0.017143562450655736,
+        "step": 16
+      },
+      {
+        "learning_rate": 4.4444444444444447e-05,
+        "loss": 0.01684282402129611,
+        "step": 17
+      },
+      {
+        "learning_rate": 3.333333333333333e-05,
+        "loss": 0.08313578955130652,
+        "step": 18
+      },
+      {
+        "learning_rate": 2.2222222222222233e-05,
+        "loss": 0.1721353508228276,
+        "step": 19
+      },
+      {
+        "learning_rate": 1.1111111111111117e-05,
+        "loss": 0.24765708728227764,
+        "step": 20
+      }
+    ],
+    "minimum_loss": 0.01684282402129611,
+    "steps": 20
+  },
+  "passed": false,
+  "post_sft_validation": {
+    "accuracy": 0.9615384615384616,
+    "exact": 25,
+    "failure_sample_ids": [
+      "synthetic-db1039faf1f1b223cfb5"
+    ],
+    "samples": 26
+  },
+  "pre_registration_revision": "4468606",
+  "schema_version": "nano_train_public_sft_smoke_v2"
+}
