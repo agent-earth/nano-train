@@ -83,6 +83,30 @@ def _arithmetic_constants(expression: str) -> set[str]:
 
 
 def semantic_output_valid(sample: TokenizedSample, output: str) -> bool:
+    if sample.format_family == "reasoning_numeric":
+        verifier = sample.verifier or {}
+        if verifier.get("kind") != "safe_ast_reasoning_numeric_v1":
+            return False
+        match = re.fullmatch(
+            (
+                r"WORK: (.+) = "
+                r"([-+]?(?:[0-9]+(?:\.[0-9]+)?|\.[0-9]+))\n"
+                r"FINAL: ([-+]?(?:[0-9]+(?:\.[0-9]+)?|\.[0-9]+))"
+            ),
+            output.strip(),
+        )
+        if match is None:
+            return False
+        expression, work_result, final_result = match.groups()
+        try:
+            verified = format_number(evaluate_arithmetic(expression))
+        except (SyntaxError, ValueError, ZeroDivisionError, OverflowError):
+            return False
+        return (
+            work_result == final_result
+            and work_result == verifier.get("expected_result")
+            and verified == verifier.get("expected_result")
+        )
     if sample.format_family == "process_trace_numeric":
         verifier = sample.verifier or {}
         steps = verifier.get("steps")

@@ -333,6 +333,46 @@ class TrainTests(unittest.TestCase):
             )
         )
 
+    def test_reasoning_numeric_accepts_safe_equivalent_work(self):
+        sample = TokenizedSample(
+            "reasoning",
+            "validation",
+            [1],
+            [1],
+            [],
+            "WORK: 1 + 12 + 12 * 2 = 37\nFINAL: 37",
+            "reasoning_numeric",
+            {
+                "kind": "safe_ast_reasoning_numeric_v1",
+                "expression": "1 + 12 + 12 * 2",
+                "expected_result": "37",
+            },
+        )
+        self.assertTrue(
+            semantic_output_valid(
+                sample,
+                "WORK: 12 * 2 + 12 + 1 = 37\nFINAL: 37",
+            )
+        )
+        self.assertFalse(
+            semantic_output_valid(
+                sample,
+                "WORK: 12 * 2 + 12 = 36\nFINAL: 36",
+            )
+        )
+        self.assertFalse(
+            semantic_output_valid(
+                sample,
+                "WORK: __import__('os').system('id') = 37\nFINAL: 37",
+            )
+        )
+        self.assertFalse(
+            semantic_output_valid(
+                sample,
+                "WORK: 12 * 2 + 12 + 1 = 37 FINAL: 37",
+            )
+        )
+
     def test_v5_budget_audit_identity_and_contract(self):
         config = load_audit_config(
             Path(

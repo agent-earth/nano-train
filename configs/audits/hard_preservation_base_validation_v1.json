@@ -1,0 +1,14 @@
+{
+  "audit_id": "hard-preservation-base-validation-v1",
+  "dataset_path": "../nano-data-pipeline/datasets/hard_preservation_mix_v5.json",
+  "expected": {
+    "dataset_sha256": "ac07e10f1e04ca8ddec74aefc8df9b00475f7fc9c57345ff98182dd8e4c8bae9",
+    "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670"
+  },
+  "generation_max_new_tokens": 80,
+  "max_length": 192,
+  "model_path": "../../models/Qwen3.5-4B",
+  "output_dir": "artifacts/hard-preservation-base-validation-v1",
+  "schema_version": "nano_train_base_validation_audit_v1",
+  "seed": 20260816
+}
