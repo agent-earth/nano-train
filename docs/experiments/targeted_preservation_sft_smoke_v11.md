@@ -74,3 +74,30 @@ CUDA_VISIBLE_DEVICES=3 PYTHONPATH=. ../.venv/bin/python \
   `9a971cb46a1f5c21164d6117bef40aedfcb7170e9e82604bb7400c942a2be593`;
 - model config SHA256:
   `ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670`.
+
+## Result
+
+V11 passes every frozen local gate:
+
+- aggregate exact / semantic is 23/32 / 26/32;
+- numeric exact / semantic is 9/16 / 12/16;
+- choice is 6/8 and process is 8/8;
+- all 32 losses and all 224 FP32 adapter tensors are finite;
+- early/late five-step loss means are 0.185905 / 0.012403;
+- independent reload reproduces aggregate, family metrics, and failure IDs;
+- peak training memory is 20.18 GiB;
+- zero post outputs reach the 128-token cap.
+
+Relative to v10, three numeric failures and one choice failure are fixed, with
+zero new semantic failures. Because the development split informed the data
+intervention, this supports the diagnosed mechanism but is not independent
+quality evidence.
+
+The exact adapter may proceed only to the sealed 40-case regression canary.
+Passing the canary permits the unchanged adapter to run the full frozen suite;
+it does not establish uplift. Merge, scale-up, and RL remain forbidden.
+
+Public result:
+
+- `docs/results/targeted_preservation_sft_smoke_v11.md`;
+- `docs/results/targeted_preservation_sft_smoke_v11.public.json`.
