@@ -184,6 +184,10 @@ def run_sft_smoke(config: SFTSmokeConfig) -> dict[str, Any]:
     if not torch.cuda.is_available():
         raise RuntimeError("SFT smoke requires one CUDA GPU")
     set_seed(config.seed)
+    dtype = {
+        "float16": torch.float16,
+        "float32": torch.float32,
+    }[config.dtype]
     output_root = Path(config.output_dir)
     adapter_dir = output_root / "adapter"
     output_root.mkdir(parents=True, exist_ok=True)
@@ -211,7 +215,7 @@ def run_sft_smoke(config: SFTSmokeConfig) -> dict[str, Any]:
     model = Qwen3_5ForCausalLM.from_pretrained(
         config.model_path,
         local_files_only=True,
-        dtype=torch.float16,
+        dtype=dtype,
         low_cpu_mem_usage=True,
     ).to(device)
     model.config.use_cache = False
