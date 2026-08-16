@@ -94,3 +94,30 @@ CUDA_VISIBLE_DEVICES=3 PYTHONPATH=. ../.venv/bin/python \
   scripts/validate_sft_adapter.py \
   --config configs/sft/hard_preservation_smoke_v7.json
 ```
+
+## Result
+
+V7 is stable and improves every validation family, but fails the frozen local
+gate:
+
+- aggregate exact / semantic improves from 8/32 to 19/32;
+- numeric improves from 0/16 to 6/16, below the required 10/16;
+- choice improves from 2/8 to 5/8 and reaches its threshold;
+- process improves from 6/8 to 8/8 and reaches its threshold;
+- aggregate semantic is below 24/32 and strict exact is below 22/32;
+- all 20 losses and all 224 FP32 adapter tensors are finite;
+- early/late five-step loss means are 0.197253 / 0.058721;
+- independent reload reproduces aggregate and family metrics;
+- peak training memory is 20.10 GiB;
+- no post-SFT output reaches the 128-token cap.
+
+The 10 remaining numeric failures have wrong final numbers in a non-scoring
+diagnostic, so the gap is semantic rather than a format or truncation artifact.
+
+V7 is rejected. The sealed canary, full suite, merge, scale-up, and RL remain
+forbidden.
+
+Public result:
+
+- `docs/results/hard_preservation_sft_smoke_v7.md`;
+- `docs/results/hard_preservation_sft_smoke_v7.public.json`.
