@@ -14,7 +14,7 @@ from transformers import AutoConfig, AutoTokenizer
 
 from nano_train.config import load_sft_smoke_config
 from nano_train.data import load_analog_dataset, tokenize_samples
-from nano_train.sft import sha256_file
+from nano_train.sft import _batch_order, sha256_file
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -39,12 +39,18 @@ EXPECTED = {
         "dataset_sha256": "d226f243051b7d2d2d4db4d5a596b871032fa44d71b296586f879559a8781c09",
         "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
     },
+    "semantic_arithmetic_smoke_v5.json": {
+        "config_sha256": "89e48fa387851e06a9394253e3bbdc345d7a0e84d963015be67e2ae8183fad38",
+        "dataset_sha256": "d226f243051b7d2d2d4db4d5a596b871032fa44d71b296586f879559a8781c09",
+        "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+    },
 }
 EXPECTED_SPLITS = {
     "format_contract_smoke_v1.json": {"train": 102, "validation": 26},
     "format_contract_smoke_v2.json": {"train": 102, "validation": 26},
     "format_contract_smoke_v3.json": {"train": 128, "validation": 32},
     "semantic_arithmetic_smoke_v4.json": {"train": 160, "validation": 32},
+    "semantic_arithmetic_smoke_v5.json": {"train": 160, "validation": 32},
 }
 
 
@@ -82,6 +88,27 @@ def main() -> None:
     ]
     if min(target_lengths) < 2:
         raise SystemExit("assistant mask contains an empty target")
+    examples_seen = (
+        config.max_steps
+        * config.batch_size
+        * config.gradient_accumulation_steps
+    )
+    train_samples = [sample for sample in samples if sample.split == "train"]
+    order = _batch_order(train_samples, config.seed)
+    visited_indices = [
+        order[index % len(order)] for index in range(examples_seen)
+    ]
+    unique_examples_seen = len(set(visited_indices))
+    if (
+        config_path.name == "semantic_arithmetic_smoke_v5.json"
+        and (
+            examples_seen != counts["train"]
+            or unique_examples_seen != counts["train"]
+        )
+    ):
+        raise SystemExit(
+            "v5 must expose exactly one train-set coverage equivalent"
+        )
 
     model_config = AutoConfig.from_pretrained(model_path, local_files_only=True)
     if model_config.model_type != "qwen3_5":
@@ -124,6 +151,9 @@ def main() -> None:
                 "effective_batch_size": (
                     config.batch_size * config.gradient_accumulation_steps
                 ),
+                "examples_seen": examples_seen,
+                "unique_examples_seen": unique_examples_seen,
+                "training_coverage_equivalents": examples_seen / counts["train"],
                 "lora_targets": sorted(targets),
                 "dependencies": {
                     "torch": torch.__version__,

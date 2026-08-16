@@ -59,7 +59,7 @@ class TrainTests(unittest.TestCase):
                         "seed": 1,
                         "dtype": "float16",
                         "max_length": 128,
-                        "max_steps": 21,
+                        "max_steps": 41,
                         "batch_size": 1,
                         "gradient_accumulation_steps": 1,
                         "learning_rate": 0.001,
@@ -74,7 +74,7 @@ class TrainTests(unittest.TestCase):
                 ),
                 encoding="utf-8",
             )
-            with self.assertRaisesRegex(ValueError, "20 optimizer steps"):
+            with self.assertRaisesRegex(ValueError, "40 optimizer steps"):
                 load_sft_smoke_config(path)
 
     def test_config_accepts_float32_smoke(self):
@@ -115,6 +115,21 @@ class TrainTests(unittest.TestCase):
                 continue
             self.assertEqual(getattr(v3, field), getattr(v4, field), field)
         self.assertEqual(v4.generation_max_new_tokens, 32)
+
+    def test_v5_changes_only_step_count_and_identity(self):
+        v4 = load_sft_smoke_config(
+            "configs/sft/semantic_arithmetic_smoke_v4.json"
+        )
+        v5 = load_sft_smoke_config(
+            "configs/sft/semantic_arithmetic_smoke_v5.json"
+        )
+        excluded = {"experiment_id", "output_dir", "max_steps"}
+        for field in v4.__dataclass_fields__:
+            if field in excluded:
+                continue
+            self.assertEqual(getattr(v4, field), getattr(v5, field), field)
+        self.assertEqual(v4.max_steps, 20)
+        self.assertEqual(v5.max_steps, 40)
 
     def test_tokenize_masks_prompt_and_keeps_assistant(self):
         dataset = {
