@@ -64,6 +64,11 @@ EXPECTED = {
         "dataset_sha256": "ac07e10f1e04ca8ddec74aefc8df9b00475f7fc9c57345ff98182dd8e4c8bae9",
         "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
     },
+    "hard_preservation_smoke_v10.json": {
+        "config_sha256": "49c5d50572bb568235fd25e4ad5882b381facc795e6131196423f829985c8910",
+        "dataset_sha256": "ac07e10f1e04ca8ddec74aefc8df9b00475f7fc9c57345ff98182dd8e4c8bae9",
+        "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+    },
 }
 EXPECTED_SPLITS = {
     "format_contract_smoke_v1.json": {"train": 102, "validation": 26},
@@ -75,6 +80,7 @@ EXPECTED_SPLITS = {
     "hard_preservation_smoke_v7.json": {"train": 160, "validation": 32},
     "hard_preservation_smoke_v8.json": {"train": 160, "validation": 32},
     "hard_preservation_smoke_v9.json": {"train": 160, "validation": 32},
+    "hard_preservation_smoke_v10.json": {"train": 160, "validation": 32},
 }
 
 
@@ -153,6 +159,7 @@ def main() -> None:
         "hard_preservation_smoke_v7.json",
         "hard_preservation_smoke_v8.json",
         "hard_preservation_smoke_v9.json",
+        "hard_preservation_smoke_v10.json",
     }:
         expected_families = {
             "train": {
@@ -180,6 +187,7 @@ def main() -> None:
             "hard_preservation_smoke_v7.json": 80,
             "hard_preservation_smoke_v8.json": 160,
             "hard_preservation_smoke_v9.json": 120,
+            "hard_preservation_smoke_v10.json": 128,
         }[config_path.name]
         if (
             examples_seen != expected_exposure
@@ -208,6 +216,11 @@ def main() -> None:
                 "capability_preservation_choice": 27,
                 "capability_preservation_numeric": 63,
                 "semantic_arithmetic_process": 30,
+            },
+            "hard_preservation_smoke_v10.json": {
+                "capability_preservation_choice": 30,
+                "capability_preservation_numeric": 66,
+                "semantic_arithmetic_process": 32,
             },
         }[config_path.name]
         if (
