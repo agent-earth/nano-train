@@ -44,6 +44,11 @@ EXPECTED = {
         "dataset_sha256": "d226f243051b7d2d2d4db4d5a596b871032fa44d71b296586f879559a8781c09",
         "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
     },
+    "arithmetic_process_smoke_v6.json": {
+        "config_sha256": "f8ab480d0195527b3fe8d98bb49ee377ba444257dcfe203de50c720d06624447",
+        "dataset_sha256": "0e53fb3d05fb60569a4109da05b66d93c1158f734495e0126a55cf195c41653a",
+        "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+    },
 }
 EXPECTED_SPLITS = {
     "format_contract_smoke_v1.json": {"train": 102, "validation": 26},
@@ -51,6 +56,7 @@ EXPECTED_SPLITS = {
     "format_contract_smoke_v3.json": {"train": 128, "validation": 32},
     "semantic_arithmetic_smoke_v4.json": {"train": 160, "validation": 32},
     "semantic_arithmetic_smoke_v5.json": {"train": 160, "validation": 32},
+    "arithmetic_process_smoke_v6.json": {"train": 160, "validation": 32},
 }
 
 
@@ -100,15 +106,31 @@ def main() -> None:
     ]
     unique_examples_seen = len(set(visited_indices))
     if (
-        config_path.name == "semantic_arithmetic_smoke_v5.json"
+        config_path.name
+        in {
+            "semantic_arithmetic_smoke_v5.json",
+            "arithmetic_process_smoke_v6.json",
+        }
         and (
             examples_seen != counts["train"]
             or unique_examples_seen != counts["train"]
         )
     ):
         raise SystemExit(
-            "v5 must expose exactly one train-set coverage equivalent"
+            "full-coverage smoke must expose exactly one train-set equivalent"
         )
+    if config_path.name == "arithmetic_process_smoke_v6.json":
+        if any(
+            sample.format_family != "process_trace_numeric"
+            or (sample.verifier or {}).get("kind")
+            != "safe_ast_arithmetic_process_v2"
+            for sample in samples
+        ):
+            raise SystemExit("v6 requires only verified process trace samples")
+        if max(target_lengths) >= config.generation_max_new_tokens:
+            raise SystemExit(
+                "v6 generation budget must exceed target length including EOS"
+            )
 
     model_config = AutoConfig.from_pretrained(model_path, local_files_only=True)
     if model_config.model_type != "qwen3_5":

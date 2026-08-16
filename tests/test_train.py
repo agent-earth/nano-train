@@ -137,6 +137,27 @@ class TrainTests(unittest.TestCase):
         self.assertEqual(v4.max_steps, 20)
         self.assertEqual(v5.max_steps, 40)
 
+    def test_v6_changes_only_process_objective_fields(self):
+        v5 = load_sft_smoke_config(
+            "configs/sft/semantic_arithmetic_smoke_v5.json"
+        )
+        v6 = load_sft_smoke_config(
+            "configs/sft/arithmetic_process_smoke_v6.json"
+        )
+        excluded = {
+            "experiment_id",
+            "dataset_path",
+            "output_dir",
+            "max_length",
+            "generation_max_new_tokens",
+        }
+        for field in v5.__dataclass_fields__:
+            if field in excluded:
+                continue
+            self.assertEqual(getattr(v5, field), getattr(v6, field), field)
+        self.assertEqual(v6.max_length, 192)
+        self.assertEqual(v6.generation_max_new_tokens, 80)
+
     def test_tokenize_masks_prompt_and_keeps_assistant(self):
         dataset = {
             "samples": [
@@ -245,6 +266,70 @@ class TrainTests(unittest.TestCase):
             semantic_output_valid(
                 sample,
                 "CALC: __import__('os').system('id') = 22\nFINAL: 22",
+            )
+        )
+
+    def test_process_trace_verifies_every_intermediate_step(self):
+        sample = TokenizedSample(
+            "process",
+            "validation",
+            [1],
+            [1],
+            [],
+            (
+                "STEP 1: 5 * 3 = 15\n"
+                "STEP 2: 7 + 15 = 22\n"
+                "FINAL: 22"
+            ),
+            "process_trace_numeric",
+            {
+                "kind": "safe_ast_arithmetic_process_v2",
+                "source_expression": "7 + 5 * 3",
+                "steps": [
+                    {"expression": "5 * 3", "expected_result": "15"},
+                    {"expression": "7 + 15", "expected_result": "22"},
+                ],
+                "expected_result": "22",
+            },
+        )
+        self.assertTrue(
+            semantic_output_valid(
+                sample,
+                (
+                    "STEP 1: (5 * 3) = 15\n"
+                    "STEP 2: (7 + 15) = 22\n"
+                    "FINAL: 22"
+                ),
+            )
+        )
+        self.assertFalse(
+            semantic_output_valid(
+                sample,
+                (
+                    "STEP 1: 5 * 3 = 14\n"
+                    "STEP 2: 7 + 14 = 21\n"
+                    "FINAL: 21"
+                ),
+            )
+        )
+        self.assertFalse(
+            semantic_output_valid(
+                sample,
+                (
+                    "STEP 1: 5 * 3 = 15\n"
+                    "STEP 2: 8 + 14 = 22\n"
+                    "FINAL: 22"
+                ),
+            )
+        )
+        self.assertFalse(
+            semantic_output_valid(
+                sample,
+                (
+                    "STEP 1: __import__('os').system('id') = 15\n"
+                    "STEP 2: 7 + 15 = 22\n"
+                    "FINAL: 22"
+                ),
             )
         )
 
