@@ -88,3 +88,29 @@ CUDA_VISIBLE_DEVICES=3 PYTHONPATH=. ../.venv/bin/python \
   scripts/validate_sft_adapter.py \
   --config configs/sft/arithmetic_process_smoke_v6.json
 ```
+
+## Result
+
+V6 passes every frozen local process-contract gate:
+
+- baseline strict exact / process semantic is 28/32 / 28/32;
+- post-SFT strict exact / process semantic is 32/32 / 32/32;
+- all 40 losses and all 224 FP32 adapter tensors are finite;
+- early and late five-step mean losses are 0.001741121 and 0.000000474;
+- independent reload reproduces both metrics at 32/32;
+- peak training memory is 20.14 GiB;
+- no post-SFT output reaches the 80-token cap.
+
+The mechanism interpretation is limited. Baseline and post-SFT final-answer
+accuracy are both 32/32. All four baseline process failures already have the
+correct numeric `FINAL`; they combine operations or omit a canonical STEP.
+V6 improves process-contract adherence, not final arithmetic accuracy.
+
+This passed local smoke authorizes only frozen matched benchmark evaluation
+with task-level non-regression. It does not authorize an arithmetic-uplift
+claim, merge, scale-up, or RL.
+
+Public result:
+
+- `docs/results/arithmetic_process_sft_smoke_v6.md`;
+- `docs/results/arithmetic_process_sft_smoke_v6.public.json`.
