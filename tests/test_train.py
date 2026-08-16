@@ -9,7 +9,12 @@ from types import SimpleNamespace
 import torch
 
 from nano_train.config import load_sft_smoke_config
-from nano_train.data import TokenizedSample, collate_samples, tokenize_samples
+from nano_train.data import (
+    TokenizedSample,
+    collate_samples,
+    semantic_output_valid,
+    tokenize_samples,
+)
 from nano_train.sft import (
     _assert_finite_gradients,
     _assert_finite_loss,
@@ -92,12 +97,32 @@ class TrainTests(unittest.TestCase):
                 continue
             self.assertEqual(getattr(v2, field), getattr(v3, field), field)
 
+    def test_v4_changes_only_semantic_objective_fields(self):
+        v3 = load_sft_smoke_config(
+            "configs/sft/format_contract_smoke_v3.json"
+        )
+        v4 = load_sft_smoke_config(
+            "configs/sft/semantic_arithmetic_smoke_v4.json"
+        )
+        excluded = {
+            "experiment_id",
+            "dataset_path",
+            "output_dir",
+            "generation_max_new_tokens",
+        }
+        for field in v3.__dataclass_fields__:
+            if field in excluded:
+                continue
+            self.assertEqual(getattr(v3, field), getattr(v4, field), field)
+        self.assertEqual(v4.generation_max_new_tokens, 32)
+
     def test_tokenize_masks_prompt_and_keeps_assistant(self):
         dataset = {
             "samples": [
                 {
                     "sample_id": "synthetic-a",
                     "split": "train",
+                    "format_family": "final_choice",
                     "messages": [
                         {"role": "system", "content": "system"},
                         {"role": "user", "content": "question"},
@@ -113,8 +138,12 @@ class TrainTests(unittest.TestCase):
         self.assertEqual(tokenizer.assertions, (False, True, False))
 
     def test_collator_masks_padding(self):
-        first = TokenizedSample("a", "train", [1, 2], [-100, 2], [1], "x")
-        second = TokenizedSample("b", "train", [3], [3], [], "y")
+        first = TokenizedSample(
+            "a", "train", [1, 2], [-100, 2], [1], "x", "final_numeric", None
+        )
+        second = TokenizedSample(
+            "b", "train", [3], [3], [], "y", "final_numeric", None
+        )
         batch = collate_samples([first, second], pad_token_id=0)
         self.assertEqual(batch["input_ids"].tolist(), [[1, 2], [3, 0]])
         self.assertEqual(batch["labels"].tolist(), [[-100, 2], [3, -100]])
@@ -122,7 +151,16 @@ class TrainTests(unittest.TestCase):
 
     def test_batch_order_and_scheduler_are_deterministic(self):
         samples = [
-            TokenizedSample(str(index), "train", [index], [index], [], str(index))
+            TokenizedSample(
+                str(index),
+                "train",
+                [index],
+                [index],
+                [],
+                str(index),
+                "final_numeric",
+                None,
+            )
             for index in range(8)
         ]
         self.assertEqual(_batch_order(samples, 7), _batch_order(samples, 7))
@@ -154,6 +192,40 @@ class TrainTests(unittest.TestCase):
         self.assertEqual(receipt["stage"], "gradient")
         self.assertFalse(receipt["adapter_saved"])
         self.assertFalse(receipt["post_validation_run"])
+
+    def test_semantic_trace_accepts_equivalent_safe_expression(self):
+        sample = TokenizedSample(
+            "trace",
+            "validation",
+            [1],
+            [1],
+            [],
+            "CALC: 7 + 5 * 3 = 22\nFINAL: 22",
+            "trace_numeric",
+            {
+                "kind": "safe_ast_arithmetic_v1",
+                "expression": "7 + 5 * 3",
+                "expected_result": "22",
+            },
+        )
+        self.assertTrue(
+            semantic_output_valid(
+                sample,
+                "CALC: (5 * 3) + 7 = 22\nFINAL: 22",
+            )
+        )
+        self.assertFalse(
+            semantic_output_valid(
+                sample,
+                "CALC: (5 * 3) + 7 = 21\nFINAL: 21",
+            )
+        )
+        self.assertFalse(
+            semantic_output_valid(
+                sample,
+                "CALC: __import__('os').system('id') = 22\nFINAL: 22",
+            )
+        )
 
 
 if __name__ == "__main__":

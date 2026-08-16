@@ -23,6 +23,7 @@ from nano_train.data import (
     TokenizedSample,
     collate_samples,
     load_analog_dataset,
+    semantic_output_valid,
     tokenize_samples,
 )
 
@@ -104,9 +105,11 @@ def evaluate_exact(
                 "target": sample.target,
                 "output": generated,
                 "exact": generated == sample.target,
+                "semantic_valid": semantic_output_valid(sample, generated),
             }
         )
     exact = sum(row["exact"] for row in rows)
+    semantic_exact = sum(row["semantic_valid"] for row in rows)
     return (
         {
             "samples": len(rows),
@@ -114,6 +117,11 @@ def evaluate_exact(
             "accuracy": exact / len(rows),
             "failure_sample_ids": [
                 row["sample_id"] for row in rows if not row["exact"]
+            ],
+            "semantic_exact": semantic_exact,
+            "semantic_accuracy": semantic_exact / len(rows),
+            "semantic_failure_sample_ids": [
+                row["sample_id"] for row in rows if not row["semantic_valid"]
             ],
         },
         rows,
