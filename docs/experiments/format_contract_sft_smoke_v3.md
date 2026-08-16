@@ -69,3 +69,29 @@ PYTHONPATH=. ../.venv/bin/python scripts/validate_sft_smoke.py \
 CUDA_VISIBLE_DEVICES=3 PYTHONPATH=. ../.venv/bin/python -m nano_train.cli \
   sft-smoke --config configs/sft/format_contract_smoke_v3.json
 ```
+
+## Result
+
+V3 is numerically stable and improves fresh validation, but fails full
+acceptance:
+
+- all 20 optimizer-step losses are finite;
+- baseline exact validation: 13/32;
+- post-SFT exact validation: 20/32;
+- format-valid outputs improve 29/32 to 32/32;
+- early five-step mean loss: 0.428718;
+- late five-step mean loss: 0.222961;
+- 224/224 adapter tensors are finite;
+- independent reload reproduces 20/32;
+- peak training memory: 18.33 GiB.
+
+The loss-mean and numerical-stability gates pass. Exact validation does not
+reach 32/32. Of 12 post-SFT errors, 9 are numeric two-step, 2 are choice
+two-step, and 1 is choice single-step. Every post-SFT output has valid format,
+so the remaining gap is semantic arithmetic rather than contract compliance.
+
+Do not benchmark, merge, scale, or start RL. Stop format-only SFT iteration and
+pre-register a semantic arithmetic objective.
+
+- [`docs/results/format_contract_sft_smoke_v3.md`](../results/format_contract_sft_smoke_v3.md)
+- [`docs/results/format_contract_sft_smoke_v3.public.json`](../results/format_contract_sft_smoke_v3.public.json)
