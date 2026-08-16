@@ -100,3 +100,29 @@ CUDA_VISIBLE_DEVICES=3 PYTHONPATH=. ../.venv/bin/python \
   `181bc26725ff55fbf929cb09ca9484207ef73fcd20780a17c5702755a40ca0bb`;
 - holdout selection receipt SHA256:
   `33239ffc09965981088c7de0af2a98e072e3c02ac9219795dd325b603c990e1d`.
+
+## Result
+
+V12 is stable but fails the frozen local gate:
+
+- aggregate exact / semantic is 21/32 / 25/32;
+- numeric exact / semantic is 8/16 / 12/16;
+- choice is 5/8 and process is 8/8;
+- all 32 losses and all 224 FP32 adapter tensors are finite;
+- early/late five-step loss means are 0.232207 / 0.018025;
+- independent reload reproduces aggregate, family metrics, and failure IDs;
+- peak training memory is 20.18 GiB;
+- zero post outputs reach the 128-token cap.
+
+Relative to v11, numeric semantic stays 12/16 with one fixed and one regressed
+case, choice falls 6/8 to 5/8, aggregate semantic falls 26/32 to 25/32, and
+strict exact falls 23/32 to 21/32. V12 is not a Pareto improvement.
+
+Reject v12 and keep v11 as the current candidate. Do not run the sealed canary,
+prior 211-case suite, or independent holdout. The holdout remains unread: no
+prompts or references were loaded.
+
+Public result:
+
+- `docs/results/failure_targeted_preservation_sft_smoke_v12.md`;
+- `docs/results/failure_targeted_preservation_sft_smoke_v12.public.json`.
