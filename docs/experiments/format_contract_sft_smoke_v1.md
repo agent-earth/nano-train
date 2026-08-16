@@ -88,3 +88,26 @@ PYTHONPATH=. ../.venv/bin/python scripts/validate_sft_smoke.py
 CUDA_VISIBLE_DEVICES=3 PYTHONPATH=. ../.venv/bin/python -m nano_train.cli \
   sft-smoke --config configs/sft/format_contract_smoke_v1.json
 ```
+
+## Result
+
+The v1 smoke fails:
+
+- baseline exact validation: 23/26;
+- step 1 loss: 0.148261;
+- first non-finite loss: step 2;
+- finite steps: 1/20;
+- post-SFT exact validation: 0/26;
+- peak allocated memory: 10.11 GiB.
+
+The v1 runner incorrectly continued after non-finite loss and saved an invalid
+adapter. That adapter is quarantined in ignored local artifacts and must not
+be evaluated, merged, published, or used for RL.
+
+All 224 saved LoRA tensors are FP32 but non-finite, so the exact instability
+source remains unresolved. The runner now requires finite loss, gradients, and
+post-update parameters and writes a failure receipt instead of saving an
+adapter. A separate v2 requires a diagnostic and new pre-registration.
+
+- [`docs/results/format_contract_sft_smoke_v1.md`](../results/format_contract_sft_smoke_v1.md)
+- [`docs/results/format_contract_sft_smoke_v1.public.json`](../results/format_contract_sft_smoke_v1.public.json)

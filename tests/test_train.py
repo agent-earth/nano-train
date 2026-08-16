@@ -6,9 +6,18 @@ import unittest
 from pathlib import Path
 from types import SimpleNamespace
 
+import torch
+
 from nano_train.config import load_sft_smoke_config
 from nano_train.data import TokenizedSample, collate_samples, tokenize_samples
-from nano_train.sft import _batch_order, _scheduler_scale
+from nano_train.sft import (
+    _assert_finite_gradients,
+    _assert_finite_loss,
+    _assert_finite_parameters,
+    _batch_order,
+    _scheduler_scale,
+    _write_failure,
+)
 
 
 class FakeTokenizer:
@@ -101,6 +110,30 @@ class TrainTests(unittest.TestCase):
         self.assertEqual(_scheduler_scale(0, 2, 20), 0.5)
         self.assertEqual(_scheduler_scale(1, 2, 20), 1.0)
         self.assertGreater(_scheduler_scale(2, 2, 20), _scheduler_scale(19, 2, 20))
+
+    def test_nonfinite_guards_and_failure_receipt(self):
+        parameter = torch.nn.Parameter(torch.tensor([1.0]))
+        parameter.grad = torch.tensor([float("nan")])
+        with self.assertRaisesRegex(FloatingPointError, "gradients"):
+            _assert_finite_gradients([parameter], step=2)
+        with self.assertRaisesRegex(FloatingPointError, "loss"):
+            _assert_finite_loss(torch.tensor(float("nan")), step=2)
+        parameter.data.fill_(float("inf"))
+        with self.assertRaisesRegex(FloatingPointError, "parameters"):
+            _assert_finite_parameters([parameter], step=2)
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _write_failure(
+                root,
+                step=2,
+                stage="gradient",
+                error=FloatingPointError("bad gradient"),
+            )
+            receipt = json.loads((root / "failure.json").read_text())
+        self.assertEqual(receipt["optimizer_step"], 2)
+        self.assertEqual(receipt["stage"], "gradient")
+        self.assertFalse(receipt["adapter_saved"])
+        self.assertFalse(receipt["post_validation_run"])
 
 
 if __name__ == "__main__":

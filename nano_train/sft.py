@@ -127,6 +127,59 @@ def _scheduler_scale(step: int, warmup_steps: int, max_steps: int) -> float:
     return max(0.0, 1.0 - progress)
 
 
+def _trainable_parameters(model: Any):
+    return [parameter for parameter in model.parameters() if parameter.requires_grad]
+
+
+def _assert_finite_loss(loss: torch.Tensor, *, step: int) -> None:
+    if not torch.isfinite(loss.detach()):
+        raise FloatingPointError(f"non-finite loss at optimizer step {step}")
+
+
+def _assert_finite_gradients(parameters: list[torch.nn.Parameter], *, step: int) -> None:
+    bad = sum(
+        parameter.grad is not None
+        and not bool(torch.isfinite(parameter.grad).all())
+        for parameter in parameters
+    )
+    if bad:
+        raise FloatingPointError(
+            f"non-finite gradients in {bad} tensors at optimizer step {step}"
+        )
+
+
+def _assert_finite_parameters(
+    parameters: list[torch.nn.Parameter],
+    *,
+    step: int,
+) -> None:
+    bad = sum(not bool(torch.isfinite(parameter).all()) for parameter in parameters)
+    if bad:
+        raise FloatingPointError(
+            f"non-finite trainable parameters in {bad} tensors after step {step}"
+        )
+
+
+def _write_failure(output_root: Path, *, step: int, stage: str, error: Exception) -> None:
+    (output_root / "failure.json").write_text(
+        json.dumps(
+            {
+                "schema_version": "nano_train_failure_v1",
+                "optimizer_step": step,
+                "stage": stage,
+                "error_type": type(error).__name__,
+                "error": str(error),
+                "adapter_saved": False,
+                "post_validation_run": False,
+            },
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+
 def run_sft_smoke(config: SFTSmokeConfig) -> dict[str, Any]:
     if not torch.cuda.is_available():
         raise RuntimeError("SFT smoke requires one CUDA GPU")
@@ -187,12 +240,15 @@ def run_sft_smoke(config: SFTSmokeConfig) -> dict[str, Any]:
         (parameter for parameter in model.parameters() if parameter.requires_grad),
         lr=config.learning_rate,
         weight_decay=config.weight_decay,
+        eps=1e-6,
     )
+    trainable = _trainable_parameters(model)
     order = _batch_order(train, config.seed)
     losses = []
     optimizer.zero_grad(set_to_none=True)
     model.train()
     for step in range(config.max_steps):
+        optimizer_step = step + 1
         batch_indices = [
             order[
                 (
@@ -220,6 +276,16 @@ def run_sft_smoke(config: SFTSmokeConfig) -> dict[str, Any]:
                 ).items()
             }
             outputs = model(**batch, use_cache=False)
+            try:
+                _assert_finite_loss(outputs.loss, step=optimizer_step)
+            except FloatingPointError as error:
+                _write_failure(
+                    output_root,
+                    step=optimizer_step,
+                    stage="forward_loss",
+                    error=error,
+                )
+                raise
             loss = outputs.loss / config.gradient_accumulation_steps
             loss.backward()
             step_losses.append(float(outputs.loss.detach().cpu()))
@@ -230,11 +296,32 @@ def run_sft_smoke(config: SFTSmokeConfig) -> dict[str, Any]:
         )
         for group in optimizer.param_groups:
             group["lr"] = config.learning_rate * lr_scale
-        torch.nn.utils.clip_grad_norm_(
-            (parameter for parameter in model.parameters() if parameter.requires_grad),
-            max_norm=1.0,
-        )
+        try:
+            _assert_finite_gradients(trainable, step=optimizer_step)
+            torch.nn.utils.clip_grad_norm_(
+                trainable,
+                max_norm=1.0,
+                error_if_nonfinite=True,
+            )
+        except (FloatingPointError, RuntimeError) as error:
+            _write_failure(
+                output_root,
+                step=optimizer_step,
+                stage="gradient",
+                error=error,
+            )
+            raise
         optimizer.step()
+        try:
+            _assert_finite_parameters(trainable, step=optimizer_step)
+        except FloatingPointError as error:
+            _write_failure(
+                output_root,
+                step=optimizer_step,
+                stage="optimizer_step",
+                error=error,
+            )
+            raise
         optimizer.zero_grad(set_to_none=True)
         losses.append(
             {
