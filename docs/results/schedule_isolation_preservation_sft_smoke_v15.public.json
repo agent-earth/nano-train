@@ -1,0 +1,301 @@
+{
+  "adapter_validation": {
+    "nonfinite_tensors": 0,
+    "reload_matches": true,
+    "reload_peak_allocated_gib": 15.810230731964111,
+    "reload_success": true,
+    "tensor_count": 224
+  },
+  "artifacts": {
+    "adapter_sha256": "d7ed4de2d613de424c6240148703e5656e73c5a323ad59f930d8c9cb8972b660",
+    "generations_sha256": "858551be0115b3df4337cfab79842b534bffb43ea209c5a21855b6f918540a39",
+    "metrics_sha256": "209bf207ff7b98f7f3a5b97a08e737616ddd93ace640b78b438cf91e889ac097",
+    "reload_validation_sha256": "aba4ed297ece771729f10212e15a3634aaf874bce2e977310e906e3cdfa4f761"
+  },
+  "baseline_validation": {
+    "accuracy": 0.25,
+    "by_family": {
+      "capability_preservation_choice": {
+        "exact": 2,
+        "exact_failure_sample_ids": [
+          "synthetic-0e85915fc657932c5e67",
+          "synthetic-131282e9564acfa56afc",
+          "synthetic-1a7b299fb729cd67bd71",
+          "synthetic-8d42bc65194f32bcdd8e",
+          "synthetic-cb1b63a543f33dcb72fe",
+          "synthetic-d3902d28ebf8554f0c6a"
+        ],
+        "samples": 8,
+        "semantic_exact": 2,
+        "semantic_failure_sample_ids": [
+          "synthetic-0e85915fc657932c5e67",
+          "synthetic-131282e9564acfa56afc",
+          "synthetic-1a7b299fb729cd67bd71",
+          "synthetic-8d42bc65194f32bcdd8e",
+          "synthetic-cb1b63a543f33dcb72fe",
+          "synthetic-d3902d28ebf8554f0c6a"
+        ]
+      },
+      "capability_preservation_numeric": {
+        "exact": 0,
+        "exact_failure_sample_ids": [
+          "synthetic-0709234d9cb212370701",
+          "synthetic-33e0eb52e48e0c3d5634",
+          "synthetic-3c3b215d2977ecf9e2db",
+          "synthetic-3d1e1bb4aabc306febd9",
+          "synthetic-4e05b5f9c88b88acf4b2",
+          "synthetic-6acb64d64d214f6dc7a2",
+          "synthetic-6ff963588953d733c5a3",
+          "synthetic-806ef83ba2912d38c746",
+          "synthetic-926e2a5acdb5db04b881",
+          "synthetic-935daa9738c039fcbb0f",
+          "synthetic-ace9ddd7bfd07e20ce96",
+          "synthetic-b84be4098f2c5fba218a",
+          "synthetic-c3daf536f8bd333e8555",
+          "synthetic-cea6bc124f10a7665e68",
+          "synthetic-ded38e17d41cc5a613da",
+          "synthetic-ffba3e636d5c7eb11e9c"
+        ],
+        "samples": 16,
+        "semantic_exact": 0,
+        "semantic_failure_sample_ids": [
+          "synthetic-0709234d9cb212370701",
+          "synthetic-33e0eb52e48e0c3d5634",
+          "synthetic-3c3b215d2977ecf9e2db",
+          "synthetic-3d1e1bb4aabc306febd9",
+          "synthetic-4e05b5f9c88b88acf4b2",
+          "synthetic-6acb64d64d214f6dc7a2",
+          "synthetic-6ff963588953d733c5a3",
+          "synthetic-806ef83ba2912d38c746",
+          "synthetic-926e2a5acdb5db04b881",
+          "synthetic-935daa9738c039fcbb0f",
+          "synthetic-ace9ddd7bfd07e20ce96",
+          "synthetic-b84be4098f2c5fba218a",
+          "synthetic-c3daf536f8bd333e8555",
+          "synthetic-cea6bc124f10a7665e68",
+          "synthetic-ded38e17d41cc5a613da",
+          "synthetic-ffba3e636d5c7eb11e9c"
+        ]
+      },
+      "semantic_arithmetic_process": {
+        "exact": 6,
+        "exact_failure_sample_ids": [
+          "synthetic-744ddaafd028c5f0db87",
+          "synthetic-c26d5d53c869fc6169eb"
+        ],
+        "samples": 8,
+        "semantic_exact": 6,
+        "semantic_failure_sample_ids": [
+          "synthetic-744ddaafd028c5f0db87",
+          "synthetic-c26d5d53c869fc6169eb"
+        ]
+      }
+    },
+    "exact": 8,
+    "failure_sample_ids": [
+      "synthetic-0709234d9cb212370701",
+      "synthetic-0e85915fc657932c5e67",
+      "synthetic-131282e9564acfa56afc",
+      "synthetic-1a7b299fb729cd67bd71",
+      "synthetic-33e0eb52e48e0c3d5634",
+      "synthetic-3c3b215d2977ecf9e2db",
+      "synthetic-3d1e1bb4aabc306febd9",
+      "synthetic-4e05b5f9c88b88acf4b2",
+      "synthetic-6acb64d64d214f6dc7a2",
+      "synthetic-6ff963588953d733c5a3",
+      "synthetic-744ddaafd028c5f0db87",
+      "synthetic-806ef83ba2912d38c746",
+      "synthetic-8d42bc65194f32bcdd8e",
+      "synthetic-926e2a5acdb5db04b881",
+      "synthetic-935daa9738c039fcbb0f",
+      "synthetic-ace9ddd7bfd07e20ce96",
+      "synthetic-b84be4098f2c5fba218a",
+      "synthetic-c26d5d53c869fc6169eb",
+      "synthetic-c3daf536f8bd333e8555",
+      "synthetic-cb1b63a543f33dcb72fe",
+      "synthetic-cea6bc124f10a7665e68",
+      "synthetic-d3902d28ebf8554f0c6a",
+      "synthetic-ded38e17d41cc5a613da",
+      "synthetic-ffba3e636d5c7eb11e9c"
+    ],
+    "samples": 32,
+    "semantic_accuracy": 0.25,
+    "semantic_exact": 8,
+    "semantic_failure_sample_ids": [
+      "synthetic-0709234d9cb212370701",
+      "synthetic-0e85915fc657932c5e67",
+      "synthetic-131282e9564acfa56afc",
+      "synthetic-1a7b299fb729cd67bd71",
+      "synthetic-33e0eb52e48e0c3d5634",
+      "synthetic-3c3b215d2977ecf9e2db",
+      "synthetic-3d1e1bb4aabc306febd9",
+      "synthetic-4e05b5f9c88b88acf4b2",
+      "synthetic-6acb64d64d214f6dc7a2",
+      "synthetic-6ff963588953d733c5a3",
+      "synthetic-744ddaafd028c5f0db87",
+      "synthetic-806ef83ba2912d38c746",
+      "synthetic-8d42bc65194f32bcdd8e",
+      "synthetic-926e2a5acdb5db04b881",
+      "synthetic-935daa9738c039fcbb0f",
+      "synthetic-ace9ddd7bfd07e20ce96",
+      "synthetic-b84be4098f2c5fba218a",
+      "synthetic-c26d5d53c869fc6169eb",
+      "synthetic-c3daf536f8bd333e8555",
+      "synthetic-cb1b63a543f33dcb72fe",
+      "synthetic-cea6bc124f10a7665e68",
+      "synthetic-d3902d28ebf8554f0c6a",
+      "synthetic-ded38e17d41cc5a613da",
+      "synthetic-ffba3e636d5c7eb11e9c"
+    ]
+  },
+  "configuration": {
+    "dtype": "float32",
+    "effective_batch_size": 4,
+    "examples_seen": 128,
+    "generation_max_new_tokens": 128,
+    "max_steps": 32,
+    "schedule_examples_seen": 7
+  },
+  "data_revision": "890b576",
+  "decision": {
+    "accepted_local_smoke": false,
+    "aggregate_semantic_at_least_24": true,
+    "independent_holdout_allowed": false,
+    "merge_allowed": false,
+    "next_action": "Preserve v11 and the v15 semantic signal. Close data-family expansion; design a method-level preservation intervention such as loss weighting, adapter composition, or staged training before another smoke.",
+    "rl_allowed": false,
+    "scale_allowed": false,
+    "sealed_canary_allowed": false,
+    "strict_exact_at_least_22": false
+  },
+  "evaluation_boundary": {
+    "independent_holdout_prompts_loaded": false,
+    "independent_holdout_references_loaded": false,
+    "independent_holdout_run": false,
+    "prior_full_suite_run": false,
+    "sealed_canary_run": false
+  },
+  "experiment_id": "schedule-isolation-preservation-sft-smoke-v15",
+  "identity": {
+    "adapter_sha256": "d7ed4de2d613de424c6240148703e5656e73c5a323ad59f930d8c9cb8972b660",
+    "config_sha256": "413cff6c370c69a9ef6ac9d4ebef32bf3f695ecd14f02c9f105da2893f63230d",
+    "dataset_sha256": "2bb712de519149d776b1c346466ee49d20017f1065aa3d1b44ae59eb6f5b973a",
+    "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670"
+  },
+  "mechanism": {
+    "data_family_matrix_complete": true,
+    "isolated_family": "weighted_recurring_schedule_total",
+    "result": "capability_gain_with_contract_interference",
+    "semantic_gain": true,
+    "strict_and_choice_preservation_failed": true
+  },
+  "optimization": {
+    "all_losses_finite": true,
+    "early_five_step_mean": 0.20444080251036212,
+    "failure_receipt_exists": false,
+    "late_five_step_mean": 0.021413675631356453,
+    "peak_allocated_gib": 20.176533699035645,
+    "steps": 32
+  },
+  "passed": false,
+  "post_sft_validation": {
+    "accuracy": 0.65625,
+    "by_family": {
+      "capability_preservation_choice": {
+        "exact": 5,
+        "exact_failure_sample_ids": [
+          "synthetic-1a7b299fb729cd67bd71",
+          "synthetic-cb1b63a543f33dcb72fe",
+          "synthetic-d3902d28ebf8554f0c6a"
+        ],
+        "samples": 8,
+        "semantic_exact": 5,
+        "semantic_failure_sample_ids": [
+          "synthetic-1a7b299fb729cd67bd71",
+          "synthetic-cb1b63a543f33dcb72fe",
+          "synthetic-d3902d28ebf8554f0c6a"
+        ]
+      },
+      "capability_preservation_numeric": {
+        "exact": 8,
+        "exact_failure_sample_ids": [
+          "synthetic-33e0eb52e48e0c3d5634",
+          "synthetic-3c3b215d2977ecf9e2db",
+          "synthetic-3d1e1bb4aabc306febd9",
+          "synthetic-6ff963588953d733c5a3",
+          "synthetic-926e2a5acdb5db04b881",
+          "synthetic-b84be4098f2c5fba218a",
+          "synthetic-c3daf536f8bd333e8555",
+          "synthetic-ded38e17d41cc5a613da"
+        ],
+        "samples": 16,
+        "semantic_exact": 15,
+        "semantic_failure_sample_ids": [
+          "synthetic-6ff963588953d733c5a3"
+        ]
+      },
+      "semantic_arithmetic_process": {
+        "exact": 8,
+        "exact_failure_sample_ids": [],
+        "samples": 8,
+        "semantic_exact": 8,
+        "semantic_failure_sample_ids": []
+      }
+    },
+    "exact": 21,
+    "failure_sample_ids": [
+      "synthetic-1a7b299fb729cd67bd71",
+      "synthetic-33e0eb52e48e0c3d5634",
+      "synthetic-3c3b215d2977ecf9e2db",
+      "synthetic-3d1e1bb4aabc306febd9",
+      "synthetic-6ff963588953d733c5a3",
+      "synthetic-926e2a5acdb5db04b881",
+      "synthetic-b84be4098f2c5fba218a",
+      "synthetic-c3daf536f8bd333e8555",
+      "synthetic-cb1b63a543f33dcb72fe",
+      "synthetic-d3902d28ebf8554f0c6a",
+      "synthetic-ded38e17d41cc5a613da"
+    ],
+    "samples": 32,
+    "semantic_accuracy": 0.875,
+    "semantic_exact": 28,
+    "semantic_failure_sample_ids": [
+      "synthetic-1a7b299fb729cd67bd71",
+      "synthetic-6ff963588953d733c5a3",
+      "synthetic-cb1b63a543f33dcb72fe",
+      "synthetic-d3902d28ebf8554f0c6a"
+    ]
+  },
+  "pre_registration_revision": "85d7435",
+  "schema_version": "nano_train_public_sft_smoke_v15",
+  "versus_v11": {
+    "aggregate_exact_delta": -2,
+    "aggregate_semantic_delta": 2,
+    "family_deltas": {
+      "capability_preservation_choice": {
+        "fixed_sample_ids": [],
+        "regressed_sample_ids": [
+          "synthetic-d3902d28ebf8554f0c6a"
+        ],
+        "semantic_delta": -1,
+        "strict_delta": -1
+      },
+      "capability_preservation_numeric": {
+        "fixed_sample_ids": [
+          "synthetic-33e0eb52e48e0c3d5634",
+          "synthetic-c3daf536f8bd333e8555",
+          "synthetic-ded38e17d41cc5a613da"
+        ],
+        "regressed_sample_ids": [],
+        "semantic_delta": 3,
+        "strict_delta": -1
+      },
+      "semantic_arithmetic_process": {
+        "fixed_sample_ids": [],
+        "regressed_sample_ids": [],
+        "semantic_delta": 0,
+        "strict_delta": 0
+      }
+    }
+  }
+}
