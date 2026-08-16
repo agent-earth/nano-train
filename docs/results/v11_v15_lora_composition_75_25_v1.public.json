@@ -1,0 +1,72 @@
+{
+  "adapter": {
+    "adapter_tree_sha256": "eda64b55fce83f71c464583eab09dad80911a991c605c6bb6502975283700c8b",
+    "max_block_error": 0.0,
+    "module_pairs": 112,
+    "representation": "rank16_block_concatenation",
+    "target_alpha": 16,
+    "target_rank": 16,
+    "tensor_count": 224,
+    "weights_sha256": "dc59cdd8323810e23916129b2fcf83c4c4b3e1fffaadf5977c7f2d9e02a657dd"
+  },
+  "artifacts": {
+    "composition_receipt_sha256": "758e5c32a10f0720811b231ac985738a9174baabd6188a3929a76e725dfe962f",
+    "config_sha256": "7d86536f5d087050746f7fc0b732ef638dcff744ba9d92b70c54627ce2a2fb37",
+    "evaluation_reload_sha256": "85adc347c63cfb6350c49788572d89b0bd1d02141db737c440bf9a59848662a5",
+    "evaluation_sha256": "85adc347c63cfb6350c49788572d89b0bd1d02141db737c440bf9a59848662a5"
+  },
+  "decision": {
+    "accepted_local_smoke": false,
+    "adapter_weight_search_allowed": false,
+    "independent_holdout_allowed": false,
+    "merge_allowed": false,
+    "next_action": "Preserve v11. Use an explicitly pre-registered objective- or stage-level preservation method rather than further data-family or adapter-weight search.",
+    "prior_full_suite_allowed": false,
+    "rl_allowed": false,
+    "scale_allowed": false,
+    "sealed_canary_allowed": false
+  },
+  "determinism": {
+    "generations_match": true,
+    "metrics_match": true,
+    "two_evaluations_byte_identical": true
+  },
+  "evaluation_boundary": {
+    "independent_holdout_prompts_loaded": false,
+    "independent_holdout_references_loaded": false,
+    "independent_holdout_run": false,
+    "prior_full_suite_run": false,
+    "sealed_canary_run": false
+  },
+  "experiment_id": "v11-v15-exact-lora-composition-75-25-v1",
+  "formula": "0.75 * delta_v11 + 0.25 * delta_v15",
+  "passed": false,
+  "pre_registration_revision": "410ce93",
+  "source": {
+    "capability_adapter_tree_sha256": "d7ed4de2d613de424c6240148703e5656e73c5a323ad59f930d8c9cb8972b660",
+    "preservation_adapter_tree_sha256": "87248908918b06c2d28ff68efd4f0b1ff92ca8bf8b7588e1c7e81a85eb7da852"
+  },
+  "validation": {
+    "by_family": {
+      "capability_preservation_choice": {
+        "exact": 5,
+        "samples": 8,
+        "semantic_exact": 5
+      },
+      "capability_preservation_numeric": {
+        "exact": 8,
+        "samples": 16,
+        "semantic_exact": 14
+      },
+      "semantic_arithmetic_process": {
+        "exact": 8,
+        "samples": 8,
+        "semantic_exact": 8
+      }
+    },
+    "exact": 21,
+    "peak_allocated_gib": 15.847340106964111,
+    "samples": 32,
+    "semantic_exact": 27
+  }
+}
