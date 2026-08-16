@@ -69,3 +69,36 @@ CUDA_VISIBLE_DEVICES=3 PYTHONPATH=. ../.venv/bin/python \
   scripts/validate_sft_adapter.py \
   --config configs/sft/semantic_arithmetic_smoke_v5.json
 ```
+
+## Result
+
+V5 is numerically stable but fails the frozen acceptance thresholds:
+
+- baseline strict exact / semantic valid is 3/32 / 4/32;
+- post-SFT strict exact / semantic valid is 12/32 / 12/32;
+- all 40 losses and all 224 FP32 adapter tensors are finite;
+- early and late five-step mean losses are 0.124293 and 0.096740;
+- independent reload reproduces strict exact and semantic valid at 12/32;
+- peak training memory is 18.65 GiB.
+
+The post-SFT taxonomy is 12 semantic-valid, 13 CALC/FINAL mismatch, 6
+execution mismatch, and 1 invalid trace. Relative to v4, three execution
+mismatches become valid while one valid case regresses. All 13 CALC/FINAL
+mismatches remain.
+
+An audit after the frozen run found that the 32-token generation budget is
+shorter than the target contract: target content reaches 37 tokens, 69/160
+train and 14/32 validation targets exceed the cap, and all 13 CALC/FINAL
+mismatch cases have over-cap canonical targets. This does not alter the
+official v5 result. Six execution mismatches remain independent of this
+truncation confounder.
+
+The adapter is rejected. Benchmark evaluation, merge, scale-up, and RL remain
+unauthorized. Preserve v5 as negative evidence and separately pre-register an
+evaluation-only audit of this unchanged adapter with a sufficient generation
+budget before another training intervention.
+
+Public result:
+
+- `docs/results/semantic_arithmetic_sft_smoke_v5.md`;
+- `docs/results/semantic_arithmetic_sft_smoke_v5.public.json`.
