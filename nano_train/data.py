@@ -22,6 +22,7 @@ class TokenizedSample:
     target: str
     format_family: str
     verifier: dict[str, Any] | None
+    task_family: str = ""
 
 
 OPERATORS = {
@@ -262,6 +263,7 @@ def tokenize_samples(
                 target=target,
                 format_family=str(sample["format_family"]),
                 verifier=sample.get("verifier"),
+                task_family=str(sample.get("task_family", "")),
             )
         )
     return result

@@ -23,6 +23,7 @@ from nano_train.sft import (
     _batch_order,
     _scheduler_scale,
     _write_failure,
+    evaluate_exact,
 )
 from scripts.run_generation_budget_audit import (
     load_config as load_audit_config,
@@ -158,6 +159,27 @@ class TrainTests(unittest.TestCase):
         self.assertEqual(v6.max_length, 192)
         self.assertEqual(v6.generation_max_new_tokens, 80)
 
+    def test_v7_changes_only_mixed_safety_intervention_fields(self):
+        v6 = load_sft_smoke_config(
+            "configs/sft/arithmetic_process_smoke_v6.json"
+        )
+        v7 = load_sft_smoke_config(
+            "configs/sft/hard_preservation_smoke_v7.json"
+        )
+        excluded = {
+            "experiment_id",
+            "dataset_path",
+            "output_dir",
+            "generation_max_new_tokens",
+            "max_steps",
+        }
+        for field in v6.__dataclass_fields__:
+            if field in excluded:
+                continue
+            self.assertEqual(getattr(v6, field), getattr(v7, field), field)
+        self.assertEqual(v7.max_steps, 20)
+        self.assertEqual(v7.generation_max_new_tokens, 128)
+
     def test_tokenize_masks_prompt_and_keeps_assistant(self):
         dataset = {
             "samples": [
@@ -178,6 +200,82 @@ class TrainTests(unittest.TestCase):
         self.assertTrue(all(value == -100 for value in sample.labels[: len(sample.prompt_ids)]))
         self.assertTrue(all(value != -100 for value in sample.labels[len(sample.prompt_ids) :]))
         self.assertEqual(tokenizer.assertions, (False, True, False))
+        self.assertEqual(sample.task_family, "")
+
+    def test_evaluate_exact_reports_family_metrics(self):
+        class FakeModel:
+            def eval(self):
+                return None
+
+            def generate(self, *, input_ids, **kwargs):
+                return torch.cat(
+                    [input_ids, torch.tensor([[9]], device=input_ids.device)],
+                    dim=1,
+                )
+
+        class DecodeTokenizer:
+            eos_token_id = 2
+            pad_token_id = 0
+
+            def decode(self, token_ids, *, skip_special_tokens):
+                return "ok"
+
+        samples = [
+            TokenizedSample(
+                "a",
+                "validation",
+                [1, 9],
+                [-100, 9],
+                [1],
+                "ok",
+                "final_numeric",
+                None,
+                "family_a",
+            ),
+            TokenizedSample(
+                "b",
+                "validation",
+                [1, 9],
+                [-100, 9],
+                [1],
+                "ok",
+                "final_numeric",
+                None,
+                "family_b",
+            ),
+        ]
+        metrics, rows = evaluate_exact(
+            FakeModel(),
+            DecodeTokenizer(),
+            samples,
+            device=torch.device("cpu"),
+            max_new_tokens=1,
+        )
+        self.assertEqual(metrics["exact"], 2)
+        self.assertEqual(metrics["semantic_exact"], 2)
+        self.assertEqual(
+            metrics["by_family"],
+            {
+                "family_a": {
+                    "samples": 1,
+                    "exact": 1,
+                    "semantic_exact": 1,
+                    "exact_failure_sample_ids": [],
+                    "semantic_failure_sample_ids": [],
+                },
+                "family_b": {
+                    "samples": 1,
+                    "exact": 1,
+                    "semantic_exact": 1,
+                    "exact_failure_sample_ids": [],
+                    "semantic_failure_sample_ids": [],
+                },
+            },
+        )
+        self.assertEqual(
+            [row["task_family"] for row in rows],
+            ["family_a", "family_b"],
+        )
 
     def test_collator_masks_padding(self):
         first = TokenizedSample(
