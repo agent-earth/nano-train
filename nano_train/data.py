@@ -65,7 +65,91 @@ def format_number(value: int | float) -> str:
     return str(int(number)) if number.is_integer() else format(number, ".12g")
 
 
+def _arithmetic_structure(expression: str) -> str:
+    tree = ast.parse(expression, mode="eval")
+    evaluate_arithmetic(expression)
+    return ast.dump(tree, annotate_fields=True, include_attributes=False)
+
+
+def _arithmetic_constants(expression: str) -> set[str]:
+    tree = ast.parse(expression, mode="eval")
+    evaluate_arithmetic(expression)
+    return {
+        format_number(node.value)
+        for node in ast.walk(tree)
+        if isinstance(node, ast.Constant)
+        and type(node.value) in {int, float}
+    }
+
+
 def semantic_output_valid(sample: TokenizedSample, output: str) -> bool:
+    if sample.format_family == "process_trace_numeric":
+        verifier = sample.verifier or {}
+        steps = verifier.get("steps")
+        if (
+            verifier.get("kind") != "safe_ast_arithmetic_process_v2"
+            or not isinstance(steps, list)
+            or len(steps) not in {2, 3}
+        ):
+            return False
+        lines = output.strip().splitlines()
+        if len(lines) != len(steps) + 1:
+            return False
+        previous_result = None
+        try:
+            for index, (line, expected_step) in enumerate(
+                zip(lines[:-1], steps),
+                start=1,
+            ):
+                match = re.fullmatch(
+                    (
+                        rf"STEP {index}: (.+) = "
+                        r"([-+]?(?:[0-9]+(?:\.[0-9]+)?|\.[0-9]+))"
+                    ),
+                    line,
+                )
+                if match is None:
+                    return False
+                expression, result = match.groups()
+                verified = format_number(evaluate_arithmetic(expression))
+                if (
+                    _arithmetic_structure(expression)
+                    != _arithmetic_structure(expected_step["expression"])
+                    or result != expected_step["expected_result"]
+                    or verified != expected_step["expected_result"]
+                ):
+                    return False
+                if (
+                    previous_result is not None
+                    and previous_result not in _arithmetic_constants(expression)
+                ):
+                    return False
+                previous_result = result
+            final_match = re.fullmatch(
+                (
+                    r"FINAL: "
+                    r"([-+]?(?:[0-9]+(?:\.[0-9]+)?|\.[0-9]+))"
+                ),
+                lines[-1],
+            )
+            source_result = format_number(
+                evaluate_arithmetic(verifier["source_expression"])
+            )
+        except (
+            KeyError,
+            SyntaxError,
+            TypeError,
+            ValueError,
+            ZeroDivisionError,
+            OverflowError,
+        ):
+            return False
+        return (
+            final_match is not None
+            and previous_result == verifier.get("expected_result")
+            and final_match.group(1) == verifier.get("expected_result")
+            and source_result == verifier.get("expected_result")
+        )
     if sample.format_family != "trace_numeric":
         return output.strip() == sample.target
     verifier = sample.verifier or {}
