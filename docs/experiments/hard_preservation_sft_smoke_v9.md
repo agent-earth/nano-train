@@ -53,3 +53,32 @@ CUDA_VISIBLE_DEVICES=3 PYTHONPATH=. ../.venv/bin/python \
   scripts/validate_sft_adapter.py \
   --config configs/sft/hard_preservation_smoke_v9.json
 ```
+
+## Result
+
+V9 is stable and is the best aggregate dose tested, but fails the unchanged
+local gate:
+
+- aggregate exact / semantic is 22/32 / 22/32;
+- numeric is 9/16, below required 10/16;
+- choice is 5/8 and process is 8/8;
+- all 30 losses and all 224 FP32 adapter tensors are finite;
+- early/late five-step loss means are 0.197262 / 0.049462;
+- independent reload reproduces aggregate and family metrics;
+- peak training memory is 20.17 GiB;
+- zero post outputs reach the 128-token cap.
+
+The dose curve is:
+
+- v7 20 steps: aggregate 19, numeric 6, choice 5, process 8;
+- v9 30 steps: aggregate 22, numeric 9, choice 5, process 8;
+- v8 40 steps: aggregate 21, numeric 9, choice 4, process 8.
+
+Do not run the sealed canary, full suite, merge, scale-up, or RL. A later
+interpolation may change only `max_steps` to 32 while retaining all data and
+gates.
+
+Public result:
+
+- `docs/results/hard_preservation_sft_smoke_v9.md`;
+- `docs/results/hard_preservation_sft_smoke_v9.public.json`.
