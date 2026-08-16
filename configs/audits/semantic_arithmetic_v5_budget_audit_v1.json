@@ -1,0 +1,25 @@
+{
+  "adapter_path": "artifacts/semantic-arithmetic-sft-smoke-v5/adapter",
+  "audit_id": "semantic-arithmetic-v5-budget-audit-v1",
+  "dataset_path": "../nano-data-pipeline/datasets/verified_semantic_arithmetic_traces_v3.json",
+  "expected": {
+    "adapter_tree_sha256": "7ecb48dad68b0a7499baefcfeb587ce72ecf85df60a8a7c338c25b3d464f3421",
+    "dataset_sha256": "d226f243051b7d2d2d4db4d5a596b871032fa44d71b296586f879559a8781c09",
+    "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+    "source_config_sha256": "89e48fa387851e06a9394253e3bbdc345d7a0e84d963015be67e2ae8183fad38",
+    "source_generations_sha256": "6210f9ee7cb8a03377dc6588c82f3c79012d6104465cab7bdeb739035adc68d6",
+    "source_metrics_sha256": "696d00d59c65f861cde9c93f2a31fd106ffcfd16bfc8e0e1fbbb5c9d015f4c9e",
+    "source_reload_sha256": "7f3cdb37a1d1ef3d8cc8519488e83b9ac612d45b4203a4ed5b5757ec4b717fa2"
+  },
+  "generation_max_new_tokens": 48,
+  "model_path": "../../models/Qwen3.5-4B",
+  "output_dir": "artifacts/semantic-arithmetic-v5-budget-audit-v1",
+  "schema_version": "nano_train_generation_budget_audit_v1",
+  "seed": 20260816,
+  "source_config_path": "configs/sft/semantic_arithmetic_smoke_v5.json",
+  "source_generations_path": "artifacts/semantic-arithmetic-sft-smoke-v5/generations.json",
+  "source_metrics_path": "artifacts/semantic-arithmetic-sft-smoke-v5/metrics.json",
+  "source_pre_registration_revision": "c8e331d",
+  "source_reload_path": "artifacts/semantic-arithmetic-sft-smoke-v5/reload_validation.json",
+  "source_result_revision": "11db032"
+}

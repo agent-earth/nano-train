@@ -5,6 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
+from unittest import mock
 
 import torch
 
@@ -22,6 +23,11 @@ from nano_train.sft import (
     _batch_order,
     _scheduler_scale,
     _write_failure,
+)
+from scripts.run_generation_budget_audit import (
+    load_config as load_audit_config,
+    validate_contract as validate_audit_contract,
+    verify_identity as verify_audit_identity,
 )
 
 
@@ -241,6 +247,59 @@ class TrainTests(unittest.TestCase):
                 "CALC: __import__('os').system('id') = 22\nFINAL: 22",
             )
         )
+
+    def test_v5_budget_audit_identity_and_contract(self):
+        config = load_audit_config(
+            Path(
+                "configs/audits/"
+                "semantic_arithmetic_v5_budget_audit_v1.json"
+            )
+        )
+        identity = verify_audit_identity(config)
+        self.assertEqual(identity, config["expected"])
+        validation = [
+            TokenizedSample(
+                "case-a",
+                "validation",
+                [1],
+                [-100, 1, 2, 3],
+                [1],
+                "target",
+                "trace_numeric",
+                {
+                    "kind": "safe_ast_arithmetic_v1",
+                    "expression": "1 + 1",
+                    "expected_result": "2",
+                },
+            )
+        ]
+        tokenizer = mock.Mock()
+        tokenizer.return_value = SimpleNamespace(input_ids=[1, 2, 3])
+        contract = validate_audit_contract(
+            config,
+            tokenizer,
+            validation,
+            {"post_sft": [{"sample_id": "case-a"}]},
+        )
+        self.assertTrue(contract["source_case_set_matches"])
+        self.assertTrue(contract["budget_above_target_with_eos_max"])
+
+        short_budget = {**config, "generation_max_new_tokens": 3}
+        with self.assertRaisesRegex(ValueError, "must exceed"):
+            validate_audit_contract(
+                short_budget,
+                tokenizer,
+                validation,
+                {"post_sft": [{"sample_id": "case-a"}]},
+            )
+
+        with self.assertRaisesRegex(ValueError, "case sets differ"):
+            validate_audit_contract(
+                config,
+                tokenizer,
+                validation,
+                {"post_sft": [{"sample_id": "different-case"}]},
+            )
 
 
 if __name__ == "__main__":
