@@ -69,6 +69,11 @@ EXPECTED = {
         "dataset_sha256": "ac07e10f1e04ca8ddec74aefc8df9b00475f7fc9c57345ff98182dd8e4c8bae9",
         "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
     },
+    "targeted_preservation_smoke_v11.json": {
+        "config_sha256": "9a971cb46a1f5c21164d6117bef40aedfcb7170e9e82604bb7400c942a2be593",
+        "dataset_sha256": "ab51a1be5f45d7f71796fbf98ef6cce83ff9cb0f0a756fed01cb1e7aea55651d",
+        "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+    },
 }
 EXPECTED_SPLITS = {
     "format_contract_smoke_v1.json": {"train": 102, "validation": 26},
@@ -81,6 +86,7 @@ EXPECTED_SPLITS = {
     "hard_preservation_smoke_v8.json": {"train": 160, "validation": 32},
     "hard_preservation_smoke_v9.json": {"train": 160, "validation": 32},
     "hard_preservation_smoke_v10.json": {"train": 160, "validation": 32},
+    "targeted_preservation_smoke_v11.json": {"train": 160, "validation": 32},
 }
 
 
@@ -160,6 +166,7 @@ def main() -> None:
         "hard_preservation_smoke_v8.json",
         "hard_preservation_smoke_v9.json",
         "hard_preservation_smoke_v10.json",
+        "targeted_preservation_smoke_v11.json",
     }:
         expected_families = {
             "train": {
@@ -188,6 +195,7 @@ def main() -> None:
             "hard_preservation_smoke_v8.json": 160,
             "hard_preservation_smoke_v9.json": 120,
             "hard_preservation_smoke_v10.json": 128,
+            "targeted_preservation_smoke_v11.json": 128,
         }[config_path.name]
         if (
             examples_seen != expected_exposure
@@ -222,6 +230,11 @@ def main() -> None:
                 "capability_preservation_numeric": 66,
                 "semantic_arithmetic_process": 32,
             },
+            "targeted_preservation_smoke_v11.json": {
+                "capability_preservation_choice": 30,
+                "capability_preservation_numeric": 66,
+                "semantic_arithmetic_process": 32,
+            },
         }[config_path.name]
         if (
             dict(sorted(exposed_family_counts.items()))
@@ -237,6 +250,43 @@ def main() -> None:
             )
         if dataset.get("policy", {}).get("sealed_canary_used_for_training") is not False:
             raise SystemExit("v7 dataset must exclude the sealed canary")
+        if config_path.name == "targeted_preservation_smoke_v11.json":
+            base_path = ROOT / "../nano-data-pipeline/datasets/hard_preservation_mix_v5.json"
+            base = load_analog_dataset(base_path)
+            base_validation = [
+                sample
+                for sample in base["samples"]
+                if sample["split"] == "validation"
+            ]
+            targeted_validation = [
+                sample
+                for sample in dataset["samples"]
+                if sample["split"] == "validation"
+            ]
+            if targeted_validation != base_validation:
+                raise SystemExit("v11 development rows must be byte-identical to v5")
+            if (
+                dataset.get("source", {}).get("replacement_count") != 16
+                or dataset.get("policy", {}).get("observed_validation_reused")
+                is not True
+                or dataset.get("policy", {}).get("validation_role")
+                != "development_gate_only"
+            ):
+                raise SystemExit("v11 targeted-data boundary is invalid")
+            rows_by_id = {
+                sample["sample_id"]: sample for sample in dataset["samples"]
+            }
+            exposed_targeted = sum(
+                (
+                    rows_by_id[train_samples[index].sample_id]["generation_rule"]
+                    == "targeted_host_two_count_v6"
+                )
+                for index in visited_indices
+            )
+            if exposed_targeted != 13:
+                raise SystemExit(
+                    f"v11 must expose 13 targeted rows, got {exposed_targeted}"
+                )
 
     model_config = AutoConfig.from_pretrained(model_path, local_files_only=True)
     if model_config.model_type != "qwen3_5":
