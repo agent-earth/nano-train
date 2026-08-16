@@ -1,0 +1,272 @@
+{
+  "artifacts": {
+    "local_generations_sha256": "614d10e61f3bbaebdbea3a2bc5a93f68a368c5969f3a7e66c619b06300a4baf9",
+    "local_result_sha256": "e03d63dbdb6c1465e8b2005fff0426b00850b68d0e8e5a91b7a117502c3e5293"
+  },
+  "audit_id": "hard-preservation-base-validation-v2",
+  "by_family": {
+    "capability_preservation_choice": {
+      "exact": 2,
+      "exact_failure_sample_ids": [
+        "synthetic-0e85915fc657932c5e67",
+        "synthetic-131282e9564acfa56afc",
+        "synthetic-1a7b299fb729cd67bd71",
+        "synthetic-8d42bc65194f32bcdd8e",
+        "synthetic-cb1b63a543f33dcb72fe",
+        "synthetic-d3902d28ebf8554f0c6a"
+      ],
+      "samples": 8,
+      "semantic_exact": 2,
+      "semantic_failure_sample_ids": [
+        "synthetic-0e85915fc657932c5e67",
+        "synthetic-131282e9564acfa56afc",
+        "synthetic-1a7b299fb729cd67bd71",
+        "synthetic-8d42bc65194f32bcdd8e",
+        "synthetic-cb1b63a543f33dcb72fe",
+        "synthetic-d3902d28ebf8554f0c6a"
+      ]
+    },
+    "capability_preservation_numeric": {
+      "exact": 0,
+      "exact_failure_sample_ids": [
+        "synthetic-0709234d9cb212370701",
+        "synthetic-33e0eb52e48e0c3d5634",
+        "synthetic-3c3b215d2977ecf9e2db",
+        "synthetic-3d1e1bb4aabc306febd9",
+        "synthetic-4e05b5f9c88b88acf4b2",
+        "synthetic-6acb64d64d214f6dc7a2",
+        "synthetic-6ff963588953d733c5a3",
+        "synthetic-806ef83ba2912d38c746",
+        "synthetic-926e2a5acdb5db04b881",
+        "synthetic-935daa9738c039fcbb0f",
+        "synthetic-ace9ddd7bfd07e20ce96",
+        "synthetic-b84be4098f2c5fba218a",
+        "synthetic-c3daf536f8bd333e8555",
+        "synthetic-cea6bc124f10a7665e68",
+        "synthetic-ded38e17d41cc5a613da",
+        "synthetic-ffba3e636d5c7eb11e9c"
+      ],
+      "samples": 16,
+      "semantic_exact": 0,
+      "semantic_failure_sample_ids": [
+        "synthetic-0709234d9cb212370701",
+        "synthetic-33e0eb52e48e0c3d5634",
+        "synthetic-3c3b215d2977ecf9e2db",
+        "synthetic-3d1e1bb4aabc306febd9",
+        "synthetic-4e05b5f9c88b88acf4b2",
+        "synthetic-6acb64d64d214f6dc7a2",
+        "synthetic-6ff963588953d733c5a3",
+        "synthetic-806ef83ba2912d38c746",
+        "synthetic-926e2a5acdb5db04b881",
+        "synthetic-935daa9738c039fcbb0f",
+        "synthetic-ace9ddd7bfd07e20ce96",
+        "synthetic-b84be4098f2c5fba218a",
+        "synthetic-c3daf536f8bd333e8555",
+        "synthetic-cea6bc124f10a7665e68",
+        "synthetic-ded38e17d41cc5a613da",
+        "synthetic-ffba3e636d5c7eb11e9c"
+      ]
+    },
+    "semantic_arithmetic_process": {
+      "exact": 6,
+      "exact_failure_sample_ids": [
+        "synthetic-744ddaafd028c5f0db87",
+        "synthetic-c26d5d53c869fc6169eb"
+      ],
+      "samples": 8,
+      "semantic_exact": 6,
+      "semantic_failure_sample_ids": [
+        "synthetic-744ddaafd028c5f0db87",
+        "synthetic-c26d5d53c869fc6169eb"
+      ]
+    }
+  },
+  "config_sha256": "41389316f1979750161132c6e5c16c7da4051f4d61877188fbbb3de3d5f97905",
+  "contract": {
+    "generation_max_new_tokens": 128,
+    "max_input_tokens": 191,
+    "maximum_output_tokens": 96,
+    "output_token_histogram": {
+      "3": 8,
+      "42": 1,
+      "44": 3,
+      "53": 1,
+      "54": 1,
+      "55": 1,
+      "60": 1,
+      "61": 1,
+      "64": 2,
+      "76": 1,
+      "77": 2,
+      "83": 1,
+      "84": 5,
+      "87": 1,
+      "88": 1,
+      "91": 1,
+      "96": 1
+    },
+    "outputs_at_generation_cap": 0,
+    "target_plus_eos_token_max": 65,
+    "validation_samples": 32
+  },
+  "data_revision": "204b053",
+  "decision": {
+    "material_learning_headroom": true,
+    "next_action": "Pre-register a conservative mixed-preservation SFT smoke. Require family-level validation improvement and then the sealed 40-case canary before any full benchmark.",
+    "training_automatically_authorized": false,
+    "training_performed": false,
+    "valid_pretraining_baseline": true,
+    "zero_capped_outputs": true
+  },
+  "hardware": {
+    "gpu_name": "Tesla V100-SXM2-32GB",
+    "peak_allocated_gib": 15.771373271942139
+  },
+  "identity": {
+    "dataset_sha256": "ac07e10f1e04ca8ddec74aefc8df9b00475f7fc9c57345ff98182dd8e4c8bae9",
+    "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670"
+  },
+  "insufficient_budget_v1": {
+    "config_sha256": "3638d98b0a5b55d9d30b467ccab6fcb8425d40f81f5bb8716be31de35733a440",
+    "generation_max_new_tokens": 80,
+    "official_metrics_changed_in_v2": false,
+    "outputs_at_generation_cap": 8,
+    "result_sha256": "d5972e7cf6dd93dfb35bc6479a3e9f89c405c9930a20e775965102b771f9292b"
+  },
+  "loose_final_diagnostic": {
+    "capability_preservation_choice": {
+      "case_ids": {
+        "loose_final_correct": [
+          "synthetic-246040a36078c4dba1f6",
+          "synthetic-85ea95503842e7640cfc"
+        ],
+        "loose_final_wrong": [
+          "synthetic-0e85915fc657932c5e67",
+          "synthetic-131282e9564acfa56afc",
+          "synthetic-1a7b299fb729cd67bd71",
+          "synthetic-8d42bc65194f32bcdd8e",
+          "synthetic-cb1b63a543f33dcb72fe",
+          "synthetic-d3902d28ebf8554f0c6a"
+        ],
+        "missing_final": []
+      },
+      "loose_final_correct": 2,
+      "loose_final_wrong": 6,
+      "missing_final": 0,
+      "official_semantic": 2,
+      "samples": 8
+    },
+    "capability_preservation_numeric": {
+      "case_ids": {
+        "loose_final_correct": [
+          "synthetic-0709234d9cb212370701",
+          "synthetic-33e0eb52e48e0c3d5634",
+          "synthetic-3c3b215d2977ecf9e2db",
+          "synthetic-4e05b5f9c88b88acf4b2",
+          "synthetic-6acb64d64d214f6dc7a2",
+          "synthetic-6ff963588953d733c5a3",
+          "synthetic-806ef83ba2912d38c746",
+          "synthetic-935daa9738c039fcbb0f",
+          "synthetic-ace9ddd7bfd07e20ce96",
+          "synthetic-cea6bc124f10a7665e68",
+          "synthetic-ffba3e636d5c7eb11e9c"
+        ],
+        "loose_final_wrong": [
+          "synthetic-3d1e1bb4aabc306febd9",
+          "synthetic-926e2a5acdb5db04b881",
+          "synthetic-b84be4098f2c5fba218a",
+          "synthetic-c3daf536f8bd333e8555",
+          "synthetic-ded38e17d41cc5a613da"
+        ],
+        "missing_final": []
+      },
+      "loose_final_correct": 11,
+      "loose_final_wrong": 5,
+      "missing_final": 0,
+      "official_semantic": 0,
+      "samples": 16
+    },
+    "semantic_arithmetic_process": {
+      "case_ids": {
+        "loose_final_correct": [
+          "synthetic-142c84e42c7fdb03ad47",
+          "synthetic-1cc88dacd91cb4fd462a",
+          "synthetic-20b4f9ab272cd2fdfb46",
+          "synthetic-744ddaafd028c5f0db87",
+          "synthetic-9095eca2ec0f1f44a939",
+          "synthetic-a306af324eb0040adec0",
+          "synthetic-c26d5d53c869fc6169eb",
+          "synthetic-eea88fb2eaf14fcc38e7"
+        ],
+        "loose_final_wrong": [],
+        "missing_final": []
+      },
+      "loose_final_correct": 8,
+      "loose_final_wrong": 0,
+      "missing_final": 0,
+      "official_semantic": 6,
+      "samples": 8
+    }
+  },
+  "pre_registration_revision": "a58b2be",
+  "schema_version": "nano_train_public_preservation_base_audit_v2",
+  "validation": {
+    "accuracy": 0.25,
+    "exact": 8,
+    "failure_sample_ids": [
+      "synthetic-0709234d9cb212370701",
+      "synthetic-0e85915fc657932c5e67",
+      "synthetic-131282e9564acfa56afc",
+      "synthetic-1a7b299fb729cd67bd71",
+      "synthetic-33e0eb52e48e0c3d5634",
+      "synthetic-3c3b215d2977ecf9e2db",
+      "synthetic-3d1e1bb4aabc306febd9",
+      "synthetic-4e05b5f9c88b88acf4b2",
+      "synthetic-6acb64d64d214f6dc7a2",
+      "synthetic-6ff963588953d733c5a3",
+      "synthetic-744ddaafd028c5f0db87",
+      "synthetic-806ef83ba2912d38c746",
+      "synthetic-8d42bc65194f32bcdd8e",
+      "synthetic-926e2a5acdb5db04b881",
+      "synthetic-935daa9738c039fcbb0f",
+      "synthetic-ace9ddd7bfd07e20ce96",
+      "synthetic-b84be4098f2c5fba218a",
+      "synthetic-c26d5d53c869fc6169eb",
+      "synthetic-c3daf536f8bd333e8555",
+      "synthetic-cb1b63a543f33dcb72fe",
+      "synthetic-cea6bc124f10a7665e68",
+      "synthetic-d3902d28ebf8554f0c6a",
+      "synthetic-ded38e17d41cc5a613da",
+      "synthetic-ffba3e636d5c7eb11e9c"
+    ],
+    "samples": 32,
+    "semantic_accuracy": 0.25,
+    "semantic_exact": 8,
+    "semantic_failure_sample_ids": [
+      "synthetic-0709234d9cb212370701",
+      "synthetic-0e85915fc657932c5e67",
+      "synthetic-131282e9564acfa56afc",
+      "synthetic-1a7b299fb729cd67bd71",
+      "synthetic-33e0eb52e48e0c3d5634",
+      "synthetic-3c3b215d2977ecf9e2db",
+      "synthetic-3d1e1bb4aabc306febd9",
+      "synthetic-4e05b5f9c88b88acf4b2",
+      "synthetic-6acb64d64d214f6dc7a2",
+      "synthetic-6ff963588953d733c5a3",
+      "synthetic-744ddaafd028c5f0db87",
+      "synthetic-806ef83ba2912d38c746",
+      "synthetic-8d42bc65194f32bcdd8e",
+      "synthetic-926e2a5acdb5db04b881",
+      "synthetic-935daa9738c039fcbb0f",
+      "synthetic-ace9ddd7bfd07e20ce96",
+      "synthetic-b84be4098f2c5fba218a",
+      "synthetic-c26d5d53c869fc6169eb",
+      "synthetic-c3daf536f8bd333e8555",
+      "synthetic-cb1b63a543f33dcb72fe",
+      "synthetic-cea6bc124f10a7665e68",
+      "synthetic-d3902d28ebf8554f0c6a",
+      "synthetic-ded38e17d41cc5a613da",
+      "synthetic-ffba3e636d5c7eb11e9c"
+    ]
+  }
+}
