@@ -26,3 +26,19 @@ Frozen identities:
   `9f79b1cf5af9fa4b36c7507318b32991692f253d2210b5b6ed70a44bee940f2d`;
 - model config SHA256:
   `ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670`.
+
+## Result
+
+V14 is stable but rejected locally:
+
+- aggregate exact / semantic: 21/32 / 25/32;
+- numeric exact / semantic: 8/16 / 12/16;
+- choice: 5/8; process: 8/8;
+- relative to v11: one numeric fix, one numeric regression, one choice
+  regression;
+- 32 finite losses, 224/224 finite FP32 tensors, exact independent reload,
+  early/late loss 0.199554/0.020787, peak 20.18 GiB, zero capped outputs.
+
+Five packing exposures are not a Pareto improvement. Reject v14, stop packing
+dose search, and preserve v11. Canary, old full suite, and independent holdout
+remain unrun; holdout prompts and references remain unread.
