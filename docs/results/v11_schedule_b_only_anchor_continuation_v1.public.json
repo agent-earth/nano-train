@@ -1,0 +1,248 @@
+{
+  "artifacts": {
+    "adapter_sha256": "d29963cbd9284fe9a21de690babecbb34ed3fbbedd16d5d780daaf8abc45bc82",
+    "generations_sha256": "f06182b3159d248dfef7bdb07e29afca168e09c0fd04a1754d686abbb85e10f5",
+    "metrics_sha256": "626b1bb9bcc33a4d204dc3b9754c4c8402ec37d7c534b2fa2118f3a3a771b520",
+    "reload_validation_sha256": "4e7af18e2610ce97f9e05885ed68902f6f07c38e5566bef8733b4cd22224f12a"
+  },
+  "baseline_validation": {
+    "accuracy": 0.71875,
+    "by_family": {
+      "capability_preservation_choice": {
+        "exact": 6,
+        "exact_failure_sample_ids": [
+          "synthetic-1a7b299fb729cd67bd71",
+          "synthetic-cb1b63a543f33dcb72fe"
+        ],
+        "samples": 8,
+        "semantic_exact": 6,
+        "semantic_failure_sample_ids": [
+          "synthetic-1a7b299fb729cd67bd71",
+          "synthetic-cb1b63a543f33dcb72fe"
+        ]
+      },
+      "capability_preservation_numeric": {
+        "exact": 9,
+        "exact_failure_sample_ids": [
+          "synthetic-33e0eb52e48e0c3d5634",
+          "synthetic-3d1e1bb4aabc306febd9",
+          "synthetic-6ff963588953d733c5a3",
+          "synthetic-926e2a5acdb5db04b881",
+          "synthetic-b84be4098f2c5fba218a",
+          "synthetic-c3daf536f8bd333e8555",
+          "synthetic-ded38e17d41cc5a613da"
+        ],
+        "samples": 16,
+        "semantic_exact": 12,
+        "semantic_failure_sample_ids": [
+          "synthetic-33e0eb52e48e0c3d5634",
+          "synthetic-6ff963588953d733c5a3",
+          "synthetic-c3daf536f8bd333e8555",
+          "synthetic-ded38e17d41cc5a613da"
+        ]
+      },
+      "semantic_arithmetic_process": {
+        "exact": 8,
+        "exact_failure_sample_ids": [],
+        "samples": 8,
+        "semantic_exact": 8,
+        "semantic_failure_sample_ids": []
+      }
+    },
+    "exact": 23,
+    "failure_sample_ids": [
+      "synthetic-1a7b299fb729cd67bd71",
+      "synthetic-33e0eb52e48e0c3d5634",
+      "synthetic-3d1e1bb4aabc306febd9",
+      "synthetic-6ff963588953d733c5a3",
+      "synthetic-926e2a5acdb5db04b881",
+      "synthetic-b84be4098f2c5fba218a",
+      "synthetic-c3daf536f8bd333e8555",
+      "synthetic-cb1b63a543f33dcb72fe",
+      "synthetic-ded38e17d41cc5a613da"
+    ],
+    "samples": 32,
+    "semantic_accuracy": 0.8125,
+    "semantic_exact": 26,
+    "semantic_failure_sample_ids": [
+      "synthetic-1a7b299fb729cd67bd71",
+      "synthetic-33e0eb52e48e0c3d5634",
+      "synthetic-6ff963588953d733c5a3",
+      "synthetic-c3daf536f8bd333e8555",
+      "synthetic-cb1b63a543f33dcb72fe",
+      "synthetic-ded38e17d41cc5a613da"
+    ]
+  },
+  "decision": {
+    "accepted_local_smoke": true,
+    "independent_holdout_allowed": false,
+    "merge_allowed": false,
+    "next_action": "Run only the old sealed 40-case regression canary on the exact anchored adapter. Passing permits the old 211-case development suite, not the independent holdout.",
+    "prior_full_suite_allowed": false,
+    "rl_allowed": false,
+    "scale_allowed": false,
+    "sealed_canary_allowed": true
+  },
+  "experiment_id": "v11-schedule-b-only-anchor-continuation-v1",
+  "identity": {
+    "adapter_tree_sha256": "d29963cbd9284fe9a21de690babecbb34ed3fbbedd16d5d780daaf8abc45bc82",
+    "anchor_adapter_tree_sha256": "87248908918b06c2d28ff68efd4f0b1ff92ca8bf8b7588e1c7e81a85eb7da852",
+    "config_sha256": "41e9c47229f52b9ff3c97985b6a637429f17756791226eaca6b06f703d863c59",
+    "dataset_sha256": "2bb712de519149d776b1c346466ee49d20017f1065aa3d1b44ae59eb6f5b973a",
+    "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670"
+  },
+  "loss_curve": [
+    {
+      "anchor_penalty": 0.0,
+      "ce_loss": 0.010931998247542651,
+      "learning_rate": 5e-05,
+      "step": 1,
+      "total_loss": 0.010931998247542651
+    },
+    {
+      "anchor_penalty": 0.0013527231058105826,
+      "ce_loss": 0.12251252992791706,
+      "learning_rate": 5e-05,
+      "step": 2,
+      "total_loss": 0.12386525509646162
+    },
+    {
+      "anchor_penalty": 0.002729683881625533,
+      "ce_loss": 0.03937882303262086,
+      "learning_rate": 4.285714285714286e-05,
+      "step": 3,
+      "total_loss": 0.04210850695380941
+    },
+    {
+      "anchor_penalty": 0.004267969634383917,
+      "ce_loss": 0.05562254649703391,
+      "learning_rate": 3.571428571428572e-05,
+      "step": 4,
+      "total_loss": 0.05989051761571318
+    },
+    {
+      "anchor_penalty": 0.005540493410080671,
+      "ce_loss": 0.0011975104062003084,
+      "learning_rate": 2.857142857142857e-05,
+      "step": 5,
+      "total_loss": 0.006738003809005022
+    },
+    {
+      "anchor_penalty": 0.006436457857489586,
+      "ce_loss": 0.0019574815378291532,
+      "learning_rate": 2.142857142857143e-05,
+      "step": 6,
+      "total_loss": 0.008393939468078315
+    },
+    {
+      "anchor_penalty": 0.006961842067539692,
+      "ce_loss": 0.058487405533924175,
+      "learning_rate": 1.4285714285714285e-05,
+      "step": 7,
+      "total_loss": 0.06544924643822014
+    },
+    {
+      "anchor_penalty": 0.007145390845835209,
+      "ce_loss": 0.008640499450848438,
+      "learning_rate": 7.142857142857145e-06,
+      "step": 8,
+      "total_loss": 0.015785890049301088
+    }
+  ],
+  "method": {
+    "a_tensors_changed": 0,
+    "anchor_norm_l2": 2.136874065995884,
+    "anchor_penalty_coefficient": 1.0,
+    "b_tensors_changed": 112,
+    "drift_norm_l2": 0.2566061406069056,
+    "examples_seen": 32,
+    "frozen_lora_a": true,
+    "max_steps": 8,
+    "relative_drift_l2": 0.12008482023993401,
+    "schedule_examples_seen": 4,
+    "trainable_lora_b_only": true,
+    "trainable_parameters": 5963776
+  },
+  "passed": true,
+  "post_validation": {
+    "accuracy": 0.6875,
+    "by_family": {
+      "capability_preservation_choice": {
+        "exact": 6,
+        "exact_failure_sample_ids": [
+          "synthetic-1a7b299fb729cd67bd71",
+          "synthetic-cb1b63a543f33dcb72fe"
+        ],
+        "samples": 8,
+        "semantic_exact": 6,
+        "semantic_failure_sample_ids": [
+          "synthetic-1a7b299fb729cd67bd71",
+          "synthetic-cb1b63a543f33dcb72fe"
+        ]
+      },
+      "capability_preservation_numeric": {
+        "exact": 8,
+        "exact_failure_sample_ids": [
+          "synthetic-33e0eb52e48e0c3d5634",
+          "synthetic-3c3b215d2977ecf9e2db",
+          "synthetic-3d1e1bb4aabc306febd9",
+          "synthetic-6ff963588953d733c5a3",
+          "synthetic-926e2a5acdb5db04b881",
+          "synthetic-b84be4098f2c5fba218a",
+          "synthetic-c3daf536f8bd333e8555",
+          "synthetic-ded38e17d41cc5a613da"
+        ],
+        "samples": 16,
+        "semantic_exact": 11,
+        "semantic_failure_sample_ids": [
+          "synthetic-33e0eb52e48e0c3d5634",
+          "synthetic-3c3b215d2977ecf9e2db",
+          "synthetic-6ff963588953d733c5a3",
+          "synthetic-c3daf536f8bd333e8555",
+          "synthetic-ded38e17d41cc5a613da"
+        ]
+      },
+      "semantic_arithmetic_process": {
+        "exact": 8,
+        "exact_failure_sample_ids": [],
+        "samples": 8,
+        "semantic_exact": 8,
+        "semantic_failure_sample_ids": []
+      }
+    },
+    "exact": 22,
+    "failure_sample_ids": [
+      "synthetic-1a7b299fb729cd67bd71",
+      "synthetic-33e0eb52e48e0c3d5634",
+      "synthetic-3c3b215d2977ecf9e2db",
+      "synthetic-3d1e1bb4aabc306febd9",
+      "synthetic-6ff963588953d733c5a3",
+      "synthetic-926e2a5acdb5db04b881",
+      "synthetic-b84be4098f2c5fba218a",
+      "synthetic-c3daf536f8bd333e8555",
+      "synthetic-cb1b63a543f33dcb72fe",
+      "synthetic-ded38e17d41cc5a613da"
+    ],
+    "samples": 32,
+    "semantic_accuracy": 0.78125,
+    "semantic_exact": 25,
+    "semantic_failure_sample_ids": [
+      "synthetic-1a7b299fb729cd67bd71",
+      "synthetic-33e0eb52e48e0c3d5634",
+      "synthetic-3c3b215d2977ecf9e2db",
+      "synthetic-6ff963588953d733c5a3",
+      "synthetic-c3daf536f8bd333e8555",
+      "synthetic-cb1b63a543f33dcb72fe",
+      "synthetic-ded38e17d41cc5a613da"
+    ]
+  },
+  "pre_registration_revision": "71c769c",
+  "schema_version": "nano_train_public_anchored_continuation_v1",
+  "validation": {
+    "failure_receipt_exists": false,
+    "nonfinite_tensors": 0,
+    "reload_matches": true,
+    "reload_peak_allocated_gib": 15.810230731964111,
+    "training_peak_allocated_gib": 19.75962734222412
+  }
+}

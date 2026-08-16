@@ -77,3 +77,19 @@ CUDA_VISIBLE_DEVICES=3 PYTHONPATH=. ../.venv/bin/python -m nano_train.cli \
   anchored-continuation \
   --config configs/continuation/v11_schedule_b_only_anchor_v1.json
 ```
+
+## Result
+
+The method passes all frozen local gates:
+
+- baseline exactly reproduces v11 at 23/32 strict and 26/32 semantic;
+- post result: 22/32 strict and 25/32 semantic;
+- numeric 11/16, choice 6/8, process 8/8;
+- all 112 A tensors are byte-identical to v11; all 112 B tensors change;
+- B relative drift is 0.120085 versus unconstrained v15 at 0.658966;
+- independent reload exactly reproduces post metrics and failure IDs;
+- no failure receipt, no capped output, peak memory 19.76 GiB.
+
+Passing authorizes only the old sealed regression canary. It is not independent
+quality evidence and does not authorize full suite, holdout, merge, scale, or
+RL.
