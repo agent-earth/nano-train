@@ -29,6 +29,16 @@ EXPECTED = {
         "dataset_sha256": "46f2128f219db7011d5db95b5ca3a97029b57f5ac959e194860b4c0f4ba3ad53",
         "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
     },
+    "format_contract_smoke_v3.json": {
+        "config_sha256": "fee61ad70cec96368849b6873e7f261dbfc822dc82af7d206cfdb29b58edbfdd",
+        "dataset_sha256": "95d8e3e8a173960fd8604f284bae0243e74f4c924c96b719252c8c9a6525f001",
+        "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+    },
+}
+EXPECTED_SPLITS = {
+    "format_contract_smoke_v1.json": {"train": 102, "validation": 26},
+    "format_contract_smoke_v2.json": {"train": 102, "validation": 26},
+    "format_contract_smoke_v3.json": {"train": 128, "validation": 32},
 }
 
 
@@ -56,7 +66,7 @@ def main() -> None:
         max_length=config.max_length,
     )
     counts = Counter(sample.split for sample in samples)
-    if counts != {"train": 102, "validation": 26}:
+    if counts != EXPECTED_SPLITS[config_path.name]:
         raise SystemExit(f"unexpected split counts: {counts}")
     max_tokens = max(len(sample.input_ids) for sample in samples)
     if max_tokens > config.max_length:
