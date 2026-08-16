@@ -1,6 +1,10 @@
 from __future__ import annotations
 
 import json
+import ast
+import math
+import operator
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -16,6 +20,76 @@ class TokenizedSample:
     labels: list[int]
     prompt_ids: list[int]
     target: str
+    format_family: str
+    verifier: dict[str, Any] | None
+
+
+OPERATORS = {
+    ast.Add: operator.add,
+    ast.Sub: operator.sub,
+    ast.Mult: operator.mul,
+    ast.Div: operator.truediv,
+    ast.USub: operator.neg,
+    ast.UAdd: operator.pos,
+}
+
+
+def evaluate_arithmetic(expression: str) -> int | float:
+    tree = ast.parse(expression, mode="eval")
+
+    def evaluate(node: ast.AST) -> int | float:
+        if isinstance(node, ast.Expression):
+            return evaluate(node.body)
+        if (
+            isinstance(node, ast.Constant)
+            and type(node.value) in {int, float}
+        ):
+            return node.value
+        if isinstance(node, ast.BinOp) and type(node.op) in OPERATORS:
+            return OPERATORS[type(node.op)](
+                evaluate(node.left),
+                evaluate(node.right),
+            )
+        if isinstance(node, ast.UnaryOp) and type(node.op) in OPERATORS:
+            return OPERATORS[type(node.op)](evaluate(node.operand))
+        raise ValueError(f"unsafe arithmetic node: {type(node).__name__}")
+
+    result = evaluate(tree)
+    if not isinstance(result, (int, float)) or not math.isfinite(float(result)):
+        raise ValueError("arithmetic result is not finite")
+    return result
+
+
+def format_number(value: int | float) -> str:
+    number = float(value)
+    return str(int(number)) if number.is_integer() else format(number, ".12g")
+
+
+def semantic_output_valid(sample: TokenizedSample, output: str) -> bool:
+    if sample.format_family != "trace_numeric":
+        return output.strip() == sample.target
+    verifier = sample.verifier or {}
+    match = re.fullmatch(
+        (
+            r"CALC: (.+) = "
+            r"([-+]?(?:[0-9]+(?:\.[0-9]+)?|\.[0-9]+))\n"
+            r"FINAL: ([-+]?(?:[0-9]+(?:\.[0-9]+)?|\.[0-9]+))"
+        ),
+        output.strip(),
+    )
+    if match is None:
+        return False
+    expression, calc_result, final_result = match.groups()
+    try:
+        verified = format_number(evaluate_arithmetic(expression))
+    except (SyntaxError, ValueError, ZeroDivisionError, OverflowError):
+        return False
+    return (
+        verifier.get("kind") == "safe_ast_arithmetic_v1"
+        and calc_result == final_result
+        and calc_result == verifier.get("expected_result")
+        and verified == verifier.get("expected_result")
+    )
 
 
 def load_analog_dataset(path: str | Path) -> dict[str, Any]:
@@ -78,6 +152,8 @@ def tokenize_samples(
                 labels=labels,
                 prompt_ids=prompt_ids,
                 target=target,
+                format_family=str(sample["format_family"]),
+                verifier=sample.get("verifier"),
             )
         )
     return result

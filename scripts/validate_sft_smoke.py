@@ -34,11 +34,17 @@ EXPECTED = {
         "dataset_sha256": "95d8e3e8a173960fd8604f284bae0243e74f4c924c96b719252c8c9a6525f001",
         "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
     },
+    "semantic_arithmetic_smoke_v4.json": {
+        "config_sha256": "a162cc982896b16d5f3f1bdb79ba455f24b629ec95cc149b289e90e0b6ffab04",
+        "dataset_sha256": "d226f243051b7d2d2d4db4d5a596b871032fa44d71b296586f879559a8781c09",
+        "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+    },
 }
 EXPECTED_SPLITS = {
     "format_contract_smoke_v1.json": {"train": 102, "validation": 26},
     "format_contract_smoke_v2.json": {"train": 102, "validation": 26},
     "format_contract_smoke_v3.json": {"train": 128, "validation": 32},
+    "semantic_arithmetic_smoke_v4.json": {"train": 160, "validation": 32},
 }
 
 
