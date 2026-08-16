@@ -74,6 +74,11 @@ EXPECTED = {
         "dataset_sha256": "ab51a1be5f45d7f71796fbf98ef6cce83ff9cb0f0a756fed01cb1e7aea55651d",
         "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
     },
+    "failure_targeted_preservation_smoke_v12.json": {
+        "config_sha256": "82ad3ca17fc23e5722fead74cf9387364183db2cda8493ed02474e0ef60d2d02",
+        "dataset_sha256": "b9dcbec512831a3f2c96e7db5abf4a0750420f26a28cc0f2a27699661f79aa23",
+        "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+    },
 }
 EXPECTED_SPLITS = {
     "format_contract_smoke_v1.json": {"train": 102, "validation": 26},
@@ -87,6 +92,10 @@ EXPECTED_SPLITS = {
     "hard_preservation_smoke_v9.json": {"train": 160, "validation": 32},
     "hard_preservation_smoke_v10.json": {"train": 160, "validation": 32},
     "targeted_preservation_smoke_v11.json": {"train": 160, "validation": 32},
+    "failure_targeted_preservation_smoke_v12.json": {
+        "train": 160,
+        "validation": 32,
+    },
 }
 
 
@@ -167,6 +176,7 @@ def main() -> None:
         "hard_preservation_smoke_v9.json",
         "hard_preservation_smoke_v10.json",
         "targeted_preservation_smoke_v11.json",
+        "failure_targeted_preservation_smoke_v12.json",
     }:
         expected_families = {
             "train": {
@@ -196,6 +206,7 @@ def main() -> None:
             "hard_preservation_smoke_v9.json": 120,
             "hard_preservation_smoke_v10.json": 128,
             "targeted_preservation_smoke_v11.json": 128,
+            "failure_targeted_preservation_smoke_v12.json": 128,
         }[config_path.name]
         if (
             examples_seen != expected_exposure
@@ -231,6 +242,11 @@ def main() -> None:
                 "semantic_arithmetic_process": 32,
             },
             "targeted_preservation_smoke_v11.json": {
+                "capability_preservation_choice": 30,
+                "capability_preservation_numeric": 66,
+                "semantic_arithmetic_process": 32,
+            },
+            "failure_targeted_preservation_smoke_v12.json": {
                 "capability_preservation_choice": 30,
                 "capability_preservation_numeric": 66,
                 "semantic_arithmetic_process": 32,
@@ -287,6 +303,77 @@ def main() -> None:
                 raise SystemExit(
                     f"v11 must expose 13 targeted rows, got {exposed_targeted}"
                 )
+        if config_path.name == "failure_targeted_preservation_smoke_v12.json":
+            base_path = (
+                ROOT
+                / "../nano-data-pipeline/datasets/"
+                "targeted_preservation_mix_v6.json"
+            )
+            base = load_analog_dataset(base_path)
+            base_validation = [
+                sample
+                for sample in base["samples"]
+                if sample["split"] == "validation"
+            ]
+            targeted_validation = [
+                sample
+                for sample in dataset["samples"]
+                if sample["split"] == "validation"
+            ]
+            if targeted_validation != base_validation:
+                raise SystemExit("v12 development rows must be byte-identical to v6")
+            if (
+                dataset.get("source", {}).get("replacement_count") != 24
+                or dataset.get("policy", {}).get(
+                    "independent_holdout_used_for_training"
+                )
+                is not False
+                or dataset.get("policy", {}).get("validation_role")
+                != "development_gate_only"
+            ):
+                raise SystemExit("v12 failure-targeted boundary is invalid")
+            rows_by_id = {
+                sample["sample_id"]: sample for sample in dataset["samples"]
+            }
+            exposed_targeted_families = Counter(
+                rows_by_id[train_samples[index].sample_id]["generation_rule"]
+                for index in visited_indices
+                if rows_by_id[train_samples[index].sample_id][
+                    "generation_rule"
+                ].startswith("failure_targeted_")
+            )
+            expected_targeted_families = {
+                "failure_targeted_packing_efficiency_effective_volume_v7": 5,
+                "failure_targeted_percentage_increase_total_composition_v7": 7,
+                "failure_targeted_weighted_recurring_schedule_total_v7": 7,
+            }
+            if (
+                dict(sorted(exposed_targeted_families.items()))
+                != expected_targeted_families
+            ):
+                raise SystemExit(
+                    "v12 targeted exposure differs: "
+                    f"{exposed_targeted_families}"
+                )
+            holdout_receipt_path = (
+                ROOT
+                / "../nano-harness/configs/generated/"
+                "qwen35_independent_holdout_v1_selection.json"
+            )
+            holdout_receipt = json.loads(
+                holdout_receipt_path.read_text(encoding="utf-8")
+            )
+            if (
+                holdout_receipt.get("summary", {}).get("history_overlap") != 0
+                or holdout_receipt.get("summary", {}).get("cases") != 40
+                or holdout_receipt.get("policy", {}).get("training_eligible")
+                is not False
+                or holdout_receipt.get("policy", {}).get(
+                    "prompts_loaded_before_evaluation"
+                )
+                is not False
+            ):
+                raise SystemExit("v12 independent holdout boundary is invalid")
 
     model_config = AutoConfig.from_pretrained(model_path, local_files_only=True)
     if model_config.model_type != "qwen3_5":
