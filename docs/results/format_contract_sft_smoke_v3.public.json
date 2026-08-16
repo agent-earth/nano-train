@@ -1,0 +1,289 @@
+{
+  "adapter_validation": {
+    "dtype_counts": {
+      "torch.float32": 224
+    },
+    "nonfinite_tensors": 0,
+    "reload_peak_allocated_gib": 15.807435989379883,
+    "reload_success": true,
+    "reload_validation": {
+      "accuracy": 0.625,
+      "exact": 20,
+      "failure_sample_ids": [
+        "synthetic-156a520638b90785f547",
+        "synthetic-1585b07dfbb2ef7802d1",
+        "synthetic-27cb7c4d270b1c7976ca",
+        "synthetic-4ab237d0b0d2666f628e",
+        "synthetic-51aa9541238cc5bec2be",
+        "synthetic-56ee2d6a5234063fd57d",
+        "synthetic-5e76957da2136b22de98",
+        "synthetic-7b37b14f0d2533efcc09",
+        "synthetic-9c5fbc8b21e2b2a60e0b",
+        "synthetic-9e13c6bf86c88637c689",
+        "synthetic-a619c69c250254d67dc6",
+        "synthetic-e5b4601602c2393ab97b"
+      ],
+      "samples": 32
+    },
+    "tensor_count": 224
+  },
+  "artifacts": {
+    "adapter_sha256": "5d193fcea89e0b297ef69fe2500d366508ca92bcc600fd97cdb5062d39b1e309",
+    "generations_sha256": "ca075c648a2c8427589092b864046602c75a451fd807abc9ece3b288fe54a0fc",
+    "metrics_sha256": "9a52f5af7ded83c8198258b230c635e288ae077336b4ebcb1648335702c9075a",
+    "reload_validation_sha256": "cd149c4e3b971b832cccee9511a74420746b30999af2d0036094075a92810034"
+  },
+  "baseline_validation": {
+    "accuracy": 0.40625,
+    "exact": 13,
+    "failure_sample_ids": [
+      "synthetic-1585b07dfbb2ef7802d1",
+      "synthetic-27cb7c4d270b1c7976ca",
+      "synthetic-4192699b35a392f7264b",
+      "synthetic-4ab237d0b0d2666f628e",
+      "synthetic-51aa9541238cc5bec2be",
+      "synthetic-56ee2d6a5234063fd57d",
+      "synthetic-5e76957da2136b22de98",
+      "synthetic-7b37b14f0d2533efcc09",
+      "synthetic-9c5fbc8b21e2b2a60e0b",
+      "synthetic-9e13c6bf86c88637c689",
+      "synthetic-a1200a860ce5a8f6a4ab",
+      "synthetic-a1e96245ac715fea94b7",
+      "synthetic-a619c69c250254d67dc6",
+      "synthetic-a84b544c7d9af87adb9f",
+      "synthetic-b1dbdfe316108cd34c33",
+      "synthetic-b2d4a0c41bf5c8afa2f4",
+      "synthetic-b314dd6c8707c3c933cd",
+      "synthetic-e5b4601602c2393ab97b",
+      "synthetic-fdb862b7d5e028ad2e94"
+    ],
+    "samples": 32
+  },
+  "configuration": {
+    "dtype": "float32",
+    "effective_batch_size": 4,
+    "learning_rate": 0.0002,
+    "lora_alpha": 16,
+    "lora_r": 8,
+    "lora_targets": [
+      "q_proj",
+      "v_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "max_steps": 20,
+    "seed": 20260816,
+    "train_samples": 128,
+    "validation_samples": 32
+  },
+  "decision": {
+    "accepted": false,
+    "adapter_reload_passed": true,
+    "benchmark_evaluation_allowed": false,
+    "memory_below_28_gib": true,
+    "moving_average_loss_decreased": true,
+    "next_action": "Stop format-only SFT iteration. The fresh remaining errors are format-valid and predominantly two-step semantic failures; design a semantic arithmetic training objective before another smoke.",
+    "numerical_stability_passed": true,
+    "rl_allowed": false,
+    "validation_exact_32_of_32": false,
+    "validation_improved": true
+  },
+  "dependencies": {
+    "accelerate": "1.14.0",
+    "peft": "0.20.0",
+    "python": "3.11.2",
+    "torch": "2.10.0+cu128",
+    "transformers": "5.12.1"
+  },
+  "experiment_id": "format-contract-sft-smoke-v3",
+  "generation_breakdown": {
+    "baseline": {
+      "exact_by_stratum": {
+        "choice_contract:single_step": 2,
+        "choice_contract:two_step": 7,
+        "numeric_contract:single_step": 4,
+        "numeric_contract:two_step": 0
+      },
+      "failures_by_stratum": {
+        "choice_contract:single_step": 2,
+        "choice_contract:two_step": 5,
+        "numeric_contract:single_step": 0,
+        "numeric_contract:two_step": 12
+      },
+      "format_valid_by_stratum": {
+        "choice_contract:single_step": 4,
+        "choice_contract:two_step": 12,
+        "numeric_contract:single_step": 4,
+        "numeric_contract:two_step": 9
+      },
+      "format_valid_total": 29,
+      "samples": 32
+    },
+    "post_sft": {
+      "exact_by_stratum": {
+        "choice_contract:single_step": 3,
+        "choice_contract:two_step": 10,
+        "numeric_contract:single_step": 4,
+        "numeric_contract:two_step": 3
+      },
+      "failures_by_stratum": {
+        "choice_contract:single_step": 1,
+        "choice_contract:two_step": 2,
+        "numeric_contract:single_step": 0,
+        "numeric_contract:two_step": 9
+      },
+      "format_valid_by_stratum": {
+        "choice_contract:single_step": 4,
+        "choice_contract:two_step": 12,
+        "numeric_contract:single_step": 4,
+        "numeric_contract:two_step": 12
+      },
+      "format_valid_total": 32,
+      "samples": 32
+    }
+  },
+  "hardware": {
+    "gpu_name": "Tesla V100-SXM2-32GB",
+    "peak_allocated_gib": 18.32884454727173
+  },
+  "identity": {
+    "config_sha256": "fee61ad70cec96368849b6873e7f261dbfc822dc82af7d206cfdb29b58edbfdd",
+    "dataset_id": "format-contract-curriculum-analog-v2",
+    "dataset_sha256": "95d8e3e8a173960fd8604f284bae0243e74f4c924c96b719252c8c9a6525f001",
+    "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670"
+  },
+  "optimization": {
+    "all_losses_finite": true,
+    "early_five_step_mean": 0.42871796299441484,
+    "failure_receipt_exists": false,
+    "late_five_step_mean": 0.22296105050481857,
+    "late_mean_below_early_mean": true,
+    "loss_curve": [
+      {
+        "learning_rate": 0.0001,
+        "loss": 0.3022195789963007,
+        "step": 1
+      },
+      {
+        "learning_rate": 0.0002,
+        "loss": 0.24948677979409695,
+        "step": 2
+      },
+      {
+        "learning_rate": 0.0002,
+        "loss": 0.11644820868968964,
+        "step": 3
+      },
+      {
+        "learning_rate": 0.00018888888888888888,
+        "loss": 0.14630794323602458,
+        "step": 4
+      },
+      {
+        "learning_rate": 0.00017777777777777779,
+        "loss": 1.3291273042559624,
+        "step": 5
+      },
+      {
+        "learning_rate": 0.0001666666666666667,
+        "loss": 0.13544847828597995,
+        "step": 6
+      },
+      {
+        "learning_rate": 0.00015555555555555556,
+        "loss": 0.22910067276097834,
+        "step": 7
+      },
+      {
+        "learning_rate": 0.00014444444444444444,
+        "loss": 0.43200021144002676,
+        "step": 8
+      },
+      {
+        "learning_rate": 0.00013333333333333337,
+        "loss": 0.21553211666378047,
+        "step": 9
+      },
+      {
+        "learning_rate": 0.00012222222222222224,
+        "loss": 0.2203817038480338,
+        "step": 10
+      },
+      {
+        "learning_rate": 0.00011111111111111112,
+        "loss": 0.12009347215189337,
+        "step": 11
+      },
+      {
+        "learning_rate": 0.0001,
+        "loss": 0.13349000038579106,
+        "step": 12
+      },
+      {
+        "learning_rate": 8.888888888888889e-05,
+        "loss": 0.2332838062866358,
+        "step": 13
+      },
+      {
+        "learning_rate": 7.777777777777777e-05,
+        "loss": 0.15501184901222587,
+        "step": 14
+      },
+      {
+        "learning_rate": 6.666666666666668e-05,
+        "loss": 0.3417009674012661,
+        "step": 15
+      },
+      {
+        "learning_rate": 5.555555555555556e-05,
+        "loss": 0.08877939498052001,
+        "step": 16
+      },
+      {
+        "learning_rate": 4.4444444444444447e-05,
+        "loss": 0.05383515416178852,
+        "step": 17
+      },
+      {
+        "learning_rate": 3.333333333333333e-05,
+        "loss": 0.4667878746986389,
+        "step": 18
+      },
+      {
+        "learning_rate": 2.2222222222222233e-05,
+        "loss": 0.13963620003778487,
+        "step": 19
+      },
+      {
+        "learning_rate": 1.1111111111111117e-05,
+        "loss": 0.36576662864536047,
+        "step": 20
+      }
+    ],
+    "minimum_loss": 0.05383515416178852,
+    "steps": 20
+  },
+  "passed": false,
+  "post_sft_validation": {
+    "accuracy": 0.625,
+    "exact": 20,
+    "failure_sample_ids": [
+      "synthetic-156a520638b90785f547",
+      "synthetic-1585b07dfbb2ef7802d1",
+      "synthetic-27cb7c4d270b1c7976ca",
+      "synthetic-4ab237d0b0d2666f628e",
+      "synthetic-51aa9541238cc5bec2be",
+      "synthetic-56ee2d6a5234063fd57d",
+      "synthetic-5e76957da2136b22de98",
+      "synthetic-7b37b14f0d2533efcc09",
+      "synthetic-9c5fbc8b21e2b2a60e0b",
+      "synthetic-9e13c6bf86c88637c689",
+      "synthetic-a619c69c250254d67dc6",
+      "synthetic-e5b4601602c2393ab97b"
+    ],
+    "samples": 32
+  },
+  "pre_registration_revision": "f05699f",
+  "schema_version": "nano_train_public_sft_smoke_v3"
+}
