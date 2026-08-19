@@ -1,0 +1,183 @@
+{
+  "arms": {
+    "baseline": {
+      "by_family": {
+        "coding-and-validation": {
+          "exact": 0,
+          "samples": 8,
+          "verified": 6
+        },
+        "execution-target-final": {
+          "exact": 0,
+          "samples": 24,
+          "verified": 0
+        },
+        "execution-target-process": {
+          "exact": 24,
+          "samples": 24,
+          "verified": 24
+        },
+        "planning-and-state": {
+          "exact": 8,
+          "samples": 8,
+          "verified": 8
+        },
+        "skill-routing-and-reflection": {
+          "exact": 0,
+          "samples": 8,
+          "verified": 5
+        },
+        "tool-use-and-recovery": {
+          "exact": 0,
+          "samples": 8,
+          "verified": 8
+        }
+      },
+      "by_view": {
+        "final": {
+          "exact": 0,
+          "samples": 24,
+          "verified": 0
+        },
+        "json_preservation": {
+          "exact": 8,
+          "samples": 32,
+          "verified": 27
+        },
+        "process": {
+          "exact": 24,
+          "samples": 24,
+          "verified": 24
+        }
+      },
+      "changed_output_count": 0,
+      "changed_output_ids": [],
+      "exact": 32,
+      "pair_summary": {
+        "both_verified": 0,
+        "final_only_verified": 0,
+        "neither_verified": 0,
+        "pairs": 24,
+        "process_only_verified": 24
+      },
+      "samples": 80,
+      "verified": 51
+    },
+    "post_sft": {
+      "by_family": {
+        "coding-and-validation": {
+          "exact": 0,
+          "samples": 8,
+          "verified": 7
+        },
+        "execution-target-final": {
+          "exact": 1,
+          "samples": 24,
+          "verified": 1
+        },
+        "execution-target-process": {
+          "exact": 24,
+          "samples": 24,
+          "verified": 24
+        },
+        "planning-and-state": {
+          "exact": 8,
+          "samples": 8,
+          "verified": 8
+        },
+        "skill-routing-and-reflection": {
+          "exact": 0,
+          "samples": 8,
+          "verified": 7
+        },
+        "tool-use-and-recovery": {
+          "exact": 0,
+          "samples": 8,
+          "verified": 8
+        }
+      },
+      "by_view": {
+        "final": {
+          "exact": 1,
+          "samples": 24,
+          "verified": 1
+        },
+        "json_preservation": {
+          "exact": 8,
+          "samples": 32,
+          "verified": 30
+        },
+        "process": {
+          "exact": 24,
+          "samples": 24,
+          "verified": 24
+        }
+      },
+      "changed_output_count": 41,
+      "changed_output_ids": [
+        "execution-0e96a0c75b469a04f54876c3",
+        "execution-124af515772d83c216378fc5",
+        "execution-127670da08a7b3b8a85b3f90",
+        "execution-149c4ef63af02a579aa9ce30",
+        "execution-1616f5d348ed9ec16f3702fd",
+        "execution-183cd1a90a985d685d39725c",
+        "execution-1a904d2f1f57fff78595b31a",
+        "execution-1b488c49ac51f87ef9b720e1",
+        "execution-1c3537f11230a21cbae912d8",
+        "execution-1d9d8c6d43630d7cc5c28a0c",
+        "execution-1dae3e71efdead686947869a",
+        "execution-1f6b6d0964dedacfec31eb2f",
+        "execution-20344905bd8551ea7590885d",
+        "execution-20ed4061539e037303325496",
+        "execution-24ad7db7946eb38917724e44",
+        "execution-2ea17f5b406e49b586d68183",
+        "execution-30081b6f635cb65e6ce1f7f3",
+        "execution-324ee114736e33336333fb96",
+        "execution-364e3169da7af05bdf7b35c7",
+        "execution-3835bde88199e26bf71d523f",
+        "execution-45d640bdbc7023b0809bedaf",
+        "execution-49b2bf1d551483f2da181739",
+        "execution-53124972df36facafc210c38",
+        "execution-6e105c78e9d70c3f5dd4a13a",
+        "execution-6ff2ad7e10e7faef4f70dd85",
+        "execution-842b66b47d4f16d3403dae54",
+        "execution-8bce9a16584ba4496a2cbb86",
+        "execution-90c416237b14fdbd1da26a22",
+        "execution-9821bc4c775c00427971e53b",
+        "execution-9a0e54f0c8f57cdb507f5e42",
+        "execution-9e5225c98348afc6c0b433ae",
+        "execution-a9508b9488e40d43854acf03",
+        "execution-c11fa92d7b42b8aa2452d428",
+        "execution-c6687ba1bee52e4eaeff893d",
+        "execution-ce1b198b51fdfc0a84820b0c",
+        "execution-d2650e3a0c43ecba8d094074",
+        "execution-e4e5b5e1b73202ad104a9a0b",
+        "execution-f2020ab5fa84b8fe93cfe417",
+        "execution-f4fca9f80bac9ba12f1c292e",
+        "execution-f64fab0c6249263bd9631ebd",
+        "execution-f88ef8237aba9c9b057a2fff"
+      ],
+      "exact": 33,
+      "pair_summary": {
+        "both_verified": 1,
+        "final_only_verified": 0,
+        "neither_verified": 0,
+        "pairs": 24,
+        "process_only_verified": 23
+      },
+      "samples": 80,
+      "verified": 55
+    }
+  },
+  "config_sha256": "b7a87ab0360383e94124c09c4b91fcb501b1219ff304b0b4531980519ea63b18",
+  "dataset_canonical_sha256": "77728a0531f18e55989c172a21fb267284aa1001c17fd62de6bcd13b9d300659",
+  "dataset_file_sha256": "295158d643f8e5822341770c86e011326ef0f5ec681fa0d98cdd5804e5725f42",
+  "experiment_id": "execution-target-paired-consistency-v1",
+  "generations_sha256": "ee05d12c0d01ad9c6ab070aeaaff1305f213277b0347c92e4c389d48c2d6909c",
+  "heldout_sample_id_sha256": "ba697ea371a7e93b9d6a6928226e339ab77043c65e3ec21be580c8b83397ec62",
+  "pair_both_verified_delta": 1,
+  "release_manifest_sha256": "f80690f4fe00cb2fc71df2f93d93e54074fa9b8c2ca0553693e3ca185b2163af",
+  "schema_version": "nano_train_paired_consistency_rescore_v1",
+  "scorer": "execution_target_family_and_pair_verifier_v1",
+  "verified_delta": 4
+}
