@@ -6,6 +6,10 @@ import json
 from nano_train.continuation import load_config as load_continuation_config
 from nano_train.continuation import run as run_continuation
 from nano_train.config import load_sft_smoke_config
+from nano_train.paired_consistency import (
+    load_config as load_paired_consistency_config,
+)
+from nano_train.paired_consistency import run as run_paired_consistency
 from nano_train.sft import run_sft_smoke
 
 
@@ -20,10 +24,16 @@ def main() -> None:
     run.add_argument("--config", required=True)
     continuation = subparsers.add_parser("anchored-continuation")
     continuation.add_argument("--config", required=True)
+    paired = subparsers.add_parser("paired-consistency")
+    paired.add_argument("--config", required=True)
 
     args = parser.parse_args()
     if args.command == "anchored-continuation":
         result = run_continuation(load_continuation_config(args.config))
+    elif args.command == "paired-consistency":
+        result = run_paired_consistency(
+            load_paired_consistency_config(args.config)
+        )
     else:
         config = load_sft_smoke_config(args.config)
     if args.command == "validate-config":

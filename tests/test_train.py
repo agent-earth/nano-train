@@ -15,6 +15,14 @@ from nano_train.continuation import (
     normalized_anchor_penalty,
     validate_choice_replay_contract,
 )
+from nano_train.paired_consistency import (
+    align_teacher_logits,
+    build_selection_contract,
+    build_step_schedule,
+    load_config as load_paired_consistency_config,
+    paired_consistency_kl,
+    target_prediction_logits,
+)
 from nano_train.data import (
     TokenizedSample,
     collate_samples,
@@ -64,6 +72,93 @@ class FakeTokenizer:
 
 
 class TrainTests(unittest.TestCase):
+    def test_paired_consistency_config_and_selection_are_frozen(self):
+        config = load_paired_consistency_config(
+            "configs/paired_consistency/execution_target_consistency_v1.json"
+        )
+        selection = build_selection_contract(config)
+        steps = build_step_schedule(selection)
+        self.assertEqual(config.max_steps, 40)
+        self.assertEqual(config.consistency_weight, 1.0)
+        self.assertTrue(config.teacher_detach)
+        self.assertEqual(len(selection["heldout_sample_ids"]), 80)
+        self.assertEqual(len(selection["pair_schedule"]), 20)
+        self.assertEqual(len(selection["json_schedule"]), 20)
+        self.assertEqual(len(steps), 40)
+        self.assertEqual(
+            [step["kind"] for step in steps],
+            ["pair", "json"] * 20,
+        )
+        prior = load_sft_smoke_config(
+            "configs/sft/execution_target_paired_smoke_v1.json"
+        )
+        self.assertFalse(
+            set(selection["heldout_sample_ids"])
+            & set(prior.train_sample_schedule)
+        )
+        self.assertFalse(
+            {
+                sample_id
+                for pair in selection["pair_schedule"]
+                for sample_id in (
+                    pair["process_sample_id"],
+                    pair["final_sample_id"],
+                )
+            }
+            & set(prior.train_sample_schedule)
+        )
+
+    def test_paired_consistency_kl_detaches_teacher(self):
+        teacher = torch.randn(3, 7, requires_grad=True)
+        student = torch.randn(3, 7, requires_grad=True)
+        loss = paired_consistency_kl(
+            teacher,
+            student,
+            temperature=1.0,
+            teacher_detach=True,
+        )
+        loss.backward()
+        self.assertIsNone(teacher.grad)
+        self.assertIsNotNone(student.grad)
+        self.assertTrue(torch.isfinite(student.grad).all())
+
+    def test_paired_consistency_kl_is_zero_for_equal_logits(self):
+        logits = torch.randn(4, 9)
+        loss = paired_consistency_kl(
+            logits,
+            logits.clone(),
+            temperature=1.0,
+            teacher_detach=True,
+        )
+        self.assertAlmostEqual(float(loss), 0.0, places=6)
+
+    def test_target_logits_align_final_suffix_and_reject_mismatch(self):
+        process_logits = torch.randn(1, 6, 11)
+        process_labels = torch.tensor([[-100, 1, 2, 3, 4, 5]])
+        final_logits = torch.randn(1, 3, 11)
+        final_labels = torch.tensor([[-100, 4, 5]])
+        teacher_logits, teacher_labels = target_prediction_logits(
+            process_logits,
+            process_labels,
+        )
+        student_logits, student_labels = target_prediction_logits(
+            final_logits,
+            final_labels,
+        )
+        aligned = align_teacher_logits(
+            teacher_logits,
+            teacher_labels,
+            student_labels,
+        )
+        self.assertEqual(aligned.shape, student_logits.shape)
+        bad_labels = torch.tensor([8, 5])
+        with self.assertRaisesRegex(ValueError, "suffix labels differ"):
+            align_teacher_logits(
+                teacher_logits,
+                teacher_labels,
+                bad_labels,
+            )
+
     def test_normalized_anchor_penalty(self):
         parameter = torch.nn.Parameter(torch.tensor([3.0, 5.0]))
         anchor = torch.tensor([1.0, 1.0])
