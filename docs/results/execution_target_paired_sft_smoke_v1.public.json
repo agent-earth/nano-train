@@ -1,0 +1,475 @@
+{
+  "adapter_validation": {
+    "nonfinite_tensors": 0,
+    "reload_success": true,
+    "stable": true,
+    "tensor_count": 32
+  },
+  "artifacts": {
+    "generations_sha256": "f077e9ad9d9c42a477399753395f05bca09695fb3a53b17278a7003d300b3656",
+    "metrics_sha256": "2a06d255724ef9ed12df3177eaaee72f019abf960d51d62fa1b58a5e008e9803",
+    "reload_validation_sha256": "726267cf1a5eb9fa9be2e30c2d5d88e3315e0df682955fd5ba73d34abd774c84",
+    "rescore_sha256": "57aba19fe463ef59c749db82cbd4c1f8cc5ecdf6f06c8c524e0b3960fea50c58"
+  },
+  "claim_boundary": "adapter \u8bad\u7ec3\u7a33\u5b9a\uff0caggregate verified \u589e\u52a0 3 \u5206\uff0c\u4f46\u5168\u90e8\u6765\u81ea JSON routing \u6539\u5584\u3002final-only execution \u4ecd\u662f 0/24\uff0cboth-verified pairs \u4ecd\u662f 0/24\u3002\u56e0\u6b64\u672c\u65b9\u6cd5\u88ab\u62d2\u7edd\uff0c\u4e0d\u5141\u8bb8\u6269\u5927\u8bad\u7ec3\u3001\u8bbf\u95ee benchmark \u6216 independent holdout\uff0c\u4e5f\u4e0d\u5141\u8bb8\u542f\u52a8 RL\u3002",
+  "decision": {
+    "accepted_local_smoke": true,
+    "aggregate_positive": true,
+    "benchmark_allowed": false,
+    "final_view_positive": false,
+    "independent_holdout_allowed": false,
+    "json_family_non_regression": true,
+    "larger_training_allowed": false,
+    "next_action": "\u62d2\u7edd\u628a\u6807\u51c6 SFT \u76f4\u63a5\u7528\u4e8e paired views \u7684 execution transfer\u3002\u4e0d\u8981\u6839\u636e\u8fd9\u7ec4 dev \u7ee7\u7eed\u641c\u7d22 steps\u3001LR\u3001seed\u3001schedule\u3001LoRA scope\u3001prompt\u3001parser \u6216 adapter weight\u3002\u4e0b\u4e00\u8f6e\u8bad\u7ec3\u524d\u5148\u8bbe\u8ba1\u663e\u5f0f consistency/distillation objective\uff0c\u628a process view \u7684\u6b63\u786e\u6700\u7ec8\u503c\u7ea6\u675f\u5230 final-only logits\u3002",
+    "pair_both_verified_positive": false,
+    "paired_execution_method_accepted": false,
+    "rl_allowed": false
+  },
+  "evaluation": {
+    "baseline": {
+      "by_family": {
+        "coding-and-validation": {
+          "exact": 0,
+          "samples": 8,
+          "verified": 7
+        },
+        "execution-target-final": {
+          "exact": 0,
+          "samples": 24,
+          "verified": 0
+        },
+        "execution-target-process": {
+          "exact": 24,
+          "samples": 24,
+          "verified": 24
+        },
+        "planning-and-state": {
+          "exact": 8,
+          "samples": 8,
+          "verified": 8
+        },
+        "skill-routing-and-reflection": {
+          "exact": 0,
+          "samples": 8,
+          "verified": 4
+        },
+        "tool-use-and-recovery": {
+          "exact": 0,
+          "samples": 8,
+          "verified": 8
+        }
+      },
+      "by_view": {
+        "final": {
+          "exact": 0,
+          "samples": 24,
+          "verified": 0
+        },
+        "json_preservation": {
+          "exact": 8,
+          "samples": 32,
+          "verified": 27
+        },
+        "process": {
+          "exact": 24,
+          "samples": 24,
+          "verified": 24
+        }
+      },
+      "changed_output_count": 0,
+      "changed_output_ids": [],
+      "exact": 32,
+      "pair_summary": {
+        "both_verified": 0,
+        "final_only_verified": 0,
+        "neither_verified": 0,
+        "pairs": 24,
+        "process_only_verified": 24
+      },
+      "samples": 80,
+      "verified": 51
+    },
+    "changed_output_count": 28,
+    "final_view_verified_delta": 0,
+    "json_family_non_regression": true,
+    "json_verified_delta": 3,
+    "pair_both_verified_delta": 0,
+    "post_sft": {
+      "by_family": {
+        "coding-and-validation": {
+          "exact": 0,
+          "samples": 8,
+          "verified": 7
+        },
+        "execution-target-final": {
+          "exact": 0,
+          "samples": 24,
+          "verified": 0
+        },
+        "execution-target-process": {
+          "exact": 24,
+          "samples": 24,
+          "verified": 24
+        },
+        "planning-and-state": {
+          "exact": 8,
+          "samples": 8,
+          "verified": 8
+        },
+        "skill-routing-and-reflection": {
+          "exact": 0,
+          "samples": 8,
+          "verified": 7
+        },
+        "tool-use-and-recovery": {
+          "exact": 0,
+          "samples": 8,
+          "verified": 8
+        }
+      },
+      "by_view": {
+        "final": {
+          "exact": 0,
+          "samples": 24,
+          "verified": 0
+        },
+        "json_preservation": {
+          "exact": 8,
+          "samples": 32,
+          "verified": 30
+        },
+        "process": {
+          "exact": 24,
+          "samples": 24,
+          "verified": 24
+        }
+      },
+      "changed_output_count": 28,
+      "changed_output_ids": [
+        "execution-000d4b6a8412ca3ea1a29960",
+        "execution-1cd2c52cc38cd6681e4f6c32",
+        "execution-1e039b9e6e4fd7f47e1d070c",
+        "execution-1fe938b87ee5c165a3bebe8d",
+        "execution-2c62bdbfbf0ac71afe77b2e4",
+        "execution-3d7ef7195d91fb911599de48",
+        "execution-4414524e87acc10325815aeb",
+        "execution-4e5056993ed02b1b83291745",
+        "execution-642345f0b1175fc4c655f3dc",
+        "execution-74ea0f4cff0a1f74648342e4",
+        "execution-84b69f9fdc56b19125e13455",
+        "execution-8e2cf08c86fb1155fe394d01",
+        "execution-9e76d2f58da22af0422fd629",
+        "execution-a27bfd284cf63f4148892fd8",
+        "execution-ae4ca71f6b4e6fcab9d0ad6c",
+        "execution-aeadcf59405f87d7cdb3da60",
+        "execution-b89c7831da2d4df9c94671a0",
+        "execution-b9c56554bcb0d8250cafad7f",
+        "execution-bf7e6190d4bc64311cf45fa2",
+        "execution-cebe0dea1519576bb4bc7507",
+        "execution-d0eb0822d17f5b12e87c557e",
+        "execution-d934c077db554448ee0a7ac9",
+        "execution-e50faa916958059fc28107ff",
+        "execution-ed520ece43995931d7f52159",
+        "execution-eec0fd98625ad2ab421e9762",
+        "execution-f044127f42568c7d65b22197",
+        "execution-f32946640c483913d1c8acc5",
+        "execution-fd2eb47b8d93a1e6b4ef2785"
+      ],
+      "exact": 32,
+      "pair_summary": {
+        "both_verified": 0,
+        "final_only_verified": 0,
+        "neither_verified": 0,
+        "pairs": 24,
+        "process_only_verified": 24
+      },
+      "samples": 80,
+      "verified": 54
+    },
+    "process_view_verified_delta": 0,
+    "reload_matches": true,
+    "reload_peak_allocated_gib": 15.92706823348999,
+    "verified_delta": 3
+  },
+  "experiment_id": "execution-target-paired-sft-smoke-v1",
+  "failure_analysis": {
+    "baseline_both_verified_pairs": 0,
+    "baseline_process_only_pairs": 24,
+    "changed_final_case_count": 4,
+    "changed_final_cases": [
+      {
+        "baseline": "FINAL: 344",
+        "expected": "FINAL: 521",
+        "expression": "(145 + 43) * 3 - 43",
+        "pair_id": "dev-relation-003",
+        "post_sft": "FINAL: 374",
+        "sample_id": "execution-3d7ef7195d91fb911599de48"
+      },
+      {
+        "baseline": "FINAL: 514",
+        "expected": "FINAL: 493",
+        "expression": "(225 + 43) * 2 - 43",
+        "pair_id": "dev-relation-008",
+        "post_sft": "FINAL: 264",
+        "sample_id": "execution-9e76d2f58da22af0422fd629"
+      },
+      {
+        "baseline": "FINAL: 804",
+        "expected": "FINAL: 761",
+        "expression": "(225 + 43) * 3 - 43",
+        "pair_id": "dev-relation-009",
+        "post_sft": "FINAL: 808",
+        "sample_id": "execution-1fe938b87ee5c165a3bebe8d"
+      },
+      {
+        "baseline": "FINAL: 1374",
+        "expected": "FINAL: 1273",
+        "expression": "(385 + 59) * 3 - 59",
+        "pair_id": "dev-relation-023",
+        "post_sft": "FINAL: 1376",
+        "sample_id": "execution-a27bfd284cf63f4148892fd8"
+      }
+    ],
+    "mechanism": "The base model already executes all 24 process views. Standard SFT changes some final-only outputs but never makes one correct, so the paired supervision does not transfer the verified process result into the final-only contract.",
+    "post_both_verified_pairs": 0,
+    "post_process_only_pairs": 24
+  },
+  "identity": {
+    "adapter_sha256": "a12b90ce3961edd3b8f256ea7642c174880730a1352c247342d0dedd2047ffe8",
+    "config_sha256": "7dddcad143d37338ab2bd572e0fe540f1e55cbaf14893fafde2da460f10851d7",
+    "dataset_canonical_sha256": "77728a0531f18e55989c172a21fb267284aa1001c17fd62de6bcd13b9d300659",
+    "dataset_file_sha256": "295158d643f8e5822341770c86e011326ef0f5ec681fa0d98cdd5804e5725f42",
+    "preregister_commit": "09f5747",
+    "preregister_sha256": "c549856f3ce2ded880392d65c71620c724929f2c6fd3bc90edc7d0745300a5b9",
+    "release_manifest_sha256": "f80690f4fe00cb2fc71df2f93d93e54074fa9b8c2ca0553693e3ca185b2163af"
+  },
+  "method": {
+    "schedule_matches": true,
+    "scheduled_complete_pairs": 10,
+    "scheduled_json_by_family": {
+      "coding-and-validation": 5,
+      "planning-and-state": 5,
+      "skill-routing-and-reflection": 5,
+      "tool-use-and-recovery": 5
+    },
+    "scheduled_train_rows": 40,
+    "scheduled_train_sample_id_sha256": "a16782d6465215757737459227fb66b4b758deb1c8bb610557d383dea9ab966b",
+    "scheduled_views": {
+      "final": 10,
+      "json_preservation": 20,
+      "process": 10
+    },
+    "validation_sample_id_sha256": "184ac88ec7184e18fd20619cd4b66be7acadf929c78f487546281518012951d1"
+  },
+  "schema_version": "nano_train_execution_target_paired_sft_public_v1",
+  "training": {
+    "loss_curve": [
+      {
+        "learning_rate": 5e-05,
+        "loss": 0.01196901872754097,
+        "step": 1
+      },
+      {
+        "learning_rate": 5e-05,
+        "loss": 1.0347527265548706,
+        "step": 2
+      },
+      {
+        "learning_rate": 4.871794871794872e-05,
+        "loss": 0.07940225303173065,
+        "step": 3
+      },
+      {
+        "learning_rate": 4.7435897435897435e-05,
+        "loss": 0.00039049822953529656,
+        "step": 4
+      },
+      {
+        "learning_rate": 4.615384615384616e-05,
+        "loss": 1.392967700958252,
+        "step": 5
+      },
+      {
+        "learning_rate": 4.4871794871794874e-05,
+        "loss": 0.11289527267217636,
+        "step": 6
+      },
+      {
+        "learning_rate": 4.358974358974359e-05,
+        "loss": 0.008463547565042973,
+        "step": 7
+      },
+      {
+        "learning_rate": 4.230769230769231e-05,
+        "loss": 0.7866007685661316,
+        "step": 8
+      },
+      {
+        "learning_rate": 4.1025641025641023e-05,
+        "loss": 0.06806778907775879,
+        "step": 9
+      },
+      {
+        "learning_rate": 3.9743589743589747e-05,
+        "loss": 0.00032089423621073365,
+        "step": 10
+      },
+      {
+        "learning_rate": 3.846153846153846e-05,
+        "loss": 1.3371250629425049,
+        "step": 11
+      },
+      {
+        "learning_rate": 3.717948717948718e-05,
+        "loss": 0.09070025384426117,
+        "step": 12
+      },
+      {
+        "learning_rate": 3.58974358974359e-05,
+        "loss": 0.009988809004426003,
+        "step": 13
+      },
+      {
+        "learning_rate": 3.461538461538462e-05,
+        "loss": 0.8356719613075256,
+        "step": 14
+      },
+      {
+        "learning_rate": 3.333333333333334e-05,
+        "loss": 0.06569469720125198,
+        "step": 15
+      },
+      {
+        "learning_rate": 3.205128205128205e-05,
+        "loss": 0.00027537040296010673,
+        "step": 16
+      },
+      {
+        "learning_rate": 3.0769230769230774e-05,
+        "loss": 1.2565343379974365,
+        "step": 17
+      },
+      {
+        "learning_rate": 2.948717948717949e-05,
+        "loss": 0.07857193052768707,
+        "step": 18
+      },
+      {
+        "learning_rate": 2.8205128205128207e-05,
+        "loss": 0.007630549371242523,
+        "step": 19
+      },
+      {
+        "learning_rate": 2.6923076923076923e-05,
+        "loss": 0.8645046353340149,
+        "step": 20
+      },
+      {
+        "learning_rate": 2.564102564102564e-05,
+        "loss": 0.06655667722225189,
+        "step": 21
+      },
+      {
+        "learning_rate": 2.4358974358974363e-05,
+        "loss": 0.000214940300793387,
+        "step": 22
+      },
+      {
+        "learning_rate": 2.307692307692308e-05,
+        "loss": 1.1546072959899902,
+        "step": 23
+      },
+      {
+        "learning_rate": 2.1794871794871795e-05,
+        "loss": 0.06760258227586746,
+        "step": 24
+      },
+      {
+        "learning_rate": 2.0512820512820512e-05,
+        "loss": 0.00932998675853014,
+        "step": 25
+      },
+      {
+        "learning_rate": 1.923076923076923e-05,
+        "loss": 0.9895774722099304,
+        "step": 26
+      },
+      {
+        "learning_rate": 1.7948717948717948e-05,
+        "loss": 0.05992046371102333,
+        "step": 27
+      },
+      {
+        "learning_rate": 1.666666666666667e-05,
+        "loss": 0.00018600223120301962,
+        "step": 28
+      },
+      {
+        "learning_rate": 1.5384615384615387e-05,
+        "loss": 1.2707302570343018,
+        "step": 29
+      },
+      {
+        "learning_rate": 1.4102564102564104e-05,
+        "loss": 0.0706077441573143,
+        "step": 30
+      },
+      {
+        "learning_rate": 1.282051282051282e-05,
+        "loss": 0.006901092827320099,
+        "step": 31
+      },
+      {
+        "learning_rate": 1.1538461538461536e-05,
+        "loss": 0.6532498598098755,
+        "step": 32
+      },
+      {
+        "learning_rate": 1.025641025641026e-05,
+        "loss": 0.008094525896012783,
+        "step": 33
+      },
+      {
+        "learning_rate": 8.974358974358976e-06,
+        "loss": 1.0070749521255493,
+        "step": 34
+      },
+      {
+        "learning_rate": 7.692307692307694e-06,
+        "loss": 0.006963732186704874,
+        "step": 35
+      },
+      {
+        "learning_rate": 6.41025641025641e-06,
+        "loss": 0.9551787376403809,
+        "step": 36
+      },
+      {
+        "learning_rate": 5.128205128205127e-06,
+        "loss": 0.0069897049106657505,
+        "step": 37
+      },
+      {
+        "learning_rate": 3.846153846153843e-06,
+        "loss": 0.8559117913246155,
+        "step": 38
+      },
+      {
+        "learning_rate": 2.564102564102566e-06,
+        "loss": 0.007872972637414932,
+        "step": 39
+      },
+      {
+        "learning_rate": 1.282051282051283e-06,
+        "loss": 0.7769546508789062,
+        "step": 40
+      }
+    ],
+    "peak_allocated_gib": 18.280276775360107,
+    "steps": 40,
+    "train_rows_available": 512,
+    "trainable_parameters": 917504,
+    "validation_rows": 80,
+    "wall_seconds": 617.8618750572205
+  }
+}
