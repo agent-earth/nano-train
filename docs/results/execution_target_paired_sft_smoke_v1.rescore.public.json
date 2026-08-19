@@ -1,0 +1,169 @@
+{
+  "arms": {
+    "baseline": {
+      "by_family": {
+        "coding-and-validation": {
+          "exact": 0,
+          "samples": 8,
+          "verified": 7
+        },
+        "execution-target-final": {
+          "exact": 0,
+          "samples": 24,
+          "verified": 0
+        },
+        "execution-target-process": {
+          "exact": 24,
+          "samples": 24,
+          "verified": 24
+        },
+        "planning-and-state": {
+          "exact": 8,
+          "samples": 8,
+          "verified": 8
+        },
+        "skill-routing-and-reflection": {
+          "exact": 0,
+          "samples": 8,
+          "verified": 4
+        },
+        "tool-use-and-recovery": {
+          "exact": 0,
+          "samples": 8,
+          "verified": 8
+        }
+      },
+      "by_view": {
+        "final": {
+          "exact": 0,
+          "samples": 24,
+          "verified": 0
+        },
+        "json_preservation": {
+          "exact": 8,
+          "samples": 32,
+          "verified": 27
+        },
+        "process": {
+          "exact": 24,
+          "samples": 24,
+          "verified": 24
+        }
+      },
+      "changed_output_count": 0,
+      "changed_output_ids": [],
+      "exact": 32,
+      "pair_summary": {
+        "both_verified": 0,
+        "final_only_verified": 0,
+        "neither_verified": 0,
+        "pairs": 24,
+        "process_only_verified": 24
+      },
+      "samples": 80,
+      "verified": 51
+    },
+    "post_sft": {
+      "by_family": {
+        "coding-and-validation": {
+          "exact": 0,
+          "samples": 8,
+          "verified": 7
+        },
+        "execution-target-final": {
+          "exact": 0,
+          "samples": 24,
+          "verified": 0
+        },
+        "execution-target-process": {
+          "exact": 24,
+          "samples": 24,
+          "verified": 24
+        },
+        "planning-and-state": {
+          "exact": 8,
+          "samples": 8,
+          "verified": 8
+        },
+        "skill-routing-and-reflection": {
+          "exact": 0,
+          "samples": 8,
+          "verified": 7
+        },
+        "tool-use-and-recovery": {
+          "exact": 0,
+          "samples": 8,
+          "verified": 8
+        }
+      },
+      "by_view": {
+        "final": {
+          "exact": 0,
+          "samples": 24,
+          "verified": 0
+        },
+        "json_preservation": {
+          "exact": 8,
+          "samples": 32,
+          "verified": 30
+        },
+        "process": {
+          "exact": 24,
+          "samples": 24,
+          "verified": 24
+        }
+      },
+      "changed_output_count": 28,
+      "changed_output_ids": [
+        "execution-000d4b6a8412ca3ea1a29960",
+        "execution-1cd2c52cc38cd6681e4f6c32",
+        "execution-1e039b9e6e4fd7f47e1d070c",
+        "execution-1fe938b87ee5c165a3bebe8d",
+        "execution-2c62bdbfbf0ac71afe77b2e4",
+        "execution-3d7ef7195d91fb911599de48",
+        "execution-4414524e87acc10325815aeb",
+        "execution-4e5056993ed02b1b83291745",
+        "execution-642345f0b1175fc4c655f3dc",
+        "execution-74ea0f4cff0a1f74648342e4",
+        "execution-84b69f9fdc56b19125e13455",
+        "execution-8e2cf08c86fb1155fe394d01",
+        "execution-9e76d2f58da22af0422fd629",
+        "execution-a27bfd284cf63f4148892fd8",
+        "execution-ae4ca71f6b4e6fcab9d0ad6c",
+        "execution-aeadcf59405f87d7cdb3da60",
+        "execution-b89c7831da2d4df9c94671a0",
+        "execution-b9c56554bcb0d8250cafad7f",
+        "execution-bf7e6190d4bc64311cf45fa2",
+        "execution-cebe0dea1519576bb4bc7507",
+        "execution-d0eb0822d17f5b12e87c557e",
+        "execution-d934c077db554448ee0a7ac9",
+        "execution-e50faa916958059fc28107ff",
+        "execution-ed520ece43995931d7f52159",
+        "execution-eec0fd98625ad2ab421e9762",
+        "execution-f044127f42568c7d65b22197",
+        "execution-f32946640c483913d1c8acc5",
+        "execution-fd2eb47b8d93a1e6b4ef2785"
+      ],
+      "exact": 32,
+      "pair_summary": {
+        "both_verified": 0,
+        "final_only_verified": 0,
+        "neither_verified": 0,
+        "pairs": 24,
+        "process_only_verified": 24
+      },
+      "samples": 80,
+      "verified": 54
+    }
+  },
+  "config_sha256": "7dddcad143d37338ab2bd572e0fe540f1e55cbaf14893fafde2da460f10851d7",
+  "dataset_canonical_sha256": "77728a0531f18e55989c172a21fb267284aa1001c17fd62de6bcd13b9d300659",
+  "dataset_file_sha256": "295158d643f8e5822341770c86e011326ef0f5ec681fa0d98cdd5804e5725f42",
+  "experiment_id": "execution-target-paired-sft-smoke-v1",
+  "generations_sha256": "f077e9ad9d9c42a477399753395f05bca09695fb3a53b17278a7003d300b3656",
+  "pair_both_verified_delta": 0,
+  "release_manifest_sha256": "f80690f4fe00cb2fc71df2f93d93e54074fa9b8c2ca0553693e3ca185b2163af",
+  "schema_version": "nano_train_execution_target_rescore_v1",
+  "scorer": "execution_target_family_and_pair_verifier_v1",
+  "verified_delta": 3
+}
