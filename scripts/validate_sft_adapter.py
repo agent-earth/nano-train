@@ -13,6 +13,7 @@ from transformers import AutoTokenizer, Qwen3_5ForCausalLM
 from nano_train.config import load_sft_smoke_config
 from nano_train.data import (
     load_analog_dataset,
+    load_execution_target_dataset,
     load_skill_release_dataset,
     tokenize_samples,
 )
@@ -52,6 +53,11 @@ def main() -> None:
             validation_start_per_family=(
                 config.validation_start_per_family
             ),
+        )
+    elif config.dataset_schema == "execution_target_json_v1":
+        dataset = load_execution_target_dataset(
+            config.dataset_path,
+            config.release_manifest_path or "",
         )
     else:
         dataset = load_analog_dataset(config.dataset_path)

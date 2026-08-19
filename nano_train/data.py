@@ -86,6 +86,25 @@ def _arithmetic_constants(expression: str) -> set[str]:
 
 
 def semantic_output_valid(sample: TokenizedSample, output: str) -> bool:
+    if sample.format_family == "execution_target_final":
+        verifier = sample.verifier or {}
+        task_spec = sample.task_spec or {}
+        expression = task_spec.get("expression")
+        match = re.fullmatch(
+            r"FINAL: ([-+]?(?:[0-9]+(?:\.[0-9]+)?|\.[0-9]+))",
+            output.strip(),
+        )
+        if (
+            verifier.get("kind") != "safe_execution_receipt_v1"
+            or not isinstance(expression, str)
+            or match is None
+        ):
+            return False
+        try:
+            expected = format_number(evaluate_arithmetic(expression))
+        except (SyntaxError, ValueError, ZeroDivisionError, OverflowError):
+            return False
+        return match.group(1) == expected
     if sample.format_family == "skill_release_exact":
         return skill_release_output_valid(
             sample.task_family,
@@ -293,6 +312,37 @@ def skill_release_output_valid(
     return False
 
 
+def execution_target_output_valid(
+    task_family: str,
+    view: str,
+    task_spec: dict[str, Any] | None,
+    verifier: dict[str, Any] | None,
+    output: str,
+) -> bool:
+    format_family = {
+        "process": "process_trace_numeric",
+        "final": "execution_target_final",
+        "json_preservation": "skill_release_exact",
+    }.get(view)
+    if format_family is None:
+        return False
+    return semantic_output_valid(
+        TokenizedSample(
+            sample_id="execution-target-rescore",
+            split="validation",
+            input_ids=[],
+            labels=[],
+            prompt_ids=[],
+            target="",
+            format_family=format_family,
+            verifier=verifier,
+            task_family=task_family,
+            task_spec=task_spec,
+        ),
+        output,
+    )
+
+
 def _json_object(output: str) -> dict[str, Any] | None:
     try:
         value = json.loads(output)
@@ -446,6 +496,105 @@ def load_skill_release_dataset(
             "path": str(release_path),
             "sha256": _sha256_file(release_path),
             "accepted_jsonl_sha256": expected_sha256,
+        },
+        "samples": samples,
+    }
+
+
+def load_execution_target_dataset(
+    path: str | Path,
+    release_manifest_path: str | Path,
+) -> dict[str, Any]:
+    dataset_path = Path(path)
+    release_path = Path(release_manifest_path)
+    dataset = json.loads(dataset_path.read_text(encoding="utf-8"))
+    release = json.loads(release_path.read_text(encoding="utf-8"))
+    if dataset.get("schema_version") != "nano_execution_target_dataset_v1":
+        raise ValueError("unsupported execution-target dataset schema")
+    if release.get("schema_version") != "nano_execution_target_release_v1":
+        raise ValueError("unsupported execution-target release schema")
+    if release.get("training_unblocked") is not True:
+        raise ValueError("execution-target release is not training-unblocked")
+    checks = release.get("checks")
+    if not isinstance(checks, dict) or len(checks) < 20 or not all(checks.values()):
+        raise ValueError("execution-target release checks are incomplete")
+    canonical_sha256 = hashlib.sha256(
+        json.dumps(
+            dataset,
+            sort_keys=True,
+            separators=(",", ":"),
+            ensure_ascii=False,
+        ).encode("utf-8")
+    ).hexdigest()
+    if canonical_sha256 != release.get("source", {}).get(
+        "dataset_canonical_sha256"
+    ):
+        raise ValueError("execution-target dataset identity mismatch")
+    rows = dataset.get("samples")
+    if not isinstance(rows, list) or not rows:
+        raise ValueError("execution-target dataset contains no samples")
+    samples = []
+    seen_ids = set()
+    for row in rows:
+        sample_id = str(row.get("sample_id", ""))
+        if not sample_id or sample_id in seen_ids:
+            raise ValueError("execution-target sample IDs are invalid")
+        seen_ids.add(sample_id)
+        split = row.get("split")
+        if split not in {"train", "dev"}:
+            raise ValueError("execution-target sample has unsupported split")
+        if row.get("training_eligible") is not (split == "train"):
+            raise ValueError("execution-target training eligibility mismatch")
+        messages = row.get("messages")
+        if (
+            not isinstance(messages, list)
+            or len(messages) != 3
+            or [message.get("role") for message in messages]
+            != ["system", "user", "assistant"]
+        ):
+            raise ValueError("execution-target sample has invalid messages")
+        view = row.get("view")
+        format_family = {
+            "process": "process_trace_numeric",
+            "final": "execution_target_final",
+            "json_preservation": "skill_release_exact",
+        }.get(view)
+        if format_family is None:
+            raise ValueError("execution-target sample has unsupported view")
+        samples.append(
+            {
+                "sample_id": sample_id,
+                "split": "validation" if split == "dev" else "train",
+                "task_family": str(row.get("task_family", "")),
+                "format_family": format_family,
+                "generation_rule": "execution_target_paired_v1",
+                "training_eligible": split == "train",
+                "messages": messages,
+                "verifier": row.get("verifier"),
+                "task_spec": row.get("task_spec"),
+            }
+        )
+    expected = release["accepted"]
+    train_count = sum(row["split"] == "train" for row in samples)
+    dev_count = sum(row["split"] == "validation" for row in samples)
+    if (
+        train_count != expected.get("train_rows")
+        or dev_count != expected.get("dev_rows")
+    ):
+        raise ValueError("execution-target release row counts mismatch")
+    return {
+        "schema_version": "nano_analog_dataset_v1",
+        "dataset_id": release["release_id"],
+        "policy": {
+            "source_split": "non_eval_analog_only",
+            "training_allowed": True,
+            "contains_benchmark_content": False,
+        },
+        "release": {
+            "path": str(release_path),
+            "sha256": _sha256_file(release_path),
+            "dataset_canonical_sha256": canonical_sha256,
+            "dataset_file_sha256": _sha256_file(dataset_path),
         },
         "samples": samples,
     }
