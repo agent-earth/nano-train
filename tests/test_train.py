@@ -227,6 +227,28 @@ class TrainTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "gradient checkpointing"):
                 load_sft_smoke_config(path)
 
+    def test_bounded_dose_changes_only_preregistered_dose_fields(self):
+        smoke = load_sft_smoke_config(
+            "configs/sft/skill_release_long_sequence_smoke_v1.json"
+        )
+        dose = load_sft_smoke_config(
+            "configs/sft/skill_release_bounded_dose_v2.json"
+        )
+        changed = {
+            "experiment_id",
+            "output_dir",
+            "max_steps",
+            "train_samples_per_family",
+            "validation_samples_per_family",
+        }
+        for field in smoke.__dataclass_fields__:
+            if field in changed:
+                continue
+            self.assertEqual(getattr(smoke, field), getattr(dose, field), field)
+        self.assertEqual(dose.max_steps, 20)
+        self.assertEqual(dose.train_samples_per_family, 16)
+        self.assertEqual(dose.validation_samples_per_family, 4)
+
     def test_v3_changes_only_dataset_identity_fields(self):
         v2 = load_sft_smoke_config(
             "configs/sft/format_contract_smoke_v2.json"
