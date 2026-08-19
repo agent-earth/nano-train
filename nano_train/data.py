@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import ast
+import hashlib
 import math
 import operator
 import re
@@ -218,6 +219,134 @@ def load_analog_dataset(path: str | Path) -> dict[str, Any]:
     if any(sample.get("training_eligible") is not True for sample in samples):
         raise ValueError("analog dataset contains an ineligible sample")
     return dataset
+
+
+def load_skill_release_dataset(
+    path: str | Path,
+    release_manifest_path: str | Path,
+    *,
+    train_samples_per_family: int,
+    validation_samples_per_family: int,
+) -> dict[str, Any]:
+    dataset_path = Path(path)
+    release_path = Path(release_manifest_path)
+    release = json.loads(release_path.read_text(encoding="utf-8"))
+    if release.get("schema_version") != "nano_skill_sft_release_v1":
+        raise ValueError("unsupported skill SFT release schema")
+    if release.get("training_unblocked") is not True:
+        raise ValueError("skill SFT release is not training-unblocked")
+    expected_sha256 = (
+        release.get("artifacts", {}).get("accepted_jsonl_sha256")
+    )
+    if _sha256_file(dataset_path) != expected_sha256:
+        raise ValueError("skill SFT release dataset SHA256 mismatch")
+    checks = release.get("checks")
+    if not isinstance(checks, dict) or not checks or not all(checks.values()):
+        raise ValueError("skill SFT release checks are incomplete")
+
+    selected: dict[tuple[str, str], list[dict[str, Any]]] = {}
+    seen_ids = set()
+    seen_exact = set()
+    seen_semantic = set()
+    with dataset_path.open(encoding="utf-8") as handle:
+        for line_number, line in enumerate(handle, start=1):
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            if row.get("schema_version") != "nano_skill_sft_sample_v1":
+                raise ValueError(
+                    f"unsupported skill sample at line {line_number}"
+                )
+            split = row.get("split")
+            normalized_split = (
+                "validation" if split == "dev" else split
+            )
+            if normalized_split not in {"train", "validation"}:
+                raise ValueError("skill sample has unsupported split")
+            if row.get("sample_id") in seen_ids:
+                raise ValueError("skill release contains duplicate sample IDs")
+            if row.get("exact_hash") in seen_exact:
+                raise ValueError("skill release contains duplicate exact hashes")
+            if row.get("semantic_hash") in seen_semantic:
+                raise ValueError(
+                    "skill release contains duplicate semantic hashes"
+                )
+            seen_ids.add(row["sample_id"])
+            seen_exact.add(row["exact_hash"])
+            seen_semantic.add(row["semantic_hash"])
+            family = str(row.get("family_id", ""))
+            if not family:
+                raise ValueError("skill sample lacks family_id")
+            key = (normalized_split, family)
+            limit = (
+                train_samples_per_family
+                if normalized_split == "train"
+                else validation_samples_per_family
+            )
+            bucket = selected.setdefault(key, [])
+            if len(bucket) < limit:
+                messages = row.get("messages")
+                if (
+                    not isinstance(messages, list)
+                    or len(messages) < 2
+                    or messages[-1].get("role") != "assistant"
+                ):
+                    raise ValueError("skill sample has invalid messages")
+                bucket.append(
+                    {
+                        "sample_id": row["sample_id"],
+                        "split": normalized_split,
+                        "task_family": family,
+                        "format_family": "skill_release_exact",
+                        "generation_rule": "skill_release_v2",
+                        "training_eligible": True,
+                        "messages": messages,
+                        "verifier": row.get("verifier"),
+                    }
+                )
+
+    families = sorted(
+        {
+            family
+            for split, family in selected
+            if split == "train"
+        }
+    )
+    if not families:
+        raise ValueError("skill release contains no train families")
+    samples = []
+    for family in families:
+        train = selected.get(("train", family), [])
+        validation = selected.get(("validation", family), [])
+        if len(train) != train_samples_per_family:
+            raise ValueError(f"insufficient train rows for {family}")
+        if len(validation) != validation_samples_per_family:
+            raise ValueError(f"insufficient validation rows for {family}")
+        samples.extend(train)
+        samples.extend(validation)
+    return {
+        "schema_version": "nano_analog_dataset_v1",
+        "dataset_id": release["release_id"],
+        "policy": {
+            "source_split": "non_eval_analog_only",
+            "training_allowed": True,
+            "contains_benchmark_content": False,
+        },
+        "release": {
+            "path": str(release_path),
+            "sha256": _sha256_file(release_path),
+            "accepted_jsonl_sha256": expected_sha256,
+        },
+        "samples": samples,
+    }
+
+
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def tokenize_samples(
