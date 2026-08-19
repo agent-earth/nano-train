@@ -250,6 +250,27 @@ class TrainTests(unittest.TestCase):
         self.assertEqual(dose.train_samples_per_family, 16)
         self.assertEqual(dose.validation_samples_per_family, 4)
 
+    def test_expanded_lora_changes_only_method_and_identity(self):
+        dose = load_sft_smoke_config(
+            "configs/sft/skill_release_bounded_dose_v2.json"
+        )
+        expanded = load_sft_smoke_config(
+            "configs/sft/skill_release_expanded_lora_v3.json"
+        )
+        changed = {"experiment_id", "output_dir", "lora_targets"}
+        for field in dose.__dataclass_fields__:
+            if field in changed:
+                continue
+            self.assertEqual(
+                getattr(dose, field),
+                getattr(expanded, field),
+                field,
+            )
+        self.assertEqual(
+            expanded.lora_targets,
+            ("q_proj", "v_proj", "gate_proj", "up_proj", "down_proj"),
+        )
+
     def test_v3_changes_only_dataset_identity_fields(self):
         v2 = load_sft_smoke_config(
             "configs/sft/format_contract_smoke_v2.json"
