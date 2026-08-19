@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import tempfile
 import unittest
+from dataclasses import replace
 from pathlib import Path
 from types import SimpleNamespace
 from unittest import mock
@@ -19,9 +20,11 @@ from nano_train.paired_consistency import (
     align_teacher_logits,
     build_selection_contract,
     build_step_schedule,
+    frozen_method_contract,
     load_config as load_paired_consistency_config,
     paired_consistency_kl,
     target_prediction_logits,
+    validate_config as validate_paired_consistency_config,
 )
 from nano_train.data import (
     TokenizedSample,
@@ -53,6 +56,9 @@ from scripts.rescore_execution_target_generations import (
     score_execution_target_generations,
 )
 from scripts.build_lora_delta_composition import compose_pair
+from scripts.preregister_paired_consistency_replication_v1 import (
+    build_receipt as build_consistency_replication_receipt,
+)
 
 
 class FakeTokenizer:
@@ -72,6 +78,44 @@ class FakeTokenizer:
 
     def __call__(self, text, *, add_special_tokens=False):
         return SimpleNamespace(input_ids=[ord(char) % 251 + 1 for char in text])
+
+
+class StableWordTokenizer:
+    eos_token = "<eos>"
+    pad_token_id = 0
+
+    def __init__(self):
+        self.token_ids = {}
+
+    def apply_chat_template(
+        self,
+        messages,
+        *,
+        tokenize,
+        add_generation_prompt,
+        enable_thinking,
+    ):
+        if (
+            tokenize
+            or not add_generation_prompt
+            or enable_thinking
+        ):
+            raise AssertionError("unexpected chat template options")
+        return "\n".join(
+            f"{message['role']}: {message['content']}"
+            for message in messages
+        ) + "\nassistant: "
+
+    def __call__(self, text, *, add_special_tokens=False):
+        if add_special_tokens:
+            raise AssertionError("special tokens must remain disabled")
+        tokens = text.replace("\n", " \n ").split()
+        input_ids = []
+        for token in tokens:
+            if token not in self.token_ids:
+                self.token_ids[token] = len(self.token_ids) + 1
+            input_ids.append(self.token_ids[token])
+        return SimpleNamespace(input_ids=input_ids)
 
 
 class TrainTests(unittest.TestCase):
@@ -109,6 +153,128 @@ class TrainTests(unittest.TestCase):
                 )
             }
             & set(prior.train_sample_schedule)
+        )
+
+    def test_consistency_replication_selection_and_method_are_frozen(self):
+        prior = load_paired_consistency_config(
+            "configs/paired_consistency/execution_target_consistency_v1.json"
+        )
+        config = load_paired_consistency_config(
+            "configs/paired_consistency/consistency_replication_v1.json"
+        )
+        selection = build_selection_contract(config)
+        steps = build_step_schedule(selection)
+        self.assertEqual(
+            frozen_method_contract(config),
+            frozen_method_contract(prior),
+        )
+        self.assertEqual(len(selection["heldout_sample_ids"]), 512)
+        self.assertEqual(len(selection["heldout_pair_schedule"]), 192)
+        self.assertEqual(len(selection["pair_schedule"]), 20)
+        self.assertEqual(len(selection["json_schedule"]), 20)
+        self.assertEqual(len(steps), 40)
+        self.assertEqual(
+            [step["kind"] for step in steps],
+            ["pair", "json"] * 20,
+        )
+        raw_by_id = selection["raw_by_id"]
+        train_ids = {
+            sample_id
+            for pair in selection["pair_schedule"]
+            for sample_id in (
+                pair["process_sample_id"],
+                pair["final_sample_id"],
+            )
+        } | set(selection["json_schedule"])
+        heldout_ids = set(selection["heldout_sample_ids"])
+        self.assertFalse(train_ids & heldout_ids)
+        self.assertEqual(
+            {raw_by_id[sample_id]["split"] for sample_id in train_ids},
+            {"train"},
+        )
+        self.assertEqual(
+            {raw_by_id[sample_id]["split"] for sample_id in heldout_ids},
+            {"dev"},
+        )
+        self.assertEqual(
+            selection["hashes"],
+            {
+                "heldout_sample_id_sha256": (
+                    "be95a2c45b7067bb74bf9d35d7170cb5d7940057799279fc"
+                    "7480e83961dcf461"
+                ),
+                "pair_ids_sha256": (
+                    "cb090086853bd0d22a6e550a35eebb316a1c23b413e51aa2"
+                    "cacf247079cec5de"
+                ),
+                "json_ids_sha256": (
+                    "f0b02bad64c15d0b923321fa29b7b3819eb3d682ab962325"
+                    "cb6e4f5281381e59"
+                ),
+                "prior_train_ids_sha256": (
+                    "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934c"
+                    "a495991b7852b855"
+                ),
+                "source_dev_ids_sha256": (
+                    "be95a2c45b7067bb74bf9d35d7170cb5d7940057799279fc"
+                    "7480e83961dcf461"
+                ),
+            },
+        )
+
+    def test_consistency_replication_significance_gates_are_frozen(self):
+        config = load_paired_consistency_config(
+            "configs/paired_consistency/consistency_replication_v1.json"
+        )
+        for field, value in (
+            ("bootstrap_samples", 9_999),
+            ("mcnemar_alpha", 0.1),
+            ("require_ci_lower_positive", False),
+            ("minimum_final_only_wins", 5),
+            ("maximum_final_only_losses", 1),
+        ):
+            with self.subTest(field=field):
+                with self.assertRaisesRegex(
+                    ValueError,
+                    f"freezes {field}",
+                ):
+                    validate_paired_consistency_config(
+                        replace(config, **{field: value})
+                    )
+
+    def test_consistency_replication_receipt_is_deterministic(self):
+        first = build_consistency_replication_receipt(
+            tokenizer=StableWordTokenizer()
+        )
+        second = build_consistency_replication_receipt(
+            tokenizer=StableWordTokenizer()
+        )
+        self.assertEqual(first, second)
+        self.assertEqual(first["release"]["accepted"]["train_tokens"], 405007)
+        self.assertEqual(first["release"]["checks_passed"], 30)
+        self.assertEqual(first["release"]["checks_total"], 30)
+        self.assertEqual(first["selection"]["optimizer_steps"], 40)
+        self.assertEqual(first["selection"]["heldout_samples"], 512)
+        self.assertEqual(first["selection"]["heldout_pairs"], 192)
+        self.assertEqual(first["selection"]["train_heldout_overlap"], 0)
+        self.assertTrue(first["selection"]["max_length_bound_pass"])
+        self.assertTrue(first["selection"]["pair_suffix_alignment_pass"])
+        self.assertEqual(
+            len(first["selection"]["train_pair_suffix_alignment"]),
+            20,
+        )
+        self.assertEqual(
+            len(first["selection"]["heldout_pair_suffix_alignment"]),
+            192,
+        )
+        self.assertFalse(first["execution_boundary"]["training_started"])
+        self.assertFalse(
+            first["execution_boundary"]["model_generation_started"]
+        )
+        self.assertTrue(
+            first["method_lock"][
+                "matches_execution_target_consistency_v1"
+            ]
         )
 
     def test_paired_consistency_kl_detaches_teacher(self):

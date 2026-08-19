@@ -1,0 +1,2808 @@
+{
+  "claim_boundary": "This receipt freezes one unchanged consistency-v1 replication on 192 fresh development pairs and 128 fresh JSON rows before any model training or generation. It is local synthetic replication evidence, not benchmark or independent-holdout evidence.",
+  "decision_rule": {
+    "benchmark_allowed": false,
+    "forbidden_after_observation": [
+      "objective_search",
+      "loss_weight_search",
+      "temperature_search",
+      "teacher_detach_search",
+      "heldout_selection_search",
+      "pair_schedule_search",
+      "json_schedule_search",
+      "step_search",
+      "learning_rate_search",
+      "seed_search",
+      "lora_scope_search",
+      "prompt_search",
+      "parser_search",
+      "adapter_weight_search",
+      "threshold_search"
+    ],
+    "independent_holdout_allowed": false,
+    "larger_training_allowed": false,
+    "method_accepted": "stable_and_reloadable AND aggregate/final/pair bootstrap CI lower bounds > 0 AND aggregate/final/pair exact McNemar p < 0.05 AND final-only wins >= 6 AND final-only losses = 0 AND every JSON family is non-regressing",
+    "rl_allowed": false
+  },
+  "execution_boundary": {
+    "model_generation_started": false,
+    "this_commit_only_preregisters": true,
+    "training_started": false
+  },
+  "experiment_id": "paired-consistency-replication-v1",
+  "identity": {
+    "config_sha256": "534c9d7794643a0a4a4c242995bfe931c9834844bbd20acb6bfe97f42e9a6c8f",
+    "data_commit": "2d3cfae",
+    "dataset_canonical_sha256": "40514440b95b94981a756a8f325d5a1111db1ec7bc94125875e40e8bc3898797",
+    "dataset_file_sha256": "5020beffdc0b707a876bf24d36195a9cdf833cb894e089f3f3aa3676b2b6472e",
+    "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+    "prior_consistency_config_sha256": "b7a87ab0360383e94124c09c4b91fcb501b1219ff304b0b4531980519ea63b18",
+    "release_manifest_sha256": "db649d2e603a7a24305d01ed108f2fa4f640f1c315a4e07cf4278c5a7534856a",
+    "source_result_sha256": "76968fc034c0bf6543d3e140129280140274d7296d93834e569de53cd1bfb856"
+  },
+  "method_lock": {
+    "frozen_fields": {
+      "consistency_temperature": 1.0,
+      "consistency_weight": 1.0,
+      "dtype": "float32",
+      "final_ce_weight": 0.5,
+      "generation_max_new_tokens": 160,
+      "gradient_checkpointing": true,
+      "learning_rate": 5e-05,
+      "lora_alpha": 16,
+      "lora_dropout": 0.0,
+      "lora_r": 8,
+      "lora_targets": [
+        "q_proj",
+        "v_proj"
+      ],
+      "max_length": 704,
+      "max_steps": 40,
+      "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+      "process_ce_weight": 0.5,
+      "seed": 20260819,
+      "teacher_detach": true,
+      "train_json_per_family": 5,
+      "train_pair_count": 20,
+      "warmup_steps": 1,
+      "weight_decay": 0.0
+    },
+    "matches_execution_target_consistency_v1": true,
+    "objective": {
+      "gradient_policy": "process CE backward, detach aligned teacher suffix logits, then final CE plus KL backward before one optimizer step",
+      "json_step_total": "json_ce",
+      "pair_step_total": "0.5 * process_ce + 0.5 * final_ce + 1.0 * KL(detach(process_final_logits) || final_logits)"
+    }
+  },
+  "release": {
+    "accepted": {
+      "dev_json_by_family": {
+        "coding-and-validation": 32,
+        "planning-and-state": 32,
+        "skill-routing-and-reflection": 32,
+        "tool-use-and-recovery": 32
+      },
+      "dev_pairs": 192,
+      "dev_rows": 512,
+      "rows": 1152,
+      "train_json_by_family": {
+        "coding-and-validation": 64,
+        "planning-and-state": 64,
+        "skill-routing-and-reflection": 64,
+        "tool-use-and-recovery": 64
+      },
+      "train_pairs": 192,
+      "train_rows": 640,
+      "train_tokens": 405007
+    },
+    "checks_passed": 30,
+    "checks_total": 30,
+    "release_id": "paired-consistency-replication-v1",
+    "scope": "release eligibility only; it is not evidence that the model method improves",
+    "training_unblocked": true
+  },
+  "schema_version": "nano_train_paired_consistency_replication_preregister_v1",
+  "selection": {
+    "hashes": {
+      "heldout_sample_id_sha256": "be95a2c45b7067bb74bf9d35d7170cb5d7940057799279fc7480e83961dcf461",
+      "json_ids_sha256": "f0b02bad64c15d0b923321fa29b7b3819eb3d682ab962325cb6e4f5281381e59",
+      "pair_ids_sha256": "cb090086853bd0d22a6e550a35eebb316a1c23b413e51aa2cacf247079cec5de",
+      "prior_train_ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_dev_ids_sha256": "be95a2c45b7067bb74bf9d35d7170cb5d7940057799279fc7480e83961dcf461"
+    },
+    "heldout_composition": {
+      "coding-and-validation": 32,
+      "final": 192,
+      "planning-and-state": 32,
+      "process": 192,
+      "skill-routing-and-reflection": 32,
+      "tool-use-and-recovery": 32
+    },
+    "heldout_full_sequence_max": 645,
+    "heldout_pair_schedule": [
+      {
+        "final_sample_id": "replication-f53c7787e6e1f6b8785095bb",
+        "pair_id": "dev-replication-000",
+        "process_sample_id": "replication-1c3a535f52529b0661f80fae"
+      },
+      {
+        "final_sample_id": "replication-95ef45a494d248a63bbe7a21",
+        "pair_id": "dev-replication-001",
+        "process_sample_id": "replication-1263543c73f2abe2c7eed65a"
+      },
+      {
+        "final_sample_id": "replication-5f24ee9723f72be5842f2a3e",
+        "pair_id": "dev-replication-002",
+        "process_sample_id": "replication-936e3bb13716af6654cb5602"
+      },
+      {
+        "final_sample_id": "replication-c0f27bb92ae7488e245e9d01",
+        "pair_id": "dev-replication-003",
+        "process_sample_id": "replication-5160195a80cae1a2ef173f09"
+      },
+      {
+        "final_sample_id": "replication-331996844a965846a61b8ca7",
+        "pair_id": "dev-replication-004",
+        "process_sample_id": "replication-7dc3c5faa19e4b5154bdc689"
+      },
+      {
+        "final_sample_id": "replication-be8ea494206c4c38fbffab1f",
+        "pair_id": "dev-replication-005",
+        "process_sample_id": "replication-112ed0dd630235404bf61720"
+      },
+      {
+        "final_sample_id": "replication-dfaded727da8e494b6e58259",
+        "pair_id": "dev-replication-006",
+        "process_sample_id": "replication-062741daad98e7b4bc9ddb8c"
+      },
+      {
+        "final_sample_id": "replication-21ded3b388ae08f503b6cef0",
+        "pair_id": "dev-replication-007",
+        "process_sample_id": "replication-97dff76df8d6ac1dcfe071dc"
+      },
+      {
+        "final_sample_id": "replication-eff8636678e9d2ea11dd4966",
+        "pair_id": "dev-replication-008",
+        "process_sample_id": "replication-a7681161401919f7533898ec"
+      },
+      {
+        "final_sample_id": "replication-09e9bd81ae111a4424564499",
+        "pair_id": "dev-replication-009",
+        "process_sample_id": "replication-a7c027dc915bf69686d45106"
+      },
+      {
+        "final_sample_id": "replication-99162742df6a9a4cd0cfdde3",
+        "pair_id": "dev-replication-010",
+        "process_sample_id": "replication-4344b5f36b544490ea101e48"
+      },
+      {
+        "final_sample_id": "replication-bac0c6fb269e900dbec4241a",
+        "pair_id": "dev-replication-011",
+        "process_sample_id": "replication-a0b24094856006f237597b88"
+      },
+      {
+        "final_sample_id": "replication-5f86686fa80c3d35886ec40a",
+        "pair_id": "dev-replication-012",
+        "process_sample_id": "replication-e70000aefbd96746e603d2c5"
+      },
+      {
+        "final_sample_id": "replication-e616b1afea3993fc15f2e7b6",
+        "pair_id": "dev-replication-013",
+        "process_sample_id": "replication-35fe8184184498ae1fa49eb5"
+      },
+      {
+        "final_sample_id": "replication-296f84d22cfea93082dd80f9",
+        "pair_id": "dev-replication-014",
+        "process_sample_id": "replication-32fc34be637fe59be65d1591"
+      },
+      {
+        "final_sample_id": "replication-52df84cf57c3c5580c34510d",
+        "pair_id": "dev-replication-015",
+        "process_sample_id": "replication-5da6ab817db00b580613bad1"
+      },
+      {
+        "final_sample_id": "replication-3f3632c51d0a275d9179da9b",
+        "pair_id": "dev-replication-016",
+        "process_sample_id": "replication-f22ff30f801bb9ec6de45e17"
+      },
+      {
+        "final_sample_id": "replication-e26481c8ec11e0d770c00b24",
+        "pair_id": "dev-replication-017",
+        "process_sample_id": "replication-7fb72f1562c395eda1913997"
+      },
+      {
+        "final_sample_id": "replication-3b1f198a8d0136ec1dfcd464",
+        "pair_id": "dev-replication-018",
+        "process_sample_id": "replication-4e6f824f121755e925caaedf"
+      },
+      {
+        "final_sample_id": "replication-6c14e2adc0a098154d38c263",
+        "pair_id": "dev-replication-019",
+        "process_sample_id": "replication-6ae776196db1d603d55ca6c0"
+      },
+      {
+        "final_sample_id": "replication-6e189b522b890961670e1e01",
+        "pair_id": "dev-replication-020",
+        "process_sample_id": "replication-e3f64193c8a42f2f047c71c8"
+      },
+      {
+        "final_sample_id": "replication-4e426b7c43b5982efd49c1ce",
+        "pair_id": "dev-replication-021",
+        "process_sample_id": "replication-c5cae2a1c7506e0b0e6c3ec2"
+      },
+      {
+        "final_sample_id": "replication-aedf7658829993fd23a6b4dd",
+        "pair_id": "dev-replication-022",
+        "process_sample_id": "replication-673a5186cc31bc0e8c9e4092"
+      },
+      {
+        "final_sample_id": "replication-90d856a5acb830745a62b440",
+        "pair_id": "dev-replication-023",
+        "process_sample_id": "replication-7716fc5ddd392b6c55a98079"
+      },
+      {
+        "final_sample_id": "replication-255888c8fafb35b9ae106d9c",
+        "pair_id": "dev-replication-024",
+        "process_sample_id": "replication-45e2a7b79e5f4ddf74a6a4fc"
+      },
+      {
+        "final_sample_id": "replication-a95eff66e554ec8a7c317c28",
+        "pair_id": "dev-replication-025",
+        "process_sample_id": "replication-57c8f4d3da27a0421c2b11b0"
+      },
+      {
+        "final_sample_id": "replication-307ca25a9ab7a104ab9f04a3",
+        "pair_id": "dev-replication-026",
+        "process_sample_id": "replication-bf24e2b6a53b036adb8c0b71"
+      },
+      {
+        "final_sample_id": "replication-5852752b53f512cf98225688",
+        "pair_id": "dev-replication-027",
+        "process_sample_id": "replication-a88d96eb85f404bb4dc562e9"
+      },
+      {
+        "final_sample_id": "replication-9c926c8e43ad67e6ba1c07b7",
+        "pair_id": "dev-replication-028",
+        "process_sample_id": "replication-8d4e00fdb9e703786233203e"
+      },
+      {
+        "final_sample_id": "replication-b6e0ed6d7a5188b153163f73",
+        "pair_id": "dev-replication-029",
+        "process_sample_id": "replication-e0ca44bd96cd05b80ec55d48"
+      },
+      {
+        "final_sample_id": "replication-91cf6d0246dfee7aaf698e30",
+        "pair_id": "dev-replication-030",
+        "process_sample_id": "replication-66de24d35c5441df8500825d"
+      },
+      {
+        "final_sample_id": "replication-0a4431eeced5e2e213de5d89",
+        "pair_id": "dev-replication-031",
+        "process_sample_id": "replication-7121d0def371664da8a7e020"
+      },
+      {
+        "final_sample_id": "replication-7b589d6d33bdf0bf73622c20",
+        "pair_id": "dev-replication-032",
+        "process_sample_id": "replication-99e0147b6dc0ef5ba065a3c0"
+      },
+      {
+        "final_sample_id": "replication-32af57fd87a726b66459d83f",
+        "pair_id": "dev-replication-033",
+        "process_sample_id": "replication-4439d29e9d2d06112d1e91d1"
+      },
+      {
+        "final_sample_id": "replication-53d2ff24ad88f02f8748d235",
+        "pair_id": "dev-replication-034",
+        "process_sample_id": "replication-e9796f6b35cc4d0fbfc7ea63"
+      },
+      {
+        "final_sample_id": "replication-c2e851642c9b1fa8645439d4",
+        "pair_id": "dev-replication-035",
+        "process_sample_id": "replication-db6359814b2da12bf1b352b1"
+      },
+      {
+        "final_sample_id": "replication-d784050aee94e37ef3889dd1",
+        "pair_id": "dev-replication-036",
+        "process_sample_id": "replication-12fb50f3d0f9f41602a84e12"
+      },
+      {
+        "final_sample_id": "replication-5e60a0ce5d31f7fb701bc517",
+        "pair_id": "dev-replication-037",
+        "process_sample_id": "replication-d67fba9b56b64d5e6cb3ceb3"
+      },
+      {
+        "final_sample_id": "replication-304498a5b9cd57296f58b83e",
+        "pair_id": "dev-replication-038",
+        "process_sample_id": "replication-7a55ff9f1976f08ace3a7e68"
+      },
+      {
+        "final_sample_id": "replication-3d431b16370850d579e48bec",
+        "pair_id": "dev-replication-039",
+        "process_sample_id": "replication-03b70d948ca85ce9dbb05cb3"
+      },
+      {
+        "final_sample_id": "replication-90c609c52a549d75c9425c33",
+        "pair_id": "dev-replication-040",
+        "process_sample_id": "replication-0bf494c32e495d31dc765a40"
+      },
+      {
+        "final_sample_id": "replication-8bc2ed644db11f7509d1d049",
+        "pair_id": "dev-replication-041",
+        "process_sample_id": "replication-ecdd7e96b7fd72a721ae6c49"
+      },
+      {
+        "final_sample_id": "replication-63ac44ffaba6a1128370ead7",
+        "pair_id": "dev-replication-042",
+        "process_sample_id": "replication-bd9a2695ee718a6367de4626"
+      },
+      {
+        "final_sample_id": "replication-4569a1f82303622e556034bd",
+        "pair_id": "dev-replication-043",
+        "process_sample_id": "replication-972a383231c5760c2753d472"
+      },
+      {
+        "final_sample_id": "replication-b410ed2642e5d92ccc42f2da",
+        "pair_id": "dev-replication-044",
+        "process_sample_id": "replication-7d23538c6b94e4affe5d957d"
+      },
+      {
+        "final_sample_id": "replication-298e8c262811fc589fb676af",
+        "pair_id": "dev-replication-045",
+        "process_sample_id": "replication-34f80c2711e4e54514c312da"
+      },
+      {
+        "final_sample_id": "replication-cfd7b827976fe9c441dcff81",
+        "pair_id": "dev-replication-046",
+        "process_sample_id": "replication-93e2c3c4030be49cec55b908"
+      },
+      {
+        "final_sample_id": "replication-401b3e8a046aeb779c1604d1",
+        "pair_id": "dev-replication-047",
+        "process_sample_id": "replication-b72c4cf565a06035bd09aa2e"
+      },
+      {
+        "final_sample_id": "replication-84fe469b5b8fe19088deb4fb",
+        "pair_id": "dev-replication-048",
+        "process_sample_id": "replication-62185c7531690a0f164a7ffa"
+      },
+      {
+        "final_sample_id": "replication-ca566afc3018a0a8b2d7f383",
+        "pair_id": "dev-replication-049",
+        "process_sample_id": "replication-d3f3608a1191bfe881d31feb"
+      },
+      {
+        "final_sample_id": "replication-a6b38b3f4757cbe241863b1f",
+        "pair_id": "dev-replication-050",
+        "process_sample_id": "replication-658a1e059a59d4d11e4e0263"
+      },
+      {
+        "final_sample_id": "replication-836f641091b6b91967b5a744",
+        "pair_id": "dev-replication-051",
+        "process_sample_id": "replication-39f4857b26ccedff80a427be"
+      },
+      {
+        "final_sample_id": "replication-b4530fffe64e4405f5b17b92",
+        "pair_id": "dev-replication-052",
+        "process_sample_id": "replication-ba2d8672430053d80a9eb8b6"
+      },
+      {
+        "final_sample_id": "replication-b47341284ff19e7517730061",
+        "pair_id": "dev-replication-053",
+        "process_sample_id": "replication-93f483ec4958e6b5674743f5"
+      },
+      {
+        "final_sample_id": "replication-ab38ea4eca9f2a60e0f0f762",
+        "pair_id": "dev-replication-054",
+        "process_sample_id": "replication-6f64f1088bb78ceedd188b0b"
+      },
+      {
+        "final_sample_id": "replication-87b05369b86a614a4ed04f08",
+        "pair_id": "dev-replication-055",
+        "process_sample_id": "replication-b01c63d52bf5a004e41adcc5"
+      },
+      {
+        "final_sample_id": "replication-baa332af00051376fec1f6a7",
+        "pair_id": "dev-replication-056",
+        "process_sample_id": "replication-0cdd963eab569700e167ffd7"
+      },
+      {
+        "final_sample_id": "replication-83833b15554c1e1318444525",
+        "pair_id": "dev-replication-057",
+        "process_sample_id": "replication-8ca7e775e7b586a59768804f"
+      },
+      {
+        "final_sample_id": "replication-4e72c8cec28d03d890f01a4a",
+        "pair_id": "dev-replication-058",
+        "process_sample_id": "replication-4583651e34cb3e0aa8442063"
+      },
+      {
+        "final_sample_id": "replication-8aaf86fe5caab3cd39382a2e",
+        "pair_id": "dev-replication-059",
+        "process_sample_id": "replication-ca8a8d5f377fb817ffb2e427"
+      },
+      {
+        "final_sample_id": "replication-3a087d485e9209ed72df9e7e",
+        "pair_id": "dev-replication-060",
+        "process_sample_id": "replication-5abc6ceb5723c248ee3f4401"
+      },
+      {
+        "final_sample_id": "replication-c750295b5e4eb562257b7c55",
+        "pair_id": "dev-replication-061",
+        "process_sample_id": "replication-3c0dde86bedb1358e65c7daa"
+      },
+      {
+        "final_sample_id": "replication-b6b6a2e357352505dd061094",
+        "pair_id": "dev-replication-062",
+        "process_sample_id": "replication-40be46636fe54d6ca1e8b221"
+      },
+      {
+        "final_sample_id": "replication-5162cf4b00a79473c5c68dca",
+        "pair_id": "dev-replication-063",
+        "process_sample_id": "replication-cdcd9989b9fdd038216ab0b0"
+      },
+      {
+        "final_sample_id": "replication-f462bfb66e2fdc9414cf9814",
+        "pair_id": "dev-replication-064",
+        "process_sample_id": "replication-568de7aea45a0aa4836bbdcf"
+      },
+      {
+        "final_sample_id": "replication-cf1ddaf0fff40642ed878b08",
+        "pair_id": "dev-replication-065",
+        "process_sample_id": "replication-31f9e7434a17281b1e99907b"
+      },
+      {
+        "final_sample_id": "replication-556d5eeebf80e6a18de2b586",
+        "pair_id": "dev-replication-066",
+        "process_sample_id": "replication-609c93cb00de67f93a9c6b94"
+      },
+      {
+        "final_sample_id": "replication-a7b564b83ec0eb4688fdf011",
+        "pair_id": "dev-replication-067",
+        "process_sample_id": "replication-67fbc7baf937ba723d849f97"
+      },
+      {
+        "final_sample_id": "replication-da3d7f6d1e545eae7258d23c",
+        "pair_id": "dev-replication-068",
+        "process_sample_id": "replication-5933467a9aaee0dcfd3a0c36"
+      },
+      {
+        "final_sample_id": "replication-c25ac74871cde95a098418b0",
+        "pair_id": "dev-replication-069",
+        "process_sample_id": "replication-7196be995d16415c87699a60"
+      },
+      {
+        "final_sample_id": "replication-e4f9d986a778359ff287c5f9",
+        "pair_id": "dev-replication-070",
+        "process_sample_id": "replication-18630d48acffb1245b01e3c9"
+      },
+      {
+        "final_sample_id": "replication-8afa4cc21f6b9fdc6b36590d",
+        "pair_id": "dev-replication-071",
+        "process_sample_id": "replication-27a0111b6e39b7e36d0596fa"
+      },
+      {
+        "final_sample_id": "replication-446af012b40bfd9ed930db89",
+        "pair_id": "dev-replication-072",
+        "process_sample_id": "replication-5b8f595cafbaab43cbd74fa3"
+      },
+      {
+        "final_sample_id": "replication-3a8a41af321508286adefe9e",
+        "pair_id": "dev-replication-073",
+        "process_sample_id": "replication-5ab7ae9d35057f741a031757"
+      },
+      {
+        "final_sample_id": "replication-eaefd1fa8e61847d5518f885",
+        "pair_id": "dev-replication-074",
+        "process_sample_id": "replication-8bc010a3c10f62327623bc94"
+      },
+      {
+        "final_sample_id": "replication-df8d2cd941acd1c6dd51cf7b",
+        "pair_id": "dev-replication-075",
+        "process_sample_id": "replication-76abb8d18afdcafc22359ff4"
+      },
+      {
+        "final_sample_id": "replication-04aa155b1ab3e3aa75f90a85",
+        "pair_id": "dev-replication-076",
+        "process_sample_id": "replication-accca793a7b6c1360ab73b50"
+      },
+      {
+        "final_sample_id": "replication-7e810653a0e6a646fd648123",
+        "pair_id": "dev-replication-077",
+        "process_sample_id": "replication-05e6cc92247ce3cb6660f84f"
+      },
+      {
+        "final_sample_id": "replication-582ac62d2bec259b6ce27feb",
+        "pair_id": "dev-replication-078",
+        "process_sample_id": "replication-95937739df8c078822f32ace"
+      },
+      {
+        "final_sample_id": "replication-2bfb1a190c2ee023b5af122b",
+        "pair_id": "dev-replication-079",
+        "process_sample_id": "replication-9b0b5a3ee0c2782ee7777fa9"
+      },
+      {
+        "final_sample_id": "replication-544cef18dfc84a21b65544bb",
+        "pair_id": "dev-replication-080",
+        "process_sample_id": "replication-442bee0fbee4f2349eead1cd"
+      },
+      {
+        "final_sample_id": "replication-83904d7be4bc3678fd45d748",
+        "pair_id": "dev-replication-081",
+        "process_sample_id": "replication-5b2182500c21ceb72a7baaa7"
+      },
+      {
+        "final_sample_id": "replication-ea63e72ed3aafec312de8631",
+        "pair_id": "dev-replication-082",
+        "process_sample_id": "replication-e22c68924a272980fc02830b"
+      },
+      {
+        "final_sample_id": "replication-a058d12e3c0412ab498b8e39",
+        "pair_id": "dev-replication-083",
+        "process_sample_id": "replication-0d246d6636dd17203c7c8e5e"
+      },
+      {
+        "final_sample_id": "replication-df23495a02c6936c862ca534",
+        "pair_id": "dev-replication-084",
+        "process_sample_id": "replication-3cef2a6189c51a417090536e"
+      },
+      {
+        "final_sample_id": "replication-de67a777ee3b5666d125cf9b",
+        "pair_id": "dev-replication-085",
+        "process_sample_id": "replication-829aa6ab655fe0598eb12852"
+      },
+      {
+        "final_sample_id": "replication-f408b5557170edfd9dd5a5eb",
+        "pair_id": "dev-replication-086",
+        "process_sample_id": "replication-ed3b173750715a26de7965aa"
+      },
+      {
+        "final_sample_id": "replication-1d6b242b633b7680179af80e",
+        "pair_id": "dev-replication-087",
+        "process_sample_id": "replication-25c56265337e5159add55d29"
+      },
+      {
+        "final_sample_id": "replication-f94cb7fe1e7763bd4ba27428",
+        "pair_id": "dev-replication-088",
+        "process_sample_id": "replication-7113b81f7d64a73e0d0229dd"
+      },
+      {
+        "final_sample_id": "replication-43adad7454c678553e7f49df",
+        "pair_id": "dev-replication-089",
+        "process_sample_id": "replication-16c2fb8b046ecb60cd4f7aed"
+      },
+      {
+        "final_sample_id": "replication-b2050349c6c013fec16fbce5",
+        "pair_id": "dev-replication-090",
+        "process_sample_id": "replication-8f442acd6ac5292ddd8c8fbf"
+      },
+      {
+        "final_sample_id": "replication-1e343654daf55e06dc4702cc",
+        "pair_id": "dev-replication-091",
+        "process_sample_id": "replication-84e737c5adced1078f448326"
+      },
+      {
+        "final_sample_id": "replication-8e4b9326fa939a284abd2cba",
+        "pair_id": "dev-replication-092",
+        "process_sample_id": "replication-9ceb9abb80336f792b2c0d62"
+      },
+      {
+        "final_sample_id": "replication-37be83ce6c653ec639c256ab",
+        "pair_id": "dev-replication-093",
+        "process_sample_id": "replication-e12bd394381d55f2e3ad9134"
+      },
+      {
+        "final_sample_id": "replication-c3b01653525195c074a3ed45",
+        "pair_id": "dev-replication-094",
+        "process_sample_id": "replication-b47002e249aea13c3f797c08"
+      },
+      {
+        "final_sample_id": "replication-8b8607a2fdec8b99ee16458e",
+        "pair_id": "dev-replication-095",
+        "process_sample_id": "replication-41fa073fa6dd14347f7b3d12"
+      },
+      {
+        "final_sample_id": "replication-8b5db86409276e0906cb8c46",
+        "pair_id": "dev-replication-096",
+        "process_sample_id": "replication-5f9b7750698c3567e061277e"
+      },
+      {
+        "final_sample_id": "replication-d66bab2ef9083eca114fcf04",
+        "pair_id": "dev-replication-097",
+        "process_sample_id": "replication-0c450c01acfebf803fe4e439"
+      },
+      {
+        "final_sample_id": "replication-db10bb6f3f8fc5d19747e925",
+        "pair_id": "dev-replication-098",
+        "process_sample_id": "replication-960f018fe4854cebb134dc74"
+      },
+      {
+        "final_sample_id": "replication-f0f3b614b4166f05d214de11",
+        "pair_id": "dev-replication-099",
+        "process_sample_id": "replication-9be69b87ebf11751b4bdc572"
+      },
+      {
+        "final_sample_id": "replication-781328d5f3169aa6f061a590",
+        "pair_id": "dev-replication-100",
+        "process_sample_id": "replication-5e04c3706c1c751474b91b9f"
+      },
+      {
+        "final_sample_id": "replication-4b7d58907a6ac0777a3bc1fc",
+        "pair_id": "dev-replication-101",
+        "process_sample_id": "replication-b371342c28765644121a9e29"
+      },
+      {
+        "final_sample_id": "replication-c71308e5b4260fe03e486a57",
+        "pair_id": "dev-replication-102",
+        "process_sample_id": "replication-ae0779567aff059641a01519"
+      },
+      {
+        "final_sample_id": "replication-c16c8b195d178e6065a0dd66",
+        "pair_id": "dev-replication-103",
+        "process_sample_id": "replication-6d9528623b39d5a890038096"
+      },
+      {
+        "final_sample_id": "replication-37889096ce9b26dec9158f14",
+        "pair_id": "dev-replication-104",
+        "process_sample_id": "replication-282acd101698817b6bf017c4"
+      },
+      {
+        "final_sample_id": "replication-50d2ee3085249233658e2f82",
+        "pair_id": "dev-replication-105",
+        "process_sample_id": "replication-03704f5aeab31c67f6c19cd1"
+      },
+      {
+        "final_sample_id": "replication-b03f5623048154a1b5dd1307",
+        "pair_id": "dev-replication-106",
+        "process_sample_id": "replication-7672e2e8dcb7699f1b711307"
+      },
+      {
+        "final_sample_id": "replication-5e67b62c2beaaf2fbe4a42ed",
+        "pair_id": "dev-replication-107",
+        "process_sample_id": "replication-88b1936a32256c2748014d73"
+      },
+      {
+        "final_sample_id": "replication-336d0510458701cb38cf07aa",
+        "pair_id": "dev-replication-108",
+        "process_sample_id": "replication-1c89ae656c17d0e6bf09b14f"
+      },
+      {
+        "final_sample_id": "replication-56c1accee6d418b0daef99db",
+        "pair_id": "dev-replication-109",
+        "process_sample_id": "replication-eb8c572cbc52761d560df1df"
+      },
+      {
+        "final_sample_id": "replication-6d7f36c3b77038426181d560",
+        "pair_id": "dev-replication-110",
+        "process_sample_id": "replication-412ad89062f9ee90a18fc320"
+      },
+      {
+        "final_sample_id": "replication-1d07523743db78cfdb5b546f",
+        "pair_id": "dev-replication-111",
+        "process_sample_id": "replication-cb6027af282889bc91230248"
+      },
+      {
+        "final_sample_id": "replication-2746b04c752bc83ef05a8697",
+        "pair_id": "dev-replication-112",
+        "process_sample_id": "replication-8b0588a14fb0e80f5ff386fd"
+      },
+      {
+        "final_sample_id": "replication-ed2e4efa59cfa3c778186985",
+        "pair_id": "dev-replication-113",
+        "process_sample_id": "replication-34bdf19e262f1175b4c9e601"
+      },
+      {
+        "final_sample_id": "replication-2288d66fe72c02ebf652f5bd",
+        "pair_id": "dev-replication-114",
+        "process_sample_id": "replication-bd97d22e2f1b146939c78295"
+      },
+      {
+        "final_sample_id": "replication-08e852de99961e57e2009761",
+        "pair_id": "dev-replication-115",
+        "process_sample_id": "replication-ddcb11ac2337098195aacddf"
+      },
+      {
+        "final_sample_id": "replication-86daf27b828ca9a2d19e7979",
+        "pair_id": "dev-replication-116",
+        "process_sample_id": "replication-64ee6d16c84aebacc441e4b7"
+      },
+      {
+        "final_sample_id": "replication-3505d09f7379d1b76d7b25f9",
+        "pair_id": "dev-replication-117",
+        "process_sample_id": "replication-c08513258678aa5fc6c8fb16"
+      },
+      {
+        "final_sample_id": "replication-f2c63de6776a8a898ad2c067",
+        "pair_id": "dev-replication-118",
+        "process_sample_id": "replication-a64e0ade97f1488bbc3dba51"
+      },
+      {
+        "final_sample_id": "replication-5758c6081788f40d63c1bbc5",
+        "pair_id": "dev-replication-119",
+        "process_sample_id": "replication-e2077c01c532983509904f2e"
+      },
+      {
+        "final_sample_id": "replication-6494206732fe9298c353cee2",
+        "pair_id": "dev-replication-120",
+        "process_sample_id": "replication-ed6ecaaa0e13b84a8646f9ca"
+      },
+      {
+        "final_sample_id": "replication-3db0bb993e4ad4024812f050",
+        "pair_id": "dev-replication-121",
+        "process_sample_id": "replication-b6d036d3f79fd31bf7564201"
+      },
+      {
+        "final_sample_id": "replication-be085b33d563a438b3feadab",
+        "pair_id": "dev-replication-122",
+        "process_sample_id": "replication-3863ded1ae0edb995be2d355"
+      },
+      {
+        "final_sample_id": "replication-4a5e040de1248a64c87fe075",
+        "pair_id": "dev-replication-123",
+        "process_sample_id": "replication-5d5952a12753ac3650177cbf"
+      },
+      {
+        "final_sample_id": "replication-1653b7edb8d37eec05d9b838",
+        "pair_id": "dev-replication-124",
+        "process_sample_id": "replication-8a7e664044344b30f41813bc"
+      },
+      {
+        "final_sample_id": "replication-6df6ecffa647f2ec1d6dbecc",
+        "pair_id": "dev-replication-125",
+        "process_sample_id": "replication-e5c685e6184cad86a04286d4"
+      },
+      {
+        "final_sample_id": "replication-600cadbfb85e137dfdf180c3",
+        "pair_id": "dev-replication-126",
+        "process_sample_id": "replication-98d02479cf06c69368c08544"
+      },
+      {
+        "final_sample_id": "replication-db4bf1641790057aaa685f4e",
+        "pair_id": "dev-replication-127",
+        "process_sample_id": "replication-5e3810146941fb6b2fb7dbc1"
+      },
+      {
+        "final_sample_id": "replication-38ba62fd09bd0bc5df6a3774",
+        "pair_id": "dev-replication-128",
+        "process_sample_id": "replication-7f07ff08d2ef5d023e49f6f7"
+      },
+      {
+        "final_sample_id": "replication-c034b4546458a283c203a942",
+        "pair_id": "dev-replication-129",
+        "process_sample_id": "replication-844290c8faf2e9d690ccecac"
+      },
+      {
+        "final_sample_id": "replication-7050ead8a65f553f6aafe939",
+        "pair_id": "dev-replication-130",
+        "process_sample_id": "replication-cd9f6f5f12b672bf47433ede"
+      },
+      {
+        "final_sample_id": "replication-e1805a012aa20e9825d1cfad",
+        "pair_id": "dev-replication-131",
+        "process_sample_id": "replication-bfb73619e5c45a092bbdc427"
+      },
+      {
+        "final_sample_id": "replication-bdb123e000af9c872d8b22e1",
+        "pair_id": "dev-replication-132",
+        "process_sample_id": "replication-b5dca534d52cbb3d690058a8"
+      },
+      {
+        "final_sample_id": "replication-2c396a03be09d14acca8b421",
+        "pair_id": "dev-replication-133",
+        "process_sample_id": "replication-7f5fdcb70485ebd0936d7d8b"
+      },
+      {
+        "final_sample_id": "replication-197824de7de73f06b7200f65",
+        "pair_id": "dev-replication-134",
+        "process_sample_id": "replication-8451aa197a6038caaa907577"
+      },
+      {
+        "final_sample_id": "replication-581dd11c238108d64fb09d44",
+        "pair_id": "dev-replication-135",
+        "process_sample_id": "replication-247232cfc521c8427d31fa7a"
+      },
+      {
+        "final_sample_id": "replication-a2fdbb21d96afa86cc5126a8",
+        "pair_id": "dev-replication-136",
+        "process_sample_id": "replication-d1aa0989422b6d66a16d46f1"
+      },
+      {
+        "final_sample_id": "replication-8df6fb0852ef55c4ce3ce4c8",
+        "pair_id": "dev-replication-137",
+        "process_sample_id": "replication-6f8037507a29995c6d377c00"
+      },
+      {
+        "final_sample_id": "replication-d0659600571748db07b4ff45",
+        "pair_id": "dev-replication-138",
+        "process_sample_id": "replication-6481414e5a964d7b85f62651"
+      },
+      {
+        "final_sample_id": "replication-977a90b08468aa5508f99dd5",
+        "pair_id": "dev-replication-139",
+        "process_sample_id": "replication-88fcf108c63f4da17204a969"
+      },
+      {
+        "final_sample_id": "replication-977b4c49bf26601718f1117b",
+        "pair_id": "dev-replication-140",
+        "process_sample_id": "replication-ac708701385bdf956204dc46"
+      },
+      {
+        "final_sample_id": "replication-3aed7ca80b8bde68a22e13a1",
+        "pair_id": "dev-replication-141",
+        "process_sample_id": "replication-509aad8c9f632cbbf966f460"
+      },
+      {
+        "final_sample_id": "replication-528593ea6f395f7ac277418f",
+        "pair_id": "dev-replication-142",
+        "process_sample_id": "replication-ce45739067dac38126df2c6f"
+      },
+      {
+        "final_sample_id": "replication-958ed379d8c3d4de98326a1a",
+        "pair_id": "dev-replication-143",
+        "process_sample_id": "replication-4fb98cafed9ec722324889fc"
+      },
+      {
+        "final_sample_id": "replication-388d09f99092703105d859ac",
+        "pair_id": "dev-replication-144",
+        "process_sample_id": "replication-8f924adfd21caf07922f75df"
+      },
+      {
+        "final_sample_id": "replication-9553be13d718264bb8942aa8",
+        "pair_id": "dev-replication-145",
+        "process_sample_id": "replication-3fc6ab375a4bf00e5d8a5fe5"
+      },
+      {
+        "final_sample_id": "replication-10e8587c64d43d40b8b87a71",
+        "pair_id": "dev-replication-146",
+        "process_sample_id": "replication-a8c8d41a7c09e533b0851d92"
+      },
+      {
+        "final_sample_id": "replication-cbae591c44e48904b6eb47a7",
+        "pair_id": "dev-replication-147",
+        "process_sample_id": "replication-7c3385077c7f7c2b17e393f1"
+      },
+      {
+        "final_sample_id": "replication-facccd65477549ce2d359ecb",
+        "pair_id": "dev-replication-148",
+        "process_sample_id": "replication-ba00ebb23529d016730d0b11"
+      },
+      {
+        "final_sample_id": "replication-2c57816e5f8ae38db054851a",
+        "pair_id": "dev-replication-149",
+        "process_sample_id": "replication-671cf9d82e7e1a181416caf3"
+      },
+      {
+        "final_sample_id": "replication-378f84e52069bd5dc3615991",
+        "pair_id": "dev-replication-150",
+        "process_sample_id": "replication-2c49a960d7369dabfb063a9b"
+      },
+      {
+        "final_sample_id": "replication-9e518bd7a75d7206277f3f10",
+        "pair_id": "dev-replication-151",
+        "process_sample_id": "replication-02354437eaf08c660ccbf98c"
+      },
+      {
+        "final_sample_id": "replication-164ec04a53d40882bd9e26b0",
+        "pair_id": "dev-replication-152",
+        "process_sample_id": "replication-843fa46fcb5cb58d1c36652a"
+      },
+      {
+        "final_sample_id": "replication-f208daff516434bf83d7a1ee",
+        "pair_id": "dev-replication-153",
+        "process_sample_id": "replication-be2ed976ed403e472635a5b8"
+      },
+      {
+        "final_sample_id": "replication-de3b9bc25202aa6b5c6df215",
+        "pair_id": "dev-replication-154",
+        "process_sample_id": "replication-2f3933c4d88025e42a609035"
+      },
+      {
+        "final_sample_id": "replication-9bec7a20d85b609926a72f57",
+        "pair_id": "dev-replication-155",
+        "process_sample_id": "replication-2c84169052d3b7fecda481b5"
+      },
+      {
+        "final_sample_id": "replication-902c48574c3770598bdabc8c",
+        "pair_id": "dev-replication-156",
+        "process_sample_id": "replication-8fd5189bc50bfc9f5fc873b7"
+      },
+      {
+        "final_sample_id": "replication-452e223f9f70a51c4735fcc3",
+        "pair_id": "dev-replication-157",
+        "process_sample_id": "replication-5eab03cd694697e2bbe52f2c"
+      },
+      {
+        "final_sample_id": "replication-15ff9d343f6b69609682dffe",
+        "pair_id": "dev-replication-158",
+        "process_sample_id": "replication-8f966b8f47eb3004dc072e7b"
+      },
+      {
+        "final_sample_id": "replication-94fefefe130e659668130d38",
+        "pair_id": "dev-replication-159",
+        "process_sample_id": "replication-cdaf6fdfa3b0da22c55d5f7d"
+      },
+      {
+        "final_sample_id": "replication-5fe92783f6d111cb9cbdc55a",
+        "pair_id": "dev-replication-160",
+        "process_sample_id": "replication-0021237a886a6dc3209f9c61"
+      },
+      {
+        "final_sample_id": "replication-e9e9b0dccb426181ba8ee99b",
+        "pair_id": "dev-replication-161",
+        "process_sample_id": "replication-3bebc25b9349d89048bb6bb7"
+      },
+      {
+        "final_sample_id": "replication-8ef0fbe65836e3c2c96fff1f",
+        "pair_id": "dev-replication-162",
+        "process_sample_id": "replication-0ff2ae15bd316029bb6da224"
+      },
+      {
+        "final_sample_id": "replication-7405720940c487e996c76852",
+        "pair_id": "dev-replication-163",
+        "process_sample_id": "replication-c612e759bce7cc1bb90328e3"
+      },
+      {
+        "final_sample_id": "replication-ad0630a8d74045c3bbb89146",
+        "pair_id": "dev-replication-164",
+        "process_sample_id": "replication-df9c27544633e555efa886ac"
+      },
+      {
+        "final_sample_id": "replication-a777e956009c47f3ce091150",
+        "pair_id": "dev-replication-165",
+        "process_sample_id": "replication-5ffc19f5ac9d50c596059150"
+      },
+      {
+        "final_sample_id": "replication-7c56c0e224b4684ddd9a7486",
+        "pair_id": "dev-replication-166",
+        "process_sample_id": "replication-3c61dd05644026d3222d52ad"
+      },
+      {
+        "final_sample_id": "replication-491cfec7d84d730d5c4c727c",
+        "pair_id": "dev-replication-167",
+        "process_sample_id": "replication-eefdabdb7f4f26d2f7277742"
+      },
+      {
+        "final_sample_id": "replication-c6bde9293f326af581433572",
+        "pair_id": "dev-replication-168",
+        "process_sample_id": "replication-39d057fa71338dcbb6580a4d"
+      },
+      {
+        "final_sample_id": "replication-eb3605a5197b4378fea65cf9",
+        "pair_id": "dev-replication-169",
+        "process_sample_id": "replication-5bdc7ac408244904ce35dc70"
+      },
+      {
+        "final_sample_id": "replication-af00a2a50ee85bee7d79a1f6",
+        "pair_id": "dev-replication-170",
+        "process_sample_id": "replication-bc950fde0aefbd3eaf4c0869"
+      },
+      {
+        "final_sample_id": "replication-265df95cfae4b3f6b1d74e00",
+        "pair_id": "dev-replication-171",
+        "process_sample_id": "replication-4f55890c979d435b6b40c57b"
+      },
+      {
+        "final_sample_id": "replication-b6d817efff0b694f7adb6bd0",
+        "pair_id": "dev-replication-172",
+        "process_sample_id": "replication-4ee643f1751901e20ee84bca"
+      },
+      {
+        "final_sample_id": "replication-8b87dbe9a68a481d13c6f7ef",
+        "pair_id": "dev-replication-173",
+        "process_sample_id": "replication-15ff2089b442b83982cfc1d0"
+      },
+      {
+        "final_sample_id": "replication-e2e0f6f1561099555c2b5169",
+        "pair_id": "dev-replication-174",
+        "process_sample_id": "replication-54b681e24e1b60d422de0610"
+      },
+      {
+        "final_sample_id": "replication-2bc03027712ad84b7a4480c5",
+        "pair_id": "dev-replication-175",
+        "process_sample_id": "replication-03e82ce90ab57697e4c365ee"
+      },
+      {
+        "final_sample_id": "replication-e11e460297e4ca0cb84bc200",
+        "pair_id": "dev-replication-176",
+        "process_sample_id": "replication-f7dfee1e0d64b77646e782dd"
+      },
+      {
+        "final_sample_id": "replication-a7bf081fd3f48671a3b6951f",
+        "pair_id": "dev-replication-177",
+        "process_sample_id": "replication-20a4d45581f2dfd808e8c06f"
+      },
+      {
+        "final_sample_id": "replication-ed224c6b9129b721c52c564b",
+        "pair_id": "dev-replication-178",
+        "process_sample_id": "replication-f045f0915565d2cf87067b5f"
+      },
+      {
+        "final_sample_id": "replication-f0c7b8d69361df1ac7ecd184",
+        "pair_id": "dev-replication-179",
+        "process_sample_id": "replication-de1862d38f2b15e365f18a35"
+      },
+      {
+        "final_sample_id": "replication-0f2ee5b2d12738894e0f30bc",
+        "pair_id": "dev-replication-180",
+        "process_sample_id": "replication-fb3965d640f70c9724def7e8"
+      },
+      {
+        "final_sample_id": "replication-b0d26c7fd9267af70eb56310",
+        "pair_id": "dev-replication-181",
+        "process_sample_id": "replication-f5ff0f8a55334fd21e6729bb"
+      },
+      {
+        "final_sample_id": "replication-67f9db838f704d13b1f4f141",
+        "pair_id": "dev-replication-182",
+        "process_sample_id": "replication-c052d43de1edf07196708d73"
+      },
+      {
+        "final_sample_id": "replication-4c1acbede3166010db235338",
+        "pair_id": "dev-replication-183",
+        "process_sample_id": "replication-df9a131eda83aac24e1bcce0"
+      },
+      {
+        "final_sample_id": "replication-6211be4fb0f8c72729638dad",
+        "pair_id": "dev-replication-184",
+        "process_sample_id": "replication-028c091834ff50732dfe3054"
+      },
+      {
+        "final_sample_id": "replication-ea2831aec442316b4a997a0f",
+        "pair_id": "dev-replication-185",
+        "process_sample_id": "replication-de482ee1d53a9c6a2b7d6986"
+      },
+      {
+        "final_sample_id": "replication-380033160cdc4ea27a09c068",
+        "pair_id": "dev-replication-186",
+        "process_sample_id": "replication-6807a79eb3c3fd441ad72cf7"
+      },
+      {
+        "final_sample_id": "replication-ea5b9a61921508704fecf231",
+        "pair_id": "dev-replication-187",
+        "process_sample_id": "replication-70ca7c417f70da2cf17efee2"
+      },
+      {
+        "final_sample_id": "replication-681e71bcc4737b1c00ad8df4",
+        "pair_id": "dev-replication-188",
+        "process_sample_id": "replication-e5b0d871473130506410edba"
+      },
+      {
+        "final_sample_id": "replication-2d653874b13b0e63074ff261",
+        "pair_id": "dev-replication-189",
+        "process_sample_id": "replication-e9eeb3ae41c5e9bccc4f73fb"
+      },
+      {
+        "final_sample_id": "replication-6b859f06c0f7d562c45e7513",
+        "pair_id": "dev-replication-190",
+        "process_sample_id": "replication-54598ada27cd572f2f4b9067"
+      },
+      {
+        "final_sample_id": "replication-3868140e86d5dba25be85430",
+        "pair_id": "dev-replication-191",
+        "process_sample_id": "replication-610168e14cd61eb14665bd69"
+      }
+    ],
+    "heldout_pair_suffix_alignment": [
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-000"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-001"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-002"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-003"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-004"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-005"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-006"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-007"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-008"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-009"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-010"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-011"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-012"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-013"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-014"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-015"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-016"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-017"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-018"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-019"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-020"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-021"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-022"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-023"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-024"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-025"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-026"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-027"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-028"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-029"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-030"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-031"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-032"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-033"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-034"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-035"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-036"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-037"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-038"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-039"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-040"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-041"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-042"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-043"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-044"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-045"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-046"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-047"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-048"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-049"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-050"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-051"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-052"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-053"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-054"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-055"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-056"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-057"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-058"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-059"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-060"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-061"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-062"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-063"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-064"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-065"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-066"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-067"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-068"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-069"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-070"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-071"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-072"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-073"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-074"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-075"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-076"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-077"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-078"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-079"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-080"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-081"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-082"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-083"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-084"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-085"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-086"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-087"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-088"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-089"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-090"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-091"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-092"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-093"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-094"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-095"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-096"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-097"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-098"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-099"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-100"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-101"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-102"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-103"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-104"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-105"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-106"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-107"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-108"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-109"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-110"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-111"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-112"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-113"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-114"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-115"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-116"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-117"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-118"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-119"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-120"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-121"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-122"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-123"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-124"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-125"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-126"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-127"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-128"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-129"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-130"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-131"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-132"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-133"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-134"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-135"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-136"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-137"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-138"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-139"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-140"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-141"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-142"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-143"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-144"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-145"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-146"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-147"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-148"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-149"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-150"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-151"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-152"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-153"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-154"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-155"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-156"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-157"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-158"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-159"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-160"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-161"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-162"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-163"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-164"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-165"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-166"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-167"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-168"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-169"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-170"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-171"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-172"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-173"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-174"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-175"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-176"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-177"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-178"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-179"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-180"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-181"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-182"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-183"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-184"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-185"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-186"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-187"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-188"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-189"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-190"
+      },
+      {
+        "aligned": true,
+        "pair_id": "dev-replication-191"
+      }
+    ],
+    "heldout_pairs": 192,
+    "heldout_sample_ids": [
+      "replication-1c3a535f52529b0661f80fae",
+      "replication-f53c7787e6e1f6b8785095bb",
+      "replication-1263543c73f2abe2c7eed65a",
+      "replication-95ef45a494d248a63bbe7a21",
+      "replication-936e3bb13716af6654cb5602",
+      "replication-5f24ee9723f72be5842f2a3e",
+      "replication-5160195a80cae1a2ef173f09",
+      "replication-c0f27bb92ae7488e245e9d01",
+      "replication-7dc3c5faa19e4b5154bdc689",
+      "replication-331996844a965846a61b8ca7",
+      "replication-112ed0dd630235404bf61720",
+      "replication-be8ea494206c4c38fbffab1f",
+      "replication-062741daad98e7b4bc9ddb8c",
+      "replication-dfaded727da8e494b6e58259",
+      "replication-97dff76df8d6ac1dcfe071dc",
+      "replication-21ded3b388ae08f503b6cef0",
+      "replication-a7681161401919f7533898ec",
+      "replication-eff8636678e9d2ea11dd4966",
+      "replication-a7c027dc915bf69686d45106",
+      "replication-09e9bd81ae111a4424564499",
+      "replication-4344b5f36b544490ea101e48",
+      "replication-99162742df6a9a4cd0cfdde3",
+      "replication-a0b24094856006f237597b88",
+      "replication-bac0c6fb269e900dbec4241a",
+      "replication-e70000aefbd96746e603d2c5",
+      "replication-5f86686fa80c3d35886ec40a",
+      "replication-35fe8184184498ae1fa49eb5",
+      "replication-e616b1afea3993fc15f2e7b6",
+      "replication-32fc34be637fe59be65d1591",
+      "replication-296f84d22cfea93082dd80f9",
+      "replication-5da6ab817db00b580613bad1",
+      "replication-52df84cf57c3c5580c34510d",
+      "replication-f22ff30f801bb9ec6de45e17",
+      "replication-3f3632c51d0a275d9179da9b",
+      "replication-7fb72f1562c395eda1913997",
+      "replication-e26481c8ec11e0d770c00b24",
+      "replication-4e6f824f121755e925caaedf",
+      "replication-3b1f198a8d0136ec1dfcd464",
+      "replication-6ae776196db1d603d55ca6c0",
+      "replication-6c14e2adc0a098154d38c263",
+      "replication-e3f64193c8a42f2f047c71c8",
+      "replication-6e189b522b890961670e1e01",
+      "replication-c5cae2a1c7506e0b0e6c3ec2",
+      "replication-4e426b7c43b5982efd49c1ce",
+      "replication-673a5186cc31bc0e8c9e4092",
+      "replication-aedf7658829993fd23a6b4dd",
+      "replication-7716fc5ddd392b6c55a98079",
+      "replication-90d856a5acb830745a62b440",
+      "replication-45e2a7b79e5f4ddf74a6a4fc",
+      "replication-255888c8fafb35b9ae106d9c",
+      "replication-57c8f4d3da27a0421c2b11b0",
+      "replication-a95eff66e554ec8a7c317c28",
+      "replication-bf24e2b6a53b036adb8c0b71",
+      "replication-307ca25a9ab7a104ab9f04a3",
+      "replication-a88d96eb85f404bb4dc562e9",
+      "replication-5852752b53f512cf98225688",
+      "replication-8d4e00fdb9e703786233203e",
+      "replication-9c926c8e43ad67e6ba1c07b7",
+      "replication-e0ca44bd96cd05b80ec55d48",
+      "replication-b6e0ed6d7a5188b153163f73",
+      "replication-66de24d35c5441df8500825d",
+      "replication-91cf6d0246dfee7aaf698e30",
+      "replication-7121d0def371664da8a7e020",
+      "replication-0a4431eeced5e2e213de5d89",
+      "replication-99e0147b6dc0ef5ba065a3c0",
+      "replication-7b589d6d33bdf0bf73622c20",
+      "replication-4439d29e9d2d06112d1e91d1",
+      "replication-32af57fd87a726b66459d83f",
+      "replication-e9796f6b35cc4d0fbfc7ea63",
+      "replication-53d2ff24ad88f02f8748d235",
+      "replication-db6359814b2da12bf1b352b1",
+      "replication-c2e851642c9b1fa8645439d4",
+      "replication-12fb50f3d0f9f41602a84e12",
+      "replication-d784050aee94e37ef3889dd1",
+      "replication-d67fba9b56b64d5e6cb3ceb3",
+      "replication-5e60a0ce5d31f7fb701bc517",
+      "replication-7a55ff9f1976f08ace3a7e68",
+      "replication-304498a5b9cd57296f58b83e",
+      "replication-03b70d948ca85ce9dbb05cb3",
+      "replication-3d431b16370850d579e48bec",
+      "replication-0bf494c32e495d31dc765a40",
+      "replication-90c609c52a549d75c9425c33",
+      "replication-ecdd7e96b7fd72a721ae6c49",
+      "replication-8bc2ed644db11f7509d1d049",
+      "replication-bd9a2695ee718a6367de4626",
+      "replication-63ac44ffaba6a1128370ead7",
+      "replication-972a383231c5760c2753d472",
+      "replication-4569a1f82303622e556034bd",
+      "replication-7d23538c6b94e4affe5d957d",
+      "replication-b410ed2642e5d92ccc42f2da",
+      "replication-34f80c2711e4e54514c312da",
+      "replication-298e8c262811fc589fb676af",
+      "replication-93e2c3c4030be49cec55b908",
+      "replication-cfd7b827976fe9c441dcff81",
+      "replication-b72c4cf565a06035bd09aa2e",
+      "replication-401b3e8a046aeb779c1604d1",
+      "replication-62185c7531690a0f164a7ffa",
+      "replication-84fe469b5b8fe19088deb4fb",
+      "replication-d3f3608a1191bfe881d31feb",
+      "replication-ca566afc3018a0a8b2d7f383",
+      "replication-658a1e059a59d4d11e4e0263",
+      "replication-a6b38b3f4757cbe241863b1f",
+      "replication-39f4857b26ccedff80a427be",
+      "replication-836f641091b6b91967b5a744",
+      "replication-ba2d8672430053d80a9eb8b6",
+      "replication-b4530fffe64e4405f5b17b92",
+      "replication-93f483ec4958e6b5674743f5",
+      "replication-b47341284ff19e7517730061",
+      "replication-6f64f1088bb78ceedd188b0b",
+      "replication-ab38ea4eca9f2a60e0f0f762",
+      "replication-b01c63d52bf5a004e41adcc5",
+      "replication-87b05369b86a614a4ed04f08",
+      "replication-0cdd963eab569700e167ffd7",
+      "replication-baa332af00051376fec1f6a7",
+      "replication-8ca7e775e7b586a59768804f",
+      "replication-83833b15554c1e1318444525",
+      "replication-4583651e34cb3e0aa8442063",
+      "replication-4e72c8cec28d03d890f01a4a",
+      "replication-ca8a8d5f377fb817ffb2e427",
+      "replication-8aaf86fe5caab3cd39382a2e",
+      "replication-5abc6ceb5723c248ee3f4401",
+      "replication-3a087d485e9209ed72df9e7e",
+      "replication-3c0dde86bedb1358e65c7daa",
+      "replication-c750295b5e4eb562257b7c55",
+      "replication-40be46636fe54d6ca1e8b221",
+      "replication-b6b6a2e357352505dd061094",
+      "replication-cdcd9989b9fdd038216ab0b0",
+      "replication-5162cf4b00a79473c5c68dca",
+      "replication-568de7aea45a0aa4836bbdcf",
+      "replication-f462bfb66e2fdc9414cf9814",
+      "replication-31f9e7434a17281b1e99907b",
+      "replication-cf1ddaf0fff40642ed878b08",
+      "replication-609c93cb00de67f93a9c6b94",
+      "replication-556d5eeebf80e6a18de2b586",
+      "replication-67fbc7baf937ba723d849f97",
+      "replication-a7b564b83ec0eb4688fdf011",
+      "replication-5933467a9aaee0dcfd3a0c36",
+      "replication-da3d7f6d1e545eae7258d23c",
+      "replication-7196be995d16415c87699a60",
+      "replication-c25ac74871cde95a098418b0",
+      "replication-18630d48acffb1245b01e3c9",
+      "replication-e4f9d986a778359ff287c5f9",
+      "replication-27a0111b6e39b7e36d0596fa",
+      "replication-8afa4cc21f6b9fdc6b36590d",
+      "replication-5b8f595cafbaab43cbd74fa3",
+      "replication-446af012b40bfd9ed930db89",
+      "replication-5ab7ae9d35057f741a031757",
+      "replication-3a8a41af321508286adefe9e",
+      "replication-8bc010a3c10f62327623bc94",
+      "replication-eaefd1fa8e61847d5518f885",
+      "replication-76abb8d18afdcafc22359ff4",
+      "replication-df8d2cd941acd1c6dd51cf7b",
+      "replication-accca793a7b6c1360ab73b50",
+      "replication-04aa155b1ab3e3aa75f90a85",
+      "replication-05e6cc92247ce3cb6660f84f",
+      "replication-7e810653a0e6a646fd648123",
+      "replication-95937739df8c078822f32ace",
+      "replication-582ac62d2bec259b6ce27feb",
+      "replication-9b0b5a3ee0c2782ee7777fa9",
+      "replication-2bfb1a190c2ee023b5af122b",
+      "replication-442bee0fbee4f2349eead1cd",
+      "replication-544cef18dfc84a21b65544bb",
+      "replication-5b2182500c21ceb72a7baaa7",
+      "replication-83904d7be4bc3678fd45d748",
+      "replication-e22c68924a272980fc02830b",
+      "replication-ea63e72ed3aafec312de8631",
+      "replication-0d246d6636dd17203c7c8e5e",
+      "replication-a058d12e3c0412ab498b8e39",
+      "replication-3cef2a6189c51a417090536e",
+      "replication-df23495a02c6936c862ca534",
+      "replication-829aa6ab655fe0598eb12852",
+      "replication-de67a777ee3b5666d125cf9b",
+      "replication-ed3b173750715a26de7965aa",
+      "replication-f408b5557170edfd9dd5a5eb",
+      "replication-25c56265337e5159add55d29",
+      "replication-1d6b242b633b7680179af80e",
+      "replication-7113b81f7d64a73e0d0229dd",
+      "replication-f94cb7fe1e7763bd4ba27428",
+      "replication-16c2fb8b046ecb60cd4f7aed",
+      "replication-43adad7454c678553e7f49df",
+      "replication-8f442acd6ac5292ddd8c8fbf",
+      "replication-b2050349c6c013fec16fbce5",
+      "replication-84e737c5adced1078f448326",
+      "replication-1e343654daf55e06dc4702cc",
+      "replication-9ceb9abb80336f792b2c0d62",
+      "replication-8e4b9326fa939a284abd2cba",
+      "replication-e12bd394381d55f2e3ad9134",
+      "replication-37be83ce6c653ec639c256ab",
+      "replication-b47002e249aea13c3f797c08",
+      "replication-c3b01653525195c074a3ed45",
+      "replication-41fa073fa6dd14347f7b3d12",
+      "replication-8b8607a2fdec8b99ee16458e",
+      "replication-5f9b7750698c3567e061277e",
+      "replication-8b5db86409276e0906cb8c46",
+      "replication-0c450c01acfebf803fe4e439",
+      "replication-d66bab2ef9083eca114fcf04",
+      "replication-960f018fe4854cebb134dc74",
+      "replication-db10bb6f3f8fc5d19747e925",
+      "replication-9be69b87ebf11751b4bdc572",
+      "replication-f0f3b614b4166f05d214de11",
+      "replication-5e04c3706c1c751474b91b9f",
+      "replication-781328d5f3169aa6f061a590",
+      "replication-b371342c28765644121a9e29",
+      "replication-4b7d58907a6ac0777a3bc1fc",
+      "replication-ae0779567aff059641a01519",
+      "replication-c71308e5b4260fe03e486a57",
+      "replication-6d9528623b39d5a890038096",
+      "replication-c16c8b195d178e6065a0dd66",
+      "replication-282acd101698817b6bf017c4",
+      "replication-37889096ce9b26dec9158f14",
+      "replication-03704f5aeab31c67f6c19cd1",
+      "replication-50d2ee3085249233658e2f82",
+      "replication-7672e2e8dcb7699f1b711307",
+      "replication-b03f5623048154a1b5dd1307",
+      "replication-88b1936a32256c2748014d73",
+      "replication-5e67b62c2beaaf2fbe4a42ed",
+      "replication-1c89ae656c17d0e6bf09b14f",
+      "replication-336d0510458701cb38cf07aa",
+      "replication-eb8c572cbc52761d560df1df",
+      "replication-56c1accee6d418b0daef99db",
+      "replication-412ad89062f9ee90a18fc320",
+      "replication-6d7f36c3b77038426181d560",
+      "replication-cb6027af282889bc91230248",
+      "replication-1d07523743db78cfdb5b546f",
+      "replication-8b0588a14fb0e80f5ff386fd",
+      "replication-2746b04c752bc83ef05a8697",
+      "replication-34bdf19e262f1175b4c9e601",
+      "replication-ed2e4efa59cfa3c778186985",
+      "replication-bd97d22e2f1b146939c78295",
+      "replication-2288d66fe72c02ebf652f5bd",
+      "replication-ddcb11ac2337098195aacddf",
+      "replication-08e852de99961e57e2009761",
+      "replication-64ee6d16c84aebacc441e4b7",
+      "replication-86daf27b828ca9a2d19e7979",
+      "replication-c08513258678aa5fc6c8fb16",
+      "replication-3505d09f7379d1b76d7b25f9",
+      "replication-a64e0ade97f1488bbc3dba51",
+      "replication-f2c63de6776a8a898ad2c067",
+      "replication-e2077c01c532983509904f2e",
+      "replication-5758c6081788f40d63c1bbc5",
+      "replication-ed6ecaaa0e13b84a8646f9ca",
+      "replication-6494206732fe9298c353cee2",
+      "replication-b6d036d3f79fd31bf7564201",
+      "replication-3db0bb993e4ad4024812f050",
+      "replication-3863ded1ae0edb995be2d355",
+      "replication-be085b33d563a438b3feadab",
+      "replication-5d5952a12753ac3650177cbf",
+      "replication-4a5e040de1248a64c87fe075",
+      "replication-8a7e664044344b30f41813bc",
+      "replication-1653b7edb8d37eec05d9b838",
+      "replication-e5c685e6184cad86a04286d4",
+      "replication-6df6ecffa647f2ec1d6dbecc",
+      "replication-98d02479cf06c69368c08544",
+      "replication-600cadbfb85e137dfdf180c3",
+      "replication-5e3810146941fb6b2fb7dbc1",
+      "replication-db4bf1641790057aaa685f4e",
+      "replication-7f07ff08d2ef5d023e49f6f7",
+      "replication-38ba62fd09bd0bc5df6a3774",
+      "replication-844290c8faf2e9d690ccecac",
+      "replication-c034b4546458a283c203a942",
+      "replication-cd9f6f5f12b672bf47433ede",
+      "replication-7050ead8a65f553f6aafe939",
+      "replication-bfb73619e5c45a092bbdc427",
+      "replication-e1805a012aa20e9825d1cfad",
+      "replication-b5dca534d52cbb3d690058a8",
+      "replication-bdb123e000af9c872d8b22e1",
+      "replication-7f5fdcb70485ebd0936d7d8b",
+      "replication-2c396a03be09d14acca8b421",
+      "replication-8451aa197a6038caaa907577",
+      "replication-197824de7de73f06b7200f65",
+      "replication-247232cfc521c8427d31fa7a",
+      "replication-581dd11c238108d64fb09d44",
+      "replication-d1aa0989422b6d66a16d46f1",
+      "replication-a2fdbb21d96afa86cc5126a8",
+      "replication-6f8037507a29995c6d377c00",
+      "replication-8df6fb0852ef55c4ce3ce4c8",
+      "replication-6481414e5a964d7b85f62651",
+      "replication-d0659600571748db07b4ff45",
+      "replication-88fcf108c63f4da17204a969",
+      "replication-977a90b08468aa5508f99dd5",
+      "replication-ac708701385bdf956204dc46",
+      "replication-977b4c49bf26601718f1117b",
+      "replication-509aad8c9f632cbbf966f460",
+      "replication-3aed7ca80b8bde68a22e13a1",
+      "replication-ce45739067dac38126df2c6f",
+      "replication-528593ea6f395f7ac277418f",
+      "replication-4fb98cafed9ec722324889fc",
+      "replication-958ed379d8c3d4de98326a1a",
+      "replication-8f924adfd21caf07922f75df",
+      "replication-388d09f99092703105d859ac",
+      "replication-3fc6ab375a4bf00e5d8a5fe5",
+      "replication-9553be13d718264bb8942aa8",
+      "replication-a8c8d41a7c09e533b0851d92",
+      "replication-10e8587c64d43d40b8b87a71",
+      "replication-7c3385077c7f7c2b17e393f1",
+      "replication-cbae591c44e48904b6eb47a7",
+      "replication-ba00ebb23529d016730d0b11",
+      "replication-facccd65477549ce2d359ecb",
+      "replication-671cf9d82e7e1a181416caf3",
+      "replication-2c57816e5f8ae38db054851a",
+      "replication-2c49a960d7369dabfb063a9b",
+      "replication-378f84e52069bd5dc3615991",
+      "replication-02354437eaf08c660ccbf98c",
+      "replication-9e518bd7a75d7206277f3f10",
+      "replication-843fa46fcb5cb58d1c36652a",
+      "replication-164ec04a53d40882bd9e26b0",
+      "replication-be2ed976ed403e472635a5b8",
+      "replication-f208daff516434bf83d7a1ee",
+      "replication-2f3933c4d88025e42a609035",
+      "replication-de3b9bc25202aa6b5c6df215",
+      "replication-2c84169052d3b7fecda481b5",
+      "replication-9bec7a20d85b609926a72f57",
+      "replication-8fd5189bc50bfc9f5fc873b7",
+      "replication-902c48574c3770598bdabc8c",
+      "replication-5eab03cd694697e2bbe52f2c",
+      "replication-452e223f9f70a51c4735fcc3",
+      "replication-8f966b8f47eb3004dc072e7b",
+      "replication-15ff9d343f6b69609682dffe",
+      "replication-cdaf6fdfa3b0da22c55d5f7d",
+      "replication-94fefefe130e659668130d38",
+      "replication-0021237a886a6dc3209f9c61",
+      "replication-5fe92783f6d111cb9cbdc55a",
+      "replication-3bebc25b9349d89048bb6bb7",
+      "replication-e9e9b0dccb426181ba8ee99b",
+      "replication-0ff2ae15bd316029bb6da224",
+      "replication-8ef0fbe65836e3c2c96fff1f",
+      "replication-c612e759bce7cc1bb90328e3",
+      "replication-7405720940c487e996c76852",
+      "replication-df9c27544633e555efa886ac",
+      "replication-ad0630a8d74045c3bbb89146",
+      "replication-5ffc19f5ac9d50c596059150",
+      "replication-a777e956009c47f3ce091150",
+      "replication-3c61dd05644026d3222d52ad",
+      "replication-7c56c0e224b4684ddd9a7486",
+      "replication-eefdabdb7f4f26d2f7277742",
+      "replication-491cfec7d84d730d5c4c727c",
+      "replication-39d057fa71338dcbb6580a4d",
+      "replication-c6bde9293f326af581433572",
+      "replication-5bdc7ac408244904ce35dc70",
+      "replication-eb3605a5197b4378fea65cf9",
+      "replication-bc950fde0aefbd3eaf4c0869",
+      "replication-af00a2a50ee85bee7d79a1f6",
+      "replication-4f55890c979d435b6b40c57b",
+      "replication-265df95cfae4b3f6b1d74e00",
+      "replication-4ee643f1751901e20ee84bca",
+      "replication-b6d817efff0b694f7adb6bd0",
+      "replication-15ff2089b442b83982cfc1d0",
+      "replication-8b87dbe9a68a481d13c6f7ef",
+      "replication-54b681e24e1b60d422de0610",
+      "replication-e2e0f6f1561099555c2b5169",
+      "replication-03e82ce90ab57697e4c365ee",
+      "replication-2bc03027712ad84b7a4480c5",
+      "replication-f7dfee1e0d64b77646e782dd",
+      "replication-e11e460297e4ca0cb84bc200",
+      "replication-20a4d45581f2dfd808e8c06f",
+      "replication-a7bf081fd3f48671a3b6951f",
+      "replication-f045f0915565d2cf87067b5f",
+      "replication-ed224c6b9129b721c52c564b",
+      "replication-de1862d38f2b15e365f18a35",
+      "replication-f0c7b8d69361df1ac7ecd184",
+      "replication-fb3965d640f70c9724def7e8",
+      "replication-0f2ee5b2d12738894e0f30bc",
+      "replication-f5ff0f8a55334fd21e6729bb",
+      "replication-b0d26c7fd9267af70eb56310",
+      "replication-c052d43de1edf07196708d73",
+      "replication-67f9db838f704d13b1f4f141",
+      "replication-df9a131eda83aac24e1bcce0",
+      "replication-4c1acbede3166010db235338",
+      "replication-028c091834ff50732dfe3054",
+      "replication-6211be4fb0f8c72729638dad",
+      "replication-de482ee1d53a9c6a2b7d6986",
+      "replication-ea2831aec442316b4a997a0f",
+      "replication-6807a79eb3c3fd441ad72cf7",
+      "replication-380033160cdc4ea27a09c068",
+      "replication-70ca7c417f70da2cf17efee2",
+      "replication-ea5b9a61921508704fecf231",
+      "replication-e5b0d871473130506410edba",
+      "replication-681e71bcc4737b1c00ad8df4",
+      "replication-e9eeb3ae41c5e9bccc4f73fb",
+      "replication-2d653874b13b0e63074ff261",
+      "replication-54598ada27cd572f2f4b9067",
+      "replication-6b859f06c0f7d562c45e7513",
+      "replication-610168e14cd61eb14665bd69",
+      "replication-3868140e86d5dba25be85430",
+      "replication-0b8d994ba7674d0b77ea459f",
+      "replication-0e4a441f35b7c95b3d5c5305",
+      "replication-0ed84f857620a78c80ddf54d",
+      "replication-0f10eb8fc2383ed22f165bb2",
+      "replication-1465ee0b412b66408074a548",
+      "replication-1ea634f362c7b9ac968af644",
+      "replication-44a55ad427b5b8fa6658ddff",
+      "replication-4572606785ed4644c3c6e032",
+      "replication-4727cd675659898382f0df49",
+      "replication-48d58266a38fcd90bbd6acab",
+      "replication-49998c9a6edc832988b52cbc",
+      "replication-49e47e0657ebecec56468912",
+      "replication-608fa920349ea44f5292cf1c",
+      "replication-618e8ef0621b6b5ff095f3e3",
+      "replication-626842427863f2efe5b04f54",
+      "replication-7a49092e387e93af8cc755a8",
+      "replication-889978244a0ced276cff5a20",
+      "replication-aab0941d73a56daf77fe72a6",
+      "replication-aac9a6c0f6111ec29606c9fb",
+      "replication-add2a210ae56971178e8bd20",
+      "replication-b4625f4353adb1e385b03b00",
+      "replication-b7bc8cc7803e3dc6bd673e52",
+      "replication-ba974b00e869b685162161d4",
+      "replication-bfd513df80a1cfe8fc431354",
+      "replication-c34a3bf79f65855c92a9ba10",
+      "replication-c60f8ccb348c836d4c7389ba",
+      "replication-cae7cd6d128eb590bfeabaa5",
+      "replication-d170054f0816cace9e16a5c4",
+      "replication-d48e736eb17ee1be4cc413b5",
+      "replication-e57231d45ac5eb9b10df6a8b",
+      "replication-f012aa34df77d8565b841901",
+      "replication-f8b55258d5d3e209df47fba6",
+      "replication-02026a3b536305fed18fb29c",
+      "replication-021454e52c8fb955cc74fa5d",
+      "replication-049bbc56226044df30d845eb",
+      "replication-24155c93c69be4d0574ba410",
+      "replication-315682335e424b78d49e06ca",
+      "replication-32a091845184b34fa4442324",
+      "replication-336f460b1e88a4a15cefbfcb",
+      "replication-3a55e4363ed4659a5e04b9ac",
+      "replication-47aa909fa5b95ce444c873c4",
+      "replication-588b9976adbe228b471efd5a",
+      "replication-58e0bda07655848deb482970",
+      "replication-5a99dd4aafc57f9f7efe27ef",
+      "replication-6ae4ff9fa603f74244907a14",
+      "replication-6bffd8e8bb348ee810a103ad",
+      "replication-6d75f29b784274bb788d02c2",
+      "replication-7c2eb3713bd305e22cd97bf6",
+      "replication-7fd9f7bcda9cd34365663b0f",
+      "replication-818cc589f12e496b2878f423",
+      "replication-84f325779702b17132dd8b04",
+      "replication-8ba093157d60c0b487502a47",
+      "replication-a5fe8b44a9f39db3d916bcb9",
+      "replication-a7d92743ff52da26976c0451",
+      "replication-bd1431605ba16436c6932787",
+      "replication-bfbae011ae9b763ad762344a",
+      "replication-c4b14e5b0db96eaf563c2a99",
+      "replication-ccc9634dbcc198aa7d67a970",
+      "replication-cfd91bc8d21f60f005c3702d",
+      "replication-d067a2635d34dfe03b4ef8a2",
+      "replication-d20727e753c46d4016a6c3d7",
+      "replication-df01d009550433c161c06ee1",
+      "replication-e92bb624374f218c65abadf4",
+      "replication-f1de626b56679fd9fee649a6",
+      "replication-01b5b58933c523849e696fc4",
+      "replication-0e8af333832c3d721ea27504",
+      "replication-10ba4586c18cda20b4a8801d",
+      "replication-20f67e280d69c2081f0ce885",
+      "replication-2eb0b389ad031c4b9ecef774",
+      "replication-2ee4fdfa564bd2a1b669f208",
+      "replication-36230ff36807d80e1060574e",
+      "replication-3eba9444d99c2716adeb3a5d",
+      "replication-43b4479760bddee116f8c259",
+      "replication-45c7d1c680e404e9eae567e5",
+      "replication-47fa4c46ffad5e10353882c4",
+      "replication-51f1950766abc13f808fe7bb",
+      "replication-5377e5de083788d2acf9e1bd",
+      "replication-64a375bbbc842b06c46c6b9a",
+      "replication-650963612a5754f21cacfa05",
+      "replication-6a12c339dd83a50f15b72bce",
+      "replication-735c7ef0e0028fc02b5bd0fc",
+      "replication-8df8dfa8c5b5d8d71fcf1de4",
+      "replication-978688577b6c2dae1efe85fd",
+      "replication-98152d5d0d22112568805ae7",
+      "replication-a3c848e0f666420a320464fa",
+      "replication-a3f9132cd5d2627378f8b0e5",
+      "replication-a5f8441e80f27b27afc9fd3e",
+      "replication-ace9ac9d9cad054a5a25dc95",
+      "replication-b3c67507ca7f65133be112b8",
+      "replication-cb935ca956e5d9e3ecb08730",
+      "replication-ccc1cbf5d1c0cd56faa388ad",
+      "replication-d0d1b0fcc675bde1ea5c8f2b",
+      "replication-d70acac4b10f15b2899afc2f",
+      "replication-ea045ba96c4c8ba933b90986",
+      "replication-f395a0b6f319f42e01d7f926",
+      "replication-fb74af6f4461ece5592bd1bc",
+      "replication-027f0e0a0a39e4bde770dd93",
+      "replication-05b2be79323c0d114f7a2f9d",
+      "replication-0e8dd8d6143fa36e3af54b75",
+      "replication-121ab6487dad851ef70a667f",
+      "replication-1271b7953105e423f412d38e",
+      "replication-2780cdf1f65636bf7eface66",
+      "replication-34c56234bed38aacaa91d4c2",
+      "replication-4241834d46de4dc17f3a5356",
+      "replication-43372ff751520c09317116d0",
+      "replication-45f090d7fae668590f2f307c",
+      "replication-4fd117c05d59e50616588579",
+      "replication-5af44bb51abf289c09eb8b9d",
+      "replication-661401af455b420627c2af59",
+      "replication-682c960b4e5a29a86144585d",
+      "replication-7acd298ddb86d9df47ba07e7",
+      "replication-90f6157255ae596ad627e1aa",
+      "replication-9bda5ae9c412f2cfd5b07b96",
+      "replication-a80e72cc2826efa09644bd7d",
+      "replication-b4c6b20fade7c649010a1c83",
+      "replication-b50eda3c4d2efbcd99334859",
+      "replication-c0197616d6cca61b08d74dd8",
+      "replication-c4100155e98840e88fd9efd5",
+      "replication-c4508ec5a0ea621b755431a0",
+      "replication-c895efb594b4d3c5dabc8d0f",
+      "replication-ca950429896573e371af3aef",
+      "replication-caa86e0b22dccca012cf5a53",
+      "replication-cc30bab909ff1dbdbd506550",
+      "replication-d0ddc14fbdddbd5437027ace",
+      "replication-e3e290ca9f50cb23cff8a243",
+      "replication-e6dcbe06be174f7ab071801d",
+      "replication-f386ee9858d6e48c7e8ae5bb",
+      "replication-ff0ddc6d52baf4de0c4fbbd7"
+    ],
+    "heldout_samples": 512,
+    "json_schedule": [
+      "replication-03cff19b47576dcab5b2bf3a",
+      "replication-04914f880321e1613fd46872",
+      "replication-09ec096ea5e2669bbf55e479",
+      "replication-0bb3530a2a5b13e998f07ab5",
+      "replication-0bfa903580ac33cbeccacdf5",
+      "replication-023bdeca799fb4dfc8f52443",
+      "replication-0a60a55fd8e48e4fb4cb7d9f",
+      "replication-0bb4e9825039f3ccfb7aa210",
+      "replication-0be34ed55e70ddf54a880cc7",
+      "replication-0f7ccabbc8fb18fc54358ca7",
+      "replication-041d0f5417fafefac62c9ba5",
+      "replication-094bf21ff7968fab0ff43ddd",
+      "replication-0cc35d97e8291490d1fe4bb4",
+      "replication-101f6872ae87519668f06455",
+      "replication-1164732cab0d2ad7d02fcc79",
+      "replication-021a0f49b20d0ecd7c5642cc",
+      "replication-0f32a114256771dcb83d23b9",
+      "replication-1110735384b554e2e6484425",
+      "replication-1278ef5608c6b22b9181c9e2",
+      "replication-14e1d9fe4b2790107fd4700a"
+    ],
+    "max_length_bound_pass": true,
+    "optimizer_steps": 40,
+    "pair_schedule": [
+      {
+        "final_sample_id": "replication-9534f6bb6c3c75228d35a5c2",
+        "pair_id": "train-replication-000",
+        "process_sample_id": "replication-5459912b79777d6caec2c297"
+      },
+      {
+        "final_sample_id": "replication-5c6d2af2f08d81829f3d72d2",
+        "pair_id": "train-replication-001",
+        "process_sample_id": "replication-0177c37f06f18a0faa5acc14"
+      },
+      {
+        "final_sample_id": "replication-f7700010a7434d9ad19de5c5",
+        "pair_id": "train-replication-002",
+        "process_sample_id": "replication-8f808e14b35b0380840fb2d7"
+      },
+      {
+        "final_sample_id": "replication-068b74546e7730d048f14ace",
+        "pair_id": "train-replication-003",
+        "process_sample_id": "replication-e83e8a8d902a29fc69622f3e"
+      },
+      {
+        "final_sample_id": "replication-5feabf661cc98bfd39d0e6a5",
+        "pair_id": "train-replication-004",
+        "process_sample_id": "replication-ee02fa20b97b76eacea2e31d"
+      },
+      {
+        "final_sample_id": "replication-51f42ca3d6572ce56a7c3627",
+        "pair_id": "train-replication-005",
+        "process_sample_id": "replication-b17252ef63ec912873517b09"
+      },
+      {
+        "final_sample_id": "replication-679328d0db91ab20bfe5658c",
+        "pair_id": "train-replication-006",
+        "process_sample_id": "replication-819cc393da1f61527b80b901"
+      },
+      {
+        "final_sample_id": "replication-a9aa935dfeb98331702e10dd",
+        "pair_id": "train-replication-007",
+        "process_sample_id": "replication-da085ec6249b0e2766b3de87"
+      },
+      {
+        "final_sample_id": "replication-08d35d6f8d01213942506342",
+        "pair_id": "train-replication-008",
+        "process_sample_id": "replication-5e79644fba0f6424f51713d0"
+      },
+      {
+        "final_sample_id": "replication-621c1b5ed9571acfdaf5b3f5",
+        "pair_id": "train-replication-009",
+        "process_sample_id": "replication-fbec472f77c6d2908e378310"
+      },
+      {
+        "final_sample_id": "replication-ab0ab40cfc99423c9e430ff4",
+        "pair_id": "train-replication-010",
+        "process_sample_id": "replication-a4e6b3844837ec49d3dec6a2"
+      },
+      {
+        "final_sample_id": "replication-33c56e7d8d8d9340da357cf1",
+        "pair_id": "train-replication-011",
+        "process_sample_id": "replication-cbb5d44289d5e25941015c41"
+      },
+      {
+        "final_sample_id": "replication-86915bdad936c6adaae09c8d",
+        "pair_id": "train-replication-012",
+        "process_sample_id": "replication-13609ffe4443b126b4345d7b"
+      },
+      {
+        "final_sample_id": "replication-0b4d10dc5d559e298dd457bc",
+        "pair_id": "train-replication-013",
+        "process_sample_id": "replication-75a37f4d2772902039f9a3d0"
+      },
+      {
+        "final_sample_id": "replication-a89c5c1ccfc5335b7cf3a042",
+        "pair_id": "train-replication-014",
+        "process_sample_id": "replication-1631d96d88aca65b966d2070"
+      },
+      {
+        "final_sample_id": "replication-97138e85c70566aa521b2912",
+        "pair_id": "train-replication-015",
+        "process_sample_id": "replication-54c737eadcdff6a02103fec9"
+      },
+      {
+        "final_sample_id": "replication-55124190fcf6bf4d2ca5a2ae",
+        "pair_id": "train-replication-016",
+        "process_sample_id": "replication-a573e60f0564b60db3289c66"
+      },
+      {
+        "final_sample_id": "replication-e842344a4ac8036bb3572100",
+        "pair_id": "train-replication-017",
+        "process_sample_id": "replication-33a2ad76b41b992370574be1"
+      },
+      {
+        "final_sample_id": "replication-a82e256a8bd4e8616a5d545d",
+        "pair_id": "train-replication-018",
+        "process_sample_id": "replication-27f8b69691156439017f3f1b"
+      },
+      {
+        "final_sample_id": "replication-338d5fc6a14e3ccb32902e20",
+        "pair_id": "train-replication-019",
+        "process_sample_id": "replication-ee5a8b99205479b78fdd7770"
+      }
+    ],
+    "pair_suffix_alignment_pass": true,
+    "selected_full_sequence_max": 644,
+    "selected_target_max": 131,
+    "step_schedule": [
+      {
+        "final_sample_id": "replication-9534f6bb6c3c75228d35a5c2",
+        "kind": "pair",
+        "pair_id": "train-replication-000",
+        "process_sample_id": "replication-5459912b79777d6caec2c297"
+      },
+      {
+        "kind": "json",
+        "sample_id": "replication-03cff19b47576dcab5b2bf3a"
+      },
+      {
+        "final_sample_id": "replication-5c6d2af2f08d81829f3d72d2",
+        "kind": "pair",
+        "pair_id": "train-replication-001",
+        "process_sample_id": "replication-0177c37f06f18a0faa5acc14"
+      },
+      {
+        "kind": "json",
+        "sample_id": "replication-04914f880321e1613fd46872"
+      },
+      {
+        "final_sample_id": "replication-f7700010a7434d9ad19de5c5",
+        "kind": "pair",
+        "pair_id": "train-replication-002",
+        "process_sample_id": "replication-8f808e14b35b0380840fb2d7"
+      },
+      {
+        "kind": "json",
+        "sample_id": "replication-09ec096ea5e2669bbf55e479"
+      },
+      {
+        "final_sample_id": "replication-068b74546e7730d048f14ace",
+        "kind": "pair",
+        "pair_id": "train-replication-003",
+        "process_sample_id": "replication-e83e8a8d902a29fc69622f3e"
+      },
+      {
+        "kind": "json",
+        "sample_id": "replication-0bb3530a2a5b13e998f07ab5"
+      },
+      {
+        "final_sample_id": "replication-5feabf661cc98bfd39d0e6a5",
+        "kind": "pair",
+        "pair_id": "train-replication-004",
+        "process_sample_id": "replication-ee02fa20b97b76eacea2e31d"
+      },
+      {
+        "kind": "json",
+        "sample_id": "replication-0bfa903580ac33cbeccacdf5"
+      },
+      {
+        "final_sample_id": "replication-51f42ca3d6572ce56a7c3627",
+        "kind": "pair",
+        "pair_id": "train-replication-005",
+        "process_sample_id": "replication-b17252ef63ec912873517b09"
+      },
+      {
+        "kind": "json",
+        "sample_id": "replication-023bdeca799fb4dfc8f52443"
+      },
+      {
+        "final_sample_id": "replication-679328d0db91ab20bfe5658c",
+        "kind": "pair",
+        "pair_id": "train-replication-006",
+        "process_sample_id": "replication-819cc393da1f61527b80b901"
+      },
+      {
+        "kind": "json",
+        "sample_id": "replication-0a60a55fd8e48e4fb4cb7d9f"
+      },
+      {
+        "final_sample_id": "replication-a9aa935dfeb98331702e10dd",
+        "kind": "pair",
+        "pair_id": "train-replication-007",
+        "process_sample_id": "replication-da085ec6249b0e2766b3de87"
+      },
+      {
+        "kind": "json",
+        "sample_id": "replication-0bb4e9825039f3ccfb7aa210"
+      },
+      {
+        "final_sample_id": "replication-08d35d6f8d01213942506342",
+        "kind": "pair",
+        "pair_id": "train-replication-008",
+        "process_sample_id": "replication-5e79644fba0f6424f51713d0"
+      },
+      {
+        "kind": "json",
+        "sample_id": "replication-0be34ed55e70ddf54a880cc7"
+      },
+      {
+        "final_sample_id": "replication-621c1b5ed9571acfdaf5b3f5",
+        "kind": "pair",
+        "pair_id": "train-replication-009",
+        "process_sample_id": "replication-fbec472f77c6d2908e378310"
+      },
+      {
+        "kind": "json",
+        "sample_id": "replication-0f7ccabbc8fb18fc54358ca7"
+      },
+      {
+        "final_sample_id": "replication-ab0ab40cfc99423c9e430ff4",
+        "kind": "pair",
+        "pair_id": "train-replication-010",
+        "process_sample_id": "replication-a4e6b3844837ec49d3dec6a2"
+      },
+      {
+        "kind": "json",
+        "sample_id": "replication-041d0f5417fafefac62c9ba5"
+      },
+      {
+        "final_sample_id": "replication-33c56e7d8d8d9340da357cf1",
+        "kind": "pair",
+        "pair_id": "train-replication-011",
+        "process_sample_id": "replication-cbb5d44289d5e25941015c41"
+      },
+      {
+        "kind": "json",
+        "sample_id": "replication-094bf21ff7968fab0ff43ddd"
+      },
+      {
+        "final_sample_id": "replication-86915bdad936c6adaae09c8d",
+        "kind": "pair",
+        "pair_id": "train-replication-012",
+        "process_sample_id": "replication-13609ffe4443b126b4345d7b"
+      },
+      {
+        "kind": "json",
+        "sample_id": "replication-0cc35d97e8291490d1fe4bb4"
+      },
+      {
+        "final_sample_id": "replication-0b4d10dc5d559e298dd457bc",
+        "kind": "pair",
+        "pair_id": "train-replication-013",
+        "process_sample_id": "replication-75a37f4d2772902039f9a3d0"
+      },
+      {
+        "kind": "json",
+        "sample_id": "replication-101f6872ae87519668f06455"
+      },
+      {
+        "final_sample_id": "replication-a89c5c1ccfc5335b7cf3a042",
+        "kind": "pair",
+        "pair_id": "train-replication-014",
+        "process_sample_id": "replication-1631d96d88aca65b966d2070"
+      },
+      {
+        "kind": "json",
+        "sample_id": "replication-1164732cab0d2ad7d02fcc79"
+      },
+      {
+        "final_sample_id": "replication-97138e85c70566aa521b2912",
+        "kind": "pair",
+        "pair_id": "train-replication-015",
+        "process_sample_id": "replication-54c737eadcdff6a02103fec9"
+      },
+      {
+        "kind": "json",
+        "sample_id": "replication-021a0f49b20d0ecd7c5642cc"
+      },
+      {
+        "final_sample_id": "replication-55124190fcf6bf4d2ca5a2ae",
+        "kind": "pair",
+        "pair_id": "train-replication-016",
+        "process_sample_id": "replication-a573e60f0564b60db3289c66"
+      },
+      {
+        "kind": "json",
+        "sample_id": "replication-0f32a114256771dcb83d23b9"
+      },
+      {
+        "final_sample_id": "replication-e842344a4ac8036bb3572100",
+        "kind": "pair",
+        "pair_id": "train-replication-017",
+        "process_sample_id": "replication-33a2ad76b41b992370574be1"
+      },
+      {
+        "kind": "json",
+        "sample_id": "replication-1110735384b554e2e6484425"
+      },
+      {
+        "final_sample_id": "replication-a82e256a8bd4e8616a5d545d",
+        "kind": "pair",
+        "pair_id": "train-replication-018",
+        "process_sample_id": "replication-27f8b69691156439017f3f1b"
+      },
+      {
+        "kind": "json",
+        "sample_id": "replication-1278ef5608c6b22b9181c9e2"
+      },
+      {
+        "final_sample_id": "replication-338d5fc6a14e3ccb32902e20",
+        "kind": "pair",
+        "pair_id": "train-replication-019",
+        "process_sample_id": "replication-ee5a8b99205479b78fdd7770"
+      },
+      {
+        "kind": "json",
+        "sample_id": "replication-14e1d9fe4b2790107fd4700a"
+      }
+    ],
+    "train_heldout_overlap": 0,
+    "train_json_steps": 20,
+    "train_pair_steps": 20,
+    "train_pair_suffix_alignment": [
+      {
+        "aligned": true,
+        "pair_id": "train-replication-000"
+      },
+      {
+        "aligned": true,
+        "pair_id": "train-replication-001"
+      },
+      {
+        "aligned": true,
+        "pair_id": "train-replication-002"
+      },
+      {
+        "aligned": true,
+        "pair_id": "train-replication-003"
+      },
+      {
+        "aligned": true,
+        "pair_id": "train-replication-004"
+      },
+      {
+        "aligned": true,
+        "pair_id": "train-replication-005"
+      },
+      {
+        "aligned": true,
+        "pair_id": "train-replication-006"
+      },
+      {
+        "aligned": true,
+        "pair_id": "train-replication-007"
+      },
+      {
+        "aligned": true,
+        "pair_id": "train-replication-008"
+      },
+      {
+        "aligned": true,
+        "pair_id": "train-replication-009"
+      },
+      {
+        "aligned": true,
+        "pair_id": "train-replication-010"
+      },
+      {
+        "aligned": true,
+        "pair_id": "train-replication-011"
+      },
+      {
+        "aligned": true,
+        "pair_id": "train-replication-012"
+      },
+      {
+        "aligned": true,
+        "pair_id": "train-replication-013"
+      },
+      {
+        "aligned": true,
+        "pair_id": "train-replication-014"
+      },
+      {
+        "aligned": true,
+        "pair_id": "train-replication-015"
+      },
+      {
+        "aligned": true,
+        "pair_id": "train-replication-016"
+      },
+      {
+        "aligned": true,
+        "pair_id": "train-replication-017"
+      },
+      {
+        "aligned": true,
+        "pair_id": "train-replication-018"
+      },
+      {
+        "aligned": true,
+        "pair_id": "train-replication-019"
+      }
+    ]
+  },
+  "significance": {
+    "acceptance_gates": {
+      "aggregate_ci_lower_gt_zero": true,
+      "aggregate_exact_mcnemar_p_lt": 0.05,
+      "every_json_family_non_regression": true,
+      "final_ci_lower_gt_zero": true,
+      "final_exact_mcnemar_p_lt": 0.05,
+      "maximum_final_only_losses": 0,
+      "minimum_final_only_wins": 6,
+      "pair_ci_lower_gt_zero": true,
+      "pair_exact_mcnemar_p_lt": 0.05
+    },
+    "bootstrap_samples": 10000,
+    "bootstrap_seeds": {
+      "aggregate": "paired-consistency-replication-v1-all",
+      "final": "paired-consistency-replication-v1-final",
+      "json": "paired-consistency-replication-v1-json",
+      "pair": "paired-consistency-replication-v1-pair"
+    },
+    "mcnemar_alpha": 0.05
+  }
+}

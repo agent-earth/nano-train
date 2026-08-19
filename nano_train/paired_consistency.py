@@ -42,6 +42,30 @@ JSON_FAMILIES = (
     "tool-use-and-recovery",
 )
 
+FROZEN_METHOD_FIELDS = (
+    "model_config_sha256",
+    "seed",
+    "dtype",
+    "max_length",
+    "max_steps",
+    "learning_rate",
+    "weight_decay",
+    "warmup_steps",
+    "lora_r",
+    "lora_alpha",
+    "lora_dropout",
+    "lora_targets",
+    "generation_max_new_tokens",
+    "gradient_checkpointing",
+    "process_ce_weight",
+    "final_ce_weight",
+    "consistency_weight",
+    "consistency_temperature",
+    "teacher_detach",
+    "train_pair_count",
+    "train_json_per_family",
+)
+
 
 @dataclass(frozen=True)
 class PairedConsistencyConfig:
@@ -86,12 +110,40 @@ class PairedConsistencyConfig:
     expected_json_ids_sha256: str
     expected_prior_train_ids_sha256: str
     expected_source_dev_ids_sha256: str
+    expected_train_pair_count: int = 20
+    expected_heldout_pair_count: int = 24
+    expected_train_json_per_family: int = 5
+    expected_heldout_json_per_family: int = 8
+    bootstrap_samples: int = 10_000
+    aggregate_bootstrap_seed: str = "paired-consistency-v1-all"
+    final_bootstrap_seed: str = "paired-consistency-v1-final"
+    pair_bootstrap_seed: str = "paired-consistency-v1-pair"
+    json_bootstrap_seed: str = "paired-consistency-v1-json"
+    mcnemar_alpha: float = 0.05
+    require_ci_lower_positive: bool = False
+    minimum_final_only_wins: int = 1
+    maximum_final_only_losses: int = 0
 
 
 def load_config(path: str | Path) -> PairedConsistencyConfig:
     raw = json.loads(Path(path).read_text(encoding="utf-8"))
     expected = set(PairedConsistencyConfig.__dataclass_fields__)
-    if set(raw) != expected:
+    optional = {
+        "expected_train_pair_count",
+        "expected_heldout_pair_count",
+        "expected_train_json_per_family",
+        "expected_heldout_json_per_family",
+        "bootstrap_samples",
+        "aggregate_bootstrap_seed",
+        "final_bootstrap_seed",
+        "pair_bootstrap_seed",
+        "json_bootstrap_seed",
+        "mcnemar_alpha",
+        "require_ci_lower_positive",
+        "minimum_final_only_wins",
+        "maximum_final_only_losses",
+    }
+    if set(raw) - expected or expected - set(raw) - optional:
         raise ValueError("paired consistency config fields differ")
     raw["lora_targets"] = tuple(raw["lora_targets"])
     config = PairedConsistencyConfig(**raw)
@@ -100,7 +152,10 @@ def load_config(path: str | Path) -> PairedConsistencyConfig:
 
 
 def validate_config(config: PairedConsistencyConfig) -> None:
-    if config.schema_version != "nano_train_paired_consistency_v1":
+    if config.schema_version not in {
+        "nano_train_paired_consistency_v1",
+        "nano_train_paired_consistency_v2",
+    }:
         raise ValueError("unsupported paired consistency schema")
     expected = {
         "dtype": "float32",
@@ -120,12 +175,6 @@ def validate_config(config: PairedConsistencyConfig) -> None:
         "consistency_weight": 1.0,
         "consistency_temperature": 1.0,
         "teacher_detach": True,
-        "heldout_pair_count": 24,
-        "train_pair_offset": 24,
-        "train_pair_count": 20,
-        "heldout_json_per_family": 8,
-        "train_json_offset": 8,
-        "train_json_per_family": 5,
     }
     for field, expected_value in expected.items():
         if getattr(config, field) != expected_value:
@@ -151,10 +200,173 @@ def validate_config(config: PairedConsistencyConfig) -> None:
         len(JSON_FAMILIES) * config.train_json_per_family
     ):
         raise ValueError("paired consistency step composition differs")
+    if config.train_pair_count != config.expected_train_pair_count:
+        raise ValueError("paired consistency train pair count differs")
+    if config.heldout_pair_count != config.expected_heldout_pair_count:
+        raise ValueError("paired consistency heldout pair count differs")
+    if (
+        config.train_json_per_family
+        != config.expected_train_json_per_family
+    ):
+        raise ValueError("paired consistency train JSON count differs")
+    if (
+        config.heldout_json_per_family
+        != config.expected_heldout_json_per_family
+    ):
+        raise ValueError("paired consistency heldout JSON count differs")
+    if config.schema_version == "nano_train_paired_consistency_v1":
+        expected_v1 = {
+            "heldout_pair_count": 24,
+            "train_pair_offset": 24,
+            "train_pair_count": 20,
+            "heldout_json_per_family": 8,
+            "train_json_offset": 8,
+            "train_json_per_family": 5,
+        }
+        for field, expected_value in expected_v1.items():
+            if getattr(config, field) != expected_value:
+                raise ValueError(
+                    f"paired consistency v1 freezes {field}={expected_value}"
+                )
+    else:
+        expected_v2 = {
+            "heldout_pair_count": 192,
+            "train_pair_offset": 0,
+            "train_pair_count": 20,
+            "heldout_json_per_family": 32,
+            "train_json_offset": 0,
+            "train_json_per_family": 5,
+            "bootstrap_samples": 10_000,
+            "aggregate_bootstrap_seed": (
+                "paired-consistency-replication-v1-all"
+            ),
+            "final_bootstrap_seed": (
+                "paired-consistency-replication-v1-final"
+            ),
+            "pair_bootstrap_seed": (
+                "paired-consistency-replication-v1-pair"
+            ),
+            "json_bootstrap_seed": (
+                "paired-consistency-replication-v1-json"
+            ),
+            "mcnemar_alpha": 0.05,
+            "require_ci_lower_positive": True,
+            "minimum_final_only_wins": 6,
+            "maximum_final_only_losses": 0,
+        }
+        for field, expected_value in expected_v2.items():
+            if getattr(config, field) != expected_value:
+                raise ValueError(
+                    f"paired consistency v2 freezes {field}={expected_value}"
+                )
 
 
 def _sha256_lines(values: list[str]) -> str:
     return hashlib.sha256("\n".join(values).encode("utf-8")).hexdigest()
+
+
+def frozen_method_contract(
+    config: PairedConsistencyConfig,
+) -> dict[str, Any]:
+    result = {
+        field: getattr(config, field)
+        for field in FROZEN_METHOD_FIELDS
+    }
+    result["lora_targets"] = list(config.lora_targets)
+    return result
+
+
+def load_replication_dataset(
+    dataset_path: Path,
+    release_path: Path,
+) -> dict[str, Any]:
+    dataset = json.loads(dataset_path.read_text(encoding="utf-8"))
+    release = json.loads(release_path.read_text(encoding="utf-8"))
+    if (
+        dataset.get("schema_version")
+        != "nano_consistency_replication_dataset_v1"
+        or release.get("schema_version")
+        != "nano_consistency_replication_release_v1"
+    ):
+        raise ValueError("unsupported consistency replication release")
+    if release.get("training_unblocked") is not True:
+        raise ValueError("consistency replication release is blocked")
+    checks = release.get("checks")
+    if not isinstance(checks, dict) or not checks or not all(checks.values()):
+        raise ValueError("consistency replication release checks differ")
+    policy = dataset.get("policy", {})
+    if (
+        policy.get("contains_benchmark_content") is not False
+        or policy.get("contains_independent_holdout") is not False
+        or policy.get("dev_training_allowed") is not False
+        or policy.get("training_allowed_after_release_gate") is not True
+    ):
+        raise ValueError("consistency replication dataset policy differs")
+    canonical_sha = hashlib.sha256(
+        json.dumps(
+            dataset,
+            sort_keys=True,
+            separators=(",", ":"),
+            ensure_ascii=False,
+        ).encode("utf-8")
+    ).hexdigest()
+    if canonical_sha != release.get("source", {}).get(
+        "dataset_canonical_sha256"
+    ):
+        raise ValueError("consistency replication dataset identity mismatch")
+    samples = []
+    for row in dataset.get("samples", []):
+        split = row.get("split")
+        if split not in {"train", "dev"}:
+            raise ValueError("consistency replication split differs")
+        if row.get("training_eligible") is not (split == "train"):
+            raise ValueError(
+                "consistency replication training eligibility differs"
+            )
+        view = row.get("view")
+        format_family = {
+            "process": "process_trace_numeric",
+            "final": "execution_target_final",
+            "json_preservation": "skill_release_exact",
+        }.get(view)
+        if format_family is None:
+            raise ValueError("consistency replication view differs")
+        samples.append(
+            {
+                "sample_id": row["sample_id"],
+                "split": "validation" if split == "dev" else "train",
+                "task_family": row["task_family"],
+                "format_family": format_family,
+                "generation_rule": "paired_consistency_replication_v1",
+                "training_eligible": split == "train",
+                "messages": row["messages"],
+                "verifier": row["verifier"],
+                "task_spec": row["task_spec"],
+            }
+        )
+    if (
+        sum(row["split"] == "train" for row in samples)
+        != release["accepted"]["train_rows"]
+        or sum(row["split"] == "validation" for row in samples)
+        != release["accepted"]["dev_rows"]
+    ):
+        raise ValueError("consistency replication release counts differ")
+    return {
+        "schema_version": "nano_analog_dataset_v1",
+        "dataset_id": release["release_id"],
+        "policy": {
+            "source_split": "non_eval_analog_only",
+            "training_allowed": True,
+            "contains_benchmark_content": False,
+        },
+        "release": {
+            "path": str(release_path),
+            "sha256": sha256_file(release_path),
+            "dataset_canonical_sha256": canonical_sha,
+            "dataset_file_sha256": sha256_file(dataset_path),
+        },
+        "samples": samples,
+    }
 
 
 def build_selection_contract(
@@ -175,66 +387,129 @@ def build_selection_contract(
     ):
         raise ValueError("paired consistency model identity mismatch")
 
-    dataset = load_execution_target_dataset(dataset_path, release_path)
+    if config.schema_version == "nano_train_paired_consistency_v1":
+        dataset = load_execution_target_dataset(dataset_path, release_path)
+    else:
+        dataset = load_replication_dataset(dataset_path, release_path)
+    if (
+        dataset["release"]["dataset_file_sha256"]
+        != config.dataset_file_sha256
+        or dataset["release"]["dataset_canonical_sha256"]
+        != config.dataset_canonical_sha256
+        or dataset["release"]["sha256"]
+        != config.release_manifest_sha256
+    ):
+        raise ValueError("paired consistency loaded dataset identity mismatch")
     raw = json.loads(dataset_path.read_text(encoding="utf-8"))
     raw_by_id = {row["sample_id"]: row for row in raw["samples"]}
+    if len(raw_by_id) != len(raw["samples"]):
+        raise ValueError("paired consistency sample IDs are not unique")
     prior_config = json.loads(prior_config_path.read_text(encoding="utf-8"))
-    prior_train_ids = sorted(prior_config["train_sample_schedule"])
+    prior_train_ids = sorted(prior_config.get("train_sample_schedule", []))
     prior_train = set(prior_train_ids)
     source_dev_ids = sorted(
         row["sample_id"] for row in raw["samples"] if row["split"] == "dev"
     )
     source_dev = set(source_dev_ids)
 
-    pairs: dict[str, dict[str, str]] = {}
-    json_rows = {family: [] for family in JSON_FAMILIES}
+    train_pairs: dict[str, dict[str, str]] = {}
+    dev_pairs: dict[str, dict[str, str]] = {}
+    train_json_rows = {family: [] for family in JSON_FAMILIES}
+    dev_json_rows = {family: [] for family in JSON_FAMILIES}
     for row in raw["samples"]:
-        if row["split"] != "train":
-            continue
-        if row.get("pair_id"):
-            pairs.setdefault(row["pair_id"], {})[row["view"]] = row["sample_id"]
-        elif row["task_family"] in json_rows:
-            json_rows[row["task_family"]].append(row["sample_id"])
-    for sample_ids in json_rows.values():
-        sample_ids.sort()
-    available_pairs = [
-        pair_id
-        for pair_id in sorted(pairs)
-        if not (set(pairs[pair_id].values()) & prior_train)
-    ]
-    heldout_pair_ids = available_pairs[: config.heldout_pair_count]
-    train_pair_ids = available_pairs[
-        config.train_pair_offset : (
-            config.train_pair_offset + config.train_pair_count
+        pair_buckets = train_pairs if row["split"] == "train" else dev_pairs
+        json_buckets = (
+            train_json_rows if row["split"] == "train" else dev_json_rows
         )
-    ]
-    heldout_json = {
-        family: [
-            sample_id
-            for sample_id in json_rows[family]
-            if sample_id not in prior_train
-        ][: config.heldout_json_per_family]
-        for family in JSON_FAMILIES
-    }
-    train_json = {
-        family: [
-            sample_id
-            for sample_id in json_rows[family]
-            if sample_id not in prior_train
-        ][
-            config.train_json_offset : (
-                config.train_json_offset + config.train_json_per_family
+        if row.get("pair_id"):
+            pair_buckets.setdefault(row["pair_id"], {})[row["view"]] = row[
+                "sample_id"
+            ]
+        elif row["task_family"] in json_buckets:
+            json_buckets[row["task_family"]].append(row["sample_id"])
+    for sample_ids in [
+        *train_json_rows.values(),
+        *dev_json_rows.values(),
+    ]:
+        sample_ids.sort()
+    for split_name, pairs in (("train", train_pairs), ("dev", dev_pairs)):
+        incomplete = [
+            pair_id
+            for pair_id, views in pairs.items()
+            if set(views) != {"process", "final"}
+        ]
+        if incomplete:
+            raise ValueError(
+                f"paired consistency {split_name} pairs are incomplete"
+            )
+    if config.schema_version == "nano_train_paired_consistency_v1":
+        available_pairs = [
+            pair_id
+            for pair_id in sorted(train_pairs)
+            if not (set(train_pairs[pair_id].values()) & prior_train)
+        ]
+        heldout_pair_ids = available_pairs[: config.heldout_pair_count]
+        selected_train_pair_ids = available_pairs[
+            config.train_pair_offset : (
+                config.train_pair_offset + config.train_pair_count
             )
         ]
-        for family in JSON_FAMILIES
-    }
+        heldout_json = {
+            family: [
+                sample_id
+                for sample_id in train_json_rows[family]
+                if sample_id not in prior_train
+            ][: config.heldout_json_per_family]
+            for family in JSON_FAMILIES
+        }
+        train_json = {
+            family: [
+                sample_id
+                for sample_id in train_json_rows[family]
+                if sample_id not in prior_train
+            ][
+                config.train_json_offset : (
+                    config.train_json_offset + config.train_json_per_family
+                )
+            ]
+            for family in JSON_FAMILIES
+        }
+        heldout_pair_source = train_pairs
+    else:
+        heldout_pair_ids = sorted(dev_pairs)
+        selected_train_pair_ids = sorted(train_pairs)[
+            config.train_pair_offset : (
+                config.train_pair_offset + config.train_pair_count
+            )
+        ]
+        heldout_json = {
+            family: list(dev_json_rows[family])
+            for family in JSON_FAMILIES
+        }
+        train_json = {
+            family: train_json_rows[family][
+                config.train_json_offset : (
+                    config.train_json_offset + config.train_json_per_family
+                )
+            ]
+            for family in JSON_FAMILIES
+        }
+        heldout_pair_source = dev_pairs
     pair_schedule = [
         {
             "pair_id": pair_id,
-            "process_sample_id": pairs[pair_id]["process"],
-            "final_sample_id": pairs[pair_id]["final"],
+            "process_sample_id": train_pairs[pair_id]["process"],
+            "final_sample_id": train_pairs[pair_id]["final"],
         }
-        for pair_id in train_pair_ids
+        for pair_id in selected_train_pair_ids
+    ]
+    heldout_pair_schedule = [
+        {
+            "pair_id": pair_id,
+            "process_sample_id": heldout_pair_source[pair_id]["process"],
+            "final_sample_id": heldout_pair_source[pair_id]["final"],
+        }
+        for pair_id in heldout_pair_ids
     ]
     json_schedule = [
         sample_id
@@ -242,7 +517,7 @@ def build_selection_contract(
         for sample_id in train_json[family]
     ]
     heldout_sample_ids = [
-        pairs[pair_id][view]
+        heldout_pair_source[pair_id][view]
         for pair_id in heldout_pair_ids
         for view in ("process", "final")
     ] + [
@@ -269,20 +544,33 @@ def build_selection_contract(
         selected_train_ids & prior_train
         or heldout_ids & prior_train
         or heldout_ids & selected_train_ids
-        or heldout_ids & source_dev
+        or (
+            config.schema_version == "nano_train_paired_consistency_v1"
+            and heldout_ids & source_dev
+        )
     ):
         raise ValueError("paired consistency selection overlaps prior evidence")
     if any(
         raw_by_id[sample_id]["split"] != "train"
-        for sample_id in selected_train_ids | heldout_ids
+        for sample_id in selected_train_ids
     ):
-        raise ValueError("paired consistency selection is not from train pool")
+        raise ValueError("paired consistency train selection is not train")
+    expected_heldout_split = (
+        "train"
+        if config.schema_version == "nano_train_paired_consistency_v1"
+        else "dev"
+    )
+    if any(
+        raw_by_id[sample_id]["split"] != expected_heldout_split
+        for sample_id in heldout_ids
+    ):
+        raise ValueError("paired consistency heldout split differs")
 
     hashes = {
         "heldout_sample_id_sha256": _sha256_lines(
             sorted(heldout_sample_ids)
         ),
-        "pair_ids_sha256": _sha256_lines(train_pair_ids),
+        "pair_ids_sha256": _sha256_lines(selected_train_pair_ids),
         "json_ids_sha256": _sha256_lines(json_schedule),
         "prior_train_ids_sha256": _sha256_lines(prior_train_ids),
         "source_dev_ids_sha256": _sha256_lines(source_dev_ids),
@@ -300,6 +588,7 @@ def build_selection_contract(
         "dataset": dataset,
         "raw_by_id": raw_by_id,
         "heldout_sample_ids": heldout_sample_ids,
+        "heldout_pair_schedule": heldout_pair_schedule,
         "pair_schedule": pair_schedule,
         "json_schedule": json_schedule,
         "hashes": hashes,
