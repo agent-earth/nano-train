@@ -11,7 +11,11 @@ from peft import PeftModel
 from transformers import AutoTokenizer, Qwen3_5ForCausalLM
 
 from nano_train.config import load_sft_smoke_config
-from nano_train.data import load_analog_dataset, tokenize_samples
+from nano_train.data import (
+    load_analog_dataset,
+    load_skill_release_dataset,
+    tokenize_samples,
+)
 from nano_train.sft import evaluate_exact, sha256_tree
 
 
@@ -37,7 +41,17 @@ def main() -> None:
     tokenizer = AutoTokenizer.from_pretrained(adapter, local_files_only=True)
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token = tokenizer.eos_token
-    dataset = load_analog_dataset(config.dataset_path)
+    if config.dataset_schema == "skill_release_jsonl_v1":
+        dataset = load_skill_release_dataset(
+            config.dataset_path,
+            config.release_manifest_path or "",
+            train_samples_per_family=config.train_samples_per_family or 0,
+            validation_samples_per_family=(
+                config.validation_samples_per_family or 0
+            ),
+        )
+    else:
+        dataset = load_analog_dataset(config.dataset_path)
     validation = [
         sample
         for sample in tokenize_samples(

@@ -18,6 +18,7 @@ from nano_train.continuation import (
 from nano_train.data import (
     TokenizedSample,
     collate_samples,
+    load_skill_release_dataset,
     semantic_output_valid,
     tokenize_samples,
 )
@@ -186,6 +187,45 @@ class TrainTests(unittest.TestCase):
         )
         self.assertEqual(config.dtype, "float32")
         self.assertEqual(config.max_steps, 20)
+
+    def test_v2_config_accepts_long_sequence_release_smoke(self):
+        config = load_sft_smoke_config(
+            "configs/sft/skill_release_long_sequence_smoke_v1.json"
+        )
+
+        self.assertEqual(config.schema_version, "nano_train_sft_smoke_v2")
+        self.assertEqual(config.dataset_schema, "skill_release_jsonl_v1")
+        self.assertEqual(config.max_length, 1088)
+        self.assertEqual(config.max_steps, 4)
+        self.assertTrue(config.gradient_checkpointing)
+        self.assertEqual(config.train_samples_per_family, 2)
+        self.assertEqual(config.validation_samples_per_family, 1)
+
+    def test_v1_config_still_rejects_long_sequence(self):
+        raw = json.loads(
+            Path("configs/sft/format_contract_smoke_v2.json").read_text()
+        )
+        raw["max_length"] = 257
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "config.json"
+            path.write_text(json.dumps(raw), encoding="utf-8")
+
+            with self.assertRaisesRegex(ValueError, "256"):
+                load_sft_smoke_config(path)
+
+    def test_v2_config_requires_gradient_checkpointing(self):
+        raw = json.loads(
+            Path(
+                "configs/sft/skill_release_long_sequence_smoke_v1.json"
+            ).read_text()
+        )
+        raw["gradient_checkpointing"] = False
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "config.json"
+            path.write_text(json.dumps(raw), encoding="utf-8")
+
+            with self.assertRaisesRegex(ValueError, "gradient checkpointing"):
+                load_sft_smoke_config(path)
 
     def test_v3_changes_only_dataset_identity_fields(self):
         v2 = load_sft_smoke_config(
@@ -405,6 +445,109 @@ class TrainTests(unittest.TestCase):
         self.assertTrue(all(value != -100 for value in sample.labels[len(sample.prompt_ids) :]))
         self.assertEqual(tokenizer.assertions, (False, True, False))
         self.assertEqual(sample.task_family, "")
+
+    def test_release_loader_selects_stratified_train_and_dev(self):
+        families = ["alpha", "beta"]
+        rows = []
+        for family in families:
+            for split, count in (("train", 3), ("dev", 2)):
+                for index in range(count):
+                    sample_id = f"{family}-{split}-{index}"
+                    messages = [
+                        {"role": "system", "content": "system"},
+                        {"role": "user", "content": sample_id},
+                        {"role": "assistant", "content": "FINAL: ok"},
+                    ]
+                    rows.append(
+                        {
+                            "schema_version": "nano_skill_sft_sample_v1",
+                            "sample_id": sample_id,
+                            "split": split,
+                            "family_id": family,
+                            "messages": messages,
+                            "verifier": {"kind": "exact"},
+                            "exact_hash": f"exact-{sample_id}",
+                            "semantic_hash": f"semantic-{sample_id}",
+                        }
+                    )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            dataset_path = root / "accepted.jsonl"
+            dataset_path.write_text(
+                "".join(json.dumps(row) + "\n" for row in rows),
+                encoding="utf-8",
+            )
+            import hashlib
+
+            digest = hashlib.sha256(dataset_path.read_bytes()).hexdigest()
+            release_path = root / "release.json"
+            release_path.write_text(
+                json.dumps(
+                    {
+                        "schema_version": "nano_skill_sft_release_v1",
+                        "release_id": "test-release",
+                        "training_unblocked": True,
+                        "checks": {"all_pass": True},
+                        "artifacts": {
+                            "accepted_jsonl_sha256": digest,
+                        },
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            dataset = load_skill_release_dataset(
+                dataset_path,
+                release_path,
+                train_samples_per_family=2,
+                validation_samples_per_family=1,
+            )
+
+        self.assertEqual(dataset["dataset_id"], "test-release")
+        self.assertEqual(
+            [row["split"] for row in dataset["samples"]].count("train"),
+            4,
+        )
+        self.assertEqual(
+            [row["split"] for row in dataset["samples"]].count("validation"),
+            2,
+        )
+        self.assertEqual(
+            {row["task_family"] for row in dataset["samples"]},
+            set(families),
+        )
+
+    def test_release_loader_rejects_blocked_or_tampered_release(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            dataset_path = root / "accepted.jsonl"
+            dataset_path.write_text("{}\n", encoding="utf-8")
+            release_path = root / "release.json"
+            release = {
+                "schema_version": "nano_skill_sft_release_v1",
+                "release_id": "blocked",
+                "training_unblocked": False,
+                "checks": {"all_pass": False},
+                "artifacts": {"accepted_jsonl_sha256": "0" * 64},
+            }
+            release_path.write_text(json.dumps(release), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "not training-unblocked"):
+                load_skill_release_dataset(
+                    dataset_path,
+                    release_path,
+                    train_samples_per_family=1,
+                    validation_samples_per_family=1,
+                )
+            release["training_unblocked"] = True
+            release["checks"] = {"all_pass": True}
+            release_path.write_text(json.dumps(release), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "SHA256"):
+                load_skill_release_dataset(
+                    dataset_path,
+                    release_path,
+                    train_samples_per_family=1,
+                    validation_samples_per_family=1,
+                )
 
     def test_evaluate_exact_reports_family_metrics(self):
         class FakeModel:

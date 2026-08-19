@@ -23,6 +23,7 @@ from nano_train.data import (
     TokenizedSample,
     collate_samples,
     load_analog_dataset,
+    load_skill_release_dataset,
     semantic_output_valid,
     tokenize_samples,
 )
@@ -221,7 +222,17 @@ def run_sft_smoke(config: SFTSmokeConfig) -> dict[str, Any]:
     output_root.mkdir(parents=True, exist_ok=True)
 
     dataset_path = Path(config.dataset_path)
-    dataset = load_analog_dataset(dataset_path)
+    if config.dataset_schema == "skill_release_jsonl_v1":
+        dataset = load_skill_release_dataset(
+            dataset_path,
+            config.release_manifest_path or "",
+            train_samples_per_family=config.train_samples_per_family or 0,
+            validation_samples_per_family=(
+                config.validation_samples_per_family or 0
+            ),
+        )
+    else:
+        dataset = load_analog_dataset(dataset_path)
     tokenizer = AutoTokenizer.from_pretrained(
         config.model_path,
         local_files_only=True,
@@ -247,6 +258,9 @@ def run_sft_smoke(config: SFTSmokeConfig) -> dict[str, Any]:
         low_cpu_mem_usage=True,
     ).to(device)
     model.config.use_cache = False
+    if config.gradient_checkpointing:
+        model.gradient_checkpointing_enable()
+        model.enable_input_require_grads()
     lora_config = LoraConfig(
         r=config.lora_r,
         lora_alpha=config.lora_alpha,
@@ -392,6 +406,7 @@ def run_sft_smoke(config: SFTSmokeConfig) -> dict[str, Any]:
             "dataset_id": dataset["dataset_id"],
             "train_samples": len(train),
             "validation_samples": len(validation),
+            "release": dataset.get("release"),
         },
         "model": {
             "path": config.model_path,

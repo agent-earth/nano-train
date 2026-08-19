@@ -1,0 +1,223 @@
+{
+  "adapter_validation": {
+    "nonfinite_tensors": 0,
+    "reload_success": true,
+    "stable": true,
+    "tensor_count": 32
+  },
+  "artifacts": {
+    "generations_sha256": "b53f1dcf8f3bb7fe0c37d9ee241e9896187d6579364b6cf4497b1f1599e6fed2",
+    "metrics_sha256": "b52f6ae6702fdbd4c1da5ed5a03d881a6ad7261c50870c854e78ec3eac3daee0",
+    "reload_validation_sha256": "29c3b793ec60ff2b7f7773ccb04069da00360ed14d7972b0914e0904f3707fdc"
+  },
+  "claim_boundary": "This smoke proves the 4B long-sequence LoRA path is finite, fits one V100, saves and reloads reproducibly, and consumes the released JSONL. It does not establish quality or benchmark uplift.",
+  "data": {
+    "dataset_id": "skill-sft-10k-10m-v2",
+    "families": [
+      "coding-and-validation",
+      "planning-and-state",
+      "skill-routing-and-reflection",
+      "tool-use-and-recovery",
+      "verified-reasoning"
+    ],
+    "max_length": 1088,
+    "train_samples": 10,
+    "validation_samples": 5
+  },
+  "decision": {
+    "accepted_local_smoke": true,
+    "benchmark_allowed": false,
+    "holdout_allowed": false,
+    "next_action": "Keep full training closed. Increase only the bounded local training dose and synthetic dev sample count under a new pre-registered config; require a positive dev delta before any benchmark or RL work.",
+    "quality_improved": false,
+    "rl_allowed": false,
+    "scale_allowed": false
+  },
+  "evaluation": {
+    "baseline": {
+      "accuracy": 0.2,
+      "by_family": {
+        "coding-and-validation": {
+          "exact": 0,
+          "exact_failure_sample_ids": [
+            "dedfbbfe12997b506019f410"
+          ],
+          "samples": 1,
+          "semantic_exact": 0,
+          "semantic_failure_sample_ids": [
+            "dedfbbfe12997b506019f410"
+          ]
+        },
+        "planning-and-state": {
+          "exact": 1,
+          "exact_failure_sample_ids": [],
+          "samples": 1,
+          "semantic_exact": 1,
+          "semantic_failure_sample_ids": []
+        },
+        "skill-routing-and-reflection": {
+          "exact": 0,
+          "exact_failure_sample_ids": [
+            "95aac875bfbcdd4d1c6885ae"
+          ],
+          "samples": 1,
+          "semantic_exact": 0,
+          "semantic_failure_sample_ids": [
+            "95aac875bfbcdd4d1c6885ae"
+          ]
+        },
+        "tool-use-and-recovery": {
+          "exact": 0,
+          "exact_failure_sample_ids": [
+            "cc8a2ad48c40569b2c08431f"
+          ],
+          "samples": 1,
+          "semantic_exact": 0,
+          "semantic_failure_sample_ids": [
+            "cc8a2ad48c40569b2c08431f"
+          ]
+        },
+        "verified-reasoning": {
+          "exact": 0,
+          "exact_failure_sample_ids": [
+            "e10d2df2581b53673c539d4f"
+          ],
+          "samples": 1,
+          "semantic_exact": 0,
+          "semantic_failure_sample_ids": [
+            "e10d2df2581b53673c539d4f"
+          ]
+        }
+      },
+      "exact": 1,
+      "failure_sample_ids": [
+        "dedfbbfe12997b506019f410",
+        "95aac875bfbcdd4d1c6885ae",
+        "cc8a2ad48c40569b2c08431f",
+        "e10d2df2581b53673c539d4f"
+      ],
+      "samples": 5,
+      "semantic_accuracy": 0.2,
+      "semantic_exact": 1,
+      "semantic_failure_sample_ids": [
+        "dedfbbfe12997b506019f410",
+        "95aac875bfbcdd4d1c6885ae",
+        "cc8a2ad48c40569b2c08431f",
+        "e10d2df2581b53673c539d4f"
+      ]
+    },
+    "post_sft": {
+      "accuracy": 0.2,
+      "by_family": {
+        "coding-and-validation": {
+          "exact": 0,
+          "exact_failure_sample_ids": [
+            "dedfbbfe12997b506019f410"
+          ],
+          "samples": 1,
+          "semantic_exact": 0,
+          "semantic_failure_sample_ids": [
+            "dedfbbfe12997b506019f410"
+          ]
+        },
+        "planning-and-state": {
+          "exact": 1,
+          "exact_failure_sample_ids": [],
+          "samples": 1,
+          "semantic_exact": 1,
+          "semantic_failure_sample_ids": []
+        },
+        "skill-routing-and-reflection": {
+          "exact": 0,
+          "exact_failure_sample_ids": [
+            "95aac875bfbcdd4d1c6885ae"
+          ],
+          "samples": 1,
+          "semantic_exact": 0,
+          "semantic_failure_sample_ids": [
+            "95aac875bfbcdd4d1c6885ae"
+          ]
+        },
+        "tool-use-and-recovery": {
+          "exact": 0,
+          "exact_failure_sample_ids": [
+            "cc8a2ad48c40569b2c08431f"
+          ],
+          "samples": 1,
+          "semantic_exact": 0,
+          "semantic_failure_sample_ids": [
+            "cc8a2ad48c40569b2c08431f"
+          ]
+        },
+        "verified-reasoning": {
+          "exact": 0,
+          "exact_failure_sample_ids": [
+            "e10d2df2581b53673c539d4f"
+          ],
+          "samples": 1,
+          "semantic_exact": 0,
+          "semantic_failure_sample_ids": [
+            "e10d2df2581b53673c539d4f"
+          ]
+        }
+      },
+      "exact": 1,
+      "failure_sample_ids": [
+        "dedfbbfe12997b506019f410",
+        "95aac875bfbcdd4d1c6885ae",
+        "cc8a2ad48c40569b2c08431f",
+        "e10d2df2581b53673c539d4f"
+      ],
+      "samples": 5,
+      "semantic_accuracy": 0.2,
+      "semantic_exact": 1,
+      "semantic_failure_sample_ids": [
+        "dedfbbfe12997b506019f410",
+        "95aac875bfbcdd4d1c6885ae",
+        "cc8a2ad48c40569b2c08431f",
+        "e10d2df2581b53673c539d4f"
+      ]
+    },
+    "reload_matches": true,
+    "reload_peak_allocated_gib": 16.0201358795166,
+    "semantic_delta": 0.0
+  },
+  "experiment_id": "skill-release-long-sequence-sft-smoke-v1",
+  "identity": {
+    "adapter_sha256": "022852127de3808266ed257fe2523c9c31e0b51a665527b0f3e41808fa2b3a96",
+    "config_sha256": "22bf219a939c5ddfa3e28068428174dcb1008f1db8eac6e1546d3064b8912896",
+    "dataset_sha256": "b5503761900cfa290dba03aff306ff511630d01544a4dab93de3a0be1e74abc1",
+    "release_accepted_jsonl_sha256": "b5503761900cfa290dba03aff306ff511630d01544a4dab93de3a0be1e74abc1",
+    "release_manifest_sha256": "26ddb15f5c2e043d20527103a5a59216e54290aabeea2a6d228ebce7b7bb35e3"
+  },
+  "schema_version": "nano_train_skill_release_sft_smoke_public_v1",
+  "training": {
+    "gradient_checkpointing": true,
+    "loss_curve": [
+      {
+        "learning_rate": 5e-05,
+        "loss": 0.5738471150398254,
+        "step": 1
+      },
+      {
+        "learning_rate": 5e-05,
+        "loss": 0.10237923264503479,
+        "step": 2
+      },
+      {
+        "learning_rate": 3.333333333333334e-05,
+        "loss": 2.4069418907165527,
+        "step": 3
+      },
+      {
+        "learning_rate": 1.666666666666667e-05,
+        "loss": 0.10604207217693329,
+        "step": 4
+      }
+    ],
+    "peak_allocated_gib": 19.85728359222412,
+    "steps": 4,
+    "trainable_parameters": 917504,
+    "wall_seconds": 57.87235975265503
+  }
+}
