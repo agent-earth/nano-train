@@ -49,6 +49,9 @@ from scripts.run_generation_budget_audit import (
     validate_contract as validate_audit_contract,
     verify_identity as verify_audit_identity,
 )
+from scripts.rescore_execution_target_generations import (
+    score_execution_target_generations,
+)
 from scripts.build_lora_delta_composition import compose_pair
 
 
@@ -1091,6 +1094,87 @@ class TrainTests(unittest.TestCase):
                 {"kind": "safe_execution_receipt_v1"},
                 "FINAL: 44",
             )
+        )
+
+    def test_shared_paired_scorer_reports_both_verified_delta(self):
+        raw_validation = {
+            "process": {
+                "sample_id": "process",
+                "task_family": "execution-target-process",
+                "view": "process",
+                "pair_id": "pair-1",
+                "task_spec": {
+                    "expression": "(20 + 4) * 2 - 4",
+                    "view": "process",
+                },
+                "verifier": {
+                    "kind": "safe_ast_arithmetic_process_v2",
+                    "source_expression": "(20 + 4) * 2 - 4",
+                    "steps": [
+                        {"expression": "20 + 4", "expected_result": "24"},
+                        {"expression": "24 * 2", "expected_result": "48"},
+                        {"expression": "48 - 4", "expected_result": "44"},
+                    ],
+                    "expected_result": "44",
+                },
+            },
+            "final": {
+                "sample_id": "final",
+                "task_family": "execution-target-final",
+                "view": "final",
+                "pair_id": "pair-1",
+                "task_spec": {
+                    "expression": "(20 + 4) * 2 - 4",
+                    "view": "final",
+                },
+                "verifier": {"kind": "safe_execution_receipt_v1"},
+            },
+        }
+        process_output = (
+            "STEP 1: 20 + 4 = 24\n"
+            "STEP 2: 24 * 2 = 48\n"
+            "STEP 3: 48 - 4 = 44\n"
+            "FINAL: 44"
+        )
+        generations = {
+            "baseline": [
+                {
+                    "sample_id": "process",
+                    "output": process_output,
+                    "exact": True,
+                },
+                {
+                    "sample_id": "final",
+                    "output": "FINAL: 45",
+                    "exact": False,
+                },
+            ],
+            "post_sft": [
+                {
+                    "sample_id": "process",
+                    "output": process_output,
+                    "exact": True,
+                },
+                {
+                    "sample_id": "final",
+                    "output": "FINAL: 44",
+                    "exact": True,
+                },
+            ],
+        }
+        result = score_execution_target_generations(
+            generations=generations,
+            raw_validation=raw_validation,
+        )
+        self.assertEqual(result["verified_delta"], 1)
+        self.assertEqual(result["pair_both_verified_delta"], 1)
+        self.assertEqual(
+            result["arms"]["baseline"]["pair_summary"]["process_only_verified"],
+            1,
+        )
+        self.assertEqual(
+            result["arms"]["post_sft"]["pair_summary"]["both_verified"],
+            1,
         )
         self.assertFalse(
             execution_target_output_valid(
