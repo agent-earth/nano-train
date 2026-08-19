@@ -23,6 +23,7 @@ from nano_train.data import (
     TokenizedSample,
     collate_samples,
     load_analog_dataset,
+    load_execution_target_dataset,
     load_skill_release_dataset,
     semantic_output_valid,
     tokenize_samples,
@@ -96,6 +97,21 @@ def _scheduled_batch_order(
         result.append(indices[offset % len(indices)])
         offsets[family] = offset + 1
     return result
+
+
+def _sample_scheduled_batch_order(
+    samples: list[TokenizedSample],
+    sample_schedule: tuple[str, ...],
+) -> list[int]:
+    if not sample_schedule:
+        return []
+    by_id = {sample.sample_id: index for index, sample in enumerate(samples)}
+    if len(by_id) != len(samples):
+        raise ValueError("train samples contain duplicate sample IDs")
+    missing = [sample_id for sample_id in sample_schedule if sample_id not in by_id]
+    if missing:
+        raise ValueError(f"sample schedule lacks train rows: {missing[:3]}")
+    return [by_id[sample_id] for sample_id in sample_schedule]
 
 
 @torch.inference_mode()
@@ -259,6 +275,11 @@ def run_sft_smoke(config: SFTSmokeConfig) -> dict[str, Any]:
                 config.validation_start_per_family
             ),
         )
+    elif config.dataset_schema == "execution_target_json_v1":
+        dataset = load_execution_target_dataset(
+            dataset_path,
+            config.release_manifest_path or "",
+        )
     else:
         dataset = load_analog_dataset(dataset_path)
     tokenizer = AutoTokenizer.from_pretrained(
@@ -317,10 +338,14 @@ def run_sft_smoke(config: SFTSmokeConfig) -> dict[str, Any]:
         eps=1e-6,
     )
     trainable = _trainable_parameters(model)
-    order = _scheduled_batch_order(
-        train,
-        config.seed,
-        config.train_family_schedule,
+    order = (
+        _sample_scheduled_batch_order(train, config.train_sample_schedule)
+        if config.train_sample_schedule
+        else _scheduled_batch_order(
+            train,
+            config.seed,
+            config.train_family_schedule,
+        )
     )
     losses = []
     train_exposure = []
@@ -463,6 +488,7 @@ def run_sft_smoke(config: SFTSmokeConfig) -> dict[str, Any]:
             **config.__dict__,
             "lora_targets": list(config.lora_targets),
             "train_family_schedule": list(config.train_family_schedule),
+            "train_sample_schedule": list(config.train_sample_schedule),
         },
         "dependencies": dependency_versions(),
         "hardware": {

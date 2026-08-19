@@ -18,6 +18,8 @@ from nano_train.continuation import (
 from nano_train.data import (
     TokenizedSample,
     collate_samples,
+    execution_target_output_valid,
+    load_execution_target_dataset,
     load_skill_release_dataset,
     semantic_output_valid,
     skill_release_output_valid,
@@ -28,6 +30,7 @@ from nano_train.sft import (
     _assert_finite_loss,
     _assert_finite_parameters,
     _batch_order,
+    _sample_scheduled_batch_order,
     _scheduled_batch_order,
     _scheduler_scale,
     _write_failure,
@@ -309,6 +312,64 @@ class TrainTests(unittest.TestCase):
                 treatment.train_family_schedule.count(family),
                 2,
             )
+
+    def test_execution_target_preregistration_is_frozen(self):
+        config = load_sft_smoke_config(
+            "configs/sft/execution_target_paired_smoke_v1.json"
+        )
+        self.assertEqual(config.schema_version, "nano_train_sft_smoke_v3")
+        self.assertEqual(config.dataset_schema, "execution_target_json_v1")
+        self.assertEqual(config.max_steps, 40)
+        self.assertEqual(config.max_length, 704)
+        self.assertEqual(config.generation_max_new_tokens, 160)
+        self.assertEqual(config.lora_targets, ("q_proj", "v_proj"))
+        self.assertEqual(len(config.train_sample_schedule), 40)
+        self.assertEqual(len(set(config.train_sample_schedule)), 40)
+
+    def test_execution_target_loader_matches_release(self):
+        dataset = load_execution_target_dataset(
+            "../../../datasets/ultimate-distill/"
+            "skill-sft-execution-target-paired-v1/dataset.json",
+            "../../../datasets/ultimate-distill/"
+            "skill-sft-execution-target-paired-v1/release.json",
+        )
+        self.assertEqual(dataset["dataset_id"], "skill-sft-execution-target-paired-v1")
+        self.assertEqual(
+            sum(row["split"] == "train" for row in dataset["samples"]),
+            512,
+        )
+        self.assertEqual(
+            sum(row["split"] == "validation" for row in dataset["samples"]),
+            80,
+        )
+        self.assertEqual(
+            {
+                row["format_family"]
+                for row in dataset["samples"]
+            },
+            {
+                "execution_target_final",
+                "process_trace_numeric",
+                "skill_release_exact",
+            },
+        )
+
+    def test_execution_target_loader_rejects_tampered_dataset(self):
+        source = Path(
+            "../../../datasets/ultimate-distill/"
+            "skill-sft-execution-target-paired-v1/dataset.json"
+        )
+        release = Path(
+            "../../../datasets/ultimate-distill/"
+            "skill-sft-execution-target-paired-v1/release.json"
+        )
+        raw = json.loads(source.read_text(encoding="utf-8"))
+        raw["samples"][0]["messages"][-1]["content"] += " "
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "dataset.json"
+            path.write_text(json.dumps(raw), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "identity mismatch"):
+                load_execution_target_dataset(path, release)
 
     def test_v3_changes_only_dataset_identity_fields(self):
         v2 = load_sft_smoke_config(
@@ -905,6 +966,72 @@ class TrainTests(unittest.TestCase):
         )
         with self.assertRaisesRegex(ValueError, "missing"):
             _scheduled_batch_order(samples, 7, ("missing",))
+
+    def test_sample_schedule_is_exact_and_rejects_missing(self):
+        samples = [
+            TokenizedSample(
+                f"sample-{index}",
+                "train",
+                [index],
+                [index],
+                [],
+                str(index),
+                "final_numeric",
+                None,
+            )
+            for index in range(4)
+        ]
+        schedule = ("sample-2", "sample-0", "sample-3")
+        order = _sample_scheduled_batch_order(samples, schedule)
+        self.assertEqual(order, [2, 0, 3])
+        with self.assertRaisesRegex(ValueError, "missing"):
+            _sample_scheduled_batch_order(samples, ("missing",))
+
+    def test_execution_target_scorer_checks_process_final_and_json(self):
+        self.assertTrue(
+            execution_target_output_valid(
+                "execution-target-final",
+                "final",
+                {"expression": "(20 + 4) * 2 - 4", "view": "final"},
+                {"kind": "safe_execution_receipt_v1"},
+                "FINAL: 44",
+            )
+        )
+        self.assertFalse(
+            execution_target_output_valid(
+                "execution-target-final",
+                "final",
+                {"expression": "(20 + 4) * 2 - 4", "view": "final"},
+                {"kind": "safe_execution_receipt_v1"},
+                "FINAL: 48",
+            )
+        )
+        self.assertTrue(
+            execution_target_output_valid(
+                "execution-target-process",
+                "process",
+                {
+                    "expression": "(20 + 4) * 2 - 4",
+                    "view": "process",
+                },
+                {
+                    "kind": "safe_ast_arithmetic_process_v2",
+                    "source_expression": "(20 + 4) * 2 - 4",
+                    "steps": [
+                        {"expression": "20 + 4", "expected_result": "24"},
+                        {"expression": "24 * 2", "expected_result": "48"},
+                        {"expression": "48 - 4", "expected_result": "44"},
+                    ],
+                    "expected_result": "44",
+                },
+                (
+                    "STEP 1: 20 + 4 = 24\n"
+                    "STEP 2: 24 * 2 = 48\n"
+                    "STEP 3: 48 - 4 = 44\n"
+                    "FINAL: 44"
+                ),
+            )
+        )
 
     def test_nonfinite_guards_and_failure_receipt(self):
         parameter = torch.nn.Parameter(torch.tensor([1.0]))

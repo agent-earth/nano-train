@@ -34,6 +34,7 @@ class SFTSmokeConfig:
     gradient_checkpointing: bool = False
     validation_start_per_family: int = 0
     train_family_schedule: tuple[str, ...] = ()
+    train_sample_schedule: tuple[str, ...] = ()
 
 
 def load_sft_smoke_config(path: str | Path) -> SFTSmokeConfig:
@@ -48,6 +49,7 @@ def load_sft_smoke_config(path: str | Path) -> SFTSmokeConfig:
         "gradient_checkpointing",
         "validation_start_per_family",
         "train_family_schedule",
+        "train_sample_schedule",
     }
     missing = expected - set(raw) - optional
     if unknown or missing:
@@ -59,6 +61,9 @@ def load_sft_smoke_config(path: str | Path) -> SFTSmokeConfig:
     raw["train_family_schedule"] = tuple(
         raw.get("train_family_schedule", ())
     )
+    raw["train_sample_schedule"] = tuple(
+        raw.get("train_sample_schedule", ())
+    )
     config = SFTSmokeConfig(**raw)
     validate_sft_smoke_config(config)
     return config
@@ -68,6 +73,7 @@ def validate_sft_smoke_config(config: SFTSmokeConfig) -> None:
     if config.schema_version not in {
         "nano_train_sft_smoke_v1",
         "nano_train_sft_smoke_v2",
+        "nano_train_sft_smoke_v3",
     }:
         raise ValueError("unsupported SFT smoke schema")
     if config.dtype not in {"float16", "float32"}:
@@ -87,7 +93,8 @@ def validate_sft_smoke_config(config: SFTSmokeConfig) -> None:
         raise ValueError("smoke run may not exceed 40 optimizer steps")
     max_length_limit = (
         1152
-        if config.schema_version == "nano_train_sft_smoke_v2"
+        if config.schema_version
+        in {"nano_train_sft_smoke_v2", "nano_train_sft_smoke_v3"}
         else 256
     )
     if config.max_length > max_length_limit:
@@ -118,9 +125,11 @@ def validate_sft_smoke_config(config: SFTSmokeConfig) -> None:
             raise ValueError("v1 smoke does not accept validation offset")
         if config.train_family_schedule:
             raise ValueError("v1 smoke does not accept a family schedule")
+        if config.train_sample_schedule:
+            raise ValueError("v1 smoke does not accept a sample schedule")
         if config.gradient_checkpointing:
             raise ValueError("v1 smoke does not enable gradient checkpointing")
-    else:
+    elif config.schema_version == "nano_train_sft_smoke_v2":
         if config.dataset_schema != "skill_release_jsonl_v1":
             raise ValueError(
                 "v2 smoke requires skill_release_jsonl_v1 data"
@@ -159,3 +168,45 @@ def validate_sft_smoke_config(config: SFTSmokeConfig) -> None:
                 )
             if any(not family for family in config.train_family_schedule):
                 raise ValueError("family schedule contains an empty family")
+        if config.train_sample_schedule:
+            raise ValueError("v2 smoke does not accept a sample schedule")
+    else:
+        if config.dataset_schema != "execution_target_json_v1":
+            raise ValueError(
+                "v3 smoke requires execution_target_json_v1 data"
+            )
+        if not config.release_manifest_path:
+            raise ValueError("v3 smoke requires release_manifest_path")
+        if any(
+            value is not None
+            for value in (
+                config.train_samples_per_family,
+                config.validation_samples_per_family,
+            )
+        ):
+            raise ValueError("v3 smoke selects all release train and dev rows")
+        if config.validation_start_per_family != 0:
+            raise ValueError("v3 smoke does not accept validation offset")
+        if config.train_family_schedule:
+            raise ValueError("v3 smoke does not accept a family schedule")
+        if not config.train_sample_schedule:
+            raise ValueError("v3 smoke requires a sample schedule")
+        if len(config.train_sample_schedule) != config.max_steps:
+            raise ValueError(
+                "sample schedule must contain one sample per step"
+            )
+        if len(set(config.train_sample_schedule)) != len(
+            config.train_sample_schedule
+        ):
+            raise ValueError("sample schedule must not repeat sample IDs")
+        if (
+            config.batch_size != 1
+            or config.gradient_accumulation_steps != 1
+        ):
+            raise ValueError(
+                "sample schedule requires batch size and accumulation 1"
+            )
+        if not config.gradient_checkpointing:
+            raise ValueError(
+                "v3 long-sequence smoke requires gradient checkpointing"
+            )
