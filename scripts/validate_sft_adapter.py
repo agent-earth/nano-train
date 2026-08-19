@@ -49,6 +49,9 @@ def main() -> None:
             validation_samples_per_family=(
                 config.validation_samples_per_family or 0
             ),
+            validation_start_per_family=(
+                config.validation_start_per_family
+            ),
         )
     else:
         dataset = load_analog_dataset(config.dataset_path)

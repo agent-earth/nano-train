@@ -28,6 +28,7 @@ from nano_train.sft import (
     _assert_finite_loss,
     _assert_finite_parameters,
     _batch_order,
+    _scheduled_batch_order,
     _scheduler_scale,
     _write_failure,
     evaluate_exact,
@@ -270,6 +271,44 @@ class TrainTests(unittest.TestCase):
             expanded.lora_targets,
             ("q_proj", "v_proj", "gate_proj", "up_proj", "down_proj"),
         )
+
+    def test_reasoning_preservation_preregistration(self):
+        control = load_sft_smoke_config(
+            "configs/sft/skill_release_bounded_dose_v2.json"
+        )
+        treatment = load_sft_smoke_config(
+            "configs/sft/skill_release_reasoning_preservation_v4.json"
+        )
+        changed = {
+            "experiment_id",
+            "output_dir",
+            "validation_start_per_family",
+            "train_family_schedule",
+        }
+        for field in control.__dataclass_fields__:
+            if field in changed:
+                continue
+            self.assertEqual(
+                getattr(control, field),
+                getattr(treatment, field),
+                field,
+            )
+        self.assertEqual(treatment.validation_start_per_family, 4)
+        self.assertEqual(len(treatment.train_family_schedule), 20)
+        self.assertEqual(
+            treatment.train_family_schedule.count("verified-reasoning"),
+            10,
+        )
+        for family in (
+            "coding-and-validation",
+            "planning-and-state",
+            "skill-routing-and-reflection",
+            "tool-use-and-recovery",
+        ):
+            self.assertGreaterEqual(
+                treatment.train_family_schedule.count(family),
+                2,
+            )
 
     def test_v3_changes_only_dataset_identity_fields(self):
         v2 = load_sft_smoke_config(
@@ -545,6 +584,7 @@ class TrainTests(unittest.TestCase):
                 release_path,
                 train_samples_per_family=2,
                 validation_samples_per_family=1,
+                validation_start_per_family=1,
             )
 
         self.assertEqual(dataset["dataset_id"], "test-release")
@@ -559,6 +599,14 @@ class TrainTests(unittest.TestCase):
         self.assertEqual(
             {row["task_family"] for row in dataset["samples"]},
             set(families),
+        )
+        self.assertEqual(
+            {
+                row["sample_id"]
+                for row in dataset["samples"]
+                if row["split"] == "validation"
+            },
+            {"alpha-dev-1", "beta-dev-1"},
         )
 
     def test_release_loader_rejects_blocked_or_tampered_release(self):
@@ -830,6 +878,33 @@ class TrainTests(unittest.TestCase):
         self.assertEqual(_scheduler_scale(0, 2, 20), 0.5)
         self.assertEqual(_scheduler_scale(1, 2, 20), 1.0)
         self.assertGreater(_scheduler_scale(2, 2, 20), _scheduler_scale(19, 2, 20))
+
+    def test_family_schedule_is_deterministic_and_exact(self):
+        samples = [
+            TokenizedSample(
+                f"{family}-{index}",
+                "train",
+                [index],
+                [index],
+                [],
+                str(index),
+                "final_numeric",
+                None,
+                family,
+            )
+            for family in ("reasoning", "json")
+            for index in range(3)
+        ]
+        schedule = ("reasoning", "json", "reasoning", "json")
+        first = _scheduled_batch_order(samples, 7, schedule)
+        second = _scheduled_batch_order(samples, 7, schedule)
+        self.assertEqual(first, second)
+        self.assertEqual(
+            [samples[index].task_family for index in first],
+            list(schedule),
+        )
+        with self.assertRaisesRegex(ValueError, "missing"):
+            _scheduled_batch_order(samples, 7, ("missing",))
 
     def test_nonfinite_guards_and_failure_receipt(self):
         parameter = torch.nn.Parameter(torch.tensor([1.0]))

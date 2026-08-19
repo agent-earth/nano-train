@@ -326,6 +326,7 @@ def load_skill_release_dataset(
     *,
     train_samples_per_family: int,
     validation_samples_per_family: int,
+    validation_start_per_family: int = 0,
 ) -> dict[str, Any]:
     dataset_path = Path(path)
     release_path = Path(release_manifest_path)
@@ -380,7 +381,10 @@ def load_skill_release_dataset(
             limit = (
                 train_samples_per_family
                 if normalized_split == "train"
-                else validation_samples_per_family
+                else (
+                    validation_start_per_family
+                    + validation_samples_per_family
+                )
             )
             bucket = selected.setdefault(key, [])
             if len(bucket) < limit:
@@ -417,7 +421,13 @@ def load_skill_release_dataset(
     samples = []
     for family in families:
         train = selected.get(("train", family), [])
-        validation = selected.get(("validation", family), [])
+        validation_pool = selected.get(("validation", family), [])
+        validation = validation_pool[
+            validation_start_per_family : (
+                validation_start_per_family
+                + validation_samples_per_family
+            )
+        ]
         if len(train) != train_samples_per_family:
             raise ValueError(f"insufficient train rows for {family}")
         if len(validation) != validation_samples_per_family:

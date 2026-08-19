@@ -32,6 +32,8 @@ class SFTSmokeConfig:
     train_samples_per_family: int | None = None
     validation_samples_per_family: int | None = None
     gradient_checkpointing: bool = False
+    validation_start_per_family: int = 0
+    train_family_schedule: tuple[str, ...] = ()
 
 
 def load_sft_smoke_config(path: str | Path) -> SFTSmokeConfig:
@@ -44,6 +46,8 @@ def load_sft_smoke_config(path: str | Path) -> SFTSmokeConfig:
         "train_samples_per_family",
         "validation_samples_per_family",
         "gradient_checkpointing",
+        "validation_start_per_family",
+        "train_family_schedule",
     }
     missing = expected - set(raw) - optional
     if unknown or missing:
@@ -52,6 +56,9 @@ def load_sft_smoke_config(path: str | Path) -> SFTSmokeConfig:
             f"missing={sorted(missing)}"
         )
     raw["lora_targets"] = tuple(raw["lora_targets"])
+    raw["train_family_schedule"] = tuple(
+        raw.get("train_family_schedule", ())
+    )
     config = SFTSmokeConfig(**raw)
     validate_sft_smoke_config(config)
     return config
@@ -107,6 +114,10 @@ def validate_sft_smoke_config(config: SFTSmokeConfig) -> None:
             )
         ):
             raise ValueError("v1 smoke does not accept release data fields")
+        if config.validation_start_per_family != 0:
+            raise ValueError("v1 smoke does not accept validation offset")
+        if config.train_family_schedule:
+            raise ValueError("v1 smoke does not accept a family schedule")
         if config.gradient_checkpointing:
             raise ValueError("v1 smoke does not enable gradient checkpointing")
     else:
@@ -127,3 +138,24 @@ def validate_sft_smoke_config(config: SFTSmokeConfig) -> None:
             raise ValueError(
                 "v2 long-sequence smoke requires gradient checkpointing"
             )
+        if (
+            type(config.validation_start_per_family) is not int
+            or config.validation_start_per_family < 0
+        ):
+            raise ValueError(
+                "validation_start_per_family must be a non-negative integer"
+            )
+        if config.train_family_schedule:
+            if (
+                config.batch_size != 1
+                or config.gradient_accumulation_steps != 1
+            ):
+                raise ValueError(
+                    "family schedule requires batch size and accumulation 1"
+                )
+            if len(config.train_family_schedule) != config.max_steps:
+                raise ValueError(
+                    "family schedule must contain one family per step"
+                )
+            if any(not family for family in config.train_family_schedule):
+                raise ValueError("family schedule contains an empty family")
