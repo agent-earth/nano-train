@@ -1,0 +1,82 @@
+{
+  "arms": {
+    "baseline": {
+      "by_family": {
+        "coding-and-validation": {
+          "exact": 0,
+          "samples": 1,
+          "verified": 1
+        },
+        "planning-and-state": {
+          "exact": 1,
+          "samples": 1,
+          "verified": 1
+        },
+        "skill-routing-and-reflection": {
+          "exact": 0,
+          "samples": 1,
+          "verified": 1
+        },
+        "tool-use-and-recovery": {
+          "exact": 0,
+          "samples": 1,
+          "verified": 1
+        },
+        "verified-reasoning": {
+          "exact": 0,
+          "samples": 1,
+          "verified": 0
+        }
+      },
+      "changed_output_count": 0,
+      "changed_output_ids": [],
+      "exact": 1,
+      "samples": 5,
+      "verified": 4
+    },
+    "post_sft": {
+      "by_family": {
+        "coding-and-validation": {
+          "exact": 0,
+          "samples": 1,
+          "verified": 1
+        },
+        "planning-and-state": {
+          "exact": 1,
+          "samples": 1,
+          "verified": 1
+        },
+        "skill-routing-and-reflection": {
+          "exact": 0,
+          "samples": 1,
+          "verified": 1
+        },
+        "tool-use-and-recovery": {
+          "exact": 0,
+          "samples": 1,
+          "verified": 1
+        },
+        "verified-reasoning": {
+          "exact": 0,
+          "samples": 1,
+          "verified": 0
+        }
+      },
+      "changed_output_count": 1,
+      "changed_output_ids": [
+        "e10d2df2581b53673c539d4f"
+      ],
+      "exact": 1,
+      "samples": 5,
+      "verified": 4
+    }
+  },
+  "config_sha256": "22bf219a939c5ddfa3e28068428174dcb1008f1db8eac6e1546d3064b8912896",
+  "dataset_sha256": "b5503761900cfa290dba03aff306ff511630d01544a4dab93de3a0be1e74abc1",
+  "experiment_id": "skill-release-long-sequence-sft-smoke-v1",
+  "generations_sha256": "b53f1dcf8f3bb7fe0c37d9ee241e9896187d6579364b6cf4497b1f1599e6fed2",
+  "release_manifest_sha256": "26ddb15f5c2e043d20527103a5a59216e54290aabeea2a6d228ebce7b7bb35e3",
+  "schema_version": "nano_train_skill_release_rescore_v1",
+  "scorer": "skill_release_family_verifier_v1",
+  "verified_delta": 0
+}

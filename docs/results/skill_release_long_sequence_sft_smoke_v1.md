@@ -21,16 +21,22 @@
 
 ## 质量
 
-- Baseline exact / semantic：
-  1/5 /
-  1/5；
-- Post-SFT exact / semantic：
-  1/5 /
-  1/5；
-- Semantic delta：+0.0000。
+- 原始 string exact（保留，不改写）：
+  1/5 → 1/5；
+- 修正后的 family verifier：
+  4/5 →
+  4/5；
+- Verified delta：+0；
+- 改变输出：1/5。
 
 这轮没有质量提升。它只证明长序列训练路径可运行、显存可承受、adapter 可保存并
 独立重载。
+
+## Scorer 更正
+
+旧 scorer 把 JSON 输出退化为字符串完全一致，因此 key 顺序不同也会被误报失败。
+现在按 release 的 `task_spec + verifier` 重算。Raw metrics 没有修改；更正结果作为
+独立 public receipt 保存。
 
 ## 决策
 
@@ -51,7 +57,8 @@
   `26ddb15f5c2e043d20527103a5a59216e54290aabeea2a6d228ebce7b7bb35e3`;
 - adapter SHA256: `022852127de3808266ed257fe2523c9c31e0b51a665527b0f3e41808fa2b3a96`;
 - metrics SHA256: `b52f6ae6702fdbd4c1da5ed5a03d881a6ad7261c50870c854e78ec3eac3daee0`;
-- reload SHA256: `29c3b793ec60ff2b7f7773ccb04069da00360ed14d7972b0914e0904f3707fdc`.
+- reload SHA256: `29c3b793ec60ff2b7f7773ccb04069da00360ed14d7972b0914e0904f3707fdc`;
+- rescore SHA256: `9b662ccbf3fdfd216df618862ff716a53898f2def36cf8b3f7a2d1528fb19d2a`.
 
 ## 结论边界
 

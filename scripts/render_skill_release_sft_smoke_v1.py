@@ -15,11 +15,16 @@ ARTIFACTS = ROOT / "artifacts/skill-release-long-sequence-sft-smoke-v1"
 CONFIG = ROOT / "configs/sft/skill_release_long_sequence_smoke_v1.json"
 PUBLIC_JSON = ROOT / "docs/results/skill_release_long_sequence_sft_smoke_v1.public.json"
 REPORT = ROOT / "docs/results/skill_release_long_sequence_sft_smoke_v1.md"
+RESCORE = ROOT / (
+    "docs/results/"
+    "skill_release_long_sequence_sft_smoke_v1.rescore.public.json"
+)
 
 
 def main() -> None:
     metrics = json.loads((ARTIFACTS / "metrics.json").read_text())
     reload = json.loads((ARTIFACTS / "reload_validation.json").read_text())
+    rescore = json.loads(RESCORE.read_text())
     adapter_path = ARTIFACTS / "adapter/adapter_model.safetensors"
     with safe_open(adapter_path, framework="pt", device="cpu") as handle:
         tensors = list(handle.keys())
@@ -37,7 +42,9 @@ def main() -> None:
         and reload_matches
         and reload["adapter_sha256"] == metrics["adapter_sha256"]
     )
-    improved = post["semantic_exact"] > baseline["semantic_exact"]
+    corrected_baseline = rescore["arms"]["baseline"]["verified"]
+    corrected_post = rescore["arms"]["post_sft"]["verified"]
+    improved = corrected_post > corrected_baseline
     release = metrics["dataset"]["release"]
     report = {
         "schema_version": "nano_train_skill_release_sft_smoke_public_v1",
@@ -73,11 +80,23 @@ def main() -> None:
             "wall_seconds": metrics["wall_seconds"],
         },
         "evaluation": {
-            "baseline": baseline,
-            "post_sft": post,
-            "semantic_delta": (
-                post["semantic_accuracy"] - baseline["semantic_accuracy"]
-            ),
+            "original_string_scorer": {
+                "baseline": baseline,
+                "post_sft": post,
+            },
+            "corrected_family_verifier": {
+                "baseline_verified": corrected_baseline,
+                "post_verified": corrected_post,
+                "samples": rescore["arms"]["baseline"]["samples"],
+                "verified_delta": rescore["verified_delta"],
+                "by_family_baseline": rescore["arms"]["baseline"][
+                    "by_family"
+                ],
+                "by_family_post": rescore["arms"]["post_sft"]["by_family"],
+                "changed_output_count": rescore["arms"]["post_sft"][
+                    "changed_output_count"
+                ],
+            },
             "reload_matches": reload_matches,
             "reload_peak_allocated_gib": reload["peak_allocated_gib"],
         },
@@ -95,6 +114,16 @@ def main() -> None:
             "reload_validation_sha256": sha256_file(
                 ARTIFACTS / "reload_validation.json"
             ),
+            "rescore_sha256": sha256_file(RESCORE),
+        },
+        "scorer_correction": {
+            "reason": (
+                "The original nano-train semantic scorer reduced skill-release "
+                "JSON tasks to string equality, so equivalent JSON key order "
+                "was incorrectly marked wrong. The corrected scorer executes "
+                "the frozen family verifier from task_spec."
+            ),
+            "raw_metrics_modified": False,
         },
         "decision": {
             "accepted_local_smoke": stable,
@@ -127,6 +156,8 @@ def main() -> None:
 def render_markdown(report: dict) -> str:
     training = report["training"]
     evaluation = report["evaluation"]
+    original = evaluation["original_string_scorer"]
+    corrected = evaluation["corrected_family_verifier"]
     decision = report["decision"]
     losses = ", ".join(
         f"{row['loss']:.6f}" for row in training["loss_curve"]
@@ -154,16 +185,22 @@ def render_markdown(report: dict) -> str:
 
 ## 质量
 
-- Baseline exact / semantic：
-  {evaluation['baseline']['exact']}/5 /
-  {evaluation['baseline']['semantic_exact']}/5；
-- Post-SFT exact / semantic：
-  {evaluation['post_sft']['exact']}/5 /
-  {evaluation['post_sft']['semantic_exact']}/5；
-- Semantic delta：{evaluation['semantic_delta']:+.4f}。
+- 原始 string exact（保留，不改写）：
+  {original['baseline']['exact']}/5 → {original['post_sft']['exact']}/5；
+- 修正后的 family verifier：
+  {corrected['baseline_verified']}/{corrected['samples']} →
+  {corrected['post_verified']}/{corrected['samples']}；
+- Verified delta：{corrected['verified_delta']:+d}；
+- 改变输出：{corrected['changed_output_count']}/{corrected['samples']}。
 
 这轮没有质量提升。它只证明长序列训练路径可运行、显存可承受、adapter 可保存并
 独立重载。
+
+## Scorer 更正
+
+旧 scorer 把 JSON 输出退化为字符串完全一致，因此 key 顺序不同也会被误报失败。
+现在按 release 的 `task_spec + verifier` 重算。Raw metrics 没有修改；更正结果作为
+独立 public receipt 保存。
 
 ## 决策
 
@@ -184,7 +221,8 @@ def render_markdown(report: dict) -> str:
   `{report['identity']['release_manifest_sha256']}`;
 - adapter SHA256: `{report['identity']['adapter_sha256']}`;
 - metrics SHA256: `{report['artifacts']['metrics_sha256']}`;
-- reload SHA256: `{report['artifacts']['reload_validation_sha256']}`.
+- reload SHA256: `{report['artifacts']['reload_validation_sha256']}`;
+- rescore SHA256: `{report['artifacts']['rescore_sha256']}`.
 
 ## 结论边界
 

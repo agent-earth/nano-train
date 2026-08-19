@@ -8,7 +8,8 @@
   "artifacts": {
     "generations_sha256": "b53f1dcf8f3bb7fe0c37d9ee241e9896187d6579364b6cf4497b1f1599e6fed2",
     "metrics_sha256": "b52f6ae6702fdbd4c1da5ed5a03d881a6ad7261c50870c854e78ec3eac3daee0",
-    "reload_validation_sha256": "29c3b793ec60ff2b7f7773ccb04069da00360ed14d7972b0914e0904f3707fdc"
+    "reload_validation_sha256": "29c3b793ec60ff2b7f7773ccb04069da00360ed14d7972b0914e0904f3707fdc",
+    "rescore_sha256": "9b662ccbf3fdfd216df618862ff716a53898f2def36cf8b3f7a2d1528fb19d2a"
   },
   "claim_boundary": "This smoke proves the 4B long-sequence LoRA path is finite, fits one V100, saves and reloads reproducibly, and consumes the released JSONL. It does not establish quality or benchmark uplift.",
   "data": {
@@ -34,153 +35,215 @@
     "scale_allowed": false
   },
   "evaluation": {
-    "baseline": {
-      "accuracy": 0.2,
-      "by_family": {
+    "corrected_family_verifier": {
+      "baseline_verified": 4,
+      "by_family_baseline": {
         "coding-and-validation": {
           "exact": 0,
-          "exact_failure_sample_ids": [
-            "dedfbbfe12997b506019f410"
-          ],
           "samples": 1,
-          "semantic_exact": 0,
-          "semantic_failure_sample_ids": [
-            "dedfbbfe12997b506019f410"
-          ]
+          "verified": 1
         },
         "planning-and-state": {
           "exact": 1,
-          "exact_failure_sample_ids": [],
           "samples": 1,
-          "semantic_exact": 1,
-          "semantic_failure_sample_ids": []
+          "verified": 1
         },
         "skill-routing-and-reflection": {
           "exact": 0,
-          "exact_failure_sample_ids": [
-            "95aac875bfbcdd4d1c6885ae"
-          ],
           "samples": 1,
-          "semantic_exact": 0,
-          "semantic_failure_sample_ids": [
-            "95aac875bfbcdd4d1c6885ae"
-          ]
+          "verified": 1
         },
         "tool-use-and-recovery": {
           "exact": 0,
-          "exact_failure_sample_ids": [
-            "cc8a2ad48c40569b2c08431f"
-          ],
           "samples": 1,
-          "semantic_exact": 0,
-          "semantic_failure_sample_ids": [
-            "cc8a2ad48c40569b2c08431f"
-          ]
+          "verified": 1
         },
         "verified-reasoning": {
           "exact": 0,
-          "exact_failure_sample_ids": [
-            "e10d2df2581b53673c539d4f"
-          ],
           "samples": 1,
-          "semantic_exact": 0,
-          "semantic_failure_sample_ids": [
-            "e10d2df2581b53673c539d4f"
-          ]
+          "verified": 0
         }
       },
-      "exact": 1,
-      "failure_sample_ids": [
-        "dedfbbfe12997b506019f410",
-        "95aac875bfbcdd4d1c6885ae",
-        "cc8a2ad48c40569b2c08431f",
-        "e10d2df2581b53673c539d4f"
-      ],
+      "by_family_post": {
+        "coding-and-validation": {
+          "exact": 0,
+          "samples": 1,
+          "verified": 1
+        },
+        "planning-and-state": {
+          "exact": 1,
+          "samples": 1,
+          "verified": 1
+        },
+        "skill-routing-and-reflection": {
+          "exact": 0,
+          "samples": 1,
+          "verified": 1
+        },
+        "tool-use-and-recovery": {
+          "exact": 0,
+          "samples": 1,
+          "verified": 1
+        },
+        "verified-reasoning": {
+          "exact": 0,
+          "samples": 1,
+          "verified": 0
+        }
+      },
+      "changed_output_count": 1,
+      "post_verified": 4,
       "samples": 5,
-      "semantic_accuracy": 0.2,
-      "semantic_exact": 1,
-      "semantic_failure_sample_ids": [
-        "dedfbbfe12997b506019f410",
-        "95aac875bfbcdd4d1c6885ae",
-        "cc8a2ad48c40569b2c08431f",
-        "e10d2df2581b53673c539d4f"
-      ]
+      "verified_delta": 0
     },
-    "post_sft": {
-      "accuracy": 0.2,
-      "by_family": {
-        "coding-and-validation": {
-          "exact": 0,
-          "exact_failure_sample_ids": [
-            "dedfbbfe12997b506019f410"
-          ],
-          "samples": 1,
-          "semantic_exact": 0,
-          "semantic_failure_sample_ids": [
-            "dedfbbfe12997b506019f410"
-          ]
+    "original_string_scorer": {
+      "baseline": {
+        "accuracy": 0.2,
+        "by_family": {
+          "coding-and-validation": {
+            "exact": 0,
+            "exact_failure_sample_ids": [
+              "dedfbbfe12997b506019f410"
+            ],
+            "samples": 1,
+            "semantic_exact": 0,
+            "semantic_failure_sample_ids": [
+              "dedfbbfe12997b506019f410"
+            ]
+          },
+          "planning-and-state": {
+            "exact": 1,
+            "exact_failure_sample_ids": [],
+            "samples": 1,
+            "semantic_exact": 1,
+            "semantic_failure_sample_ids": []
+          },
+          "skill-routing-and-reflection": {
+            "exact": 0,
+            "exact_failure_sample_ids": [
+              "95aac875bfbcdd4d1c6885ae"
+            ],
+            "samples": 1,
+            "semantic_exact": 0,
+            "semantic_failure_sample_ids": [
+              "95aac875bfbcdd4d1c6885ae"
+            ]
+          },
+          "tool-use-and-recovery": {
+            "exact": 0,
+            "exact_failure_sample_ids": [
+              "cc8a2ad48c40569b2c08431f"
+            ],
+            "samples": 1,
+            "semantic_exact": 0,
+            "semantic_failure_sample_ids": [
+              "cc8a2ad48c40569b2c08431f"
+            ]
+          },
+          "verified-reasoning": {
+            "exact": 0,
+            "exact_failure_sample_ids": [
+              "e10d2df2581b53673c539d4f"
+            ],
+            "samples": 1,
+            "semantic_exact": 0,
+            "semantic_failure_sample_ids": [
+              "e10d2df2581b53673c539d4f"
+            ]
+          }
         },
-        "planning-and-state": {
-          "exact": 1,
-          "exact_failure_sample_ids": [],
-          "samples": 1,
-          "semantic_exact": 1,
-          "semantic_failure_sample_ids": []
-        },
-        "skill-routing-and-reflection": {
-          "exact": 0,
-          "exact_failure_sample_ids": [
-            "95aac875bfbcdd4d1c6885ae"
-          ],
-          "samples": 1,
-          "semantic_exact": 0,
-          "semantic_failure_sample_ids": [
-            "95aac875bfbcdd4d1c6885ae"
-          ]
-        },
-        "tool-use-and-recovery": {
-          "exact": 0,
-          "exact_failure_sample_ids": [
-            "cc8a2ad48c40569b2c08431f"
-          ],
-          "samples": 1,
-          "semantic_exact": 0,
-          "semantic_failure_sample_ids": [
-            "cc8a2ad48c40569b2c08431f"
-          ]
-        },
-        "verified-reasoning": {
-          "exact": 0,
-          "exact_failure_sample_ids": [
-            "e10d2df2581b53673c539d4f"
-          ],
-          "samples": 1,
-          "semantic_exact": 0,
-          "semantic_failure_sample_ids": [
-            "e10d2df2581b53673c539d4f"
-          ]
-        }
+        "exact": 1,
+        "failure_sample_ids": [
+          "dedfbbfe12997b506019f410",
+          "95aac875bfbcdd4d1c6885ae",
+          "cc8a2ad48c40569b2c08431f",
+          "e10d2df2581b53673c539d4f"
+        ],
+        "samples": 5,
+        "semantic_accuracy": 0.2,
+        "semantic_exact": 1,
+        "semantic_failure_sample_ids": [
+          "dedfbbfe12997b506019f410",
+          "95aac875bfbcdd4d1c6885ae",
+          "cc8a2ad48c40569b2c08431f",
+          "e10d2df2581b53673c539d4f"
+        ]
       },
-      "exact": 1,
-      "failure_sample_ids": [
-        "dedfbbfe12997b506019f410",
-        "95aac875bfbcdd4d1c6885ae",
-        "cc8a2ad48c40569b2c08431f",
-        "e10d2df2581b53673c539d4f"
-      ],
-      "samples": 5,
-      "semantic_accuracy": 0.2,
-      "semantic_exact": 1,
-      "semantic_failure_sample_ids": [
-        "dedfbbfe12997b506019f410",
-        "95aac875bfbcdd4d1c6885ae",
-        "cc8a2ad48c40569b2c08431f",
-        "e10d2df2581b53673c539d4f"
-      ]
+      "post_sft": {
+        "accuracy": 0.2,
+        "by_family": {
+          "coding-and-validation": {
+            "exact": 0,
+            "exact_failure_sample_ids": [
+              "dedfbbfe12997b506019f410"
+            ],
+            "samples": 1,
+            "semantic_exact": 0,
+            "semantic_failure_sample_ids": [
+              "dedfbbfe12997b506019f410"
+            ]
+          },
+          "planning-and-state": {
+            "exact": 1,
+            "exact_failure_sample_ids": [],
+            "samples": 1,
+            "semantic_exact": 1,
+            "semantic_failure_sample_ids": []
+          },
+          "skill-routing-and-reflection": {
+            "exact": 0,
+            "exact_failure_sample_ids": [
+              "95aac875bfbcdd4d1c6885ae"
+            ],
+            "samples": 1,
+            "semantic_exact": 0,
+            "semantic_failure_sample_ids": [
+              "95aac875bfbcdd4d1c6885ae"
+            ]
+          },
+          "tool-use-and-recovery": {
+            "exact": 0,
+            "exact_failure_sample_ids": [
+              "cc8a2ad48c40569b2c08431f"
+            ],
+            "samples": 1,
+            "semantic_exact": 0,
+            "semantic_failure_sample_ids": [
+              "cc8a2ad48c40569b2c08431f"
+            ]
+          },
+          "verified-reasoning": {
+            "exact": 0,
+            "exact_failure_sample_ids": [
+              "e10d2df2581b53673c539d4f"
+            ],
+            "samples": 1,
+            "semantic_exact": 0,
+            "semantic_failure_sample_ids": [
+              "e10d2df2581b53673c539d4f"
+            ]
+          }
+        },
+        "exact": 1,
+        "failure_sample_ids": [
+          "dedfbbfe12997b506019f410",
+          "95aac875bfbcdd4d1c6885ae",
+          "cc8a2ad48c40569b2c08431f",
+          "e10d2df2581b53673c539d4f"
+        ],
+        "samples": 5,
+        "semantic_accuracy": 0.2,
+        "semantic_exact": 1,
+        "semantic_failure_sample_ids": [
+          "dedfbbfe12997b506019f410",
+          "95aac875bfbcdd4d1c6885ae",
+          "cc8a2ad48c40569b2c08431f",
+          "e10d2df2581b53673c539d4f"
+        ]
+      }
     },
     "reload_matches": true,
-    "reload_peak_allocated_gib": 16.0201358795166,
-    "semantic_delta": 0.0
+    "reload_peak_allocated_gib": 16.0201358795166
   },
   "experiment_id": "skill-release-long-sequence-sft-smoke-v1",
   "identity": {
@@ -191,6 +254,10 @@
     "release_manifest_sha256": "26ddb15f5c2e043d20527103a5a59216e54290aabeea2a6d228ebce7b7bb35e3"
   },
   "schema_version": "nano_train_skill_release_sft_smoke_public_v1",
+  "scorer_correction": {
+    "raw_metrics_modified": false,
+    "reason": "The original nano-train semantic scorer reduced skill-release JSON tasks to string equality, so equivalent JSON key order was incorrectly marked wrong. The corrected scorer executes the frozen family verifier from task_spec."
+  },
   "training": {
     "gradient_checkpointing": true,
     "loss_curve": [
