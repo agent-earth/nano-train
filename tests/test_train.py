@@ -20,6 +20,7 @@ from nano_train.data import (
     collate_samples,
     load_skill_release_dataset,
     semantic_output_valid,
+    skill_release_output_valid,
     tokenize_samples,
 )
 from nano_train.sft import (
@@ -570,6 +571,137 @@ class TrainTests(unittest.TestCase):
                     train_samples_per_family=1,
                     validation_samples_per_family=1,
                 )
+
+    def test_skill_release_semantic_scorers_accept_equivalent_outputs(self):
+        cases = [
+            (
+                "verified-reasoning",
+                {"expression": "(3 + 4) * 2"},
+                {"kind": "safe_execution_receipt_v1"},
+                "FINAL: 14",
+            ),
+            (
+                "tool-use-and-recovery",
+                {
+                    "required_calls": [
+                        {
+                            "name": "lookup",
+                            "arguments": {"key": "x"},
+                            "status": "error",
+                        }
+                    ]
+                },
+                {"kind": "tool_trace_contract_v1"},
+                json.dumps(
+                    {
+                        "final_status": "verified",
+                        "tool_calls": [
+                            {
+                                "status": "error",
+                                "arguments": {"key": "x"},
+                                "name": "lookup",
+                            }
+                        ],
+                    }
+                ),
+            ),
+            (
+                "planning-and-state",
+                {
+                    "constraints": ["a"],
+                    "evidence": ["b"],
+                    "pending": ["c"],
+                    "stop": False,
+                },
+                {"kind": "state_plan_consistency_v1"},
+                json.dumps(
+                    {
+                        "stop": False,
+                        "pending": ["c"],
+                        "evidence": ["b"],
+                        "constraints": ["a"],
+                    }
+                ),
+            ),
+            (
+                "coding-and-validation",
+                {
+                    "file": "x.py",
+                    "original_content": "x = 1\n",
+                    "expected_content": "x = 2\n",
+                    "test_command": "python -m unittest x",
+                },
+                {"kind": "patch_test_receipt_v1"},
+                json.dumps(
+                    {
+                        "test_status": "passed",
+                        "test_command": "python -m unittest x",
+                        "after_content": "x = 2\n",
+                        "before_sha256": __import__("hashlib")
+                        .sha256(b"x = 1\n")
+                        .hexdigest(),
+                        "file": "x.py",
+                    }
+                ),
+            ),
+            (
+                "skill-routing-and-reflection",
+                {
+                    "request_tags": ["data"],
+                    "skills": [
+                        {"skill_id": "broad", "tags": ["data", "train"]},
+                        {"skill_id": "minimal", "tags": ["data"]},
+                    ],
+                },
+                {"kind": "skill_route_receipt_v1"},
+                json.dumps(
+                    {
+                        "steps": ["validate"],
+                        "selected_skill": "minimal",
+                    }
+                ),
+            ),
+        ]
+        for family, task_spec, verifier, output in cases:
+            self.assertTrue(
+                skill_release_output_valid(
+                    family,
+                    task_spec,
+                    verifier,
+                    output,
+                ),
+                family,
+            )
+
+    def test_skill_release_semantic_scorers_reject_wrong_outputs(self):
+        self.assertFalse(
+            skill_release_output_valid(
+                "verified-reasoning",
+                {"expression": "3 + 4"},
+                {"kind": "safe_execution_receipt_v1"},
+                "FINAL: 8",
+            )
+        )
+        self.assertFalse(
+            skill_release_output_valid(
+                "planning-and-state",
+                {
+                    "constraints": ["a"],
+                    "evidence": ["b"],
+                    "pending": ["c"],
+                    "stop": False,
+                },
+                {"kind": "state_plan_consistency_v1"},
+                json.dumps(
+                    {
+                        "constraints": ["a"],
+                        "evidence": ["b"],
+                        "pending": [],
+                        "stop": False,
+                    }
+                ),
+            )
+        )
 
     def test_evaluate_exact_reports_family_metrics(self):
         class FakeModel:

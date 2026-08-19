@@ -24,6 +24,7 @@ class TokenizedSample:
     format_family: str
     verifier: dict[str, Any] | None
     task_family: str = ""
+    task_spec: dict[str, Any] | None = None
 
 
 OPERATORS = {
@@ -85,6 +86,13 @@ def _arithmetic_constants(expression: str) -> set[str]:
 
 
 def semantic_output_valid(sample: TokenizedSample, output: str) -> bool:
+    if sample.format_family == "skill_release_exact":
+        return skill_release_output_valid(
+            sample.task_family,
+            sample.task_spec,
+            sample.verifier,
+            output,
+        )
     if sample.format_family == "reasoning_numeric":
         verifier = sample.verifier or {}
         if verifier.get("kind") != "safe_ast_reasoning_numeric_v1":
@@ -202,6 +210,97 @@ def semantic_output_valid(sample: TokenizedSample, output: str) -> bool:
     )
 
 
+def skill_release_output_valid(
+    family_id: str,
+    task_spec: dict[str, Any] | None,
+    verifier: dict[str, Any] | None,
+    output: str,
+) -> bool:
+    task_spec = task_spec or {}
+    verifier = verifier or {}
+    kind = verifier.get("kind")
+    if family_id == "verified-reasoning":
+        if kind != "safe_execution_receipt_v1":
+            return False
+        expression = task_spec.get("expression")
+        match = re.fullmatch(
+            r"FINAL: ([-+]?(?:[0-9]+(?:\.[0-9]+)?|\.[0-9]+))",
+            output.strip(),
+        )
+        if not isinstance(expression, str) or match is None:
+            return False
+        try:
+            expected = format_number(evaluate_arithmetic(expression))
+        except (SyntaxError, ValueError, ZeroDivisionError, OverflowError):
+            return False
+        return match.group(1) == expected
+    value = _json_object(output)
+    if value is None:
+        return False
+    if family_id == "tool-use-and-recovery":
+        return (
+            kind == "tool_trace_contract_v1"
+            and value.get("tool_calls") == task_spec.get("required_calls")
+            and value.get("final_status") == "verified"
+        )
+    if family_id == "planning-and-state":
+        if kind != "state_plan_consistency_v1":
+            return False
+        return all(
+            value.get(key) == task_spec.get(key)
+            for key in ("constraints", "evidence", "pending", "stop")
+        )
+    if family_id == "coding-and-validation":
+        original = task_spec.get("original_content")
+        if (
+            kind != "patch_test_receipt_v1"
+            or not isinstance(original, str)
+        ):
+            return False
+        return (
+            value.get("file") == task_spec.get("file")
+            and value.get("before_sha256")
+            == hashlib.sha256(original.encode("utf-8")).hexdigest()
+            and value.get("after_content") == task_spec.get("expected_content")
+            and value.get("test_command") == task_spec.get("test_command")
+            and value.get("test_status") == "passed"
+        )
+    if family_id == "skill-routing-and-reflection":
+        if kind != "skill_route_receipt_v1":
+            return False
+        request_tags = task_spec.get("request_tags")
+        skills = task_spec.get("skills")
+        if not isinstance(request_tags, list) or not isinstance(skills, list):
+            return False
+        required = set(request_tags)
+        eligible = [
+            (len(skill["tags"]), skill["skill_id"])
+            for skill in skills
+            if (
+                isinstance(skill, dict)
+                and isinstance(skill.get("tags"), list)
+                and required <= set(skill["tags"])
+                and skill.get("skill_id")
+            )
+        ]
+        steps = value.get("steps")
+        return (
+            bool(eligible)
+            and value.get("selected_skill") == sorted(eligible)[0][1]
+            and isinstance(steps, list)
+            and bool(steps)
+        )
+    return False
+
+
+def _json_object(output: str) -> dict[str, Any] | None:
+    try:
+        value = json.loads(output)
+    except json.JSONDecodeError:
+        return None
+    return value if isinstance(value, dict) else None
+
+
 def load_analog_dataset(path: str | Path) -> dict[str, Any]:
     dataset = json.loads(Path(path).read_text(encoding="utf-8"))
     if dataset.get("schema_version") != "nano_analog_dataset_v1":
@@ -302,6 +401,7 @@ def load_skill_release_dataset(
                         "training_eligible": True,
                         "messages": messages,
                         "verifier": row.get("verifier"),
+                        "task_spec": row.get("task_spec"),
                     }
                 )
 
@@ -393,6 +493,7 @@ def tokenize_samples(
                 format_family=str(sample["format_family"]),
                 verifier=sample.get("verifier"),
                 task_family=str(sample.get("task_family", "")),
+                task_spec=sample.get("task_spec"),
             )
         )
     return result

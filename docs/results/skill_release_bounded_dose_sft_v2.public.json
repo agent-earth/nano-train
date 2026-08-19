@@ -1,0 +1,238 @@
+{
+  "adapter_validation": {
+    "nonfinite_tensors": 0,
+    "reload_success": true,
+    "stable": true,
+    "tensor_count": 32
+  },
+  "artifacts": {
+    "generations_sha256": "75f0127eb80654617bc729d4c71525ae35af01dadfa1768dce5d97316eb5fce8",
+    "metrics_sha256": "6e60285113e752e5f0dae8a6c4a66014c908117456efbd00044b06748e1c8c93",
+    "reload_validation_sha256": "afd4667a848ea00f5c7ccb9091b57063f98ebcef01affd8057970ada234900ce",
+    "rescore_sha256": "fe6977592c90f652ac0ed0c1045f68d9fc2a5471033fbce34f1e79d31ea739fc"
+  },
+  "claim_boundary": "The bounded dose proves stable optimization and adapter effect, but verified dev remains unchanged. It does not justify larger training, benchmark access, or quality claims.",
+  "data": {
+    "families": [
+      "coding-and-validation",
+      "planning-and-state",
+      "skill-routing-and-reflection",
+      "tool-use-and-recovery",
+      "verified-reasoning"
+    ],
+    "max_length": 1088,
+    "train_samples": 80,
+    "validation_samples": 20
+  },
+  "decision": {
+    "accepted_local_smoke": true,
+    "benchmark_allowed": false,
+    "family_non_regression": true,
+    "holdout_allowed": false,
+    "larger_training_allowed": false,
+    "next_action": "Do not increase dose or search LR/seed. The adapter changes outputs but does not improve verified dev. Investigate the remaining verified-reasoning failures and choose one method-level intervention with protected JSON families.",
+    "positive_dev_delta": false,
+    "rl_allowed": false
+  },
+  "evaluation": {
+    "baseline": {
+      "by_family": {
+        "coding-and-validation": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 4
+        },
+        "planning-and-state": {
+          "exact": 4,
+          "samples": 4,
+          "verified": 4
+        },
+        "skill-routing-and-reflection": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 4
+        },
+        "tool-use-and-recovery": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 4
+        },
+        "verified-reasoning": {
+          "exact": 1,
+          "samples": 4,
+          "verified": 1
+        }
+      },
+      "changed_output_count": 0,
+      "changed_output_ids": [],
+      "exact": 5,
+      "samples": 20,
+      "verified": 17
+    },
+    "changed_output_count": 9,
+    "family_non_regression": true,
+    "post_sft": {
+      "by_family": {
+        "coding-and-validation": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 4
+        },
+        "planning-and-state": {
+          "exact": 4,
+          "samples": 4,
+          "verified": 4
+        },
+        "skill-routing-and-reflection": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 4
+        },
+        "tool-use-and-recovery": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 4
+        },
+        "verified-reasoning": {
+          "exact": 1,
+          "samples": 4,
+          "verified": 1
+        }
+      },
+      "changed_output_count": 9,
+      "changed_output_ids": [
+        "1a2963eff470a32d780ddba3",
+        "6514e9393cb02a0cd0f5af3f",
+        "6ad7e51feb53f97a93663a82",
+        "804f1ba04333d753c1dcf2f4",
+        "81e8f4ff72c27f9cc2340291",
+        "cc8a2ad48c40569b2c08431f",
+        "dedfbbfe12997b506019f410",
+        "e10d2df2581b53673c539d4f",
+        "e3b54f60377fd97ce2622d25"
+      ],
+      "exact": 5,
+      "samples": 20,
+      "verified": 17
+    },
+    "reload_matches": true,
+    "reload_peak_allocated_gib": 16.020371437072754,
+    "verified_delta": 0
+  },
+  "experiment_id": "skill-release-bounded-dose-sft-v2",
+  "identity": {
+    "adapter_sha256": "96263ed167ca989002b4dee510c1f5d894bbdb809fc1b991f7b827b9450d62dd",
+    "config_sha256": "fd6303456fb192c613b20d049219900e4977a407b47c38150a90e59e543bd059",
+    "dataset_sha256": "b5503761900cfa290dba03aff306ff511630d01544a4dab93de3a0be1e74abc1",
+    "release_manifest_sha256": "26ddb15f5c2e043d20527103a5a59216e54290aabeea2a6d228ebce7b7bb35e3"
+  },
+  "schema_version": "nano_train_skill_release_bounded_dose_public_v1",
+  "training": {
+    "loss_curve": [
+      {
+        "learning_rate": 5e-05,
+        "loss": 2.3586554527282715,
+        "step": 1
+      },
+      {
+        "learning_rate": 5e-05,
+        "loss": 0.8866187334060669,
+        "step": 2
+      },
+      {
+        "learning_rate": 4.736842105263158e-05,
+        "loss": 0.10816535353660583,
+        "step": 3
+      },
+      {
+        "learning_rate": 4.473684210526316e-05,
+        "loss": 0.12612207233905792,
+        "step": 4
+      },
+      {
+        "learning_rate": 4.210526315789474e-05,
+        "loss": 0.6686823964118958,
+        "step": 5
+      },
+      {
+        "learning_rate": 3.9473684210526316e-05,
+        "loss": 0.9558345079421997,
+        "step": 6
+      },
+      {
+        "learning_rate": 3.68421052631579e-05,
+        "loss": 0.5789576172828674,
+        "step": 7
+      },
+      {
+        "learning_rate": 3.421052631578947e-05,
+        "loss": 0.8138787150382996,
+        "step": 8
+      },
+      {
+        "learning_rate": 3.157894736842105e-05,
+        "loss": 0.0008465468417853117,
+        "step": 9
+      },
+      {
+        "learning_rate": 2.8947368421052634e-05,
+        "loss": 0.09247948229312897,
+        "step": 10
+      },
+      {
+        "learning_rate": 2.6315789473684215e-05,
+        "loss": 0.0942254588007927,
+        "step": 11
+      },
+      {
+        "learning_rate": 2.368421052631579e-05,
+        "loss": 0.08279764652252197,
+        "step": 12
+      },
+      {
+        "learning_rate": 2.105263157894737e-05,
+        "loss": 0.000688197324052453,
+        "step": 13
+      },
+      {
+        "learning_rate": 1.842105263157895e-05,
+        "loss": 0.08619865030050278,
+        "step": 14
+      },
+      {
+        "learning_rate": 1.5789473684210526e-05,
+        "loss": 2.104095935821533,
+        "step": 15
+      },
+      {
+        "learning_rate": 1.3157894736842108e-05,
+        "loss": 0.07203169912099838,
+        "step": 16
+      },
+      {
+        "learning_rate": 1.0526315789473684e-05,
+        "loss": 0.7624835968017578,
+        "step": 17
+      },
+      {
+        "learning_rate": 7.894736842105266e-06,
+        "loss": 0.0850057601928711,
+        "step": 18
+      },
+      {
+        "learning_rate": 5.263157894736842e-06,
+        "loss": 0.0005590671207755804,
+        "step": 19
+      },
+      {
+        "learning_rate": 2.6315789473684237e-06,
+        "loss": 0.9611926078796387,
+        "step": 20
+      }
+    ],
+    "peak_allocated_gib": 19.848840713500977,
+    "steps": 20,
+    "trainable_parameters": 917504,
+    "wall_seconds": 197.64332675933838
+  }
+}
