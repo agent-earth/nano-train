@@ -1,0 +1,316 @@
+{
+  "adapter_validation": {
+    "nonfinite_tensors": 0,
+    "reload_success": true,
+    "stable": true,
+    "tensor_count": 32
+  },
+  "artifacts": {
+    "generations_sha256": "a9015649c4035c4a0237a1a57837f204a41e537842245b6ee1d0080fc384f347",
+    "metrics_sha256": "3d7121d2b008bae198446aab37b60c835415af731bc345a7decbf0b8585db8e3",
+    "reload_validation_sha256": "c9c8fb56283304b9bedde528e8299ad5bd39f5b96a7018b4225e62ca8e6e2d24",
+    "rescore_sha256": "15077462f77d59a2c5e3a8fef973005bc8b9347a51f5974425c7d91c33d8c636"
+  },
+  "claim_boundary": "\u8fd9\u6b21\u9884\u6ce8\u518c\u5b9e\u9a8c\u53ea\u8bc1\u660e\uff1a\u56fa\u5b9a schedule \u7684 q/v-only SFT \u53ef\u4ee5\u7a33\u5b9a\u8bad\u7ec3\uff0c\u5e76\u5728\u4e00\u7ec4 fresh synthetic dev \u4e0a\u4fdd\u4f4f\u56db\u4e2a JSON family\u3002corrected verified \u6307\u6807\u6ca1\u6709\u63d0\u5347\uff0creasoning \u4e5f\u6ca1\u6709\u63d0\u5347\u3002\u56e0\u6b64\u4e0d\u80fd\u6269\u5927\u8bad\u7ec3\uff0c\u4e0d\u80fd\u8bbf\u95ee benchmark \u6216 independent holdout\uff0c\u4e5f\u4e0d\u80fd\u542f\u52a8 RL\u3002",
+  "decision": {
+    "accepted_local_smoke": true,
+    "benchmark_allowed": false,
+    "independent_holdout_allowed": false,
+    "json_family_non_regression": true,
+    "larger_training_allowed": false,
+    "next_action": "\u62d2\u7edd\u53ea\u589e\u52a0 answer-only reasoning \u6837\u672c\u9891\u6b21\u7684\u65b9\u6848\u3002\u4e0d\u8981\u6839\u636e\u5df2\u7ecf\u770b\u5230\u7684\u7ed3\u679c\u7ee7\u7eed\u8c03\u6574 schedule\u3001offset\u3001dose\u3001LR\u3001seed\u3001prompt\u3001parser\u3001adapter weight \u6216 route\u3002\u4e0b\u4e00\u8f6e\u5fc5\u987b\u6539\u53d8\u76d1\u7763\u7ed3\u6784\uff0c\u4f8b\u5982\u4f7f\u7528 verifier \u68c0\u67e5\u7684\u8fc7\u7a0b\u8f68\u8ff9\uff0c\u5e76\u6362\u4e00\u7ec4\u65b0\u7684\u51bb\u7ed3\u672c\u5730\u8bc4\u4f30\u6570\u636e\u3002",
+    "positive_dev_delta": false,
+    "reasoning_preservation_method_accepted": false,
+    "rl_allowed": false
+  },
+  "evaluation": {
+    "baseline": {
+      "by_family": {
+        "coding-and-validation": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 4
+        },
+        "planning-and-state": {
+          "exact": 4,
+          "samples": 4,
+          "verified": 4
+        },
+        "skill-routing-and-reflection": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 4
+        },
+        "tool-use-and-recovery": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 4
+        },
+        "verified-reasoning": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 0
+        }
+      },
+      "changed_output_count": 0,
+      "changed_output_ids": [],
+      "exact": 4,
+      "samples": 20,
+      "verified": 16
+    },
+    "changed_output_count": 10,
+    "json_family_non_regression": true,
+    "post_sft": {
+      "by_family": {
+        "coding-and-validation": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 4
+        },
+        "planning-and-state": {
+          "exact": 4,
+          "samples": 4,
+          "verified": 4
+        },
+        "skill-routing-and-reflection": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 4
+        },
+        "tool-use-and-recovery": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 4
+        },
+        "verified-reasoning": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 0
+        }
+      },
+      "changed_output_count": 10,
+      "changed_output_ids": [
+        "370bae5e1423890d8d9778cc",
+        "4627533f039e9d35b685e67b",
+        "5202a76fa86b09de9a644e7e",
+        "5aa3d693f1050e5a265cdb87",
+        "69bc2b85d387e856729aa259",
+        "6e8e4ce66998e8306eaf1e4b",
+        "760a37a2fb65a7ee3d3530cb",
+        "98eab32503828ee4e9665dcb",
+        "ab91e7d16e22312cc05d7352",
+        "e1a004006d7434ac8b66cbaa"
+      ],
+      "exact": 4,
+      "samples": 20,
+      "verified": 16
+    },
+    "reload_matches": true,
+    "reload_peak_allocated_gib": 16.023963451385498,
+    "verified_delta": 0
+  },
+  "experiment_id": "skill-release-reasoning-preservation-sft-v4",
+  "failure_analysis": {
+    "mechanism": "Ten answer-only reasoning exposures do not teach the multi-step arithmetic procedure. Three fresh reasoning outputs are byte-identical and the fourth changes only from FINAL: 342 to FINAL: 344 while the verified target is 467.",
+    "reasoning_baseline_verified": 0,
+    "reasoning_cases": [
+      {
+        "baseline": "FINAL: 324",
+        "changed": false,
+        "expected": "FINAL: 424",
+        "expression": "(96 + 68) * 3 - 68",
+        "post_sft": "FINAL: 324",
+        "sample_id": "1cee7df166c235a15560a671"
+      },
+      {
+        "baseline": "FINAL: 312",
+        "changed": false,
+        "expected": "FINAL: 381",
+        "expression": "(89 + 57) * 3 - 57",
+        "post_sft": "FINAL: 312",
+        "sample_id": "3e20fdaaf2f043ff7c736f8b"
+      },
+      {
+        "baseline": "FINAL: 312",
+        "changed": false,
+        "expected": "FINAL: 338",
+        "expression": "(82 + 46) * 3 - 46",
+        "post_sft": "FINAL: 312",
+        "sample_id": "4f1df0f7809548f384f2d509"
+      },
+      {
+        "baseline": "FINAL: 342",
+        "changed": true,
+        "expected": "FINAL: 467",
+        "expression": "(103 + 79) * 3 - 79",
+        "post_sft": "FINAL: 344",
+        "sample_id": "e1a004006d7434ac8b66cbaa"
+      }
+    ],
+    "reasoning_changed_output_count": 1,
+    "reasoning_post_verified": 0
+  },
+  "identity": {
+    "adapter_sha256": "fa572f8f03a49345697b7164091c1f03d02437b39b99a948904c8e3602bc53d0",
+    "config_sha256": "a85fafb0810d995536d0620e5c11f58160ccb995474f47f15601f5efb0b42d69",
+    "dataset_sha256": "b5503761900cfa290dba03aff306ff511630d01544a4dab93de3a0be1e74abc1",
+    "preregister_commit": "4628044",
+    "preregister_sha256": "e50d29dcf1c2c541476f42f2255e88eb23b94aa1d281e61f4e68ab765958b139",
+    "release_manifest_sha256": "26ddb15f5c2e043d20527103a5a59216e54290aabeea2a6d228ebce7b7bb35e3"
+  },
+  "method": {
+    "actual_train_exposure_by_family": {
+      "coding-and-validation": 3,
+      "planning-and-state": 3,
+      "skill-routing-and-reflection": 2,
+      "tool-use-and-recovery": 2,
+      "verified-reasoning": 10
+    },
+    "changed": [
+      "train_family_schedule",
+      "validation_start_per_family",
+      "experiment_identity"
+    ],
+    "control": "skill-release-bounded-dose-sft-v2",
+    "fresh_validation_overlap": {
+      "observed_dev_id_overlap": 0,
+      "observed_dev_semantic_overlap": 0,
+      "train_id_overlap": 0,
+      "train_semantic_overlap": 0
+    },
+    "fresh_validation_sample_id_sha256": "f2e71078acbca081229c8f0d3bf849fae1befa61b9181e7dcbae1684983b694a",
+    "frozen": [
+      "model",
+      "release",
+      "train_subset",
+      "qv_lora",
+      "steps",
+      "learning_rate",
+      "seed",
+      "precision",
+      "sequence_length",
+      "generation_budget",
+      "family_verifier"
+    ],
+    "planned_train_exposure_by_family": {
+      "coding-and-validation": 3,
+      "planning-and-state": 3,
+      "skill-routing-and-reflection": 2,
+      "tool-use-and-recovery": 2,
+      "verified-reasoning": 10
+    },
+    "schedule_matches": true,
+    "validation_selection_rule": "release_order_per_family_indices_4_to_7"
+  },
+  "schema_version": "nano_train_skill_release_reasoning_preservation_public_v1",
+  "training": {
+    "loss_curve": [
+      {
+        "learning_rate": 5e-05,
+        "loss": 1.0336105823516846,
+        "step": 1
+      },
+      {
+        "learning_rate": 5e-05,
+        "loss": 0.10885234922170639,
+        "step": 2
+      },
+      {
+        "learning_rate": 4.736842105263158e-05,
+        "loss": 0.5574143528938293,
+        "step": 3
+      },
+      {
+        "learning_rate": 4.473684210526316e-05,
+        "loss": 0.0007110279402695596,
+        "step": 4
+      },
+      {
+        "learning_rate": 4.210526315789474e-05,
+        "loss": 0.6260957717895508,
+        "step": 5
+      },
+      {
+        "learning_rate": 3.9473684210526316e-05,
+        "loss": 2.338046073913574,
+        "step": 6
+      },
+      {
+        "learning_rate": 3.68421052631579e-05,
+        "loss": 1.0120240449905396,
+        "step": 7
+      },
+      {
+        "learning_rate": 3.421052631578947e-05,
+        "loss": 0.10626504570245743,
+        "step": 8
+      },
+      {
+        "learning_rate": 3.157894736842105e-05,
+        "loss": 0.7910334467887878,
+        "step": 9
+      },
+      {
+        "learning_rate": 2.8947368421052634e-05,
+        "loss": 0.09366689622402191,
+        "step": 10
+      },
+      {
+        "learning_rate": 2.6315789473684215e-05,
+        "loss": 0.22557179629802704,
+        "step": 11
+      },
+      {
+        "learning_rate": 2.368421052631579e-05,
+        "loss": 0.0008154493989422917,
+        "step": 12
+      },
+      {
+        "learning_rate": 2.105263157894737e-05,
+        "loss": 0.9710963368415833,
+        "step": 13
+      },
+      {
+        "learning_rate": 1.842105263157895e-05,
+        "loss": 2.2511017322540283,
+        "step": 14
+      },
+      {
+        "learning_rate": 1.5789473684210526e-05,
+        "loss": 0.9072573781013489,
+        "step": 15
+      },
+      {
+        "learning_rate": 1.3157894736842108e-05,
+        "loss": 0.09539293497800827,
+        "step": 16
+      },
+      {
+        "learning_rate": 1.0526315789473684e-05,
+        "loss": 0.9404374361038208,
+        "step": 17
+      },
+      {
+        "learning_rate": 7.894736842105266e-06,
+        "loss": 0.08793633431196213,
+        "step": 18
+      },
+      {
+        "learning_rate": 5.263157894736842e-06,
+        "loss": 0.20056147873401642,
+        "step": 19
+      },
+      {
+        "learning_rate": 2.6315789473684237e-06,
+        "loss": 0.0009080366580747068,
+        "step": 20
+      }
+    ],
+    "peak_allocated_gib": 19.848840713500977,
+    "steps": 20,
+    "train_samples": 80,
+    "trainable_parameters": 917504,
+    "validation_samples": 20,
+    "wall_seconds": 191.4698932170868
+  }
+}

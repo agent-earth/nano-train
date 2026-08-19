@@ -1,0 +1,91 @@
+{
+  "arms": {
+    "baseline": {
+      "by_family": {
+        "coding-and-validation": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 4
+        },
+        "planning-and-state": {
+          "exact": 4,
+          "samples": 4,
+          "verified": 4
+        },
+        "skill-routing-and-reflection": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 4
+        },
+        "tool-use-and-recovery": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 4
+        },
+        "verified-reasoning": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 0
+        }
+      },
+      "changed_output_count": 0,
+      "changed_output_ids": [],
+      "exact": 4,
+      "samples": 20,
+      "verified": 16
+    },
+    "post_sft": {
+      "by_family": {
+        "coding-and-validation": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 4
+        },
+        "planning-and-state": {
+          "exact": 4,
+          "samples": 4,
+          "verified": 4
+        },
+        "skill-routing-and-reflection": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 4
+        },
+        "tool-use-and-recovery": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 4
+        },
+        "verified-reasoning": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 0
+        }
+      },
+      "changed_output_count": 10,
+      "changed_output_ids": [
+        "370bae5e1423890d8d9778cc",
+        "4627533f039e9d35b685e67b",
+        "5202a76fa86b09de9a644e7e",
+        "5aa3d693f1050e5a265cdb87",
+        "69bc2b85d387e856729aa259",
+        "6e8e4ce66998e8306eaf1e4b",
+        "760a37a2fb65a7ee3d3530cb",
+        "98eab32503828ee4e9665dcb",
+        "ab91e7d16e22312cc05d7352",
+        "e1a004006d7434ac8b66cbaa"
+      ],
+      "exact": 4,
+      "samples": 20,
+      "verified": 16
+    }
+  },
+  "config_sha256": "a85fafb0810d995536d0620e5c11f58160ccb995474f47f15601f5efb0b42d69",
+  "dataset_sha256": "b5503761900cfa290dba03aff306ff511630d01544a4dab93de3a0be1e74abc1",
+  "experiment_id": "skill-release-reasoning-preservation-sft-v4",
+  "generations_sha256": "a9015649c4035c4a0237a1a57837f204a41e537842245b6ee1d0080fc384f347",
+  "release_manifest_sha256": "26ddb15f5c2e043d20527103a5a59216e54290aabeea2a6d228ebce7b7bb35e3",
+  "schema_version": "nano_train_skill_release_rescore_v1",
+  "scorer": "skill_release_family_verifier_v1",
+  "verified_delta": 0
+}
