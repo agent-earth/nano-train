@@ -1,0 +1,218 @@
+{
+  "claim_boundary": "This receipt freezes one local synthetic method test before any generation on the fresh validation rows. It is not benchmark or independent-holdout evidence.",
+  "decision_rule": {
+    "benchmark_allowed": false,
+    "forbidden_after_observation": [
+      "dose_search",
+      "learning_rate_search",
+      "seed_search",
+      "schedule_search",
+      "validation_offset_search",
+      "prompt_search",
+      "parser_search",
+      "adapter_weight_search",
+      "route_search"
+    ],
+    "independent_holdout_allowed": false,
+    "method_accepted": "finite_and_reloadable AND corrected_verified_delta > 0 AND every JSON family post_verified >= baseline_verified",
+    "rl_allowed": false
+  },
+  "experiment_id": "skill-release-reasoning-preservation-sft-v4",
+  "fresh_validation": {
+    "by_family": {
+      "coding-and-validation": 4,
+      "planning-and-state": 4,
+      "skill-routing-and-reflection": 4,
+      "tool-use-and-recovery": 4,
+      "verified-reasoning": 4
+    },
+    "observed_dev_id_overlap": 0,
+    "observed_dev_semantic_overlap": 0,
+    "sample_id_sha256": "f2e71078acbca081229c8f0d3bf849fae1befa61b9181e7dcbae1684983b694a",
+    "sample_ids": [
+      "1cee7df166c235a15560a671",
+      "370bae5e1423890d8d9778cc",
+      "3e05561af388e3b15fdbd5b6",
+      "3e20fdaaf2f043ff7c736f8b",
+      "4627533f039e9d35b685e67b",
+      "4f1df0f7809548f384f2d509",
+      "5202a76fa86b09de9a644e7e",
+      "5914610b434652de27f2f814",
+      "5aa3d693f1050e5a265cdb87",
+      "69bc2b85d387e856729aa259",
+      "6e8e4ce66998e8306eaf1e4b",
+      "760a37a2fb65a7ee3d3530cb",
+      "8124cbc9dec46c8d8addc296",
+      "94f0c25b3f174676c8870f72",
+      "98eab32503828ee4e9665dcb",
+      "9fc9c33cd5e45da832e7e3e9",
+      "a23a5f6e5b7529d5abc23f6c",
+      "ab91e7d16e22312cc05d7352",
+      "c8b95a526058e25a275263fc",
+      "e1a004006d7434ac8b66cbaa"
+    ],
+    "samples": 20,
+    "selection_rule": "release_order_per_family_indices_4_to_7",
+    "train_id_overlap": 0,
+    "train_semantic_overlap": 0
+  },
+  "identity": {
+    "accepted_jsonl_sha256": "b5503761900cfa290dba03aff306ff511630d01544a4dab93de3a0be1e74abc1",
+    "control_config_sha256": "fd6303456fb192c613b20d049219900e4977a407b47c38150a90e59e543bd059",
+    "release_manifest_sha256": "26ddb15f5c2e043d20527103a5a59216e54290aabeea2a6d228ebce7b7bb35e3",
+    "treatment_config_sha256": "a85fafb0810d995536d0620e5c11f58160ccb995474f47f15601f5efb0b42d69"
+  },
+  "method": {
+    "changed": [
+      "train_family_schedule",
+      "validation_start_per_family",
+      "experiment_identity"
+    ],
+    "control": "skill-release-bounded-dose-sft-v2",
+    "frozen": [
+      "model",
+      "release",
+      "train_subset",
+      "qv_lora",
+      "steps",
+      "learning_rate",
+      "seed",
+      "precision",
+      "sequence_length",
+      "generation_budget",
+      "family_verifier"
+    ],
+    "train_exposure": [
+      {
+        "sample_id": "097a932eb05c992e8689bd25",
+        "step": 1,
+        "task_family": "verified-reasoning"
+      },
+      {
+        "sample_id": "c629e0f63f6cc81bcf797426",
+        "step": 2,
+        "task_family": "coding-and-validation"
+      },
+      {
+        "sample_id": "fc64a44e3aefe6d8effa329e",
+        "step": 3,
+        "task_family": "verified-reasoning"
+      },
+      {
+        "sample_id": "d2614501d607085483781709",
+        "step": 4,
+        "task_family": "planning-and-state"
+      },
+      {
+        "sample_id": "2317a0d7ec212e574eac5756",
+        "step": 5,
+        "task_family": "verified-reasoning"
+      },
+      {
+        "sample_id": "31749f0b2ad66bc226844ca1",
+        "step": 6,
+        "task_family": "skill-routing-and-reflection"
+      },
+      {
+        "sample_id": "dcc195aa6ea1978b8cba9d72",
+        "step": 7,
+        "task_family": "verified-reasoning"
+      },
+      {
+        "sample_id": "b7bf7ebb0b47b2db169859cc",
+        "step": 8,
+        "task_family": "tool-use-and-recovery"
+      },
+      {
+        "sample_id": "db07fa5c171beadeca09549d",
+        "step": 9,
+        "task_family": "verified-reasoning"
+      },
+      {
+        "sample_id": "4a6e5d79a87d8b80d1754c02",
+        "step": 10,
+        "task_family": "coding-and-validation"
+      },
+      {
+        "sample_id": "1be0f70318016ff114a5d82b",
+        "step": 11,
+        "task_family": "verified-reasoning"
+      },
+      {
+        "sample_id": "cd69353beee201ef67c29e6e",
+        "step": 12,
+        "task_family": "planning-and-state"
+      },
+      {
+        "sample_id": "32d5ae32565a99db12a7c6ae",
+        "step": 13,
+        "task_family": "verified-reasoning"
+      },
+      {
+        "sample_id": "1ea1c6c9b9130bcf0456de3d",
+        "step": 14,
+        "task_family": "skill-routing-and-reflection"
+      },
+      {
+        "sample_id": "bcd84e4bbcf01c37797515f9",
+        "step": 15,
+        "task_family": "verified-reasoning"
+      },
+      {
+        "sample_id": "3298bd11291da1687afcacc4",
+        "step": 16,
+        "task_family": "tool-use-and-recovery"
+      },
+      {
+        "sample_id": "89784728ff5722c5ea6c1c0c",
+        "step": 17,
+        "task_family": "verified-reasoning"
+      },
+      {
+        "sample_id": "5bb666eaa24e2fdab4f23e53",
+        "step": 18,
+        "task_family": "coding-and-validation"
+      },
+      {
+        "sample_id": "7fb95a3cb9359bdcf4b67428",
+        "step": 19,
+        "task_family": "verified-reasoning"
+      },
+      {
+        "sample_id": "66b407cb44e6248611001740",
+        "step": 20,
+        "task_family": "planning-and-state"
+      }
+    ],
+    "train_exposure_by_family": {
+      "coding-and-validation": 3,
+      "planning-and-state": 3,
+      "skill-routing-and-reflection": 2,
+      "tool-use-and-recovery": 2,
+      "verified-reasoning": 10
+    },
+    "train_family_schedule": [
+      "verified-reasoning",
+      "coding-and-validation",
+      "verified-reasoning",
+      "planning-and-state",
+      "verified-reasoning",
+      "skill-routing-and-reflection",
+      "verified-reasoning",
+      "tool-use-and-recovery",
+      "verified-reasoning",
+      "coding-and-validation",
+      "verified-reasoning",
+      "planning-and-state",
+      "verified-reasoning",
+      "skill-routing-and-reflection",
+      "verified-reasoning",
+      "tool-use-and-recovery",
+      "verified-reasoning",
+      "coding-and-validation",
+      "verified-reasoning",
+      "planning-and-state"
+    ]
+  },
+  "schema_version": "nano_train_reasoning_preservation_preregister_v1"
+}

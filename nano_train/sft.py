@@ -73,6 +73,31 @@ def _batch_order(samples: list[TokenizedSample], seed: int) -> list[int]:
     return order
 
 
+def _scheduled_batch_order(
+    samples: list[TokenizedSample],
+    seed: int,
+    family_schedule: tuple[str, ...],
+) -> list[int]:
+    if not family_schedule:
+        return _batch_order(samples, seed)
+    by_family = {}
+    for index, sample in enumerate(samples):
+        by_family.setdefault(sample.task_family, []).append(index)
+    randomizer = random.Random(seed)
+    for indices in by_family.values():
+        randomizer.shuffle(indices)
+    offsets = dict.fromkeys(by_family, 0)
+    result = []
+    for family in family_schedule:
+        indices = by_family.get(family)
+        if not indices:
+            raise ValueError(f"family schedule lacks train rows for {family}")
+        offset = offsets[family]
+        result.append(indices[offset % len(indices)])
+        offsets[family] = offset + 1
+    return result
+
+
 @torch.inference_mode()
 def evaluate_exact(
     model: Any,
@@ -230,6 +255,9 @@ def run_sft_smoke(config: SFTSmokeConfig) -> dict[str, Any]:
             validation_samples_per_family=(
                 config.validation_samples_per_family or 0
             ),
+            validation_start_per_family=(
+                config.validation_start_per_family
+            ),
         )
     else:
         dataset = load_analog_dataset(dataset_path)
@@ -289,8 +317,13 @@ def run_sft_smoke(config: SFTSmokeConfig) -> dict[str, Any]:
         eps=1e-6,
     )
     trainable = _trainable_parameters(model)
-    order = _batch_order(train, config.seed)
+    order = _scheduled_batch_order(
+        train,
+        config.seed,
+        config.train_family_schedule,
+    )
     losses = []
+    train_exposure = []
     optimizer.zero_grad(set_to_none=True)
     model.train()
     for step in range(config.max_steps):
@@ -307,6 +340,17 @@ def run_sft_smoke(config: SFTSmokeConfig) -> dict[str, Any]:
             for micro_step in range(config.gradient_accumulation_steps)
             for offset in range(config.batch_size)
         ]
+        train_exposure.append(
+            {
+                "step": optimizer_step,
+                "sample_ids": [
+                    train[index].sample_id for index in batch_indices
+                ],
+                "task_families": [
+                    train[index].task_family for index in batch_indices
+                ],
+            }
+        )
         step_losses = []
         for micro_step in range(config.gradient_accumulation_steps):
             start = micro_step * config.batch_size
@@ -418,6 +462,7 @@ def run_sft_smoke(config: SFTSmokeConfig) -> dict[str, Any]:
         "config": {
             **config.__dict__,
             "lora_targets": list(config.lora_targets),
+            "train_family_schedule": list(config.train_family_schedule),
         },
         "dependencies": dependency_versions(),
         "hardware": {
@@ -427,6 +472,7 @@ def run_sft_smoke(config: SFTSmokeConfig) -> dict[str, Any]:
         "baseline_validation": baseline_metrics,
         "post_sft_validation": post_metrics,
         "loss_curve": losses,
+        "train_exposure": train_exposure,
         "adapter_sha256": sha256_tree(adapter_dir),
         "generations_sha256": sha256_file(generations_path),
         "wall_seconds": time.time() - started,
