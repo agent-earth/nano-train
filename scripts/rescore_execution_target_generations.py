@@ -57,8 +57,29 @@ def main() -> None:
         ],
         "release_manifest_sha256": dataset["release"]["sha256"],
         "scorer": "execution_target_family_and_pair_verifier_v1",
-        "arms": {},
     }
+    result.update(
+        score_execution_target_generations(
+            generations=generations,
+            raw_validation=raw_validation,
+        )
+    )
+    output = Path(args.output)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(
+        json.dumps(result, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    print(json.dumps(result, indent=2, sort_keys=True))
+
+
+def score_execution_target_generations(
+    *,
+    generations: dict,
+    raw_validation: dict[str, dict],
+) -> dict:
+    validation_ids = set(raw_validation)
+    result = {"arms": {}}
     for arm in ("baseline", "post_sft"):
         rows = generations.get(arm)
         if not isinstance(rows, list):
@@ -151,13 +172,7 @@ def main() -> None:
         result["arms"]["post_sft"]["pair_summary"]["both_verified"]
         - result["arms"]["baseline"]["pair_summary"]["both_verified"]
     )
-    output = Path(args.output)
-    output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(
-        json.dumps(result, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
-    print(json.dumps(result, indent=2, sort_keys=True))
+    return result
 
 
 if __name__ == "__main__":
