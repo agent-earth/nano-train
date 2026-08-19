@@ -1,0 +1,97 @@
+{
+  "arms": {
+    "baseline": {
+      "by_family": {
+        "coding-and-validation": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 4
+        },
+        "planning-and-state": {
+          "exact": 4,
+          "samples": 4,
+          "verified": 4
+        },
+        "skill-routing-and-reflection": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 4
+        },
+        "tool-use-and-recovery": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 4
+        },
+        "verified-reasoning": {
+          "exact": 1,
+          "samples": 4,
+          "verified": 1
+        }
+      },
+      "changed_output_count": 0,
+      "changed_output_ids": [],
+      "exact": 5,
+      "samples": 20,
+      "verified": 17
+    },
+    "post_sft": {
+      "by_family": {
+        "coding-and-validation": {
+          "exact": 4,
+          "samples": 4,
+          "verified": 4
+        },
+        "planning-and-state": {
+          "exact": 4,
+          "samples": 4,
+          "verified": 4
+        },
+        "skill-routing-and-reflection": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 4
+        },
+        "tool-use-and-recovery": {
+          "exact": 4,
+          "samples": 4,
+          "verified": 4
+        },
+        "verified-reasoning": {
+          "exact": 0,
+          "samples": 4,
+          "verified": 0
+        }
+      },
+      "changed_output_count": 16,
+      "changed_output_ids": [
+        "1a2963eff470a32d780ddba3",
+        "25bb4c0b15f346e95bb19c5f",
+        "5486ba7912a95da5361599df",
+        "6514e9393cb02a0cd0f5af3f",
+        "6ad7e51feb53f97a93663a82",
+        "76b9ac4fb8e1dc11c346146b",
+        "7e5f180c5341b77ea8b5f36e",
+        "804f1ba04333d753c1dcf2f4",
+        "81e8f4ff72c27f9cc2340291",
+        "95aac875bfbcdd4d1c6885ae",
+        "b9ef210f8655a7351e5a2f16",
+        "c92e80dfc88a7e16604a17d7",
+        "cc8a2ad48c40569b2c08431f",
+        "dedfbbfe12997b506019f410",
+        "e10d2df2581b53673c539d4f",
+        "e3b54f60377fd97ce2622d25"
+      ],
+      "exact": 12,
+      "samples": 20,
+      "verified": 16
+    }
+  },
+  "config_sha256": "e4714e8c04ceba2a2b1fadf2db70fe04b911e3620750e23183546038b1c9ef62",
+  "dataset_sha256": "b5503761900cfa290dba03aff306ff511630d01544a4dab93de3a0be1e74abc1",
+  "experiment_id": "skill-release-expanded-lora-sft-v3",
+  "generations_sha256": "daeb51e1d1ac7e91aeff70bdccf6b6160b1ca04114f3a4e31e27446c5a213dc2",
+  "release_manifest_sha256": "26ddb15f5c2e043d20527103a5a59216e54290aabeea2a6d228ebce7b7bb35e3",
+  "schema_version": "nano_train_skill_release_rescore_v1",
+  "scorer": "skill_release_family_verifier_v1",
+  "verified_delta": -1
+}
