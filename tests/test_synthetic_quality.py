@@ -9,6 +9,7 @@ from pathlib import Path
 from nano_train.synthetic_quality import (
     FAMILIES,
     build_cases,
+    candidate_admission_gates,
     case_contract,
     load_config,
     paired_comparison,
@@ -103,6 +104,32 @@ class SyntheticQualityTests(unittest.TestCase):
                 bootstrap_samples=10,
                 bootstrap_seed=1,
             )
+
+    def test_candidate_gate_rejects_zero_delta(self):
+        family_metrics = {
+            family: {"correct": 3, "cases": 24, "parse_failures": 0}
+            for family in FAMILIES
+        }
+        metrics = {
+            "by_family": family_metrics,
+            "parse_failures": 0,
+        }
+        comparison = {
+            "delta": 0.0,
+            "paired_bootstrap_95_ci": [0.0, 0.0],
+            "mcnemar_exact_p": 1.0,
+        }
+        gates = candidate_admission_gates(
+            comparison,
+            metrics,
+            metrics,
+        )
+        self.assertFalse(gates["point_delta_positive"])
+        self.assertFalse(gates["bootstrap_ci_lower_positive"])
+        self.assertFalse(gates["mcnemar_below_005"])
+        self.assertTrue(gates["every_family_non_regression"])
+        self.assertTrue(gates["parse_failures_non_regression"])
+        self.assertFalse(all(gates.values()))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,267 @@
+{
+  "arms": {
+    "base4": {
+      "hardware": {
+        "gpu_name": "Tesla V100-SXM2-32GB",
+        "peak_allocated_gib": 8.403181076049805
+      },
+      "identity": {
+        "adapter_sha256": null,
+        "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+        "model_index_sha256": "cf3f798ee02ba45f9622aa8892a47369ab667d0afbf154ee7c2212de42e6302d",
+        "raw_cases_sha256": "05833b188e25fa2d8737032ca68bd017c83cd6f4098976e734352910eba011ff",
+        "summary_sha256": "eba5dc100b9e53d0cbe66e6584c5901aba78f1d7d2c32b1e30df338a7c4b7645"
+      },
+      "metrics": {
+        "accuracy": 0.03125,
+        "by_family": {
+          "exact_division": {
+            "cases": 24,
+            "correct": 3,
+            "parse_failures": 0
+          },
+          "mixed_products": {
+            "cases": 24,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "nested_offset": {
+            "cases": 24,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "repeated_operand": {
+            "cases": 24,
+            "correct": 0,
+            "parse_failures": 0
+          }
+        },
+        "cases": 96,
+        "correct": 3,
+        "parse_failures": 0
+      },
+      "wall_seconds": 8.800021171569824
+    },
+    "base9": {
+      "hardware": {
+        "gpu_name": "Tesla V100-SXM2-32GB",
+        "peak_allocated_gib": 17.156429290771484
+      },
+      "identity": {
+        "adapter_sha256": null,
+        "model_config_sha256": "d0883072e01861ed0b2d47be3c16c36a8e81c224c7ffaa310c6558fb3f932b05",
+        "model_index_sha256": "26d3539b516be613f39563617cb9d33b3f83d401298125be392c80cefb8f7fe5",
+        "raw_cases_sha256": "9359a4902586d0329ced23d6c5483fd3bddd75bede5a4c04b9644ab7c4cdfdda",
+        "summary_sha256": "6b8f7c69df71992adab8c5304d397631a791901df6090dbf638fbde09d709970"
+      },
+      "metrics": {
+        "accuracy": 0.0625,
+        "by_family": {
+          "exact_division": {
+            "cases": 24,
+            "correct": 5,
+            "parse_failures": 0
+          },
+          "mixed_products": {
+            "cases": 24,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "nested_offset": {
+            "cases": 24,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "repeated_operand": {
+            "cases": 24,
+            "correct": 1,
+            "parse_failures": 0
+          }
+        },
+        "cases": 96,
+        "correct": 6,
+        "parse_failures": 0
+      },
+      "wall_seconds": 9.379252433776855
+    },
+    "opd4": {
+      "hardware": {
+        "gpu_name": "Tesla V100-SXM2-32GB",
+        "peak_allocated_gib": 8.403435707092285
+      },
+      "identity": {
+        "adapter_sha256": "4373481f3e7a90003760f4103a68014002a29c92c0cff1286d8b8947c01006b2",
+        "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+        "model_index_sha256": "cf3f798ee02ba45f9622aa8892a47369ab667d0afbf154ee7c2212de42e6302d",
+        "raw_cases_sha256": "05833b188e25fa2d8737032ca68bd017c83cd6f4098976e734352910eba011ff",
+        "summary_sha256": "eafa7ef7cea95b41cb1e2d202890d43a41455eac155be9a261c954df73519032"
+      },
+      "metrics": {
+        "accuracy": 0.03125,
+        "by_family": {
+          "exact_division": {
+            "cases": 24,
+            "correct": 3,
+            "parse_failures": 0
+          },
+          "mixed_products": {
+            "cases": 24,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "nested_offset": {
+            "cases": 24,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "repeated_operand": {
+            "cases": 24,
+            "correct": 0,
+            "parse_failures": 0
+          }
+        },
+        "cases": 96,
+        "correct": 3,
+        "parse_failures": 0
+      },
+      "wall_seconds": 9.022087812423706
+    },
+    "rl4": {
+      "hardware": {
+        "gpu_name": "Tesla V100-SXM2-32GB",
+        "peak_allocated_gib": 8.403435707092285
+      },
+      "identity": {
+        "adapter_sha256": "f270b009214b7508cad5bf1d404f6eaccb9980ca383845a18a6dea397dc9c2fc",
+        "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+        "model_index_sha256": "cf3f798ee02ba45f9622aa8892a47369ab667d0afbf154ee7c2212de42e6302d",
+        "raw_cases_sha256": "8e62ea2329a28dad443119601f4551f474321f07617222ac72d99d25fee569ee",
+        "summary_sha256": "59e6bb51637110a5a3094c4cdc370a96b49ecc6f14cb41220d3365db0c5e0295"
+      },
+      "metrics": {
+        "accuracy": 0.03125,
+        "by_family": {
+          "exact_division": {
+            "cases": 24,
+            "correct": 3,
+            "parse_failures": 0
+          },
+          "mixed_products": {
+            "cases": 24,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "nested_offset": {
+            "cases": 24,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "repeated_operand": {
+            "cases": 24,
+            "correct": 0,
+            "parse_failures": 0
+          }
+        },
+        "cases": 96,
+        "correct": 3,
+        "parse_failures": 0
+      },
+      "wall_seconds": 9.098792552947998
+    }
+  },
+  "claim_boundary": "The four-arm comparison is valid only for this fresh synthetic arithmetic suite. It is not benchmark, canary, holdout, or final 4B/9B superiority evidence.",
+  "comparisons": {
+    "base9_vs_base4": {
+      "baseline_accuracy": 0.03125,
+      "candidate_accuracy": 0.0625,
+      "cases": 96,
+      "delta": 0.03125,
+      "mcnemar_exact_p": 0.453125,
+      "paired_bootstrap_95_ci": [
+        -0.020833333333333332,
+        0.08333333333333333
+      ],
+      "paired_counts": {
+        "baseline_only": 2,
+        "both_correct": 1,
+        "both_wrong": 88,
+        "candidate_only": 5
+      }
+    },
+    "opd4_vs_base4": {
+      "baseline_accuracy": 0.03125,
+      "candidate_accuracy": 0.03125,
+      "cases": 96,
+      "delta": 0.0,
+      "mcnemar_exact_p": 1.0,
+      "paired_bootstrap_95_ci": [
+        0.0,
+        0.0
+      ],
+      "paired_counts": {
+        "baseline_only": 0,
+        "both_correct": 3,
+        "both_wrong": 93,
+        "candidate_only": 0
+      }
+    },
+    "rl4_vs_base4": {
+      "baseline_accuracy": 0.03125,
+      "candidate_accuracy": 0.03125,
+      "cases": 96,
+      "delta": 0.0,
+      "mcnemar_exact_p": 1.0,
+      "paired_bootstrap_95_ci": [
+        0.0,
+        0.0
+      ],
+      "paired_counts": {
+        "baseline_only": 0,
+        "both_correct": 3,
+        "both_wrong": 93,
+        "candidate_only": 0
+      }
+    }
+  },
+  "decision": {
+    "any_two_step_adapter_admitted": false,
+    "benchmark_allowed": false,
+    "canary_allowed": false,
+    "candidates": {
+      "opd4": {
+        "admitted_synthetic_quality_candidate": false,
+        "gates": {
+          "bootstrap_ci_lower_positive": false,
+          "every_family_non_regression": true,
+          "mcnemar_below_005": false,
+          "parse_failures_non_regression": true,
+          "point_delta_positive": false
+        }
+      },
+      "rl4": {
+        "admitted_synthetic_quality_candidate": false,
+        "gates": {
+          "bootstrap_ci_lower_positive": false,
+          "every_family_non_regression": true,
+          "mcnemar_below_005": false,
+          "parse_failures_non_regression": true,
+          "point_delta_positive": false
+        }
+      }
+    },
+    "holdout_allowed": false,
+    "larger_training_allowed_from_this_result": false,
+    "model_quality_scope": "fresh_synthetic_arithmetic_only",
+    "next_action": "Reject two-step RL and OPD as quality candidates. Preserve their implementation admission, wait for peer consistency, and pre-register a scaled quality-training intervention on new synthetic train/dev data rather than tuning on these 96 evaluation cases."
+  },
+  "experiment_id": "qwen35-synthetic-quality-v1",
+  "identity": {
+    "case_contract_sha256": "c9de0fcd02da9354aa38ac1f5c864f6bfc4bf6590bca3313d54232c1bac41e4b",
+    "case_ids_sha256": "b2ed535d23fcc04f743ee63e0500f482c15793e42e240d2a195ce04335185ccc",
+    "config_sha256": "5621bab71676a5dbfeb922f0851c22e099379aff2d36b628d27d6c87e07393f4",
+    "preregister_revision": "55770b16c09009959e03869ddd6bbf61c4e5784e",
+    "preregister_sha256": "d00f661d480d0a99af68233e4826f3d609c592ef97d2a5e2722e8f2c21e2a31c",
+    "result_revision": "e35ba9748699f065b6757c6942e4a0b92dba62cf"
+  },
+  "schema_version": "nano_train_synthetic_quality_public_v1"
+}

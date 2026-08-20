@@ -543,3 +543,26 @@ def _mcnemar_exact(candidate_only: int, baseline_only: int) -> float:
 def load_rows(path: Path) -> list[dict[str, Any]]:
     with path.open(encoding="utf-8") as handle:
         return [json.loads(line) for line in handle if line.strip()]
+
+
+def candidate_admission_gates(
+    comparison: dict[str, Any],
+    candidate_metrics: dict[str, Any],
+    baseline_metrics: dict[str, Any],
+) -> dict[str, bool]:
+    return {
+        "point_delta_positive": comparison["delta"] > 0,
+        "bootstrap_ci_lower_positive": (
+            comparison["paired_bootstrap_95_ci"][0] > 0
+        ),
+        "mcnemar_below_005": comparison["mcnemar_exact_p"] < 0.05,
+        "every_family_non_regression": all(
+            candidate_metrics["by_family"][family]["correct"]
+            >= baseline_metrics["by_family"][family]["correct"]
+            for family in FAMILIES
+        ),
+        "parse_failures_non_regression": (
+            candidate_metrics["parse_failures"]
+            <= baseline_metrics["parse_failures"]
+        ),
+    }
