@@ -1,0 +1,45 @@
+{
+  "alpha": 0.05,
+  "batch_size": 1,
+  "bootstrap_samples": 10000,
+  "bootstrap_seed": 20260821,
+  "dataset_file_sha256": "85a09db0743d94fc313574eaf15661556426195112da8ba59ca9abd7710fa0ff",
+  "dataset_path": "../../../datasets/ultimate-distill/orca-math-sft-v1/dataset.jsonl",
+  "dev_rows_by_stratum": {
+    "long": 48,
+    "medium": 96,
+    "short": 48
+  },
+  "dtype": "float32",
+  "experiment_id": "orca-math-sft-smoke-v1",
+  "generation_batch_size": 4,
+  "generation_max_new_tokens": 384,
+  "gradient_accumulation_steps": 4,
+  "gradient_checkpointing": true,
+  "learning_rate": 0.00005,
+  "lora_alpha": 16,
+  "lora_dropout": 0.0,
+  "lora_r": 8,
+  "lora_targets": [
+    "q_proj",
+    "v_proj"
+  ],
+  "max_length": 1024,
+  "max_steps": 40,
+  "minimum_candidate_only_wins": 6,
+  "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+  "model_path": "../../../models/Qwen3.5-4B",
+  "output_dir": "artifacts/orca-math-sft-smoke-v1",
+  "release_manifest_path": "../nano-data-pipeline-fullstack-traex-03/manifests/orca_math_sft_v1.release.json",
+  "release_manifest_sha256": "620aedd055fda7f13b8cdad9f85826dcdf8d2d92fc7532596c9c01b2a704b0b2",
+  "schema_version": "nano_train_orca_math_sft_v1",
+  "seed": 20260821,
+  "selection_seed": "orca-math-sft-smoke-v1:20260821",
+  "train_rows_by_stratum": {
+    "long": 40,
+    "medium": 80,
+    "short": 40
+  },
+  "warmup_steps": 1,
+  "weight_decay": 0.0
+}
