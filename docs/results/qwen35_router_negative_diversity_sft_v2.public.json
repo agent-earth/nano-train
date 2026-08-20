@@ -1,0 +1,162 @@
+{
+  "artifact_boundary": {
+    "adapter_committed": false,
+    "benchmark_accessed": false,
+    "canary_accessed": false,
+    "holdout_accessed": false,
+    "integration_rows_or_outputs_used": false,
+    "metrics_committed": false,
+    "raw_generations_committed": false,
+    "training_data_contains_benchmark_content": false
+  },
+  "claim_boundary": "This result establishes only local synthetic classification and subtype behavior. It is not serving, fresh-transfer, benchmark, canary, holdout, or final model-superiority evidence.",
+  "decision": {
+    "benchmark_allowed": false,
+    "canary_allowed": false,
+    "fresh_router_integration_allowed": false,
+    "further_tuning_or_second_training_run_allowed": false,
+    "holdout_allowed": false,
+    "next_action": "Build a content-identical vLLM namespace remap and pre-register 1,536-row serving parity before any fresh integration.",
+    "rl_allowed": false,
+    "router_negative_diversity_sft_admitted": true,
+    "serving_namespace_remap_required": true,
+    "serving_parity_preregistration_allowed": true
+  },
+  "experiment_id": "qwen35-router-negative-diversity-sft-v2",
+  "gates": {
+    "actual_exposure_ids_exact": true,
+    "adapter_identity_matches": true,
+    "aggregate_post_exact_gt_baseline": true,
+    "data_release_identity_matches": true,
+    "every_c_subtype_non_regression": true,
+    "every_c_subtype_post_exact_at_least_60_of_64": true,
+    "every_label_non_regression": true,
+    "finite_loss_curve": true,
+    "no_failure_receipt": true,
+    "reload_generations_exact": true,
+    "reload_metrics_exact": true,
+    "reload_success": true,
+    "router_a_post_exact_at_least_480_of_512": true,
+    "router_b_post_exact_at_least_480_of_512": true,
+    "router_c_post_exact_at_least_496_of_512": true
+  },
+  "identity": {
+    "adapter_sha256": "c40b6ab8811f162b60e6e290c7a9defbc0c013b239282bfbe8313eb986524c04",
+    "audit_sha256": "9aaa69de746dbdc5cefbb52fb271c8f9ec86716d10ada70704c7e346dc2f7c17",
+    "config_sha256": "d8081d1d565436987e5b94ee6cd6d00a2e113eed2af9dc0d2b84429fef3f3f52",
+    "contract_sha256": "c195a7373ea283546dde1866f70593f0912833d987ff5f1a8cb424c2bc340335",
+    "dataset_canonical_sha256": "f63c58b54ef4747f274599784bad9ffe4143117482c22b33005a2dbf725b1f2f",
+    "dataset_file_sha256": "8c5975e3ceed494e20d0de54eb5654ab1af71163ed58489d42d98c8b54d0bad9",
+    "generations_sha256": "add328f75554411c546deeac0cb95d1608e66c889334573acfcf9ec865e15bb0",
+    "metrics_sha256": "0a28ed02a5823451aabd124061d586ad6cbe47fca47aabc3e4883357acc1de6a",
+    "preregister_sha256": "82a14397cff51b5cdf84a5752f03aa284296ac49ce248fded354e268d96b4a2b",
+    "release_sha256": "5edd89701ff33db6eaef74475946abf79176c5c5a7c854a7eea4dd907e69c3f1",
+    "reload_generations_sha256": "f54b56f2ad2cd8d27ee7879e3dc2c787f327dfdcf178e59e1ff01d0f0339dc8e",
+    "reload_sha256": "15572a64aee307929b9a03fc0793916efb1ef61de45cdf782196b25667cd6c70",
+    "result_revision": "27df8cf6a17e62fc37906d7725ffdcd71adfe127"
+  },
+  "schema_version": "nano_train_router_negative_diversity_public_v2",
+  "training": {
+    "dtype": "float32",
+    "effective_batch_size": 4,
+    "first_loss": 0.09850877802819014,
+    "last_loss": 2.287318068283639e-06,
+    "learning_rate": 0.0002,
+    "lora_alpha": 16,
+    "lora_r": 8,
+    "lora_targets": [
+      "q_proj",
+      "v_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "peak_allocated_gib": 19.629915714263916,
+    "reload_peak_allocated_gib": 15.8255033493042,
+    "seed": 20260827,
+    "steps": 40,
+    "trainable_parameters": 9961472,
+    "wall_seconds": 1400.7615902423859
+  },
+  "validation": {
+    "baseline_accuracy": 0.7337239583333334,
+    "baseline_exact": 1127,
+    "by_label": {
+      "router_a": {
+        "baseline_exact": 512,
+        "delta": 0,
+        "post_exact": 512,
+        "reload_exact": 512,
+        "samples": 512
+      },
+      "router_b": {
+        "baseline_exact": 512,
+        "delta": 0,
+        "post_exact": 512,
+        "reload_exact": 512,
+        "samples": 512
+      },
+      "router_c": {
+        "baseline_exact": 103,
+        "delta": 409,
+        "post_exact": 512,
+        "reload_exact": 512,
+        "samples": 512
+      }
+    },
+    "c_by_subtype": {
+      "box_total": {
+        "baseline_exact": 0,
+        "delta": 64,
+        "post_exact": 64,
+        "samples": 64
+      },
+      "paired_average": {
+        "baseline_exact": 0,
+        "delta": 64,
+        "post_exact": 64,
+        "samples": 64
+      },
+      "percentage_change": {
+        "baseline_exact": 18,
+        "delta": 46,
+        "post_exact": 64,
+        "samples": 64
+      },
+      "quotient_remainder": {
+        "baseline_exact": 41,
+        "delta": 23,
+        "post_exact": 64,
+        "samples": 64
+      },
+      "remaining_stock": {
+        "baseline_exact": 0,
+        "delta": 64,
+        "post_exact": 64,
+        "samples": 64
+      },
+      "single_operation": {
+        "baseline_exact": 44,
+        "delta": 20,
+        "post_exact": 64,
+        "samples": 64
+      },
+      "time_conversion": {
+        "baseline_exact": 0,
+        "delta": 64,
+        "post_exact": 64,
+        "samples": 64
+      },
+      "weighted_total": {
+        "baseline_exact": 0,
+        "delta": 64,
+        "post_exact": 64,
+        "samples": 64
+      }
+    },
+    "delta": 409,
+    "post_accuracy": 1.0,
+    "post_exact": 1536,
+    "samples": 1536
+  }
+}
