@@ -501,19 +501,25 @@ def compress_policy(
     if temperature <= 0:
         raise ValueError("anchor policy temperature must be positive")
     logprobs = functional.log_softmax(
-        logits.float() / temperature,
+        logits.double() / temperature,
         dim=-1,
     )
     top_logprobs, top_ids = torch.topk(logprobs, k=top_k, dim=-1)
-    top_mass = top_logprobs.exp().sum(dim=-1)
-    other_logprobs = torch.log(
-        (1.0 - top_mass).clamp_min(torch.finfo(torch.float32).tiny)
+    top_probabilities = top_logprobs.exp()
+    other_probabilities = (
+        1.0 - top_probabilities.sum(dim=-1)
+    ).clamp_min(torch.finfo(torch.float64).tiny)
+    categories = torch.cat(
+        [top_probabilities, other_probabilities.unsqueeze(-1)],
+        dim=-1,
     )
+    categories = categories / categories.sum(dim=-1, keepdim=True)
+    category_logprobs = categories.log()
     return [
         {
             "top_token_ids": top_ids[index].cpu().tolist(),
-            "top_logprobs": top_logprobs[index].cpu().tolist(),
-            "other_logprob": float(other_logprobs[index].cpu()),
+            "top_logprobs": category_logprobs[index, :-1].cpu().tolist(),
+            "other_logprob": float(category_logprobs[index, -1].cpu()),
         }
         for index in range(logits.shape[0])
     ]
@@ -539,12 +545,12 @@ def aggregated_policy_kl(
     )
     teacher_top_logprobs = torch.tensor(
         [row["top_logprobs"] for row in teacher_positions],
-        dtype=torch.float32,
+        dtype=torch.float64,
         device=device,
     )
     teacher_other_logprobs = torch.tensor(
         [row["other_logprob"] for row in teacher_positions],
-        dtype=torch.float32,
+        dtype=torch.float64,
         device=device,
     )
     if (
@@ -554,14 +560,14 @@ def aggregated_policy_kl(
     ):
         raise ValueError("anchor policy teacher cache shape differs")
     student_logprobs = functional.log_softmax(
-        student_logits.float() / temperature,
+        student_logits.double() / temperature,
         dim=-1,
     )
     student_top_logprobs = student_logprobs.gather(-1, top_ids)
     student_top_mass = student_top_logprobs.exp().sum(dim=-1)
     student_other_logprobs = torch.log(
         (1.0 - student_top_mass).clamp_min(
-            torch.finfo(torch.float32).tiny
+            torch.finfo(torch.float64).tiny
         )
     )
     teacher_top_probabilities = teacher_top_logprobs.exp()
@@ -572,7 +578,9 @@ def aggregated_policy_kl(
     ).sum(dim=-1) + teacher_other_probabilities * (
         teacher_other_logprobs - student_other_logprobs
     )
-    return per_position.mean() * (temperature**2)
+    return (
+        per_position.mean() * (temperature**2)
+    ).to(student_logits.dtype)
 
 
 def _teacher_model(config: AnchorPolicyReplayConfig) -> tuple[Any, Any]:

@@ -81,9 +81,22 @@ class AnchorPolicyReplayTests(unittest.TestCase):
         for row in teacher:
             total = sum(math.exp(value) for value in row["top_logprobs"])
             total += math.exp(row["other_logprob"])
-            self.assertAlmostEqual(total, 1.0, places=6)
+            self.assertAlmostEqual(total, 1.0, places=12)
         loss = aggregated_policy_kl(logits, teacher, temperature=1.0)
         self.assertAlmostEqual(float(loss), 0.0, places=5)
+
+    def test_compressed_policy_stays_normalized_when_top_mass_is_near_one(self):
+        logits = torch.full((2, 256), -30.0, dtype=torch.float32)
+        logits[:, :16] = torch.linspace(30.0, 15.0, 16)
+        teacher = compress_policy(logits, top_k=16, temperature=1.0)
+        for row in teacher:
+            top_mass = sum(
+                math.exp(value) for value in row["top_logprobs"]
+            )
+            other_mass = math.exp(row["other_logprob"])
+            self.assertLess(top_mass, 1.0)
+            self.assertGreater(other_mass, 0.0)
+            self.assertAlmostEqual(top_mass + other_mass, 1.0, places=12)
 
     def test_policy_kl_is_positive_and_has_finite_gradient(self):
         torch.manual_seed(11)
