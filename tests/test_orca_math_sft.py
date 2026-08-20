@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 
 from nano_train.orca_math_sft import (
+    _training_dataset,
     admission_gates,
     build_selection_contract,
     load_config,
@@ -42,6 +43,12 @@ class OrcaMathSFTTests(unittest.TestCase):
             set(self.selection["train_sample_ids"])
             & set(self.selection["dev_sample_ids"])
         )
+        dataset = _training_dataset(self.selection)
+        self.assertEqual(len(dataset["samples"]), 352)
+        self.assertEqual(
+            sum(row["split"] == "train" for row in dataset["samples"]),
+            160,
+        )
 
     def test_strict_final_numeric_scorer(self):
         self.assertEqual(parse_final("reasoning\nFINAL: 0.75"), "0.75")
@@ -50,6 +57,38 @@ class OrcaMathSFTTests(unittest.TestCase):
         self.assertFalse(score_output("Answer: 3", "3"))
         self.assertFalse(score_output("FINAL: 3\nextra", "3"))
         self.assertFalse(score_output("FINAL: 4", "3"))
+
+    def test_summary_and_comparison_rows_use_frozen_case_ids(self):
+        baseline = [
+            {
+                "case_id": "a",
+                "stratum": "short",
+                "correct": False,
+                "parse_failure": False,
+            },
+            {
+                "case_id": "b",
+                "stratum": "medium",
+                "correct": True,
+                "parse_failure": False,
+            },
+        ]
+        candidate = [
+            {**baseline[0], "correct": True},
+            baseline[1],
+        ]
+        from nano_train.orca_math_sft import compare_rows, summarize_rows
+
+        summary = summarize_rows(candidate)
+        comparison = compare_rows(
+            candidate,
+            baseline,
+            bootstrap_samples=100,
+            bootstrap_seed=1,
+        )
+        self.assertEqual(summary["correct"], 2)
+        self.assertEqual(comparison["paired_counts"]["candidate_only"], 1)
+        self.assertEqual(comparison["paired_counts"]["baseline_only"], 0)
 
     def test_admission_requires_significance_and_non_regression(self):
         comparison = {
