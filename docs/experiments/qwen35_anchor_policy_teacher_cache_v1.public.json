@@ -1,0 +1,51 @@
+{
+  "claim_boundary": "This receipt establishes only a finite, identity-verified frozen anchor policy cache on synthetic train rows. It is not model quality, canary, benchmark, or holdout evidence.",
+  "dataset_identity": {
+    "dev_pair_ids_sha256": "7356a7ba1a20f80cfb7a95ee76635c121ee7972edbd2763b0455b62395392636",
+    "train_pair_ids_sha256": "f2aa21f9e5915709585133ef31b2c95eee4aaac562097450d16ea5ca155d64b9"
+  },
+  "execution_boundary": {
+    "arm_training_started": false,
+    "benchmark_accessed": false,
+    "canary_accessed": false,
+    "dev_observed": false,
+    "model_generation_started": false,
+    "teacher_cache_completed": true
+  },
+  "experiment_id": "qwen35-anchor-policy-replay-v1",
+  "identity": {
+    "anchor_adapter_sha256": "7287cfcc9372894aae2c4081f6ccf7b18a9292a9e52160579c9ab199906eda45",
+    "cache_generation_revision": "9bb5f134d95e94dd35598abf497b24a03f6769fa",
+    "config_sha256": "47c2d1df78a4beca4ed41a7ef381dca5240eedb07834c349cb677a7b8249b3c6",
+    "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+    "model_index_sha256": "cf3f798ee02ba45f9622aa8892a47369ab667d0afbf154ee7c2212de42e6302d",
+    "preregister_revision": "eb943cc7d6706810cad49d648e37d9593fb1650e",
+    "preregister_sha256": "109e6fecd7e813b6474f737a77d8667e6d165e58fcfe96de8d570041f53a920d",
+    "teacher_cache_sha256": "f30308453dcd0aff603b4aafffe59db177b4bf7c3fcbad915f7de3aa5523ebe3"
+  },
+  "schema_version": "nano_train_anchor_policy_cache_public_v1",
+  "summary": {
+    "all_probabilities_finite": true,
+    "all_probability_sums_within_1e_5": true,
+    "experiment_id": "qwen35-anchor-policy-replay-v1",
+    "maximum_top_k_mass": 0.9999999949940559,
+    "mean_top_k_mass": 0.9999199777210024,
+    "minimum_top_k_mass": 0.9987352775195426,
+    "schema_version": "nano_train_anchor_policy_cache_summary_v1",
+    "target_token_positions": 2730,
+    "temperature": 1.0,
+    "top_k": 64,
+    "train_pairs": 256
+  },
+  "teacher_contract": {
+    "final_target_positions_only": true,
+    "frozen_anchor_adapter": true,
+    "temperature": 1.0,
+    "top_k_plus_other_bucket": 64,
+    "uses_benchmark_rows_or_outputs": false,
+    "uses_case_correctness": false,
+    "uses_evaluation_expected_answer": false,
+    "uses_observed_quality_outputs": false,
+    "uses_training_target_prefix": true
+  }
+}
