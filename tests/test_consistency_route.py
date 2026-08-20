@@ -13,6 +13,7 @@ from nano_train.consistency_route import (
     public_contract,
     routed_rows,
 )
+from scripts.render_consistency_route_v1 import admission_gates
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -94,6 +95,33 @@ class ConsistencyRouteTests(unittest.TestCase):
                     path.write_text(json.dumps(altered), encoding="utf-8")
                     with self.assertRaisesRegex(ValueError, error):
                         load_config(path)
+
+    def test_route_gate_rejects_one_win_one_loss(self):
+        family = {
+            name: {"correct": 0, "cases": 64, "parse_failures": 0}
+            for name in (
+                "repeated_operand",
+                "mixed_products",
+                "exact_division",
+                "nested_offset",
+            )
+        }
+        comparison = {
+            "candidate_accuracy": 2 / 256,
+            "baseline_accuracy": 2 / 256,
+            "paired_bootstrap_95_ci": [-3 / 256, 3 / 256],
+            "mcnemar_exact_p": 1.0,
+            "paired_counts": {
+                "candidate_only": 1,
+                "baseline_only": 1,
+            },
+        }
+        metrics = {"by_family": family, "parse_failures": 0}
+        gates = admission_gates(comparison, metrics, metrics)
+        self.assertFalse(gates["routed_accuracy_gt_anchor"])
+        self.assertFalse(gates["maximum_anchor_only_losses"])
+        self.assertFalse(gates["minimum_candidate_only_wins"])
+        self.assertFalse(all(gates.values()))
 
 
 if __name__ == "__main__":

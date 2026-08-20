@@ -1,0 +1,169 @@
+{
+  "arms": {
+    "anchor": {
+      "accuracy": 0.0078125,
+      "by_family": {
+        "exact_division": {
+          "cases": 64,
+          "correct": 1,
+          "parse_failures": 0
+        },
+        "mixed_products": {
+          "cases": 64,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "nested_offset": {
+          "cases": 64,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "repeated_operand": {
+          "cases": 64,
+          "correct": 1,
+          "parse_failures": 0
+        }
+      },
+      "cases": 256,
+      "correct": 2,
+      "parse_failures": 0
+    },
+    "consistency": {
+      "accuracy": 0.0390625,
+      "by_family": {
+        "exact_division": {
+          "cases": 64,
+          "correct": 1,
+          "parse_failures": 0
+        },
+        "mixed_products": {
+          "cases": 64,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "nested_offset": {
+          "cases": 64,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "repeated_operand": {
+          "cases": 64,
+          "correct": 9,
+          "parse_failures": 0
+        }
+      },
+      "cases": 256,
+      "correct": 10,
+      "parse_failures": 0
+    },
+    "routed": {
+      "accuracy": 0.0078125,
+      "by_family": {
+        "exact_division": {
+          "cases": 64,
+          "correct": 1,
+          "parse_failures": 0
+        },
+        "mixed_products": {
+          "cases": 64,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "nested_offset": {
+          "cases": 64,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "repeated_operand": {
+          "cases": 64,
+          "correct": 1,
+          "parse_failures": 0
+        }
+      },
+      "cases": 256,
+      "correct": 2,
+      "parse_failures": 0
+    }
+  },
+  "claim_boundary": "This result establishes only fresh synthetic local route admission. It is not benchmark, canary, holdout, or final 4B/9B superiority evidence.",
+  "comparison": {
+    "baseline_accuracy": 0.0078125,
+    "candidate_accuracy": 0.0078125,
+    "cases": 256,
+    "delta": 0.0,
+    "mcnemar_exact_p": 1.0,
+    "paired_bootstrap_95_ci": [
+      -0.01171875,
+      0.01171875
+    ],
+    "paired_counts": {
+      "baseline_only": 1,
+      "both_correct": 1,
+      "both_wrong": 253,
+      "candidate_only": 1
+    }
+  },
+  "contamination_audit": {
+    "benchmark_outputs_loaded": false,
+    "benchmark_prompt_overlap": 0,
+    "benchmark_rows_hashed": {
+      "gpqa_diamond": 198,
+      "gsm8k": 1319,
+      "mmlu": 14042
+    },
+    "canary_or_holdout_loaded": false,
+    "observed_quality_prompt_overlap": 0,
+    "passed": true
+  },
+  "decision": {
+    "benchmark_allowed": false,
+    "canary_allowed": false,
+    "gates": {
+      "every_family_non_regression": true,
+      "exact_mcnemar_p_lt_005": false,
+      "maximum_anchor_only_losses": false,
+      "minimum_candidate_only_wins": false,
+      "paired_bootstrap_ci_lower_gt_zero": false,
+      "parse_failures_non_regression": true,
+      "routed_accuracy_gt_anchor": false
+    },
+    "independent_holdout_allowed": false,
+    "local_route_admitted": false,
+    "next_action": "Reject this route and preserve the result; do not tune on these cases.",
+    "route_tuning_allowed": false
+  },
+  "discordant_cases": {
+    "anchor_only_loss_case_ids": [
+      "consistency-route-exact_division-0ba6fcf9b3f0971c"
+    ],
+    "candidate_only_win_case_ids": [
+      "consistency-route-exact_division-0b097059c19d6a22"
+    ]
+  },
+  "experiment_id": "qwen35-consistency-route-v1",
+  "identity": {
+    "anchor_adapter_sha256": "7287cfcc9372894aae2c4081f6ccf7b18a9292a9e52160579c9ab199906eda45",
+    "anchor_raw_sha256": "2734c8266fc39a96b8d47f244585a29617bed5beedf122619f995f70b760462f",
+    "anchor_summary_sha256": "7303175aa55f47089cc673e676a61d651430e26c9ec6c0f20718b8e5b8c7cafd",
+    "case_contract_sha256": "dc3b375748993321db167fb61aa04000b70201d8d285556fc20da749ea2fe3c6",
+    "config_sha256": "2faebc02f55ca82c978b5608e45b964d53560e14259f5e2b5412ef6b59301dd6",
+    "consistency_adapter_sha256": "23c4760e9d6693c880859c1bd9984164eb5243742ed3517bad4929364643df49",
+    "consistency_raw_sha256": "3f944bfb9a688e1e1faa8309a81d6019f901a092b3477378ca6bbf0e82425a4f",
+    "consistency_summary_sha256": "b187d60bbcfd772f23cb49a5e3f3a4528823fb44c560a54d5c85705f75b3cd29",
+    "preregister_revision": "41638f33d7abb0614515cb077ab4ff73def23363",
+    "preregister_sha256": "1cd6e1377cc18f36af2bdf6dbc8647f8202127022c2c2e69c037672d96157489",
+    "result_revision": "102aa0558dc450d5e6401fef90d9a280e97c43e4",
+    "routed_raw_sha256": "00080a26a10ba4435264a500daba8bb0a919ca39f3d9f972c8bf871d8f0263ae"
+  },
+  "route": {
+    "route_counts": {
+      "anchor": 192,
+      "consistency": 64
+    },
+    "routed_family": "exact_division",
+    "uses_expected_answer": false,
+    "uses_model_confidence": false,
+    "uses_model_output": false
+  },
+  "schema_version": "nano_train_consistency_route_public_v1"
+}
