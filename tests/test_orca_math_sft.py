@@ -14,6 +14,7 @@ from nano_train.orca_math_sft import (
     score_output,
 )
 from scripts.preregister_orca_math_sft_v1 import build_receipt
+from scripts.render_orca_math_sft_v1 import build_report
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -136,6 +137,22 @@ class OrcaMathSFTTests(unittest.TestCase):
         self.assertFalse(
             first["decision_boundary"]["benchmark_allowed"]
         )
+
+    def test_public_report_recomputes_rejection_without_raw_prompts(self):
+        report = build_report()
+        self.assertFalse(report["decision"]["candidate_admitted"])
+        self.assertEqual(
+            report["evaluation"]["transitions"]["repaired"],
+            8,
+        )
+        self.assertEqual(
+            report["evaluation"]["transitions"]["regressed"],
+            50,
+        )
+        self.assertTrue(report["reload"]["generations_exact"])
+        serialized = json.dumps(report).lower()
+        self.assertNotIn("messages", serialized)
+        self.assertNotIn("question", serialized)
 
 
 if __name__ == "__main__":

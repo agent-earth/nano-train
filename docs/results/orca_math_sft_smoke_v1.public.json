@@ -1,0 +1,144 @@
+{
+  "claim_boundary": "This is a local synthetic-development SFT result. It is not a GSM8K, MMLU, GPQA, 9B, 27B, RL, OPD, or agent-benchmark result.",
+  "decision": {
+    "benchmark_allowed": false,
+    "candidate_admitted": false,
+    "gates": {
+      "bootstrap_ci_lower_positive": false,
+      "candidate_only_exceeds_baseline_only": false,
+      "every_stratum_non_regression": false,
+      "mcnemar_below_alpha": true,
+      "minimum_candidate_only_wins": true,
+      "point_delta_positive": false
+    },
+    "larger_sft_allowed": false,
+    "next_action": "Reject this adapter. Pre-register a fresh, verifier-guided RL/OPD method on disjoint non-benchmark math data; do not tune this SFT run or revisit its observed development rows.",
+    "rerun_or_tuning_allowed": false,
+    "rl_or_opd_allowed_for_this_adapter": false
+  },
+  "evaluation": {
+    "baseline": {
+      "accuracy": 0.5208333333333334,
+      "by_stratum": {
+        "long": {
+          "correct": 14,
+          "parse_failures": 34,
+          "samples": 48
+        },
+        "medium": {
+          "correct": 50,
+          "parse_failures": 35,
+          "samples": 96
+        },
+        "short": {
+          "correct": 36,
+          "parse_failures": 7,
+          "samples": 48
+        }
+      },
+      "correct": 100,
+      "parse_failures": 76,
+      "samples": 192
+    },
+    "by_stratum_transitions": {
+      "long": {
+        "both_correct": 6,
+        "both_wrong": 30,
+        "regressed": 8,
+        "repaired": 4
+      },
+      "medium": {
+        "both_correct": 21,
+        "both_wrong": 43,
+        "regressed": 29,
+        "repaired": 3
+      },
+      "short": {
+        "both_correct": 23,
+        "both_wrong": 11,
+        "regressed": 13,
+        "repaired": 1
+      }
+    },
+    "comparison": {
+      "baseline_accuracy": 0.5208333333333334,
+      "candidate_accuracy": 0.3020833333333333,
+      "cases": 192,
+      "delta": -0.21875,
+      "mcnemar_exact_p": 1.5702617754687065e-08,
+      "paired_bootstrap_95_ci": [
+        -0.2916666666666667,
+        -0.14583333333333334
+      ],
+      "paired_counts": {
+        "baseline_only": 50,
+        "both_correct": 50,
+        "both_wrong": 84,
+        "candidate_only": 8
+      }
+    },
+    "post_sft": {
+      "accuracy": 0.3020833333333333,
+      "by_stratum": {
+        "long": {
+          "correct": 10,
+          "parse_failures": 27,
+          "samples": 48
+        },
+        "medium": {
+          "correct": 24,
+          "parse_failures": 34,
+          "samples": 96
+        },
+        "short": {
+          "correct": 24,
+          "parse_failures": 7,
+          "samples": 48
+        }
+      },
+      "correct": 58,
+      "parse_failures": 68,
+      "samples": 192
+    },
+    "transitions": {
+      "both_correct": 50,
+      "both_wrong": 84,
+      "output_changed": 191,
+      "parse_failure_introduced": 19,
+      "parse_failure_repaired": 27,
+      "regressed": 50,
+      "repaired": 8
+    }
+  },
+  "experiment_id": "orca-math-sft-smoke-v1",
+  "identity": {
+    "adapter_sha256": "45185f6359fc5629ad9f078dc481df78203f1f19084ae8032ade7bb344bbcee6",
+    "config_sha256": "e8065b430dda7f412076473dd7efa5a040f32e1a76c55b4728558fae579c4158",
+    "dataset_file_sha256": "85a09db0743d94fc313574eaf15661556426195112da8ba59ca9abd7710fa0ff",
+    "generations_sha256": "b0e3851d950bc5a7960ca3cf64eedd5844d1d348ddf7dfbd70cd93f2410c5525",
+    "metrics_sha256": "02191ae95a7c4084760208ad7f02d8aea70c2be26de879d8dd06488f492fe6d1",
+    "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+    "preregister_sha256": "d68ab3189f592bf723d71ca6df3654b76861a0c3da981cf77e36359b173df5e3",
+    "release_manifest_sha256": "620aedd055fda7f13b8cdad9f85826dcdf8d2d92fc7532596c9c01b2a704b0b2",
+    "reload_receipt_sha256": "410bb78450524227085e078e9f380690aee037ac669983d57724ce434393481c",
+    "result_revision": "ada7e91a7e0d466edfdd3f342f23c62bb5dc2a67"
+  },
+  "reload": {
+    "generations_exact": true,
+    "metrics_exact": true,
+    "peak_allocated_gib": 16.32313060760498,
+    "success": true
+  },
+  "schema_version": "nano_train_orca_math_sft_public_v1",
+  "training": {
+    "loss_first": 0.489840105175972,
+    "loss_last": 0.35453200340270996,
+    "loss_minimum": 0.26496754959225655,
+    "optimizer_steps": 40,
+    "peak_allocated_gib": 18.998915672302246,
+    "total_train_exposures": 160,
+    "trainable_parameters": 917504,
+    "unique_train_exposures": 160,
+    "wall_seconds": 1885.132003545761
+  }
+}
