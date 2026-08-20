@@ -21,6 +21,15 @@ from nano_train.paired_consistency import (
     load_config as load_paired_consistency_config,
 )
 from nano_train.paired_consistency import run as run_paired_consistency
+from nano_train.preservation_dual_view import (
+    load_config as load_preservation_dual_view_config,
+)
+from nano_train.preservation_dual_view import (
+    run_arm as run_preservation_dual_view_arm,
+)
+from nano_train.preservation_dual_view import (
+    validate_reload as validate_preservation_dual_view_reload,
+)
 from nano_train.quality_consistency import (
     load_config as load_quality_consistency_config,
 )
@@ -80,6 +89,14 @@ def main() -> None:
     confidence_score = subparsers.add_parser("confidence-route-score")
     confidence_score.add_argument("--config", required=True)
     confidence_score.add_argument("--arm", required=True)
+    dual_view = subparsers.add_parser("preservation-dual-view")
+    dual_view.add_argument("--config", required=True)
+    dual_view.add_argument("--arm", required=True)
+    dual_view_reload = subparsers.add_parser(
+        "preservation-dual-view-reload"
+    )
+    dual_view_reload.add_argument("--config", required=True)
+    dual_view_reload.add_argument("--arm", required=True)
 
     args = parser.parse_args()
     if args.command == "anchored-continuation":
@@ -127,6 +144,16 @@ def main() -> None:
         result = score_confidence_route_arm(
             load_confidence_route_config(args.config),
             scorer_arm=args.arm,
+        )
+    elif args.command == "preservation-dual-view":
+        result = run_preservation_dual_view_arm(
+            load_preservation_dual_view_config(args.config),
+            arm_id=args.arm,
+        )
+    elif args.command == "preservation-dual-view-reload":
+        result = validate_preservation_dual_view_reload(
+            load_preservation_dual_view_config(args.config),
+            arm_id=args.arm,
         )
     else:
         config = load_sft_smoke_config(args.config)
