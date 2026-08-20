@@ -1,0 +1,185 @@
+{
+  "campaign_id": "qwen35-rl-opd-admission-v1",
+  "claim_boundary": "RL and OPD pass implementation admission only. Two synthetic optimizer steps, finite adapters, changed probe logits, and exact reload do not establish a capability or benchmark gain.",
+  "decision": {
+    "benchmark_allowed": false,
+    "canary_allowed": false,
+    "independent_holdout_allowed": false,
+    "joint_implementation_admitted": true,
+    "larger_training_allowed": false,
+    "model_quality_improvement_established": false,
+    "next_action": "Keep RL/OPD available as versioned mechanisms, but wait for the peer paired-consistency replication and a separately pre-registered quality experiment before any scale-up or benchmark use.",
+    "opd_implementation_admitted": true,
+    "rl_implementation_admitted": true
+  },
+  "experiments": {
+    "opd": {
+      "adapter_effect": {
+        "after_probe_logits_sha256": "a748e76efbccc5094bf7235d8ecb1d24c5cecd5d0ce24efc17c00d296b231836",
+        "before_probe_logits_sha256": "412f1418364dc2d0d62cbba531469e3645701b2eb95c3eee7ced9f9a9accf63f",
+        "logits_changed": true
+      },
+      "admitted": true,
+      "contamination_audit": {
+        "benchmark_labels_loaded": false,
+        "benchmark_outputs_loaded": false,
+        "benchmark_rows_hashed": {
+          "gpqa_diamond": 198,
+          "gsm8k": 1319,
+          "mmlu": 14042
+        },
+        "canary_or_holdout_loaded": false,
+        "exact_normalized_prompt_overlap": 0,
+        "passed": true,
+        "probe_prompt_sha256": "76a314556c36c4949787a0fbd3c4fc401232616ea64d0960e1fffc47de3cabc1",
+        "synthetic_prompt_sha256": "d2762e62911ad40a9fa109751100485d68b1cf00315a4530602f6ed84815aeff",
+        "synthetic_prompts": 4,
+        "train_prompt_sha256": "61a87a03956fbe231029707f82e8734fa19bea4b7b7819f71f15b1f1275bb897"
+      },
+      "experiment_id": "qwen35-4b-opd-admission-v1",
+      "gates": {
+        "adapter_logits_changed": true,
+        "all_gradient_norms_finite": true,
+        "all_losses_finite": true,
+        "contamination_audit_passed": true,
+        "finite_adapter_tensors": true,
+        "independent_reload_exact": true,
+        "optimizer_steps_exact": true,
+        "runtime_failure_receipt_absent": true
+      },
+      "hardware": {
+        "student_gpu": "Tesla V100-SXM2-32GB",
+        "student_peak_allocated_gib": 15.837884426116943,
+        "teacher_gpu": "Tesla V100-SXM2-32GB",
+        "teacher_peak_allocated_gib": 16.74174404144287
+      },
+      "identity": {
+        "adapter_sha256": "4373481f3e7a90003760f4103a68014002a29c92c0cff1286d8b8947c01006b2",
+        "metrics_sha256": "0895f35eab14494965a900b6914081f969c00e5ec1b0d23627b5f1cd1fe627cc",
+        "reload_sha256": "d14b888bc75d29c374f9efd5278930f140e09592f54b1047a0b5c8470628148e",
+        "student_model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+        "student_model_index_sha256": "cf3f798ee02ba45f9622aa8892a47369ab667d0afbf154ee7c2212de42e6302d",
+        "teacher_model_config_sha256": "d0883072e01861ed0b2d47be3c16c36a8e81c224c7ffaa310c6558fb3f932b05",
+        "teacher_model_index_sha256": "26d3539b516be613f39563617cb9d33b3f83d401298125be392c80cefb8f7fe5",
+        "trajectory_sha256": "7cf51cd6a405fb8669c2631c362bf0f6c75afafbf14b870338530f92e29c8691"
+      },
+      "reload": {
+        "finite_adapter_tensors": 32,
+        "nonfinite_adapter_tensors": 0,
+        "probe_logits_exact": true,
+        "reload_success": true
+      },
+      "training": {
+        "gradient_norms": [
+          0.11529161036014557,
+          0.1695849895477295
+        ],
+        "optimizer_steps": 2,
+        "reward_counts": {
+          "1.0": 2
+        },
+        "total_losses": [
+          0.006081541068851948,
+          0.013980121351778507
+        ],
+        "trainable_parameters": 917504,
+        "trajectory_rows": 2
+      }
+    },
+    "rl": {
+      "adapter_effect": {
+        "after_probe_logits_sha256": "6d80887c4900e2f7e64bfdc0fadda0e4df5bd01517ecbfa0d7904b102fcf94ce",
+        "before_probe_logits_sha256": "12834e2bbf65e991432ea98b4c51fdba2e4162dae9dde58d7cda085e6a0924e6",
+        "logits_changed": true
+      },
+      "admitted": true,
+      "contamination_audit": {
+        "benchmark_labels_loaded": false,
+        "benchmark_outputs_loaded": false,
+        "benchmark_rows_hashed": {
+          "gpqa_diamond": 198,
+          "gsm8k": 1319,
+          "mmlu": 14042
+        },
+        "canary_or_holdout_loaded": false,
+        "exact_normalized_prompt_overlap": 0,
+        "passed": true,
+        "probe_prompt_sha256": "e4488276ee745554bf735c3a914eaad1d853002d0f989670b7d881e196408685",
+        "synthetic_prompt_sha256": "b214f4ca4fcd2674fa19900b8eabc900e514e6831d46ebd2cb077b460b9a4735",
+        "synthetic_prompts": 4,
+        "train_prompt_sha256": "3a8a007b74605d46739702004bc840cf90254e14423074eae786cc7a5be845f8"
+      },
+      "experiment_id": "qwen35-4b-rl-admission-v1",
+      "gates": {
+        "adapter_logits_changed": true,
+        "all_gradient_norms_finite": true,
+        "all_losses_finite": true,
+        "contamination_audit_passed": true,
+        "finite_adapter_tensors": true,
+        "independent_reload_exact": true,
+        "optimizer_steps_exact": true,
+        "runtime_failure_receipt_absent": true
+      },
+      "hardware": {
+        "student_gpu": "Tesla V100-SXM2-32GB",
+        "student_peak_allocated_gib": 15.88122844696045,
+        "teacher_gpu": null,
+        "teacher_peak_allocated_gib": null
+      },
+      "identity": {
+        "adapter_sha256": "f270b009214b7508cad5bf1d404f6eaccb9980ca383845a18a6dea397dc9c2fc",
+        "metrics_sha256": "6e3d0e0942b87a30f1147f77bbc72a2bfcccac465b7fb007ee2382309c4961d6",
+        "reload_sha256": "daf39c0b9f9805dd3b7a45cdd15b882f34e018089241e1087f91e057c31c74d0",
+        "student_model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+        "student_model_index_sha256": "cf3f798ee02ba45f9622aa8892a47369ab667d0afbf154ee7c2212de42e6302d",
+        "teacher_model_config_sha256": null,
+        "teacher_model_index_sha256": null,
+        "trajectory_sha256": "0336420d08c327737299160c07a0e1a64da3e65efdbc37c91af2aa6fa7882d7c"
+      },
+      "reload": {
+        "finite_adapter_tensors": 32,
+        "nonfinite_adapter_tensors": 0,
+        "probe_logits_exact": true,
+        "reload_success": true
+      },
+      "training": {
+        "gradient_norms": [
+          0.03451624512672424,
+          0.4846930205821991
+        ],
+        "optimizer_steps": 2,
+        "reward_counts": {
+          "1.0": 2
+        },
+        "total_losses": [
+          0.0014417454367503524,
+          0.012689761817455292
+        ],
+        "trainable_parameters": 917504,
+        "trajectory_rows": 2
+      }
+    }
+  },
+  "failed_attempts": [
+    {
+      "adapter_saved": false,
+      "attempt": 1,
+      "failure_receipt_sha256": "e7a48e31973cb5081b6fdf320e06fed85ce6f777034afc014446a39cfe9e62aa",
+      "failure_stage": "reinforce_gather_before_backward",
+      "mode": "rl",
+      "optimizer_steps_completed": 0,
+      "root_cause": "student rollout token IDs were inference tensors and could not be saved by autograd gather",
+      "treatment_changed": false
+    }
+  ],
+  "identity": {
+    "config_sha256": {
+      "opd": "987c491501d28595eb0b1a812da107a4e47413be4959c6a193dad04f4f912913",
+      "rl": "17ab5c2c9d4e58d0d178833713ca68a09db3b1b73bfbadedc2402150f3a5b7ca"
+    },
+    "preregister_revision": "3b901fb6c5ce8a1c2c37adc0b62b19c3b633c5f2",
+    "preregister_sha256": "bd53a860686a5c3f7878b6642ebf92ab57c2130421f25a7b629dd599f0140d16",
+    "result_revision": "4353c9bc86dae654acca6d23dda95290f32707e1"
+  },
+  "schema_version": "nano_train_rl_opd_admission_public_v1"
+}
