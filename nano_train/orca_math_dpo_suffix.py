@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 import torch
+import torch.nn.functional as functional
 from peft import LoraConfig, PeftModel, get_peft_model
 from torch.optim import AdamW
 from transformers import AutoTokenizer, Qwen3_5ForCausalLM
@@ -17,7 +18,6 @@ from transformers import AutoTokenizer, Qwen3_5ForCausalLM
 from nano_train.data import TokenizedSample, collate_samples
 from nano_train.orca_math_dpo import (
     SAMPLE_SCHEMA,
-    dpo_loss,
     sequence_log_probability,
 )
 from nano_train.orca_math_sft import (
@@ -268,6 +268,56 @@ def tokenize_suffix_pair(
     )
 
 
+def dpo_loss_and_coefficients(
+    policy_chosen: torch.Tensor,
+    policy_rejected: torch.Tensor,
+    reference_chosen: torch.Tensor,
+    reference_rejected: torch.Tensor,
+    *,
+    beta: float,
+) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
+    if any(
+        value.numel() != 1
+        for value in (
+            policy_chosen,
+            policy_rejected,
+            reference_chosen,
+            reference_rejected,
+        )
+    ):
+        raise ValueError("suffix DPO coefficients require scalar log probabilities")
+    advantage = (
+        policy_chosen
+        - policy_rejected
+        - reference_chosen
+        + reference_rejected
+    )
+    loss = functional.softplus(-beta * advantage)
+    chosen_coefficient = -beta * torch.sigmoid(-beta * advantage)
+    rejected_coefficient = -chosen_coefficient
+    return (
+        loss,
+        advantage,
+        chosen_coefficient,
+        rejected_coefficient,
+    )
+
+
+def _inference_sequence_log_probability(
+    model: Any,
+    batch: dict[str, torch.Tensor],
+) -> torch.Tensor:
+    with torch.inference_mode():
+        outputs = model(**batch, use_cache=False)
+        value = sequence_log_probability(
+            outputs.logits,
+            batch["labels"],
+        ).detach().clone()
+    del outputs
+    torch.cuda.empty_cache()
+    return value
+
+
 def _dev_rows(selection: dict[str, Any]) -> list[dict[str, Any]]:
     return [
         {
@@ -358,26 +408,32 @@ def run(config: SuffixDPOConfig) -> dict[str, Any]:
                 [item["rejected"]], pad_token_id=tokenizer.pad_token_id
             ).items()
         }
-        with model.disable_adapter(), torch.inference_mode():
-            ref_chosen = sequence_log_probability(
-                model(**chosen_batch, use_cache=False).logits,
-                chosen_batch["labels"],
+        model.eval()
+        with model.disable_adapter():
+            ref_chosen = _inference_sequence_log_probability(
+                model,
+                chosen_batch,
             )
-            ref_rejected = sequence_log_probability(
-                model(**rejected_batch, use_cache=False).logits,
-                rejected_batch["labels"],
+            ref_rejected = _inference_sequence_log_probability(
+                model,
+                rejected_batch,
             )
-        pol_chosen = sequence_log_probability(
-            model(**chosen_batch, use_cache=False).logits,
-            chosen_batch["labels"],
+        pol_chosen_value = _inference_sequence_log_probability(
+            model,
+            chosen_batch,
         )
-        pol_rejected = sequence_log_probability(
-            model(**rejected_batch, use_cache=False).logits,
-            rejected_batch["labels"],
+        pol_rejected_value = _inference_sequence_log_probability(
+            model,
+            rejected_batch,
         )
-        loss, advantage = dpo_loss(
-            pol_chosen,
-            pol_rejected,
+        (
+            loss,
+            advantage,
+            chosen_coefficient,
+            rejected_coefficient,
+        ) = dpo_loss_and_coefficients(
+            pol_chosen_value,
+            pol_rejected_value,
             ref_chosen,
             ref_rejected,
             beta=config.beta,
@@ -389,7 +445,25 @@ def run(config: SuffixDPOConfig) -> dict[str, Any]:
             group["lr"] = config.learning_rate * scale
         try:
             _assert_finite_loss(loss, step=step)
-            loss.backward()
+            model.train()
+            chosen_outputs = model(**chosen_batch, use_cache=False)
+            pol_chosen = sequence_log_probability(
+                chosen_outputs.logits,
+                chosen_batch["labels"],
+            )
+            (
+                pol_chosen * chosen_coefficient.detach()
+            ).sum().backward()
+            del chosen_outputs, pol_chosen
+            rejected_outputs = model(**rejected_batch, use_cache=False)
+            pol_rejected = sequence_log_probability(
+                rejected_outputs.logits,
+                rejected_batch["labels"],
+            )
+            (
+                pol_rejected * rejected_coefficient.detach()
+            ).sum().backward()
+            del rejected_outputs, pol_rejected
             _assert_finite_gradients(trainable, step=step)
             norm = torch.nn.utils.clip_grad_norm_(
                 trainable, max_norm=1.0, error_if_nonfinite=True

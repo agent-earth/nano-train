@@ -3,10 +3,12 @@ from __future__ import annotations
 import unittest
 from pathlib import Path
 
+import torch
 from transformers import AutoTokenizer
 
 from nano_train.orca_math_dpo_suffix import (
     build_selection,
+    dpo_loss_and_coefficients,
     load_config,
     tokenize_suffix_pair,
 )
@@ -69,6 +71,45 @@ class SuffixDPOTests(unittest.TestCase):
         self.assertFalse(first["decision_boundary"]["benchmark_allowed"])
         self.assertTrue(
             first["execution_boundary"]["this_commit_only_preregisters"]
+        )
+
+    def test_split_backward_coefficients_match_direct_dpo_gradient(self):
+        direct_chosen = torch.tensor([0.3], requires_grad=True)
+        direct_rejected = torch.tensor([-0.2], requires_grad=True)
+        reference_chosen = torch.tensor([0.1])
+        reference_rejected = torch.tensor([-0.1])
+        from nano_train.orca_math_dpo import dpo_loss
+
+        direct_loss, _ = dpo_loss(
+            direct_chosen,
+            direct_rejected,
+            reference_chosen,
+            reference_rejected,
+            beta=0.1,
+        )
+        direct_loss.backward()
+        direct_gradients = (
+            direct_chosen.grad.detach().clone(),
+            direct_rejected.grad.detach().clone(),
+        )
+        (
+            split_loss,
+            _,
+            chosen_coefficient,
+            rejected_coefficient,
+        ) = dpo_loss_and_coefficients(
+            direct_chosen.detach(),
+            direct_rejected.detach(),
+            reference_chosen,
+            reference_rejected,
+            beta=0.1,
+        )
+        self.assertTrue(torch.allclose(split_loss, direct_loss.detach()))
+        self.assertTrue(
+            torch.allclose(chosen_coefficient, direct_gradients[0])
+        )
+        self.assertTrue(
+            torch.allclose(rejected_coefficient, direct_gradients[1])
         )
 
 
