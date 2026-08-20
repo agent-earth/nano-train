@@ -3,6 +3,10 @@ from __future__ import annotations
 import argparse
 import json
 
+from nano_train.consistency_route import (
+    load_config as load_consistency_route_config,
+)
+from nano_train.consistency_route import run_arm as run_consistency_route_arm
 from nano_train.continuation import load_config as load_continuation_config
 from nano_train.continuation import run as run_continuation
 from nano_train.config import load_sft_smoke_config
@@ -60,6 +64,9 @@ def main() -> None:
         "quality-consistency-reload"
     )
     quality_consistency_reload.add_argument("--config", required=True)
+    consistency_route = subparsers.add_parser("consistency-route")
+    consistency_route.add_argument("--config", required=True)
+    consistency_route.add_argument("--arm", required=True)
 
     args = parser.parse_args()
     if args.command == "anchored-continuation":
@@ -92,6 +99,11 @@ def main() -> None:
     elif args.command == "quality-consistency-reload":
         result = validate_quality_consistency_reload(
             load_quality_consistency_config(args.config)
+        )
+    elif args.command == "consistency-route":
+        result = run_consistency_route_arm(
+            load_consistency_route_config(args.config),
+            arm_id=args.arm,
         )
     else:
         config = load_sft_smoke_config(args.config)

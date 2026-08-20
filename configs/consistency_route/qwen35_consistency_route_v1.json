@@ -1,0 +1,82 @@
+{
+  "anchor_adapter_path": "artifacts/qwen35-scaled-quality-sft-v1/adapter",
+  "anchor_adapter_sha256": "7287cfcc9372894aae2c4081f6ccf7b18a9292a9e52160579c9ab199906eda45",
+  "batch_size": 8,
+  "benchmark_sources": [
+    {
+      "name": "gsm8k",
+      "path": "../../../datasets/gsm8k/gsm8k/main/test-00000-of-00001.parquet",
+      "prompt_column": "question",
+      "sha256": "ee7b8da9e381df27b9e3f7758a159ab2bdaa4dbaa910546cbbc47e0cb44e4f59"
+    },
+    {
+      "name": "mmlu",
+      "path": "../../../datasets/mmlu_no_train/mmlu_no_train/all/test-00000-of-00001.parquet",
+      "prompt_column": "question",
+      "sha256": "02033371a64dbe5a0d8b6fb9d612900afcd0fea5140e53490993a4540b3a58fd"
+    },
+    {
+      "name": "gpqa_diamond",
+      "path": "../../../datasets/GPQA-Diamond/GPQA-Diamond/test/gpqa_diamond.parquet",
+      "prompt_column": "question",
+      "sha256": "fdd6e95117cdf87075f56bf673a5bae4680b143bc2d29b486470810122c33f39"
+    }
+  ],
+  "bootstrap_samples": 10000,
+  "bootstrap_seed": 20260820,
+  "case_seed": 20260820,
+  "cases_per_family": 64,
+  "consistency_adapter_path": "artifacts/qwen35-quality-consistency-v1/adapter",
+  "consistency_adapter_sha256": "23c4760e9d6693c880859c1bd9984164eb5243742ed3517bad4929364643df49",
+  "experiment_id": "qwen35-consistency-route-v1",
+  "forbidden_config_paths": [
+    {
+      "kind": "synthetic_quality",
+      "path": "configs/evaluation/qwen35_synthetic_quality_v1.json",
+      "sha256": "5621bab71676a5dbfeb922f0851c22e099379aff2d36b628d27d6c87e07393f4"
+    },
+    {
+      "kind": "scaled_quality",
+      "path": "configs/scaled_quality/qwen35_scaled_quality_sft_v1.json",
+      "sha256": "23143a5363b222ba474fb5e7a08be4b95be899ddd5f82699b39c5e720e6c0df6"
+    },
+    {
+      "kind": "quality_consistency",
+      "path": "configs/quality_consistency/qwen35_quality_consistency_v1.json",
+      "sha256": "6d4495c9a4fce6f22e05be39831c10649c0738d52c1235de6fb8546699443809"
+    }
+  ],
+  "max_new_tokens": 32,
+  "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+  "model_index_sha256": "cf3f798ee02ba45f9622aa8892a47369ab667d0afbf154ee7c2212de42e6302d",
+  "model_path": "../../../models/Qwen3.5-4B",
+  "output_dir": "artifacts/qwen35-consistency-route-v1",
+  "policy": {
+    "contains_benchmark_outputs": false,
+    "contains_benchmark_rows": false,
+    "contains_canary_rows": false,
+    "contains_holdout_rows": false,
+    "contains_observed_quality_rows": false,
+    "evaluation_only": true,
+    "training_eligible": false,
+    "uses_observed_quality_outputs": false
+  },
+  "prompt_template": "Compute the synthetic arithmetic expression exactly: {expression}. Return only FINAL: <integer>.",
+  "range_offset": 20000,
+  "routed_family": "exact_division",
+  "schema_version": "nano_train_consistency_route_v1",
+  "system_prompt": "Follow the exact output contract. Solve internally without tools or external information.",
+  "temperature": 0.0,
+  "weight_shards": [
+    {
+      "bytes": 5329398688,
+      "name": "model.safetensors-00001-of-00002.safetensors",
+      "sha256": "26a93f066e1916adb13453dae5a0c707c0fbc71299ed98779571a907b8e74c61"
+    },
+    {
+      "bytes": 3990429408,
+      "name": "model.safetensors-00002-of-00002.safetensors",
+      "sha256": "cb544bd9bfae93dc59b0f22b292f5933573854a7f9b97835c67060d7d910e188"
+    }
+  ]
+}
