@@ -438,7 +438,7 @@ def _rollout(
             pad_token_id=tokenizer.pad_token_id,
             use_cache=True,
         )
-    rollout = sequence[:, prompt.shape[1] :]
+    rollout = sequence[:, prompt.shape[1] :].detach().clone()
     if rollout.shape[1] < 1:
         raise ValueError("student rollout is empty")
     output = tokenizer.decode(

@@ -18,6 +18,7 @@ from nano_train.rl_opd_admission import (
     verifier_reward,
 )
 from scripts.preregister_rl_opd_admission_v1 import build_receipt
+from scripts.render_rl_opd_admission_v1 import admission_gates
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -103,6 +104,15 @@ class RLOPDAdmissionTests(unittest.TestCase):
         self.assertTrue(torch.isfinite(logits.grad).all())
         self.assertGreater(float(logits.grad.abs().sum()), 0.0)
 
+    def test_reinforce_accepts_cloned_inference_rollout_ids(self):
+        with torch.inference_mode():
+            inference_rollout = torch.tensor([[1, 2, 3]])
+        rollout = inference_rollout.detach().clone()
+        logits = torch.randn(1, 3, 7, requires_grad=True)
+        loss = reinforce_loss(logits, rollout, reward=-0.25)
+        loss.backward()
+        self.assertTrue(torch.isfinite(logits.grad).all())
+
     def test_opd_kl_detaches_teacher_and_updates_student(self):
         teacher = torch.randn(1, 3, 7, requires_grad=True)
         student = torch.randn(1, 3, 7, requires_grad=True)
@@ -150,6 +160,58 @@ class RLOPDAdmissionTests(unittest.TestCase):
             )
         self.assertFalse(receipt["execution_boundary"]["training_started"])
         self.assertFalse(receipt["acceptance"]["benchmark_allowed"])
+
+    def test_public_admission_gates_fail_closed(self):
+        metrics = {
+            "training": {
+                "optimizer_steps": 2,
+                "loss_curve": [{}, {}],
+                "all_losses_finite": True,
+                "all_gradient_norms_finite": True,
+            },
+            "adapter_effect": {"logits_changed": True},
+            "identity": {"adapter_sha256": "a" * 64},
+            "contamination_audit": {
+                "passed": True,
+                "exact_normalized_prompt_overlap": 0,
+                "benchmark_labels_loaded": False,
+                "benchmark_outputs_loaded": False,
+                "canary_or_holdout_loaded": False,
+            },
+            "failure_receipt_exists": False,
+        }
+        reload = {
+            "finite_adapter_tensors": 32,
+            "nonfinite_adapter_tensors": 0,
+            "reload_success": True,
+            "probe_logits_exact": True,
+            "adapter_sha256": "a" * 64,
+        }
+        self.assertTrue(
+            all(
+                admission_gates(
+                    metrics,
+                    reload,
+                    runtime_failure_exists=False,
+                ).values()
+            )
+        )
+        altered = copy.deepcopy(metrics)
+        altered["contamination_audit"]["benchmark_outputs_loaded"] = True
+        self.assertFalse(
+            admission_gates(
+                altered,
+                reload,
+                runtime_failure_exists=False,
+            )["contamination_audit_passed"]
+        )
+        self.assertFalse(
+            admission_gates(
+                metrics,
+                reload,
+                runtime_failure_exists=True,
+            )["runtime_failure_receipt_absent"]
+        )
 
 
 if __name__ == "__main__":
