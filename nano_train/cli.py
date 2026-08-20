@@ -10,6 +10,13 @@ from nano_train.paired_consistency import (
     load_config as load_paired_consistency_config,
 )
 from nano_train.paired_consistency import run as run_paired_consistency
+from nano_train.quality_consistency import (
+    load_config as load_quality_consistency_config,
+)
+from nano_train.quality_consistency import run as run_quality_consistency
+from nano_train.quality_consistency import (
+    validate_reload as validate_quality_consistency_reload,
+)
 from nano_train.rl_opd_admission import (
     load_config as load_admission_config,
 )
@@ -47,6 +54,12 @@ def main() -> None:
     scaled_quality.add_argument("--config", required=True)
     scaled_quality_reload = subparsers.add_parser("scaled-quality-sft-reload")
     scaled_quality_reload.add_argument("--config", required=True)
+    quality_consistency = subparsers.add_parser("quality-consistency")
+    quality_consistency.add_argument("--config", required=True)
+    quality_consistency_reload = subparsers.add_parser(
+        "quality-consistency-reload"
+    )
+    quality_consistency_reload.add_argument("--config", required=True)
 
     args = parser.parse_args()
     if args.command == "anchored-continuation":
@@ -71,6 +84,14 @@ def main() -> None:
     elif args.command == "scaled-quality-sft-reload":
         result = validate_scaled_quality_reload(
             load_scaled_quality_config(args.config)
+        )
+    elif args.command == "quality-consistency":
+        result = run_quality_consistency(
+            load_quality_consistency_config(args.config)
+        )
+    elif args.command == "quality-consistency-reload":
+        result = validate_quality_consistency_reload(
+            load_quality_consistency_config(args.config)
         )
     else:
         config = load_sft_smoke_config(args.config)
