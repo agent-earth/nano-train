@@ -1,0 +1,3752 @@
+{
+  "acceptance": {
+    "benchmark_allowed_after_pass": false,
+    "canary_allowed_after_pass": false,
+    "every_family_non_regression": true,
+    "exact_mcnemar_p_lt": 0.05,
+    "finite_and_reloadable": true,
+    "maximum_baseline_only_losses": 0,
+    "minimum_candidate_only_wins": 12,
+    "paired_bootstrap_ci_lower_gt_zero": true,
+    "parse_failures_non_regression": true,
+    "post_accuracy_gt_baseline": true
+  },
+  "claim_boundary": "This is a benchmark-free scaled SFT quality experiment on new programmatic train/dev data. Passing would establish only fresh synthetic transfer, not benchmark or final 4B superiority.",
+  "counts": {
+    "dev_rows": 96,
+    "dev_rows_per_family": 24,
+    "maximum_sequence_tokens": 87,
+    "observed_quality_prompt_overlap": 0,
+    "tokenizer_counted_train_tokens": 39852,
+    "train_dev_prompt_overlap": 0,
+    "train_rows": 512,
+    "train_rows_per_family": 128
+  },
+  "dataset_contract": {
+    "dataset_id": "qwen35-scaled-quality-v1",
+    "dev": [
+      {
+        "case_id": "scaled-quality-dev-nested_offset-c57a8c9a494492b8",
+        "family": "nested_offset",
+        "prompt_sha256": "7cccb806a62e87147166c4272b328e3159b147d68460bec2d276ef11a3c41d84",
+        "target_sha256": "4c9e1e98cf2a68d5d80f8efd73fc75e988f16f116df3cd42123272dc6b00d734"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-22e6e262f8cf0629",
+        "family": "repeated_operand",
+        "prompt_sha256": "41449855f55f33563886788d5c10b9123e28891c9965c035e43d48452ef41ed4",
+        "target_sha256": "fa7be6b10751dd6d7fc3644fbe8bb3be6abddba0c74c248234a29bcf689c38bc"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-7243323e01cdefc2",
+        "family": "exact_division",
+        "prompt_sha256": "e475746fd955131111e1e285606d2d53c0c8d5a2d5c2ccbd1dd45b4676e25107",
+        "target_sha256": "501487564f0f7e9eaca854ee11094bf1f007a9f3ca26d13b29444f43a9c87698"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-c25cc2e212afd81e",
+        "family": "exact_division",
+        "prompt_sha256": "d303915ec9835a6ed7c760b7092ca6258f8ee18ebab426f99eb83d6fd4e925e6",
+        "target_sha256": "07e597ddf96d0766d804b594371b6c9386d2f6f96606ef608c327d2a6ebf7cc5"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-2c8a21f2f0f3969d",
+        "family": "exact_division",
+        "prompt_sha256": "fba5dc570a87d0a462b26cc768872d4dd3afcae918255cc0a25f6ff9600a94be",
+        "target_sha256": "f41123b51dbb0c115c137fb919499ef6700bf3de54eae3a72adfbe92ab805379"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-6cb296190d29fe91",
+        "family": "nested_offset",
+        "prompt_sha256": "e5e1da24e8e6808b213e423abc98d08a0ad74b93b17f49892a275e3f5e7d1e28",
+        "target_sha256": "00edb4f15ded05aba5bfc0020ac73777d6666011d7bae26a8a67477f079e83cb"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-d6d12b618faeac6e",
+        "family": "repeated_operand",
+        "prompt_sha256": "1a68230adb84bd18f0377edd3a7ef1c4578d45d53cc1815250dcb90431db4461",
+        "target_sha256": "d774b9c8cf7778571d7f560ee9a1ec4d3799bf75e5d74cb099a794bad889a6da"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-eaebb07240595705",
+        "family": "exact_division",
+        "prompt_sha256": "54290841db55292ab17f4b2115b419d93e6da5c5547ec9d4f8c4d9b54de07763",
+        "target_sha256": "f0308b6fb5e7925dac8d5151fbda746fc1a1f89ae0267492c46917546c2bbabb"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-97628b4bc6102819",
+        "family": "mixed_products",
+        "prompt_sha256": "e74e01c9519f3c2e7d563ddca8dac354058d5858aef3b74ef5dcfda3fc1b44f1",
+        "target_sha256": "c56cabd9040a9ae28e054211f8c53edc3e15d65c4882c5997ca5d47c2bda8f2d"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-41094d6a9c249927",
+        "family": "nested_offset",
+        "prompt_sha256": "c07cf6c44dc14a248202c7c673935abce1a8cf90461e8e8de71a08bf840046f7",
+        "target_sha256": "c7d3aeb756ab47f1be309453161e0e3d821cba24e7b4906d3e995ae292b2e167"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-c14a2e7ac8a9505f",
+        "family": "mixed_products",
+        "prompt_sha256": "b7a47333d8cea37360e2e05932e5a36da0a2e9f41a45e83e1d15c46a59ed9ce2",
+        "target_sha256": "5328d35db266b5c849c1bf8b786fd9ac524627d0c206dc9a6b65d9ecb59741ac"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-731de9f8d852cf1c",
+        "family": "repeated_operand",
+        "prompt_sha256": "d2bfc90de9138acb04217d5b694a3087f02ffb004e8b2ee03a6440164c5d6e5c",
+        "target_sha256": "c30b88f74bbebfb61af756776beec3d3a2c6ce3ab79921eb26cbbdcbd9e53f92"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-073cd2f1165cf450",
+        "family": "nested_offset",
+        "prompt_sha256": "6be1f3a9f230a68c1d9dd19b7d25d1d3b56f9d43957e3840163036e92649987d",
+        "target_sha256": "6042d9e1fa6dd3227394c34e55b0b4f523351101c659b4eda76c5f6261185c00"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-6ec1741a0c7582f1",
+        "family": "exact_division",
+        "prompt_sha256": "7813e5fded8797e57179748d5e0105fa78c5a3cf5e2f2c3f9efcb7eabcbd988f",
+        "target_sha256": "516d444d53f9f3ed485aea40e572c3dc6f0867ba05e5a4c06a3eed564c418a75"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-033c198e4e96d18f",
+        "family": "repeated_operand",
+        "prompt_sha256": "55e97258e3a9842cf0ded675789277e4688511119c5d76b3c4ca72e16ff7fb89",
+        "target_sha256": "5f27c1c526c267f5852aa1335d1dfc7dc9d884bfb4e2ea8d94ba2e06acf86774"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-c9caa4c7135a6dc9",
+        "family": "nested_offset",
+        "prompt_sha256": "3ef09b82e77d33c1cc29f6c472766e24d9e66e6c5d36c81cd75d6b9c2f0e0cbe",
+        "target_sha256": "a6970dbf6e2996d8646df4089a55349040936f82cab1584632a16b03d29b84e3"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-01bce8b474ae5e1c",
+        "family": "repeated_operand",
+        "prompt_sha256": "1aa81f404e8699fda6faf288ec2cf5e1070a33ab4fdbf8ce724b033fcbe934cc",
+        "target_sha256": "14a9db7e422cd11c1d8367af6f03aa98b385abf9415c3f89735764d5df4a29a0"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-ac2a7d18f3b10e8e",
+        "family": "mixed_products",
+        "prompt_sha256": "3553b79f6c989f811603d6d61625d958662c8098b531501880aeeb0ba1020ad4",
+        "target_sha256": "f2fb7a7ffb9f6844c9fa2db11a951bc0bcd89192cf05c5495f369bfcce65dd37"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-a60f67de4bb867a4",
+        "family": "nested_offset",
+        "prompt_sha256": "f3ca98de50aef80c5628f75aef3a7b72861e37962d23c64d5cb474d3b12737e8",
+        "target_sha256": "da4095bab0f252945ed4de07dc6fcde7ee14b9c2ee488db2f2ee286b2da422b2"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-e6badebee6f6f8d9",
+        "family": "nested_offset",
+        "prompt_sha256": "81ef83b8f8689fb5789c83df248120ef5f6e631d74b6084507512216c12706cf",
+        "target_sha256": "5ca5fe6f65cf3ffa149169b86918ebc0d2a2be230f0a66e483307410835c2043"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-e708995d3004666c",
+        "family": "exact_division",
+        "prompt_sha256": "3901b5d69da86805709088f78c59d94db837ceef33089fd0d166e40757cfccac",
+        "target_sha256": "e234f0745d04ae2c063a814dd2f6a5235151005b76f05d4a0685106e368f9899"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-8891818f7c29ae11",
+        "family": "repeated_operand",
+        "prompt_sha256": "2dc243a7a46c912daa3351edeb42baf195f8751faabfb9f26103d2c16fe62088",
+        "target_sha256": "a6be4cc374cbe87071faff30d6e4ba8a8fa735c22d19666cec20c61d062a11aa"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-c63ea3d59efb5197",
+        "family": "mixed_products",
+        "prompt_sha256": "3e07a84e0a90b7b3e821cace1fc250d15f6d9e4cc35cc904713df67f15e902f0",
+        "target_sha256": "5db90c6171a34783e587113094e73bd1135efaf8f504fd6915e17b90201cb52f"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-79b0f96f84119d3d",
+        "family": "mixed_products",
+        "prompt_sha256": "2b3af7561d8572a6a40fd425f12fbe55ca8f8e92155238ab9cfbe1db29162570",
+        "target_sha256": "09c85ddfd9e95cb0d5de59b13108e0acc6e99e9c835a62a0e7f4e2d78cb40ef2"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-424c47e3eeeb3805",
+        "family": "mixed_products",
+        "prompt_sha256": "70e39d6d05083199401b9c67f277c60cec58956d8f48d88121fa9f88e9e9ccb0",
+        "target_sha256": "a008f39dc82f5d2341401e41829ece73e1da1feb504afb31712d6256f6fe0b36"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-8c468491d8bc3d7c",
+        "family": "repeated_operand",
+        "prompt_sha256": "710b5a2b4ea0cfaf1a77b1a6b7bf28a8234c4bc0f1acd13a2f00d9ec88cd7282",
+        "target_sha256": "b85a2f73fd69f6698b6c6e26f9efa59159f688303929c8d5b825f5a0781a64ba"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-ddedc1a3182e8dd7",
+        "family": "repeated_operand",
+        "prompt_sha256": "162bbcbcda78138f5985e4efcb24f89b39eff3eeac531ba5bf75c7c45c6ba105",
+        "target_sha256": "90ff4aab0483499265ec6e0210653efde67bb03083ae4fe94b6c357fecd2b5fa"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-98243a09afbb5a6f",
+        "family": "exact_division",
+        "prompt_sha256": "6d297b690781e5d6c79bbc527b50a4ab98f0fb8d84d482d9bb6d883b6344c52d",
+        "target_sha256": "e2d6c4be32348381ffacf9af1a4b9f734e094b5425338c962f6c8bc47125bf42"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-2cbd8b738c4223c1",
+        "family": "repeated_operand",
+        "prompt_sha256": "f9ec18a3a63148bab2c5d1a5278c70742c89f741e9bc886534efc3ce1a5d027e",
+        "target_sha256": "31d6e567610cd9627d6728f61f004cd2fe16c5948a7feae3eb20c242d6c79474"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-f8efc753d2606bdd",
+        "family": "mixed_products",
+        "prompt_sha256": "d83ae55bae91cb15ce10585440d9f5ae6b31731151385298d5cef9e0d3c1c1eb",
+        "target_sha256": "ce677f26bc60c144d9dce6319dd64a23f929bd760971778270a24d4ed02247ff"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-8f37f97c54ab70bf",
+        "family": "nested_offset",
+        "prompt_sha256": "2c2b13d59f8e304b92b50db7c59d48aded70ae163cf4170d22df0a36dbf5520f",
+        "target_sha256": "f5bf422fd16894e6fd69fe034ac9ad1abdc413cc0130bf63ccdfb4fa97f0670b"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-811af4ec901d83a6",
+        "family": "repeated_operand",
+        "prompt_sha256": "95e4bf8edd44e01fd76ef5f08eefee3e1b9246592d225043068effb6263953ed",
+        "target_sha256": "c39bcb132bf3040a3b7ddf83705f015ab78002e64dd2b75ca4f4a07c203912d4"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-9f7e113457d1c122",
+        "family": "nested_offset",
+        "prompt_sha256": "33520daf5625a95f3645c006a2851b329c87f2120ba1ef768c795aa2375f91a3",
+        "target_sha256": "998698f787733fbb4aedfd96736da4960204c265bbe689adf8d5dd437e95d110"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-4141a2092f5a1a59",
+        "family": "repeated_operand",
+        "prompt_sha256": "662a8468dcb63eb7f8069ed20b095f0da3020847ed3837d16aa8eea227c521dc",
+        "target_sha256": "77555c2893b219896737aac5ab13f4cc6cfef2e20d582041c51b9fb4a42b9659"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-02b0f9dc41a7cd83",
+        "family": "nested_offset",
+        "prompt_sha256": "3b43578e838213befa84f162adf55b7654a247b85f25707a5b3981fd212fa5c7",
+        "target_sha256": "3a8083f57eb104f5c30f770d708457ab17b39260e1e88a414fc50f0437a7e51a"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-5820d9652d5a9f14",
+        "family": "repeated_operand",
+        "prompt_sha256": "f1b2c950dac8558de012f9bba6459973d9e790b8c99186af93850feaa9f6100d",
+        "target_sha256": "f54e4be5fb6b31957d562a556e9983fb93b7c9b9cfc619616c46b0da8dc5b01e"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-87e0c8f9cf740516",
+        "family": "exact_division",
+        "prompt_sha256": "72566d177e06d9e52de6329ff9a1f4c2484c6d606b201ec5ef5263611f63a5f1",
+        "target_sha256": "434382accc706487471c3a00a5c27ca01196c78122fd1e4ea715f25d26c13448"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-e38c4b706d167f64",
+        "family": "exact_division",
+        "prompt_sha256": "4f7577a2eeb71b379533dfdd74f3189ec64692490a73f22d58e412a9734ef321",
+        "target_sha256": "5bf786a3f4fe4301644bad219fe121932b95d591d546a199c87ba5dc6549fadc"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-61fe1a05b3a6c4cf",
+        "family": "nested_offset",
+        "prompt_sha256": "6ac9c57cef748c34321394fd7604ead1540f685941e190c0e58ac68707cf9cff",
+        "target_sha256": "9d9dbe0505ec9a8d015ec8282ab96954239226b494ee23721f06b3bcb1bd9893"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-8a0ad2c779524d8a",
+        "family": "repeated_operand",
+        "prompt_sha256": "5bf082e1ee8c622e4c07fdc758536d420790a21224b44a0941fd93fd06f48dab",
+        "target_sha256": "cdd103e967955bbf3866618a57f1b6bb4fd80af110c951f34c2ca47dadeff921"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-65c4b3127246c5a9",
+        "family": "mixed_products",
+        "prompt_sha256": "8de11d4a352f3a53bc5fbddedb6703cdd62bc3fd0d8b03aaf1b2e1f1296cef1e",
+        "target_sha256": "1e935c993be4b6273894af0cdb8744e8445016029e138e597c9084fc250301cf"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-ca7b8191dd89c291",
+        "family": "mixed_products",
+        "prompt_sha256": "2462509268d4182d8a43245e6e0119506410e7f8c7652f63a65689b9f912eece",
+        "target_sha256": "081aafad82be40c5250b1aa497dc0c9a6487949a79e2257055bb7124f6c7f53f"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-e5f4a191af68bc68",
+        "family": "nested_offset",
+        "prompt_sha256": "7f164b13f0a3a54e01e214e98fd55d2a2226aa73357099971f319a737891ef59",
+        "target_sha256": "8bd82422d8f7f9af667869d95477a8fc2896de155f1f00446758bc787f547815"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-18cce53685706017",
+        "family": "mixed_products",
+        "prompt_sha256": "4017c9f8aa0caf32138cf34231784bba24da86e5b4f530a0683fb10933cc0765",
+        "target_sha256": "e705facb2b66d80907934532f9f4f39573437b071d3bc4948aa0dac5f886c50b"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-3427d517512de3fc",
+        "family": "nested_offset",
+        "prompt_sha256": "291174b810660e5fcef0c797dbffd2733baf3d34c2b7a6e86e927136a8295ece",
+        "target_sha256": "5a412df4b02e780099bdaff301013eec93b39257d5f88d013192ae00851e0b0b"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-6725ec8569d6b00c",
+        "family": "mixed_products",
+        "prompt_sha256": "04185ae88dcea89454f4ba90fee731e285bd4004c77377f5fb02b154ba132ed1",
+        "target_sha256": "2d7d757535cfd5c02c15fbefc708e90fe2761c53cea4b3cf1c61248f93158bb1"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-39b48fe657f61c81",
+        "family": "repeated_operand",
+        "prompt_sha256": "5be192e0418f7d5365de2e2d3fbc001a6e9377def7d94a63e810f751de55b857",
+        "target_sha256": "6d8dab77c2d4c1a2b4e265ad1aebf15168018152d3bc76c84547e23d60e14269"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-83ee787aeed5206c",
+        "family": "repeated_operand",
+        "prompt_sha256": "1c53873af533b8eb1eead51722b5a50664029c9f427ece2a3168a3e48f52f18f",
+        "target_sha256": "1a2c560d31453230f016554708d44551a8467676b39b4d4d1eb789ffbf7ae6fd"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-7409c7c125ac761e",
+        "family": "exact_division",
+        "prompt_sha256": "37e2c1df78e56aca07b6b153d1259cc3499c8ec8c09ef7b0ac42ba27f0527bd8",
+        "target_sha256": "6ffa9b3c4a1b4270f58aeadcc7c5feb7567ce06989c424b03e58b487fe0e2a3f"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-d6fc63b3bf4a5169",
+        "family": "repeated_operand",
+        "prompt_sha256": "d1a581f68e9176be9c82d1eb02e54f81723c4dacf480ed3c882d1809a84936ad",
+        "target_sha256": "f37cbb92489e55d12eccb6ab4686ab6976094e434bd0e98efbc2f8d6d1d8f6b7"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-8237e554174f5c83",
+        "family": "exact_division",
+        "prompt_sha256": "fa353d75462860e985206782cd6c58373934c4a3c30ca17dd8838176dfa13161",
+        "target_sha256": "e73ef951c10813e32c8075cf567d4007bd1a7d98ac66a64ed0e31cf822ab1f79"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-381b9eeb0f8024c7",
+        "family": "exact_division",
+        "prompt_sha256": "c1c785fadc9561de3217bf69c3c13f3797f768b2177fe696e4aa97ad230b3df1",
+        "target_sha256": "3f9f48e3097d8c817d9e4dddfa22d9ae3a0bc85847a21317b4dcf781031acc6a"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-5dcd639123a56f01",
+        "family": "repeated_operand",
+        "prompt_sha256": "fa32dcb8582e2deef565d8426565a98fd575dc810af4a43c3e1eaaa708e2c664",
+        "target_sha256": "17ba89653f7ad31212007e8e2e142bfc3bddd0eb2dfd8d4d1c41dea378c1298b"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-cfd26b9ef9b73929",
+        "family": "mixed_products",
+        "prompt_sha256": "7522a501633a45a5e510141f5ae8ffbf73d14cdca75f9e72cccf6c52459fdb88",
+        "target_sha256": "70370c8760dc315cc72ff505226633b4db142c45a9a4a8b0f105409ee5f59fb4"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-4490174ffcce3f73",
+        "family": "exact_division",
+        "prompt_sha256": "d7d9fd8b724583d94c544a54de33eea6ce1c3f1b35f322d251d13787c815e7c1",
+        "target_sha256": "44553404c043e9d18e7f1281cb8b0b43655c727282826d77b7ac1e19d7123f44"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-a6bb8c8852c366d3",
+        "family": "mixed_products",
+        "prompt_sha256": "b670105be5b4a99d1479e57687bdc72665d34c358038c1a14704b6ef4be1074a",
+        "target_sha256": "1291edce4e8c7feb9782c34137037ff7255409baf6aa77b0e1273b9b1783a3ac"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-4215e97de60776f9",
+        "family": "nested_offset",
+        "prompt_sha256": "79236a2646b5db0aad844176cf51ce1e983edc6e234b69d5805e90f3b87ddacb",
+        "target_sha256": "eb9875c5d5a3e851f252495eacf60be1b9983a424c7ce3b2872fffe7a9e4fc60"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-2ae7e4a89e0afb5b",
+        "family": "mixed_products",
+        "prompt_sha256": "66488500e461792d3f65f7b15543a6abf411adb09221f85c949fb156a45ede8e",
+        "target_sha256": "7df5f51f5c2e1357dadc6ce456976a491850fef2aed3bf3f0f2f050fa937b293"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-179c8e9e9fb5f9e1",
+        "family": "repeated_operand",
+        "prompt_sha256": "f1f242b248af361ef42c05e7103f9d009bd33ea984c6be5691c1112ed2c790f2",
+        "target_sha256": "5edcc10914d0923733dca40357c88848dfc042939821c9560b4bcef8c3e1a0d7"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-24cc9ca483e7ae42",
+        "family": "nested_offset",
+        "prompt_sha256": "43fa6af014bcfcc056fa67db26d02c4babde89d34f5396c56975cfcb4f4ff813",
+        "target_sha256": "21bbe624771b62d68a5ad6eac024d759e8b4d99b8700aa9f7d06dcde41d44e2b"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-0b94ebd5b778c0c6",
+        "family": "mixed_products",
+        "prompt_sha256": "02f5abd37f7a932f7993aa1c2df76cf709261543375a575301742942907e6f59",
+        "target_sha256": "410d822a9cc5377046ba204c6bd822726ed1866f8f03bece0e291899e484d685"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-f29c62fd68a55f33",
+        "family": "nested_offset",
+        "prompt_sha256": "778776dea1f55684ecb4d814b34105fbf0f074b253326c05f903cd4b1f0a9023",
+        "target_sha256": "16a96c68dcc39caf36662e7f9b8a60a03543c6104618f2142f99e13e6bfca51d"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-76cb428ed1b4f9aa",
+        "family": "mixed_products",
+        "prompt_sha256": "8ce2fe04ee7801ba0c536fef7f59a5b81c91285a7b165de5b66faea775dbb5b5",
+        "target_sha256": "41a1504a0a0b23a57ba25595a6962916b5dc382060979174940ceba1b1b01611"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-0d8e6717690c7c57",
+        "family": "nested_offset",
+        "prompt_sha256": "a8d9443e75e7a0f3cc38b72dd730e39c3ff33a5cb0057b51b8b764ccb047163c",
+        "target_sha256": "695c6dae2e709784fcdf7f1e23a4dcaa302efe7c496e36ec0649053027f33669"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-a57867f85e0ece82",
+        "family": "repeated_operand",
+        "prompt_sha256": "9ed461ff2978eb4616780bc65a8ecca579fb3c24793a76f97faa302d1c72dd30",
+        "target_sha256": "d1889b9c60782ed25d230a4782c413fc4c16b592d6b1e80d587c1fc6e2e78b97"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-1d24974eb034cb2a",
+        "family": "nested_offset",
+        "prompt_sha256": "f11acbf24a8da3f7d585f896bf3ae1ca652a70442edb94248b239a7aaad08156",
+        "target_sha256": "255eeb5e6674dfb0e0a559a99333fb79cdc2566fd973ca49ba4415cbb3ab2c46"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-673d0cb6a76cfb75",
+        "family": "mixed_products",
+        "prompt_sha256": "e055d9a6679116fdc846956003121af40aac24a3df4fb319dea7912b8dd14a18",
+        "target_sha256": "2829a02d4733bac42a41b54753bcd3e035f31c841cfac0bc89fffaed45ddf43e"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-923e93abd6e4fee2",
+        "family": "nested_offset",
+        "prompt_sha256": "584580284448192d1b6e397c1a371bc050354775dd43622046150df6cb44b558",
+        "target_sha256": "de59a81e932ad40fee52920bf85e55894f2e8fdb23699cb44c92f1cda1853a64"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-2bede5a5147c6ad4",
+        "family": "repeated_operand",
+        "prompt_sha256": "dbd3843ce5e9729506c7b4314b997d1b1f1265a40e77446a743617e64d7a02e6",
+        "target_sha256": "baa00547104eb592a11426197dca3d6d258f5a7a4bd6110ddd72a07ccebd308c"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-e25edeb0f6bb66e2",
+        "family": "exact_division",
+        "prompt_sha256": "1cb83575309a52879e5cd59b9fe588530080cf487e8c10c2df816d4f0c22b0ee",
+        "target_sha256": "f46414f9390dfe29b06ec17087e1d4aa932f21eec4643e2e9db934d5b2144bed"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-d03308be911421a0",
+        "family": "mixed_products",
+        "prompt_sha256": "f3ac4ef12f211d2887cf3233de6ea167133f70781ebfd79a564193d9f1ac08ba",
+        "target_sha256": "4c9f69bbf32420d347d0caf0ae950b807161f02927c67d96ac90208dba10ac05"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-058e5c10e81d59f6",
+        "family": "exact_division",
+        "prompt_sha256": "1daaad44fe9c10b0aecd7dd8c38f0b9b27e3d22c24e2ca75371ee16b22a82536",
+        "target_sha256": "6e973b9c9972b8f9803657c8e394015788be39111e6562483cbc604791e40059"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-6b5438ba3adb631f",
+        "family": "repeated_operand",
+        "prompt_sha256": "8b7423adb03fb8b4da806c6cff22fa3941c3b10190f1a0e0b600f387db37757d",
+        "target_sha256": "b5f778c79bcff8eba99eb399406f5ecc691aed4df73ed362f876633260b0fe15"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-bcefe92c2ef0e100",
+        "family": "nested_offset",
+        "prompt_sha256": "53a061d158c10cbbf6e9af71132dd9eefaaf89c2da7ae55a757d5e742dbdb21e",
+        "target_sha256": "24c42c6b61bfbb450e3b13a9adf1936f76fdb4eb2692a7c14c7b8b9a996fc2ba"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-c1905af3d578cfad",
+        "family": "exact_division",
+        "prompt_sha256": "f67b1b10cb8049736b66c42fd8903f8805bc8e9689b2d7ad3e737ba0579b3875",
+        "target_sha256": "82fbaaf71cb57a080d164bb0f9d78c7c688ed6bb6625c9499b042bd5f370eb94"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-fc106aed020a7911",
+        "family": "nested_offset",
+        "prompt_sha256": "959beacc95b69b1f992f58edf7f141bcd645115b242cf7fefb59cfeab2b1aaa3",
+        "target_sha256": "fdf6afbb99325666e902cfff786bca99ab399ff04c3b88ac59fa180f8ea10a58"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-96106d71b2711006",
+        "family": "mixed_products",
+        "prompt_sha256": "2a410d2224d3242368e1150e2d6ae6ea31d27a9c9fe71a0cb165665bde15ac2f",
+        "target_sha256": "aee5156f16a66a7d36727cca71e5c23b6704e366d36de40c386edae3ad55c72f"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-bfd535310f38edbc",
+        "family": "repeated_operand",
+        "prompt_sha256": "a337651c0bd2a2a52c08b1d9b397cb70f876112a21da789f2095ae7543765b6f",
+        "target_sha256": "8d598763c1caaec60e32e655e2f5fd63ec1245385829fd9dea34ccd14dccae1a"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-31c0535fb2591f22",
+        "family": "exact_division",
+        "prompt_sha256": "96841b344c1559f8c5a94b8de9d45cc1f8a44414cbe4ae3f778b3e72fb21abf9",
+        "target_sha256": "8d00dd17252f02cf845d821724d6b8ede8fcba2c0f76efc2c549f539b9c66e14"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-70875cb2a09d616f",
+        "family": "exact_division",
+        "prompt_sha256": "85e3b2dd14fa97dbc8ada06edd029fea196c7798b51a33f6cb458d0f8fdf333c",
+        "target_sha256": "fe09c4749b3bcfbbc86ecde48914ddab2d9d5080e3596c37aba9aac3eafc19b7"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-6fea682a6aeb0cb4",
+        "family": "repeated_operand",
+        "prompt_sha256": "a5bb36cd5911436e130f37baa2f6ac47faf053b11e0ddb05913a9b0dacb29e9c",
+        "target_sha256": "96eada85ebcec9789081524846c48de56fbb2cbf926748b1815f04d665bc6fef"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-38d4623af1235955",
+        "family": "exact_division",
+        "prompt_sha256": "d5657a69e5f9cbe35b580cd64027eb8682906d63ab7e186f4fd72d725a53bc03",
+        "target_sha256": "edcc4061639a74405eb52a51a90de038e86f2b7ba20862d085fe8aa0e76b70fe"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-eed3c01b9092f40d",
+        "family": "mixed_products",
+        "prompt_sha256": "eb9b0b5f19f9c9a5c09bc489b80e053d9b24961ee3ccf54f1c2ed2315c2c2b57",
+        "target_sha256": "aa5c4bc6f073f0f3f5f18d6d42c970f29a1c20860eb399ae2e3bd16727775892"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-50269a3c9ebf4ed1",
+        "family": "exact_division",
+        "prompt_sha256": "e5f1297706fa57c026ed6b1f747cee1b0e4541efffb0bef4fea38a7d0452d1c8",
+        "target_sha256": "615f3894069d9d306146a4de66e3632721660e249faf013fbd237d17981829a3"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-8a9d9e97d8d78db6",
+        "family": "exact_division",
+        "prompt_sha256": "774582c0544371a2273f9a75367366c053d6346801aaeb05e05272617758c638",
+        "target_sha256": "e48c72b5e1c7b68cff85100f7dbdd4ceb2498e6dbbafd81e6515721ee6810ff8"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-9905ec15d9ef34a6",
+        "family": "mixed_products",
+        "prompt_sha256": "0dc701a2a004dc9b7c39b82792978218aa5e133dc017367a35f7432980d5dbde",
+        "target_sha256": "4dcd1f53f2345171cdba6b6386b89b052b631fd26922e4a395169d57c6b3df4c"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-83bf44854eab398f",
+        "family": "exact_division",
+        "prompt_sha256": "52377fd23443b9a58aaaff72880bd167872608e212a05f9ed77a3145b550b24c",
+        "target_sha256": "6e5a8c01231326c6dbc095aefe2f59032a0ba1da765166fb4c62c24294c78623"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-c5b9af94cc75060e",
+        "family": "nested_offset",
+        "prompt_sha256": "f6effc4eae408a5deb6b6f653686ab44fc985a0348ae9dcd8f235b5cb14bf00d",
+        "target_sha256": "3943366a66ad4c4358e4516d2e93af559b45db3ae45e667c0039dbb8be6493fa"
+      },
+      {
+        "case_id": "scaled-quality-dev-repeated_operand-f69bc328145f22db",
+        "family": "repeated_operand",
+        "prompt_sha256": "15405498ba3fdfae0d14451a2d57dcff5f584ae7ef8f1adafbf2c6317cf61b58",
+        "target_sha256": "62be1261883a487a2c0d9239bb943d1e59fa98db52480fae288b5280a0d7d90f"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-0da6804e6e6358aa",
+        "family": "mixed_products",
+        "prompt_sha256": "d30132a57abd251768156d2394afe843664edbde3ba49b7b310135377994ff23",
+        "target_sha256": "427574d38da8570260ff8be119a2e696e0bc88db2c5a753b4d781d039dd9364c"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-f6e014d4046128b5",
+        "family": "exact_division",
+        "prompt_sha256": "9d450b836e97651dec54ff9105c35f81fe32b064bd0fe0af43c0948a47115e41",
+        "target_sha256": "87900e90d88ddac77f21b9fa74e96c4ed35ecb76dfd2fe6912881c36ddcbf055"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-22f233413e75f225",
+        "family": "nested_offset",
+        "prompt_sha256": "bda0606efcff62b88f99713e5751a27b3acc30ff97f1526739375f8212d6ba1d",
+        "target_sha256": "531d2a504357e322907ad2f180e704e81a28284742ba6b02694390844eb0cfca"
+      },
+      {
+        "case_id": "scaled-quality-dev-exact_division-d1f27d431f42be1e",
+        "family": "exact_division",
+        "prompt_sha256": "177fc65d5dc6198626e33440494590a92699b24e428ec9fac5c6c98d0acde82b",
+        "target_sha256": "247581fd798ba73e6713f0524414f3f93d3e177d6cf7a61c44e41e5125d9529f"
+      },
+      {
+        "case_id": "scaled-quality-dev-nested_offset-98f0c83773affc66",
+        "family": "nested_offset",
+        "prompt_sha256": "95fa26841b2b318da8dc9facd577732ce099d9eaecb0ffb81487174e3dc3ef88",
+        "target_sha256": "9f1a339265a982d14d0c6e21d2b627b19a16b1676791b0e61dbb7a413b1eba2f"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-18a610e99ae3f19d",
+        "family": "mixed_products",
+        "prompt_sha256": "4390d470f5c0b15121b19c3390c6ecf65d9ef1f9611999cf67a4abff0889812f",
+        "target_sha256": "a3da9f3ec3a110c42449b34b12a68f210a6374f715ae6c229a97b7543c7e368c"
+      },
+      {
+        "case_id": "scaled-quality-dev-mixed_products-94192c3b7cecdf7a",
+        "family": "mixed_products",
+        "prompt_sha256": "b556c7c16431255b53ba90693c8bb5cb8dc4bc1db3504aa383e70ee275548846",
+        "target_sha256": "4f0ef48c7c03e7d306584e297206d1ef1bf5d87914f9a25636a347dbe7aaab8e"
+      }
+    ],
+    "identity": {
+      "dev_case_ids_sha256": "9da07908d3d9d1400c6409b972b5b62bb94bda723bf87ad466013722aea05491",
+      "dev_prompt_sha256": "e0f290f40923b57014420e08ad63c1ec39c7ff8768aef5adeff7a65a7a7d6551",
+      "train_case_ids_sha256": "5891c3c40cd72dc29aed56568494907713f0c0bc86f8118f92b15139ce5fbcf4",
+      "train_prompt_sha256": "12fb8278f3408f0a672959708e8c16943ccbcee82c85438d9c96640f8feb2cee"
+    },
+    "schema_version": "nano_train_scaled_quality_contract_v1",
+    "train": [
+      {
+        "case_id": "scaled-quality-train-exact_division-fb3d17353714b525",
+        "family": "exact_division",
+        "prompt_sha256": "a5d15c00fd645b1367b1b71481728cf036460663e8df4abeee44ce8f5c921af3",
+        "target_sha256": "9b266adfca06fa0b81fd2c5401676db1e7ab81307483ba11db6e719d7a071d1a"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-a93cb5f0dca9b4ee",
+        "family": "nested_offset",
+        "prompt_sha256": "3b45b1afb17dfbea40062833fec281691522368319a90eda46b19a13aa576f33",
+        "target_sha256": "1d2fd8899992ccdec52eaa91ddcd2d9df56909a54261dfed748e5cd996479f6f"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-1a28e8a490db1dc7",
+        "family": "mixed_products",
+        "prompt_sha256": "08f0b99e5debcb3a1fb60d0a7c40443174484266d3fffaf288a94bed2c8e3490",
+        "target_sha256": "afa98d0b7de987ce252e2fc1061cca27078d0eb7af03f15a46017289c572ee69"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-68f890e16d835847",
+        "family": "mixed_products",
+        "prompt_sha256": "99ac8c452bb08faf52f68b3727217d566fafe361a3cac158358c572ce4f46efe",
+        "target_sha256": "01b14f4fc41deeb311d50d1cd355c21a76416fc547a9ec65c43c116ed343c71b"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-85600b2d276e4ae7",
+        "family": "exact_division",
+        "prompt_sha256": "e5a309e34afa02bf5961860435bb2a3868fe02c420103eaa0f859dc69feeabd8",
+        "target_sha256": "2c8e43d862efd5153062380d78a264f8bc19bacf4b6fcd16cbd579b8be712869"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-5838981b9341e79c",
+        "family": "nested_offset",
+        "prompt_sha256": "1115abf8adcd7b06dfd80a74110c6962824fc3536a8c7cd91318780998eb7bcc",
+        "target_sha256": "06a97a9889ef63175a45fd3b2d91744ca3dce3de32f8ffda070a95d4a913f44e"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-d735b5ab403446d1",
+        "family": "exact_division",
+        "prompt_sha256": "3ef6445b68494b90fe1a9836fdfb344dc41d256526466c8090a7da685d02ad1b",
+        "target_sha256": "99e05fad292be1b74f1f64a32ebbb1bf6f3f5d1f685bc61ae2341d7a30b1c45b"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-6fc096ee537fcaeb",
+        "family": "repeated_operand",
+        "prompt_sha256": "e1f196e53b5da7ebbe769d0020fcffa105155b5607a73e8ea4041d9ab4d8d5e6",
+        "target_sha256": "885d2f0a02a0d6aaecfc305b028f3f00ec0c25a23257bde03e5aea5acac20630"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-b6233711191bd19a",
+        "family": "mixed_products",
+        "prompt_sha256": "c7a950089c7400482e0d5627b480118aeef4d671eee7219f45fa975cfd8396a5",
+        "target_sha256": "875c8b93fb8e4f0674e1366f70dd142e4c9f57077764626c9cc0b915cd37b5c5"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-d735c41e0567af85",
+        "family": "mixed_products",
+        "prompt_sha256": "cf114873b116a11754427e0c8ff975ac127af4b6c49ac526fe7aef0ad8787a82",
+        "target_sha256": "b23b628162feb5c40c2e38d71ea599c3cc4da3ac8ae489870625e8be6ebb37c0"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-19cdc3ac904ad258",
+        "family": "nested_offset",
+        "prompt_sha256": "73e379b2919ab9da7754ce2b0d5e7edf78a27020f298869c9c1807620e32cb2b",
+        "target_sha256": "deab120db9d46aca39aeb6a83e65512d2eb84106b99f9c75781512925491ab75"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-caf2b43ae0618216",
+        "family": "exact_division",
+        "prompt_sha256": "4ec510f5f1c60fc9480cb6862ec55540830baba7687c9cee7ae4ec76990e476a",
+        "target_sha256": "7f629402ef273d7b608ae29d7dc4018990fd4690a2173aa921e060451840a094"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-33eca51d873099e4",
+        "family": "repeated_operand",
+        "prompt_sha256": "9edb335322ef5752678c521887a97b4074efb9074481d9a295fb3ea27351594e",
+        "target_sha256": "e899d2ca37fdf616d2f699795f7b657e27ab6cedf292bb4235aac6d77c81554b"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-759b6dfcea058c19",
+        "family": "mixed_products",
+        "prompt_sha256": "9b1ca2be48f1c549a28ace2fce24be8f5c3a4a7165fb50423066e45a53618aa5",
+        "target_sha256": "1c68d03217cf900a0ea03b9ec303ab13f1ac9049bc22c72bab14da4546a23052"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-463ca8c83ff66e8d",
+        "family": "exact_division",
+        "prompt_sha256": "e743ed93a72aaa73007ddc34f000513826ab5711963a072e6162b02ad6aa86e2",
+        "target_sha256": "25298a0be3a7eb953e09c3e7063639017e634c222f50a7d2b9e02d77dd5314e8"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-f7a0a029deaa6c5f",
+        "family": "nested_offset",
+        "prompt_sha256": "58aab9cfb6d5c66d49146a6741cbc630f60a91192d787ad5781980ea9363a29d",
+        "target_sha256": "356abb43708831f3ddc1a2580ae70d037dd6d94cf4842b03376c5c21f9c10e58"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-e339bbe8a08195e5",
+        "family": "nested_offset",
+        "prompt_sha256": "69795991e46847fcadbe7ddfdc4fb16ff165c06ffd41daa4104023b65dc7fc3e",
+        "target_sha256": "95b439e5c186494a9a6ca0a120879f21550cf2a9048053fe8d05b5ea6566de0d"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-9e28435b164bdbdf",
+        "family": "mixed_products",
+        "prompt_sha256": "b1f0ec0696114c08a27672505b1e6dbfc788b3cb5e3cd8c6a1df0bd351def7ff",
+        "target_sha256": "2303f04bf92cccb71f2cea630abbe639ed28c0527103e9a235c0358a5d888a4e"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-88012adf31aa1708",
+        "family": "mixed_products",
+        "prompt_sha256": "0da3a81c836922f6dbd25b81b5e67768560ee81de149790909c3e0cbcc08d328",
+        "target_sha256": "b3aabb3ab3b9b5a439cc349ed1f4c774bd1522fc3a48fb0d36e3f00af59295a5"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-8a2e2e5272d0ccfd",
+        "family": "nested_offset",
+        "prompt_sha256": "e05e9dc2b9b00ddee109ffcb544bfd53fbaec1e976616618e9a8aa38d492bd70",
+        "target_sha256": "00337c4929255ec7aef27e91b799fdcc4c36b8097a4031d4d7f50720e61bb098"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-5f7421f750ab06a0",
+        "family": "nested_offset",
+        "prompt_sha256": "6deaa354be5e99420b130ed3cb239d0d74abc51e135e38a0f6f170c0e3367576",
+        "target_sha256": "213d6878b28f3121195af8e50369753541b3423af6983b93626d66944fafd271"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-e7e0795f5e36b3d3",
+        "family": "nested_offset",
+        "prompt_sha256": "67579ec2c3b30dd65af48c786e1738f4047d22a329335c85ee32b3d28cc2329b",
+        "target_sha256": "ca39b760103d5212494a1c170f1d2d662b1768ba60743c3a1d532a288b3c85eb"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-7296a7654a81a19d",
+        "family": "exact_division",
+        "prompt_sha256": "13586f1aa0210342dd5010b6275b737caf8b3305c0132dc563511c14fcf62abe",
+        "target_sha256": "b32d6e83698ebb04e9fe9d8ed3509341e0f5a35dc9257cc50f7933280fa11ba6"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-db8dcb4189e26f30",
+        "family": "nested_offset",
+        "prompt_sha256": "b274bc99045071e8e0ab21b7ee81b74b173b8d632dc2f28ea0fffdbe59ed14af",
+        "target_sha256": "655f04d3877dd83915a47ee1bdadf61d3cc6f507019b6321c453445545c2cb09"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-84c9d4ff6f0d12f3",
+        "family": "repeated_operand",
+        "prompt_sha256": "5956c0390cdc3900fcee3c42ef993da94d9dc3eb51d20781fd0e7e45be6fd9b9",
+        "target_sha256": "a297ae582e30235b1e2e6cc5943cbfc05a5f471ab748371d20f56b6e88489588"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-93fc53abc6a25ae6",
+        "family": "mixed_products",
+        "prompt_sha256": "ecf09518ea3e5594e9f65a7a375be2abfc81f6d8ca687df4e8a396e22adf5f67",
+        "target_sha256": "63862d74e613a48e508b681bfa76b6ce692b49b58c70710f3a0ead44ac85c8b3"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-7c9b34af61fc99e2",
+        "family": "mixed_products",
+        "prompt_sha256": "8f92e3a01bee28ac0fe16dfa7ad3c64fe6fa79c2d71e972d80fff859c68f317f",
+        "target_sha256": "4bd9566968b699b7513f7d974c2b3113236f0ef54c223abc7d914e4647d33736"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-5511c6ae7fc564a5",
+        "family": "exact_division",
+        "prompt_sha256": "451e6f7c7ab6d7c5eb666ebd3209b1927a24affdb92fc59be365282c7da52976",
+        "target_sha256": "9db00db644f81fff0b8414c17f9eea2e82e7f93aa95a0c2dc7370f888f2002ee"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-8fc9d7bf64dd6fbc",
+        "family": "nested_offset",
+        "prompt_sha256": "554ee054ca4a8e9a8ad598b1278e5c8370b68a223bf483b68c58b380caf2c90e",
+        "target_sha256": "ba7a2c3af4e1a814d3bf0a3d392f7618d2644fb48384f04e68ffa038eca8b4d4"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-583b768d1d8e2534",
+        "family": "mixed_products",
+        "prompt_sha256": "a8b154fae0bd6eb5358cef991c12f0ceac1deff19b124cc285f325dc852fba86",
+        "target_sha256": "d6fce997d9a15580c6180cf3e6031d5e1a34b6a8cea3822ad0eca08de3aa2494"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-f01b230533e03747",
+        "family": "mixed_products",
+        "prompt_sha256": "b32b7840119f6b3e1ed2ec545f92ae6356e1e274a70ff87f99e1edcbc7da4492",
+        "target_sha256": "d305cb704f2eec442b21154c3f018b26dac7868bdcc7e18114b80997756e92ed"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-177ec4c7b6169bbd",
+        "family": "nested_offset",
+        "prompt_sha256": "e33de8e7407c75621c27fff285dfd501f271fd1370ddc0051d5756427a9ae83d",
+        "target_sha256": "76b5d5af3cb2ba48975589f27f6a170d1f217ca58057d917514903d4c0a35868"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-1367e2f2f6ab8c23",
+        "family": "repeated_operand",
+        "prompt_sha256": "adbe125e22c4e9ad0a75bf57d4560fbb2ded0547c159c65fb002b6b76abae789",
+        "target_sha256": "58cbbe6a4f53bff3317434a7d399d88c6a575d59ceabb3c030b553c5badeeb88"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-486c9f5f094c28ab",
+        "family": "exact_division",
+        "prompt_sha256": "32b44f9ab32591cb0576d7b225353e29a1ef04bd813ab78ecee6aacb09be6784",
+        "target_sha256": "6d2ab53e19f08bc76bff45351ea601070f9bde18e0df42bb84c9d4fc366cfb03"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-994b3259de7391c8",
+        "family": "exact_division",
+        "prompt_sha256": "c3c33e04eac4f6685833c12ae08b7d4b1356ea1a1d6d1f331e6ba124e415f753",
+        "target_sha256": "d436ae1ecedda593c6ecc1f01787bb0b3ad755c82a494d020520a0863ee143dd"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-77d55a40aae41e39",
+        "family": "repeated_operand",
+        "prompt_sha256": "a827f8ce827698f813d7e3ecc4e7f540ff9d71a65f8db097a29a87e74532fe0c",
+        "target_sha256": "f02d7764d1d6738b70e969009407556345260fadfe0d7518d069b75206bf7dbc"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-916dd43b4fa0aa08",
+        "family": "exact_division",
+        "prompt_sha256": "8e039410a67d653c9e05bd540db20b73c6b924f0b42a8bda747677273c0f9e77",
+        "target_sha256": "dc2fac308ca6e39f871484226cbc230d7968b5130d5f4e8f28f2c099f209098a"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-8477ff2a346e8f43",
+        "family": "nested_offset",
+        "prompt_sha256": "b0f89e7bfabb07ff63ecbf9cc128064f1c8a1280e2682e1e2c266c2215a93e8a",
+        "target_sha256": "6fdbe77685453acacc7d06c3ea484b1b6230666c37314d9a7127ca88b18704c6"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-e1e4dfbaefe3f7ac",
+        "family": "exact_division",
+        "prompt_sha256": "8ccecf7faca1038d72bd8d4629ac76a0ae4e5418dfc01c9d6c977e0cd4e70b75",
+        "target_sha256": "9211a6d96a85ff3fb0aafc2bf0e98dabcb9684be3eb9d800b9a974db50109957"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-426c4710a0276db5",
+        "family": "mixed_products",
+        "prompt_sha256": "4f2e8be4d539901c79ef648219df4c24ad8b8cd635f68bad173a701cf5af820b",
+        "target_sha256": "2f1158f1647f385cf8257d85587cf1e48e67544f787929f36b4aa60a50c3b253"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-3f9997815225ec02",
+        "family": "repeated_operand",
+        "prompt_sha256": "2607875053ceaa71e3ce173b71fc052c118a5c1c3fda3d204fbcf5224026d2ab",
+        "target_sha256": "9275fe0d928196671d8f83b1305264afce00629100d0c44a3a6a85e1063dc9c3"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-53b096f964839a3e",
+        "family": "mixed_products",
+        "prompt_sha256": "4eebf996c2de128263c0b20972bad85b2752070ad87cf5edc008c2bd1e2fc4c0",
+        "target_sha256": "518c812707c4885f937c770c868f4dc3091c14647efbe5700c31ea52a44afda5"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-58b1345e94da4e5c",
+        "family": "nested_offset",
+        "prompt_sha256": "b5847f80cb9553689a1cb03035e0a17bffc424e069aedc7b30a7f92e5381b70e",
+        "target_sha256": "94a1e0062ea29c5f31acc1adf9cc90ed390675a43c59db72835800d6c47099ac"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-03a74d82e63d7462",
+        "family": "nested_offset",
+        "prompt_sha256": "939060040e773a67daeb9be81d3dd858f3e21875b0775c71619b1cf4edbb533d",
+        "target_sha256": "39d7d6a9e7ba1893e1fed5d55c065b23cee696f35e2d622e673a24d9be74dc99"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-430e07c955be231f",
+        "family": "nested_offset",
+        "prompt_sha256": "070f76471a443161292330701aac9f980848abb6e9811a465ea6691d7b0736f6",
+        "target_sha256": "fdfac54130925dedadf90e923c9c27c191c37dc05541a751b6c47b4270d42860"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-80b446633c0232bf",
+        "family": "repeated_operand",
+        "prompt_sha256": "b4ffd993c1e69a449fa36ff2b0c2c40057a73300cf5b1489a2f3111d60b30f5a",
+        "target_sha256": "165ac56e76a06ef712d477d7ccb4eaa137c51a721a132f2b25de293dd8662fe8"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-1e5ab07f77aba9ab",
+        "family": "mixed_products",
+        "prompt_sha256": "46baa31d0e4568d5ce19ea66760bfbf07a928469727ca9c77258e62a77c8cf1c",
+        "target_sha256": "b031ff71748f3e26615fcba265366543facb5704023cec0d60b0e7b8b0251ce7"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-b200f1a1daa2a378",
+        "family": "mixed_products",
+        "prompt_sha256": "9aa3ed4cd192500e2384f82fd16d8f3211f1329f8870150e4b0e77f544bff0c8",
+        "target_sha256": "cfa452677e7fbc4e4f91a4f390b491008324678ec13e1369ffc4bf989effef06"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-851e470fbd3376b5",
+        "family": "exact_division",
+        "prompt_sha256": "72cc6cf91cc87b63e5264b058c70a5d9080e405c63005fb631670ab7335d99ae",
+        "target_sha256": "154466477ef0007e3b98cc14635deca873cba42bcd7e40f650b021d1bfdc5605"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-21fc4ef4e6ea9b4d",
+        "family": "exact_division",
+        "prompt_sha256": "5df51cc274aeebdd8ac229ebd633d9cc2738e9852245c4532710db509a6ff5d4",
+        "target_sha256": "ef9a33df1bec7ca93ec852b3adc3304521c7ce857f123c26294ab09fbe821996"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-4910658f2d6a0dcc",
+        "family": "exact_division",
+        "prompt_sha256": "c5fbb86fb6d79a1710614ea0823c73a16866de3fbdfb0ce72aefea14befa3733",
+        "target_sha256": "667981a90bb0b790de0f9738fb46809f68547816c9dadbd0646e0dc82335bd1e"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-84e1ba5b92ec004f",
+        "family": "mixed_products",
+        "prompt_sha256": "a251a427cc359bde60b638287a8409570b10bdff53cae02b7b96a62d70a1a38a",
+        "target_sha256": "74f0dcfe46cdd257dc35637f58fac2c9f1c48c76fa16ec0ac4593ea27894c21a"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-e42c782f8614db45",
+        "family": "mixed_products",
+        "prompt_sha256": "00e29d1e4d9caa5f0497899605cbd6b3b1d85810bda7e0cf8bf2e34e7b129e8e",
+        "target_sha256": "622881b5955c7442ef50588d13e393a95ed89408039f5af5f0f45620d4dc7c95"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-9b998be509a3ee70",
+        "family": "mixed_products",
+        "prompt_sha256": "d215fd9a6a9407815203156d47ccea80e57f454225b85fa618717049934d71fb",
+        "target_sha256": "2a64ef36fced8da0abadfdb128ce8d9a1381f06532badc54eaed027808ad5a50"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-b6a75c705780876f",
+        "family": "exact_division",
+        "prompt_sha256": "e02f03d23c09a69158615a3aee053fd642ac6711736408d656964c35fa961447",
+        "target_sha256": "5f7af4ab2e26f31b53130c868506a757153a35150e00267914674b29fa3123a4"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-f1b488d3e3cbc3b6",
+        "family": "nested_offset",
+        "prompt_sha256": "a87fc834d87cc182307ce0c56ad563104efb40d4fd3f6cb98123949522b1f29d",
+        "target_sha256": "08fd80c2e9eb06f2139a2488799fe744e6e5c50bc13f9c19445982a4a6575904"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-b83387505d297a87",
+        "family": "exact_division",
+        "prompt_sha256": "87d8158ff3ea308afa4ab07e255706e2234621fa11ecd28203cccd0f0e2a28fa",
+        "target_sha256": "e4e4b23eb9a42b9314ed13a0063ed746b15668d4f763d5066cb5c59817d0bd6c"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-91dcc81b5945b2fd",
+        "family": "mixed_products",
+        "prompt_sha256": "8768052465cd6b2d00c20a26ac3f62f3d1170a288de346d2d719018415831d6d",
+        "target_sha256": "4b6bff4ba96f5b035ba1ba89bf9497d5c845214354a2885d46e89c55431737ed"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-37fcb4881cd8f02c",
+        "family": "exact_division",
+        "prompt_sha256": "aad5b2af5aa0baf970a6ed479afa0f2143334f7abe5997184e8952b3917e636e",
+        "target_sha256": "fb905c8185fd79c1fdd615ba83e39eb209760b007f51c802d50dd440c6df4253"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-7384dfa79175786e",
+        "family": "exact_division",
+        "prompt_sha256": "d6dff5e27bbcb9e857992b45ed43b3bbb162282732f6796d311c01ce2856e2ee",
+        "target_sha256": "e00830d1c04ae5ea5f1e2b7168ea163f9b6a47ce319cd09c63f59a85bc323398"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-46c67831eb6e2bdf",
+        "family": "nested_offset",
+        "prompt_sha256": "1b215bb1fbc45f2c27e3b470c53efa58d6e44b8eeeabedf76e4813b784eaf664",
+        "target_sha256": "1eb311fd3626f384cac59d43ca2bfd053a12bfa984a1cd03830933b9217c9d3b"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-9056082567d71b8b",
+        "family": "mixed_products",
+        "prompt_sha256": "f03a51c496b4a96f5f790dae0c410c899009f5cc16a6a01d1eb4d7637be944df",
+        "target_sha256": "a5dc99f894b3f9dfee862cf3129f8f812a87fd4d9eddb5cb278ae28cac00ab1e"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-06388e9f4707935a",
+        "family": "mixed_products",
+        "prompt_sha256": "79ddc43b54d4d26dab4d04c7cf42f5ac5502b0241b7cc66825939ca28ab2c163",
+        "target_sha256": "31305bf053c2654d3d4b3a3ef36b5062fe3584e2b829346439bed935f6122b92"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-66708e29df04b996",
+        "family": "mixed_products",
+        "prompt_sha256": "809e4ad6131d7285d845c1c004a2cafa6787feab041ff211281637ea183d19b3",
+        "target_sha256": "d98310e4606f52e67d9fcb0b31fadce9997da0658ca5d0bf4fe18bca6e1b63d1"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-3a9bc06750e66ed9",
+        "family": "repeated_operand",
+        "prompt_sha256": "9c971d9839885df92368b0bcb12147718524a87e61ac34ff468341a71ea3c6fe",
+        "target_sha256": "035706e3d9d537fb9b8642630199530820c2da3e08d4e13cdd4c60b8f6e4b076"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-3609539b482463b4",
+        "family": "repeated_operand",
+        "prompt_sha256": "d6b4f9c0774b5cde758acf80216ec1e6204ea0de03b9648b7efe8264ac2b8986",
+        "target_sha256": "8cc534faad5ff2c7339ecc4971f4cff648b1ca1ba571bcb4f88ab7ee12f719e7"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-696f93a16644c094",
+        "family": "repeated_operand",
+        "prompt_sha256": "cd3bacff5647823226c816d3cf927a1eb818f44d4408c5d9bd3d835bcdf37793",
+        "target_sha256": "38821303f3426d29ee2902d5a30782110dbb67e701a96dc951d5811f7c1485e2"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-5ad47f5960f98559",
+        "family": "exact_division",
+        "prompt_sha256": "6e8cbf99a0a74cd71a4e650f9d9f73ae0f3a3f16732b8628293649d8e63803fc",
+        "target_sha256": "5e12a36d47a49540a8643cc29bdb7a9d0f0c5c5ff1b5bb2ae7b3ff950535223d"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-42c0e9b4f1bcaa26",
+        "family": "exact_division",
+        "prompt_sha256": "baff8c8fcdbc2ac1afcfc92ae2998ef0bceed0259b9364ff388574dbeda70c71",
+        "target_sha256": "d7653dc87e41bc7e493f99e9f1b47f3f930ac2a50f407e9c4aab31679b9dac4e"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-231e3fde866c2741",
+        "family": "mixed_products",
+        "prompt_sha256": "2362d62df29404a5fdd067ca4a8061c98c01768d04cad3f93e56da94c9a53bc0",
+        "target_sha256": "9818497d80983008848cde361ed224433ddf3fd30109c9e763f76b2159a35521"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-4a6c27eb0314c620",
+        "family": "exact_division",
+        "prompt_sha256": "3a4540e80b411ce85306ea255ddb34d261472fb9d8a13f3f9043d2489752f74d",
+        "target_sha256": "9b266b5e55d6f500863d6da85c127f84c2f8143ff3e6a46d2451615091664c08"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-482ba1d18be3f826",
+        "family": "mixed_products",
+        "prompt_sha256": "b2d53f95575abc31681f5fe2ff1f5b0fa6ab5a1ddd5781bc590b5b823b46baba",
+        "target_sha256": "d8c3c53095665ba127f6744b8c345bd4c77d3fce9be45a3d260ad4334b255e6a"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-0af06844a6ab98bc",
+        "family": "nested_offset",
+        "prompt_sha256": "f6fe40da4453c855f816cef7677c68fffb8d49186c31402303dcdae8913ae568",
+        "target_sha256": "70796d82c596f23d18fff31bb56e093d024566215bfa3aedb6136aa94e65e762"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-b0d355515609f50d",
+        "family": "repeated_operand",
+        "prompt_sha256": "56dbaeeac1865bdf591422888a0d8d86a59c5a2a508baca4980592ef2e16c43b",
+        "target_sha256": "bfb7d597438dd36b1bab1084cf5bea726811c98ea2845ec57da2b7187aa25ab8"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-3cd6e821831aa7ca",
+        "family": "repeated_operand",
+        "prompt_sha256": "44d68b9d85973e0202f9b8dac997396c12d554500457e4e1de4d5a295649b160",
+        "target_sha256": "6d7672abf97743e85b4cb3ec5189261095568f7524bf66b03cde989e886f676f"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-b58be5928b9d699c",
+        "family": "repeated_operand",
+        "prompt_sha256": "1764bb40c0304f213a35af982df0175004f3b5666fffe596de13a07aa6b412a5",
+        "target_sha256": "1c25723b85258f7656ba7b40da0c5a86d5b46fc0171ccad4258c21600166ef64"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-af42233fdf976c1e",
+        "family": "repeated_operand",
+        "prompt_sha256": "a67e64e96a7d3cd1b2b053e20006ea5a28a67f8f04fc280d05f7e872f3c24794",
+        "target_sha256": "8e00569dd95a0be7b21383877199515d55639974a61fb843c0d0edbecbce6c9d"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-51aa61382cc12e38",
+        "family": "repeated_operand",
+        "prompt_sha256": "9e58ef57d9396c716674d5797cb2452f0e2681a81a9424e5da643b3adb718c59",
+        "target_sha256": "c812f5de77b60842d1a2c5b6fbeb45eaaa8e7c2c25dc032fbdc9a7ee51644fb7"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-6d47cc3c4661227f",
+        "family": "repeated_operand",
+        "prompt_sha256": "06f0c89e985b9718d6ec49f42dbdd95d1535c5fb2c6171092ea8547472471617",
+        "target_sha256": "14c055eeb11f46fabcd919a2fa7c16018d46b8303c037a7581338c4f93b0c203"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-cd142fd4bfc16989",
+        "family": "mixed_products",
+        "prompt_sha256": "5b21854213dce75663610f039d3c5123ffc869d769790674484e214754391e93",
+        "target_sha256": "48eb6087121ad90d6a4508992e14bce64bedc0d57767165442c2102d591926f2"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-e343e19e02033103",
+        "family": "nested_offset",
+        "prompt_sha256": "d388c68265f697441afa152aacbb47da3b78442a46580d7e96f7418e1ba0fddf",
+        "target_sha256": "4585eb7ecc7748879ccd80da0ec38484fddfbd329da2e2dbbd28d79b090e73f0"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-b4cf97afe5d7777b",
+        "family": "mixed_products",
+        "prompt_sha256": "202327246cd275c47d3db683ecdcbb21a547b3cbc2bad051fdc0b6ea452c5920",
+        "target_sha256": "6f592b752b1358a85fb01580eebc0c2f323907995fd1dab092030dc0fa8086d1"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-8b510f0e9b5fc27c",
+        "family": "nested_offset",
+        "prompt_sha256": "540a64e922a00509fbb1d18c298eeb45564792bf13c46749fd80c57342bc1112",
+        "target_sha256": "60f7b65fd19f8839dd8d082d8ea079eaa5007d7093c5b50daf759a24e4c9f2fc"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-2c9f4433daa0d257",
+        "family": "repeated_operand",
+        "prompt_sha256": "4ba47fdedbe0a76fa1eeacb625bcac359016feba1fc252aa3f56cf787722b575",
+        "target_sha256": "5f3054e502e4240c26e425c2f89351d8a331f84960d08d0fc6acb8061f9d13d5"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-fa5410fa4936d2b1",
+        "family": "nested_offset",
+        "prompt_sha256": "066597c3a9e36ffe173c50c8f326d0b8bdfc743f632fd9d117890c89677aedec",
+        "target_sha256": "11a98f1ce257528f3762ad8edeb5031a1f2c5ce4e44e8d118b4a5c35838e20a6"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-5559a9026ca1b831",
+        "family": "mixed_products",
+        "prompt_sha256": "e7b3ba9159d5bac2a69a0b8deb72f18a2ac0705c8a0356fbea671d74aaf0eb13",
+        "target_sha256": "6463d44180ae241cb44ccad40a83fc46bb10bee4fa47d4330f46e6e63fe72278"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-9efff293651c16e8",
+        "family": "repeated_operand",
+        "prompt_sha256": "4b9ce2b2ad4db629fe677fc07ea82d2a01d7889e9fa27907decdc66e2a60f247",
+        "target_sha256": "59f83e24f3e198de4c73d04035608ba3fa453e9f21440d90068dcfd37375dd85"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-902433b88219a55f",
+        "family": "repeated_operand",
+        "prompt_sha256": "5e5b0ef5ba79a571deb793d757cea26d7e4230fc8c5820f92141162a212de684",
+        "target_sha256": "6d64c78d981608cb31365fd0a487fe0cc748fe9283328bb09e2c5adc1d801f93"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-8545ab8dc903b593",
+        "family": "nested_offset",
+        "prompt_sha256": "2a197155ac01629dd9d3a122cf79b0b4af151bdb633c8e78ba5e7abf02b645c3",
+        "target_sha256": "3615e6c1a96deb3e1753e799edcc6a7d6d3f5ad3f3799c7dd47f722733d488c3"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-c7a4ac83cb34e981",
+        "family": "repeated_operand",
+        "prompt_sha256": "1d7c5d3a9c4d6ce5488dd68340b2a556be6d70cbb80af496b20b37f7726a10c6",
+        "target_sha256": "d2df5668a1430a4a2b5148b7357c5c0da7ec83cb5eda7bda277c350b21963198"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-17707809cc2a5920",
+        "family": "repeated_operand",
+        "prompt_sha256": "b8ce96354d71a60f182e4a68c230f9135afc960083cfbc2acf3bb8306c2ecdf0",
+        "target_sha256": "6f318ba3283b316bbac8e06ec7a518349151c1d48659f1acdc004d72f9a0a4fb"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-ecdf8d3448b72e6a",
+        "family": "repeated_operand",
+        "prompt_sha256": "482e74a3bad15c0da5ecb8ed91d559b36c2e2b1332b97481eedb1f2f1dc36a25",
+        "target_sha256": "ecbb30c77cb34e8077ace7085891f6b38651d6e3960b483eea61f82bf24864c2"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-e7a5a01fd3d31fbb",
+        "family": "mixed_products",
+        "prompt_sha256": "970b8b647bec17bae86ea94f687d46c30411ff26dc669ab6224140449368b599",
+        "target_sha256": "ecb9ff8d2f200769d3b9fb57ca9bdc058b6f00cecd549180b8aa74ad20f7a1ae"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-8adc4ec67cd2e108",
+        "family": "nested_offset",
+        "prompt_sha256": "fb29f098735c701b5087e51e3dece812a51cb8efb7c931e266614395658fb389",
+        "target_sha256": "8367a75285ea162a56ce35ffef623b155d47ef3d40705375b966262e09694458"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-077e0f72bc384f9c",
+        "family": "exact_division",
+        "prompt_sha256": "a2e39bc36494712a0a303c2ebaf46606e90686adfd80846abf9175e7cc97000b",
+        "target_sha256": "bdb7b654d1b02a201a91764d6d172512789f67e2d688402781b5b222b09b92ad"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-2cff1911e1c0171b",
+        "family": "repeated_operand",
+        "prompt_sha256": "ed165541192a4f802c076613796a5e89f9b4fca4c375ce0277355a49adfd2790",
+        "target_sha256": "ce354421f5c5c6a35149b46f9314abfd4d8d4408b4a6f77ee5d614f3a966eaf8"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-fd61dc5e62f825aa",
+        "family": "mixed_products",
+        "prompt_sha256": "74d3802fe13520cdade2d1f576b253f7b4c15ec299295d08fc4ea67419e5b8cc",
+        "target_sha256": "77b9af0fb0b5f56d44f23d2c7dbbaebd8505d705c0de3c616b0e4ff31c4adfee"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-b80cf61fd6f9db85",
+        "family": "mixed_products",
+        "prompt_sha256": "73997dfd30ef8d502dedde3903f9e5c1b2ee1ec6c088d86ac72a6387dc334e07",
+        "target_sha256": "72e045c21453ad3d82b7e12a137ce5765c6b6da5a5b7bbd5cfffcff2ec3751c5"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-50d5c087e2979355",
+        "family": "mixed_products",
+        "prompt_sha256": "c2ea531ba676887601235cd10bf49204faca1c1116f2ae14c474ed4225387f8e",
+        "target_sha256": "2f66ad39b4ee65e339edd7b2c74f45030353b7b4b0b693f9a6088b0f83744cb7"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-3dd8daf4af7b0ca6",
+        "family": "mixed_products",
+        "prompt_sha256": "59e12e324997a8a956c27094044ca21c4007932f80720f63e76e68a7a6373a9e",
+        "target_sha256": "8a5ec3861b79e02a9cc35dcabc1d158f4302552edea0d43cc5cf9e8ea4fe6eec"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-da743515a0cbcdb3",
+        "family": "mixed_products",
+        "prompt_sha256": "4194e7cf98cd44530a62eb2810d7842cdb454c4a0cc9befe9d35e91b24898dcf",
+        "target_sha256": "a5b1b919cdb5aa284071285bbc78b1a5884d88cd059da08ac0a373f403847153"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-a1ecbed6aee071bd",
+        "family": "repeated_operand",
+        "prompt_sha256": "2893e3994bc50eb0d386bf5854ba98a2c2d88ddf74138c4f19d4a07678fb1869",
+        "target_sha256": "4077b87df95bc9cc1eef9e09cc2bf40a16d378383f66e1f809f37fe79afcc325"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-30c43481619e42f3",
+        "family": "exact_division",
+        "prompt_sha256": "f4b832de285360d0af4b68d767c3dff0c341842b6eb2f17222c51b1c97d3781e",
+        "target_sha256": "6e5a07b787d1938edcf0ed96577378687d18bdda687f722caba5e618d526803c"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-ea6f2bab986f5ffe",
+        "family": "repeated_operand",
+        "prompt_sha256": "95eaf31fb8a10b3b46ac1736c357b7e9252c53069e36d8f93520b08be14b7a8c",
+        "target_sha256": "6278d7b050b5a63b4755ac097c2f20ad4d5e41747aedcfc5b5896ea8046ac1ee"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-fda62f2243b98725",
+        "family": "nested_offset",
+        "prompt_sha256": "95a8f4f02c73ede041e4ab64b09b526345dc9fab3e67de571613723a35755b70",
+        "target_sha256": "d8c3c53095665ba127f6744b8c345bd4c77d3fce9be45a3d260ad4334b255e6a"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-f124f5fb1e05805f",
+        "family": "exact_division",
+        "prompt_sha256": "41d30717ed6666657d1b9167392a3def4dedcbcc397ced82b5aefc4d95a5100c",
+        "target_sha256": "e76eec3a1cb4168e25ad8771cbb69942a7464d18c63888fff10432d5fff32986"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-1d6ba7156480fc34",
+        "family": "mixed_products",
+        "prompt_sha256": "c20a4d052b0420bfb51f839f26ed37065b693af079738f3f3d37566a83b9e2f1",
+        "target_sha256": "e4acfdc01e3703d9ea1762417ea2847edc9e51d308e7b3f0745fabca6a940887"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-54d0bc87575163d8",
+        "family": "exact_division",
+        "prompt_sha256": "894af886012497caaf5c24cd89ddacf110ad54420c4de221871f43b5e5f1d48b",
+        "target_sha256": "ceb2bd77340051086c589957654b38bd1669af7ff10d9ab35850433f75e321e1"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-f632e8243c942fbe",
+        "family": "repeated_operand",
+        "prompt_sha256": "0c3899d348d6a2c968c05f0cc50c92901fe9a8fe001771c5a420c101f2009157",
+        "target_sha256": "06a97a9889ef63175a45fd3b2d91744ca3dce3de32f8ffda070a95d4a913f44e"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-e2da46097938f271",
+        "family": "nested_offset",
+        "prompt_sha256": "7d71cd9834e693f6215138de921f1893c4ed5f1118be803580a690752f4e112b",
+        "target_sha256": "686b7da41b9763a594fa1a5ab88450661a407c2e4908df071f150483e773c688"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-31ade3f9c7dc9b31",
+        "family": "exact_division",
+        "prompt_sha256": "3550f82b8b5d474d860721959ca37fb6d0361f4acde18548311cd5d304fdfaa4",
+        "target_sha256": "05b57ba06a6d74f41b9ac0eac04fb8c7a9d8e3ef9c38e8071d4fbeb730985ae1"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-63336919f1af5842",
+        "family": "mixed_products",
+        "prompt_sha256": "7822c23a2af3b433cfd5dded129deff3cfd53d09a439cc5d941ced2665689c0a",
+        "target_sha256": "e13fd5774f85c28f35841ab5273a9cf9ddb091c94408e0876027eb5aa37a1d14"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-953fd7966aa1a992",
+        "family": "exact_division",
+        "prompt_sha256": "12ce12eb8bfb234316c9f64a2f5f31bd534a6e9989160050bab648d379d9b8c4",
+        "target_sha256": "b146c0e0ba3b70b567ba8d7678662616d471f534a0b00bc555e0f1779969389a"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-5aaf38e80ff5e140",
+        "family": "exact_division",
+        "prompt_sha256": "8ba3368f59acb3f591fd583529ea9fabf97a48369569c7b978e07b908983add5",
+        "target_sha256": "ce09a76d894f1fbef1dce373657934c3b000527bd70b63d6986b5923cc65103f"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-7d3a88a13d345191",
+        "family": "nested_offset",
+        "prompt_sha256": "ae9681a0e20cbe389368ff0f37c7fd84c8a27b29649e31b7523ab74da056c643",
+        "target_sha256": "4ebf5fc93016a25a8c2b684be547c04c00e5db3175e9b86830a40dbcbfaf90e2"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-5468d8c233e41132",
+        "family": "exact_division",
+        "prompt_sha256": "87ecac86b340682dfac4f3fa722869d2cf2e07d66ce7fdc01fa8803ee873a355",
+        "target_sha256": "9dd7a2f729fffbccf34d443a7b84d5738152c86bed698ef6e20d7576d26cf51a"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-24e79ff6280ad3ae",
+        "family": "mixed_products",
+        "prompt_sha256": "2763f0dded81a661826a2d8b86b0f0ae4deeea3cb6828a39f69ded204b8a4f5d",
+        "target_sha256": "a8be434bc74ab61d91b702cb223b4bcd3561de4ee9a0e2ac39db386c535cb0ba"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-f3aa4dcb48743e05",
+        "family": "repeated_operand",
+        "prompt_sha256": "d0bd8140fb9cb1f1a449dd8efdefcebaeb9d28fd1951f0bb3d39069a12f196b8",
+        "target_sha256": "7efed3bece6418588c3cc7f98f29efdb05614de2b5ecccd01116fe15dc2b67a5"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-1583d171c272199c",
+        "family": "mixed_products",
+        "prompt_sha256": "b7720b80d60fe5ac06f3acd38e46cfe7bd28f76bdd8a0318d94ddf733dca7a8b",
+        "target_sha256": "1080e6378f97cd4b53d3f771dce245e8c6b4ef803868c82125e37ccedc896210"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-aef5d69f1a58e8a4",
+        "family": "nested_offset",
+        "prompt_sha256": "b5e9cfb73658ca226b615b2101b9327cb059463b7a5b7a1c21f4e7534cd08e9d",
+        "target_sha256": "02639f23e6464fceac3d07135f98911093718e178e2f8d4e3c4ae4f3fba2086f"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-347c4fa4c14b45c2",
+        "family": "nested_offset",
+        "prompt_sha256": "2c1a57ab56e0278b041419087fbc750745dbeb8df8960bdfba761f68f82efe11",
+        "target_sha256": "aa943646f86a5c502fa29ada4c9dff1393b652f3f9a93520f5c686f8a0a1d157"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-0b82c4a2ac141322",
+        "family": "nested_offset",
+        "prompt_sha256": "d082f7472b316032ea474f26f936f2389083bd660cab36cf5797e3259024d592",
+        "target_sha256": "6b0466cec5c9f73504b86a295c79243652ce65426cca1164fdf3feee975f501b"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-ed3106e09a3d4af8",
+        "family": "mixed_products",
+        "prompt_sha256": "489651a24830ecef6c0f44269df48ff7c8afe48af6d3b159aa22f38fdc7d1778",
+        "target_sha256": "046e48fba823807600de705e87ca0cb02418b53cfd3a86d3b63f76c39d9ea970"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-04566950fde6f255",
+        "family": "mixed_products",
+        "prompt_sha256": "a09ac5e1c1566b8ae791bfdf26b760b4d61e2c10731ab280972e0e46453311a9",
+        "target_sha256": "03e15924b7e1874ce7f2220d06177c7cc12eb5687d4a1257ab10cb92127f55ea"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-0db9ea3dbc015390",
+        "family": "exact_division",
+        "prompt_sha256": "3783929cd023688a3502c3a7635c6ee0c8bf59e6227cdf6ab4022365822ce5f1",
+        "target_sha256": "b859f698ed83741178085c935292b0c28e468cad6c41990aa17fd2dd993e85ed"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-981b3abc77980f63",
+        "family": "mixed_products",
+        "prompt_sha256": "a2415c0a0b5b65c93cf9edc19432f228e81f164584f4be641a214adb9b158abb",
+        "target_sha256": "56a20c1d05218a825b2790de37056404cfd98c65a284bc7927b20ac51583eb1e"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-554e9e239f78ae38",
+        "family": "nested_offset",
+        "prompt_sha256": "649e5ea962cf0c2d8ad6049f1ddd7fa59526af2e63555a9df0f4fcdd5e68a07a",
+        "target_sha256": "358405a6dc8889e05d663a2b250634a03998540976a13f5b32ea8549e544e14d"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-e6b4ce77f2508ebc",
+        "family": "exact_division",
+        "prompt_sha256": "d97245fad47fdcf6cfa13e613e96e116ab522b2ae189083e7fa06adcc5669e83",
+        "target_sha256": "3b5155019508ced69521e15ebf06cb244fd45d0582001b91d16a3379368b5365"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-8409866f770c4c31",
+        "family": "repeated_operand",
+        "prompt_sha256": "0fcb29d8372b8d0206450be09fa8b3d217c5ef02bec737c8bb122b988c4d7bd8",
+        "target_sha256": "025586bebddbdae6e2db8c46f0b934a8ac8e436e52337fcdb598bce120e268ab"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-31430419c85f40f5",
+        "family": "repeated_operand",
+        "prompt_sha256": "56676945a87debdbaabce1632968e1f56907b6ededf730538c5179dfbc2cb051",
+        "target_sha256": "bad3f37b1eb6fc4a0cb015fa6f796262f3c824dac5feb1c49e36f38c25a8d3a7"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-b958cc8e51f177fd",
+        "family": "exact_division",
+        "prompt_sha256": "079d974553f88694537f895bd4a53b54dd5ae5607f94a5391a70704733897518",
+        "target_sha256": "748ca6f0e0e05aad98b28e05067ac958a64d80709a58a859bb8500c566d1a478"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-96314bf240dac74f",
+        "family": "nested_offset",
+        "prompt_sha256": "c9b9c6124b1d555380ba30146711e07b169ad3caaab0a7d525109650ef5e0027",
+        "target_sha256": "8a5822bd737a395b11345e43f3ed1de7b5e6fb0d4cb74a505f24bf9e7ae450ee"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-eab94ac5425073cd",
+        "family": "nested_offset",
+        "prompt_sha256": "a8db1f8216afa5111c42a9e6bc5b5bc1a1b9f015362dc72e89aba6c9e00d0224",
+        "target_sha256": "91d1128d48070158f763394338fe9d67e7cf30b44c4fa63e19a2e6d6ddf7dc75"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-fed868ddbe1940a2",
+        "family": "nested_offset",
+        "prompt_sha256": "0ed12077d56e448a58cba4542de1feabe293de4980214203d31822cc23570a02",
+        "target_sha256": "e03eee117c9a3623aec54ac00b5752cea9f1de9b68efba75b7b985ed470f0a82"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-189bb59b7356c9cf",
+        "family": "repeated_operand",
+        "prompt_sha256": "fcd384bffc9cf627722e3601b83134dd6556e1a5bb8af4c0e314a7a432ee2e31",
+        "target_sha256": "ec366a74722153591ac0534818ab64498ec5b25cd631b220e00bc8da48b2ba2e"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-43ab68afaa0dfdf0",
+        "family": "repeated_operand",
+        "prompt_sha256": "dd4cc65dd46fe2d8c3da20fb2ff8e559a782f772ee184b98f4c748d99bcae522",
+        "target_sha256": "8ef2b1e89ba279f54b4e2110d7c7286222a4a18b1c1d2ca9e0d1a4ca5b820b4d"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-ff527e67f9512c05",
+        "family": "nested_offset",
+        "prompt_sha256": "1a9fa564a8332ff6b49d6ab893a7c62e6c8e710eb16f3a3173a873ac84e8f780",
+        "target_sha256": "d9aff86c5c1c977b2e28daedd624d1a36cca8264c7f1151813a2b69a78f1bb9a"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-0ffe209bd7aa20c7",
+        "family": "repeated_operand",
+        "prompt_sha256": "b439ee6d4bf646525bfb83449d0eaf3288b8065072d756ef346dd07c642d8d11",
+        "target_sha256": "0ef683760cd25a7df3326245577e4c9ea824496c45221425ab3a36cf20a55edf"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-8bc7ca23ee51c150",
+        "family": "nested_offset",
+        "prompt_sha256": "c651dccb23a3556dd4db5e8368fd00906ffa1d74479c909d1935744c6e419727",
+        "target_sha256": "7bbe0802048e8d83beab089b39affaa0f9da72d2670dee7ba68b0a0e0688b0fb"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-ce3bdeebf0a78e62",
+        "family": "exact_division",
+        "prompt_sha256": "e6464d1b040179ed58f1a53c578432977b66716d00950cbf2852e5ca31f348d9",
+        "target_sha256": "3ee6681af1cbd36094d62f2afb86127ef9d4a84d02f25f67b4b8f83e0f926329"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-6112bdd9d717a258",
+        "family": "mixed_products",
+        "prompt_sha256": "3510472d690d4d1f7022a8857f794708a726fcefa6477e5006e471344190d6a0",
+        "target_sha256": "b38a0668b8de2c761e24551f0b0567e28fb86c4d044768064623907fad8bc358"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-1d125536575ec2c9",
+        "family": "nested_offset",
+        "prompt_sha256": "4e92ba085048ac784ef06de5e4b535e99cf310a0bd1fd982d03e1b38a09d3ab4",
+        "target_sha256": "1987dadbde85eb328b02dc80e14ec00464ea8d6ee5a72df4aa02f92f412b566b"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-91997ce54bf57d7c",
+        "family": "mixed_products",
+        "prompt_sha256": "92ebfa29f109c99cb0eb03b4292b49765e4cdf85499c8d05a572d5b96551518c",
+        "target_sha256": "9871fb983c2f3c900333a86df37a55c23597e325142a4e7168706794a8a2e824"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-4c29bc8f708d5d76",
+        "family": "exact_division",
+        "prompt_sha256": "2435c4a0e75189e844545f9316d31b324703f616a46e8f85490a03b8fe6eaf85",
+        "target_sha256": "d7fed50fa3e23e29bee36f327f470c01ff81a4f0f97af367b622a7e37b407b69"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-5a0216d3d90cb800",
+        "family": "mixed_products",
+        "prompt_sha256": "4fb2f1b3a5035a0a95eeb5a7aad98007370121055ecd0a826e3d38b44d10ac70",
+        "target_sha256": "e0e5405cb5989405bc7387cbee9b964e831925dadc3c2afc94e7211d62fb0042"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-de39408959332d3e",
+        "family": "mixed_products",
+        "prompt_sha256": "1f429c36820cb449a4f2514bae7257a47e0218f10f689cac81ee33b4251d54f2",
+        "target_sha256": "c88bee864938b9d677f95bc43f11dda0741488ac7baa180817acdf6b8433a298"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-8a34ed515709f32f",
+        "family": "repeated_operand",
+        "prompt_sha256": "77149cdfd5c859e713de8dda094ea79205c332f984c679e5967c353456e02e6a",
+        "target_sha256": "343f0b7ed8495312aad46a84f04cb28931818815e6b40f50194d5bdda06f41d9"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-1121a9f359e243b2",
+        "family": "repeated_operand",
+        "prompt_sha256": "2ed530a83a14f55552990a768ce4e45ba12cf77c8e11a30d316bbfb49e9082ff",
+        "target_sha256": "94983ac02d4c248052f27855196eb120a5d7b3c8d91ce683716f7361e5e3c292"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-9f3e9eea40202ad0",
+        "family": "nested_offset",
+        "prompt_sha256": "8f28d7c2d245a27f992a2d845c1316b53116731b1a04f1a019333c904df4fea4",
+        "target_sha256": "67dd3ca1458cff7d477be0836ecfd55aa11465cbd7f015d2a74b7fc53da3053b"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-125350e45a061e50",
+        "family": "nested_offset",
+        "prompt_sha256": "79406da528153874261de6fd68ac540a77959af9029521337c8c81e2f9680927",
+        "target_sha256": "1e924b46c6da8fb669e3433dc7e2f23b390223804c58724f3c6e96af25056176"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-843b42a3b6ee5922",
+        "family": "repeated_operand",
+        "prompt_sha256": "9eb8416340d28bb792ce6044ef84324451839d5b7843fe878ab83a4b464bb4d4",
+        "target_sha256": "a3e01a90ab36c77d415feea1b7c3dda83d1adb9547e1ad6addcb4e76c1d1e942"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-3c20e812c07bfad1",
+        "family": "repeated_operand",
+        "prompt_sha256": "df0c4cb4ab98a70233da4a52ed95f25fd011113b8fef8ca03d944fa64cfaf1c7",
+        "target_sha256": "00dc1be39b7f97aa07a72196ea3fcd7848f8c313b134d3d403560cbd17b8fc73"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-1f58b82d30f473cd",
+        "family": "nested_offset",
+        "prompt_sha256": "17da8988045fa862f7c90257c3b68ebdd27eef6601567cc6d3e5c6c557ee26a5",
+        "target_sha256": "a39252add0f411b9d8f1b306b9a083bf514e67f619f2dea99fe45ab8a661f282"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-a61202a129ba4e02",
+        "family": "mixed_products",
+        "prompt_sha256": "b31cdd4d781a04d38df9f92a22c971518ae65806a9834a9ab25340ae90c3f289",
+        "target_sha256": "b5fb4bdb391b9edfcd338b755fc91e503f0c24b93f17d8c28a75436c3eae7a94"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-aace9ce91ca3441f",
+        "family": "repeated_operand",
+        "prompt_sha256": "08d97a065e450ff16b1a225d76057a59cee0ee8d3e538f109e99df1792120dd1",
+        "target_sha256": "6dcf4854bd167a8cecffff9af1a0e136fb9fa3cf89202bdc846e9633cae25913"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-0e2cd7cb72850727",
+        "family": "mixed_products",
+        "prompt_sha256": "64e67361679202976eac58bbc44973cfcb83d057e55e275c211daf9fb75d7d01",
+        "target_sha256": "680cc60e39b9897079f1a377043a9d0e7beb923c1562166c1095f5af4cee1505"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-3d4ce9a04018cdf4",
+        "family": "repeated_operand",
+        "prompt_sha256": "661eec31ffdfb4423d2ece2026ebb7fae936ceb3c7d651f08e936fd916fb5536",
+        "target_sha256": "6d902056cf4756fc082af6b6b6cc107f0a6b819b7e84c739e137771446688ca4"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-891ad181d00aa340",
+        "family": "exact_division",
+        "prompt_sha256": "d0f73f9c61bd50b3c8ead58bdc242d0663cc5b17ade0066ff1509afc718df6d1",
+        "target_sha256": "0a430e68610fdb83b2cc32c223aa921527e3e19df23a93c6ea40dcd7c8d43ce3"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-8f5ff6f2965ac6f3",
+        "family": "repeated_operand",
+        "prompt_sha256": "62ae863c795c61cf689474634705fcd5cd535547c69ca7dd9ac012c66e320c19",
+        "target_sha256": "791a42431c09d2c32d8b7a58fc978aa624a2447745691dd4adcb056188a4a082"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-2b895148c11e23f7",
+        "family": "exact_division",
+        "prompt_sha256": "dfce6e2e2fc6cfc7d116f37ee0aaabe70e34d30a8fd36e68b16e4344f779c17e",
+        "target_sha256": "06ebb322c14f7c4a8ade686b3a656b45b88e74bdb0fbddfdf0dace087e1bd1d5"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-066bd204485bfda3",
+        "family": "exact_division",
+        "prompt_sha256": "d9ed7ae1afbfa662a11765efb2563746a05960daa183007e3788feaf7927e7fe",
+        "target_sha256": "4332919d143aeda50bf7eb2c0942d237eeeac6290296f295278fb07034ba548a"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-a3bb2301059a7117",
+        "family": "nested_offset",
+        "prompt_sha256": "95a69416323dd5b85f2d3b4f6b2e665d4a023c3ea92a4c3f920d464a32687856",
+        "target_sha256": "c89422f89181bb3d4b015ffd9129a71cfe58c975047bc4956a89844c48e2339e"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-a8735365f59898b7",
+        "family": "exact_division",
+        "prompt_sha256": "74d118ac340b5b26afd73e6a3707ea0be0ddb54e90c3829e24e349e468af9a52",
+        "target_sha256": "91967ed5f1bdf49210a06bd3e98760e7094e1182f0fb3d782fc43bacde5b5edc"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-b07c3d84f2d11b91",
+        "family": "repeated_operand",
+        "prompt_sha256": "208c304beec0c8ddd7999603a356956457dbb538815375bd0a9aa595daf2cdf9",
+        "target_sha256": "923dda368757cc8c703df796fd20ba6ec7dc64f4243c54c8ee4ac7f9018ea083"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-a005b87881cbf2fc",
+        "family": "repeated_operand",
+        "prompt_sha256": "b5c82d5d705d147b3124aa4eabe43b4728378e3e8508c23ff3d987dbbc658490",
+        "target_sha256": "3fa3f90a894fc2a55929832e857874d48181c0314a3f74e0d0db4858f3702728"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-83d02076a38f9b46",
+        "family": "exact_division",
+        "prompt_sha256": "ff5f274c431f18edd48523bff80ac4a1e0b8a2cb0e155d6cd2b126a709671556",
+        "target_sha256": "68ff239de2f6a6d4672a1155041bdff284eaf9fb5e3e521b8e9f077633537f91"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-8198d5bb973c0463",
+        "family": "mixed_products",
+        "prompt_sha256": "2d3f18c113e465a95924ea6404e175992251e8ac1a991a7386e7550d3e443ba3",
+        "target_sha256": "ebc7ce470417b108377c6b5595c18ef6b694c68ce0594b2524a4dbf8f137839c"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-1600c0ada7b3efa2",
+        "family": "nested_offset",
+        "prompt_sha256": "c78faea5d0c7ded5ae6aa6c60a8a928bae0ff5460f462289842423bf22907e6f",
+        "target_sha256": "b3173e4ec3ca0cd8e6c2926b8aaa03840108e80edd2f0a15d439c307edaf3675"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-00ec9130349c13a5",
+        "family": "exact_division",
+        "prompt_sha256": "791a75d5e112517d9d6e3e81d5b7d488d66aa7a2ef7833aa2a9f4b449d88c883",
+        "target_sha256": "f5dfb3aac1d63f3de775936580577d28b43daa0fc636173d1ac46d3d388042df"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-75c9b9c725f089ae",
+        "family": "mixed_products",
+        "prompt_sha256": "67f2fdd0c0b51c8c0bbc6704fd6f42955e0b66136c94c052b6037d67e60ce41e",
+        "target_sha256": "93fda2c140fa7d80ee514801c0b9d29d917f4335cb7e6470d5766244ee4f928f"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-980bf195cfae60c4",
+        "family": "repeated_operand",
+        "prompt_sha256": "0b04251d61fb921bae95a213627f96d45fedaf05d0aa7907d473860964258b87",
+        "target_sha256": "399b31b15b7c1739b8bd4dfc9bb08ce74fdcd3491cf9135c54c2801aed44bb95"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-488c711c1830ebb7",
+        "family": "exact_division",
+        "prompt_sha256": "e4db3d75afbd31e3f2f97c7d96d46b76c8882b12572292eb872fd3e87c3ccf8d",
+        "target_sha256": "057759cc184ff4e0a5200aa1e7626b45ace6556b224de064823ff95573e9bffc"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-650cc0820c768f86",
+        "family": "exact_division",
+        "prompt_sha256": "41d3f14dfb5812bbbb8a897921a8f7a0b70ee56c7544011ba8de2db48de5689a",
+        "target_sha256": "42be6a9d4ac9896597779d25d5cf534060c11980ac4453541440cc5d674f1edb"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-852716e398fc809c",
+        "family": "exact_division",
+        "prompt_sha256": "bf8ccbb5df125b153d1f7c8e0f3f9d1a1f6484392d4e4ac29bba3a80b80e3b9a",
+        "target_sha256": "da6a4dbad30ef5ec1881872755c54868c37a88806ec7f3735ed98c353fc5eaa5"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-360cb4d8c166de43",
+        "family": "nested_offset",
+        "prompt_sha256": "622ae81f82740d3d6eb94511747cd9ca19d1ea170de24f823cc4d712f777dff0",
+        "target_sha256": "1ead89d1d40a274f77a9b228bd0b3a9b0f9a040132e38efe297a0f1dbad06a3d"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-72425f82f63d0376",
+        "family": "nested_offset",
+        "prompt_sha256": "3cf9a7850468a045e76401a8b6177f0d5de0f562c4e26d70e81f5b4b76609c30",
+        "target_sha256": "b63bca98ca745ed07ef696edbdfe7ae2cc879bbbdc4811aba34acc497b2c7693"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-a1428bac6d29b1e3",
+        "family": "nested_offset",
+        "prompt_sha256": "e658e41aa769bbca5e482ae62f6cf8dada8c7e4f0434d3e125377136c2b9807b",
+        "target_sha256": "96de61d33a3b66f1e147fe5a0560cb4a69ffbdc2643cebb8404817acc17692dc"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-1babcd1f70a54565",
+        "family": "nested_offset",
+        "prompt_sha256": "f1376ad0582262628f71d9b31116ba6db6d39146e9f4dd616ce1b4117117f379",
+        "target_sha256": "b90b24009a3451d0f71ab5a7535274a8eb52aa6bc041174b4cfd823cf86a4a4c"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-abc4a4597b4b47b2",
+        "family": "repeated_operand",
+        "prompt_sha256": "b6e2e43f4a1d982fbbc1f18d0226ad3baaee0fcb5eb38ce92955199206d56589",
+        "target_sha256": "69e02552e60aea10365aafa3335bd6bd65d39b7dd8e8bc3b382333c28ef45b22"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-3b619a4ed176fe9a",
+        "family": "repeated_operand",
+        "prompt_sha256": "4ed3a41e443b250b0648af24702bf8a4d91ba42e4138a5e8b617f7e9a55a8dbb",
+        "target_sha256": "b2442b7d582f84cc48079541bd392e4341ef8a10c4e2d1f7739c82523d3463de"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-96e0957482b6aa73",
+        "family": "mixed_products",
+        "prompt_sha256": "619fe0ee41f2153085776022b892af5607014dad3e7b7bfa021d87dd61e090e0",
+        "target_sha256": "7cba8798d1cdd7a1cf8284d2226ba4265199be12935349feb93230a96ab97cf6"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-d9634ba6c81f0beb",
+        "family": "exact_division",
+        "prompt_sha256": "3bac3d2fa0553c62a9a60f9e011ef4717121897d08d27afc787065f1881ef30c",
+        "target_sha256": "c8269fb0eeb8430abe3259bb9bf29b077ae9c0c9677c2411083d2259c241f5a4"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-599186687bba7f9f",
+        "family": "mixed_products",
+        "prompt_sha256": "b5dc000bfa44fa9294bdf526c88e1f896439632832b19a3967586ffb4e36c6d3",
+        "target_sha256": "2706720aaad7e3f2277871efa19e1814010c9e30782e4039b8ab0477d6e14fe8"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-8b134dcb1f4f4111",
+        "family": "exact_division",
+        "prompt_sha256": "19d700386c7bb0b236e4e1f53ee5c7e8947e9d5242a96c662adda228085a3073",
+        "target_sha256": "210e892d05222fd89082e54e746539fcdea09acf37c2d2c7101e2d2545d5014e"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-78049287162299b0",
+        "family": "exact_division",
+        "prompt_sha256": "7b2791997a71f8e608490558686ea93c430adae33782698159847e0b6ee7693e",
+        "target_sha256": "43d4b41de7fd19e7ad9785f8bc46d530b11f5d22eb1d1afe5973b7c043086a81"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-8da91d0237cf382c",
+        "family": "exact_division",
+        "prompt_sha256": "363ff2f216ace4c2592ed923df611d04d517c6cc3d29437880edbac4d4427b1e",
+        "target_sha256": "63801851dd89cb482f8ffed6c8e2c7921dee632cd8b1fb0488d629b3442766f2"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-51a5b8360a8552d6",
+        "family": "repeated_operand",
+        "prompt_sha256": "9c2d1d87a33ad925a81d7ceecffceae7ce24d066464d796a69e6fad1e643b6fc",
+        "target_sha256": "2dd64d24c768f4aa705304ee590becb4a5251038488667c4bcef957af14da28a"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-aa7f8d89aa5be8a0",
+        "family": "exact_division",
+        "prompt_sha256": "5de372aa2e3cfdc36c362060f2452df5eef5d5b5110885e28ce08d970fc4f313",
+        "target_sha256": "43cf51d60ddbc2a6c94449df5a194ac8dd8cbc902d41c32f48c593b7f352cf37"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-cf531b1138bc7f92",
+        "family": "exact_division",
+        "prompt_sha256": "1b75affc23e471dd18f49383d7839fd27a55803f47a1f38179cbf8242fcde0ca",
+        "target_sha256": "c8ee811d3cd7f06f6ad079a86ac107c9897cde0ec2aea73829a4ea36d709ee74"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-6ac380576886ed93",
+        "family": "repeated_operand",
+        "prompt_sha256": "626223c37437f8f9bf182d5ead98371a69cd275a97b055a8f0369f4a46d89ed9",
+        "target_sha256": "dad5ed97c0eb99e02b5329c1bb80e5979246ec3844667d32ec9a89396f2fd79d"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-a2e67581963532d6",
+        "family": "mixed_products",
+        "prompt_sha256": "dfd35756a3c3daad64fe2e777d92113f57457c6d763084aa1e1f5a3e892a81ab",
+        "target_sha256": "662341b0a012452abc2f46d4614307003cb25cde73ffe789155afd08c189eda3"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-96123cb7567c7089",
+        "family": "mixed_products",
+        "prompt_sha256": "60a636fa7d5307c5a8c6959539685db07c27e65ad3bab71d121fc98200a9d5b8",
+        "target_sha256": "9a16f1152795a8c3568cae440b42ce9c3e6073298c5b7a68d32c6206bf751bbf"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-003e03cd84ca0e07",
+        "family": "exact_division",
+        "prompt_sha256": "4b804d1773c81920b922b6e88f16997ad11e6a6c149a0e18dc93781b97d962a6",
+        "target_sha256": "b98324dca37d4505d41f86e9d538efd4767be28dec1f1fd597998eacf65d4447"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-441f5f3d1504c6f9",
+        "family": "repeated_operand",
+        "prompt_sha256": "8e9bc80d1e1019fc0296ed4b34b697d7abdbdcb727116d36898bf368c486b2df",
+        "target_sha256": "0704ad62d4e8355f4f9bb9f06e0a6ef9d54ba050d4ac74f65fe2e36d51442cb6"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-83fbeef2aeb3d411",
+        "family": "nested_offset",
+        "prompt_sha256": "6dcf2b54b7f60356b8d1a289c5a1f7db2ef754ba710e60b0aab09c1af387808e",
+        "target_sha256": "ea1e804bdb09e558dd9fbf88413e07dfa5a6ff4478f98eb9aef9b10b3602c705"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-22e4bfafc9292a1a",
+        "family": "nested_offset",
+        "prompt_sha256": "f7b6d202e07932bd2037caacd532d60e5f8d58bb5ea04b831301dfee3d8adeb5",
+        "target_sha256": "9a6defa8498865b2c930145fd2493ae45dcf417e0719d4a8b65c2eb6315049b6"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-37065040fe3ab922",
+        "family": "exact_division",
+        "prompt_sha256": "adc4c849b42f97b6fcae516bb6de27787b2f94f8c21e3d0d6ea4eae100f767d7",
+        "target_sha256": "09887234dac9793bdbe8b4891ff15a2084af06cdcce0e7973534e68b293aad04"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-1868efe1ff375e4e",
+        "family": "nested_offset",
+        "prompt_sha256": "103f9eb76d46812920a247a91c40fc51c33113037f7a44cf4712397c343a3a1b",
+        "target_sha256": "0560b13b39e2a2c9d858fb9392d12327e79485bf56c24ec17565dc7613bbda8f"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-9dd3127b35f80c82",
+        "family": "nested_offset",
+        "prompt_sha256": "ef50db95bfe4c3f3132d361fdddb3ab4413e74bc63b91e702f12a16a0289969e",
+        "target_sha256": "0c8992a9225358b8b8d79589b8b5da27e05b01336f5d549ebe41eb0037db52c9"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-b6194810cc0d0e64",
+        "family": "repeated_operand",
+        "prompt_sha256": "08fe5a7b39eb7cdf079d8f569ca9400465c237398cea77693c13773aaff36413",
+        "target_sha256": "e4e5473e8387999b45710a81f694e857bf4886797e4b99ff0e5401cf62b973bc"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-0f3ed1068e1c001a",
+        "family": "repeated_operand",
+        "prompt_sha256": "abef7aac27b9f867f1967d4b06200a844ff42bc686b7beb47c02fe10b7b56208",
+        "target_sha256": "d319a02a0eecfab005a1d1274bfb22d5fc581e38f8bc0b5e5273cb75b37d28e8"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-9c8443839e76106e",
+        "family": "repeated_operand",
+        "prompt_sha256": "d649d6d7b2fb424dbd03af9b558dd7e59b4633a38e3750c4276c89a147476834",
+        "target_sha256": "003c5408eb764d18f5e1cd4d79470d2ee82fa3b80cca0df898122012aa2379cb"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-cf9cafb17c5829fa",
+        "family": "repeated_operand",
+        "prompt_sha256": "95b3bc30968cae6c7ef4098db3852d0c2a3978c251d93d35d06f10182d76f05b",
+        "target_sha256": "b0ea3064d5c303b8e17e3aae7b7594a6d668dd3ecdabac49351d1a0dbd782b42"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-b47486a3e43e92bd",
+        "family": "repeated_operand",
+        "prompt_sha256": "d838d3c6111155054dce23c79986064c62af30171fd1b57e10f58e561358094c",
+        "target_sha256": "84f79e075ced7458b1392e954a5d4ac6c0f54d3b46e03641840d3dc71ded45f7"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-33172e54fe6a1ab9",
+        "family": "repeated_operand",
+        "prompt_sha256": "e7803e34bc2c5f8ef1b47ba21fe8e9a101c4a93cf455e9c7d845db1bff76f706",
+        "target_sha256": "7ba937e09294dd881b93e1ab1abe704a8a4cb732e3b29147e88560afd77c50a5"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-e74bd53c05891fb1",
+        "family": "repeated_operand",
+        "prompt_sha256": "c17c9aa181bb5ba11c0c05464e16dde8ec27e6e04b44d6ce4d802a6ec07a718d",
+        "target_sha256": "266232d9d76efcb68a6c60b817541d8679faab7f9779e684571dc5a6c9ade415"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-94314de66134b88d",
+        "family": "mixed_products",
+        "prompt_sha256": "49f682fe6b7d13fc91e2c57e4a51ceff73903f0b12de9475887d30b59a5949e0",
+        "target_sha256": "eabc4798036e371e69ab59c2ae9cd6a5f051836e10e275af74b5d19ba2d5b671"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-262584473d753d1b",
+        "family": "exact_division",
+        "prompt_sha256": "9706ca57e279bd3fb0ee36337768a46e7001c985f394d1dbccceebe30a301775",
+        "target_sha256": "ee9c38c87fc3946779cd62245f8c7d8dd577d7c5adafeefc4234817315e5baa5"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-2127641555bcc22a",
+        "family": "repeated_operand",
+        "prompt_sha256": "ce697b22acf5077d1a20d695d851d6571387214de889fd3f46996578f0b959cd",
+        "target_sha256": "5296941e89f7262fccdeab637d677b723469a6aff4dade07688c06facd0c88c4"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-3c7a4ed539b91f57",
+        "family": "exact_division",
+        "prompt_sha256": "9f03e62f2d25caf18e15b7db9df43901dcad4e89afd38d717cf84818cbc081e6",
+        "target_sha256": "ce0e03892e34263f10c23fbfdb3488c2211e7f149bcf899e6a113baf625aea98"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-8a6582968cc78832",
+        "family": "repeated_operand",
+        "prompt_sha256": "72fad56d12671d80f03773ca0455ec622196e2d47b5dfce7f64a3fac2fee63d3",
+        "target_sha256": "40a135feeba94788e0cea9e0250d5e4ec5c4a8eea1e0c701505c34dcf8d036ed"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-53109140b73e92cd",
+        "family": "repeated_operand",
+        "prompt_sha256": "e3bd0171330c1bb82f3213c60c341cd9ee8b8f9cb42113aaeb3fc0075b05cd32",
+        "target_sha256": "251dfbdd057f3c5d77fc9f92fc96fc7dc5140ca1c345f2a68af3e8d5c024b656"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-4542a181c1b4e526",
+        "family": "mixed_products",
+        "prompt_sha256": "289c32ee45547dca78aa639a3e1985cccfdc39f176da0e27af0251ed758bd95b",
+        "target_sha256": "d20703b3dadb0700e728575038e6b766111b48ecb6b3ba2925bd8e120e49eb33"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-c422ca9d0b1e5585",
+        "family": "nested_offset",
+        "prompt_sha256": "d2e8efc1285e5c94e77a36576dde207dc0fd37b214b07bd823a37400b8146d34",
+        "target_sha256": "26047577cd96e99dd1502b351fa8902906f7aeea15df1348a7d51f44276b18e8"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-9a9e1e39175636eb",
+        "family": "repeated_operand",
+        "prompt_sha256": "25acddcee7960fc374990c53ce3ece28794a31b2a8233806fa801dfa700a1077",
+        "target_sha256": "188e4d09e79d771ba132ee226904efecdda77793e83df4922c6cd627d3ac4f55"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-53a076a3ca4ed441",
+        "family": "nested_offset",
+        "prompt_sha256": "9f2658528544e25fb5ba3cadf7fac4cde3099dbc3f1c7f6e4d10ad59f7feb064",
+        "target_sha256": "154471c414fe756e4e98f355b7a9464ef4c6340742f4502e4460f7fa8f0c9818"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-7edd8807b14cc1a1",
+        "family": "mixed_products",
+        "prompt_sha256": "39372db66f526c0315e3eebbc1dd1a1d89fc2979a09783f7437bd198ce139d49",
+        "target_sha256": "d6c02f86eef8eec0e6c5b43f9006a31da49d3d8b800443660c79e18df101d1b2"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-7b7bc400d8eb3f01",
+        "family": "nested_offset",
+        "prompt_sha256": "64ae5e3a4ed6935ef1a1422f8f805d93ba2bb7efb860ce6599f26b5c0c52ec6c",
+        "target_sha256": "5ff062a00cbddf7f2eab971dda2784086d82fde0c1b5f6a698b94bc55cf247d6"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-25bcb359fe052e5d",
+        "family": "repeated_operand",
+        "prompt_sha256": "2e1390fad131ef74c340cea0b15a4e05acc8b1f2620c814f8a4d45a63d39e6ac",
+        "target_sha256": "b2aee52a88c2fdaf51be472d52eb3b00ffe17cdb92614dedb9ff9b89ca8d9ec5"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-ce9e3cec4f83122d",
+        "family": "nested_offset",
+        "prompt_sha256": "83be67ea292886488df76a12d743c9bd1fbd8d668cb232a8621760f1fbc847be",
+        "target_sha256": "08a763f1cfdeec5b607d814f5d24bb7ad5ddd9b4a85026287870e2200ca06389"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-b90ed9b9cb28527d",
+        "family": "exact_division",
+        "prompt_sha256": "a9e2a8572f50905c290293448c844fdca54ae40ea30178e83b91f471b4d056f6",
+        "target_sha256": "a67271ffbff1bc7c9ece4696f02c8f368e91abd00912529dc397b6cc57d68097"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-e0577af198ab39ac",
+        "family": "mixed_products",
+        "prompt_sha256": "b011b38ee75c0eee6ee2fd3f9506f537e17e4601befe789d39d6e3a7f09b0388",
+        "target_sha256": "bd925c941ce19a8901280fa28d31d9e2bacdd8bf23c222ab7267aaf0eaef9697"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-4a9732dbbe8a3723",
+        "family": "nested_offset",
+        "prompt_sha256": "5c5805080ab800e3a33975610f48bcfb43d335b846f44b9bb94363e0891aa59e",
+        "target_sha256": "dbdeae637fbd29abdd6a7a278fc46f745cc90baccbdbf924b391de90c3258420"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-866ab22e3adb6ee1",
+        "family": "mixed_products",
+        "prompt_sha256": "3cbe5a422be8779af72c4a0684c0bc43d3696e082b0d31591a548601ff2f565f",
+        "target_sha256": "4ed0016ec97c1adc27825474ff16924bb4895075328112fa43679539536a7d04"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-d2339ba126316367",
+        "family": "mixed_products",
+        "prompt_sha256": "b987d52176e2fc29a3397846069200d4c607fb2990b62e113e35374aab4852ef",
+        "target_sha256": "4825112b1fbdf9e497e890e457845abd5d9d26df7633e5c09d37ee26f8ffec88"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-3a3665577c50294b",
+        "family": "nested_offset",
+        "prompt_sha256": "f42a23ace23c6f046dec2533b9b0b709f8e264d8caaf34c765067462b3b529b4",
+        "target_sha256": "c6393645ab56d45cadc63e5bdee6f21e43f7ca02022b3326058520d54605a7cf"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-a3d8e88aec55c1fc",
+        "family": "repeated_operand",
+        "prompt_sha256": "2bb72d4e7d8c24368a211d1335d2668c72a527e9fa998c33eff7433291bce418",
+        "target_sha256": "c7ba9a3074e65b851d58a66e7d323f4df5cc236886d74cf3ac8b89172b342f0a"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-eb91cb87bd3ee903",
+        "family": "mixed_products",
+        "prompt_sha256": "2a321380bb82f9cc3f1f3319161a9b983f5939383e7de7c8463caeaf3de28ea8",
+        "target_sha256": "70bd2307668d8784e8fc5c5ae89f868d581a25361cade0524a55b053a39c97cf"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-16a874cd1958a259",
+        "family": "exact_division",
+        "prompt_sha256": "430590e1e5c7f22b435f312f9a9989e569a2d1b41559caf8fdcab1ab2eb9f508",
+        "target_sha256": "e90d7ed134a0345f422afbd51a8fae8c8dc8afcc1f86bedbe02a6a3d8a236a1c"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-c3006c578a69fb40",
+        "family": "exact_division",
+        "prompt_sha256": "318062a100aaa3d57ce86caa9da895ba071d7832a2d64c9dc0bdca65eb0c80f9",
+        "target_sha256": "b08e6ea94622f3af39340221d9a3dd6005f94c787bc02b24d7cac5a8ac759a54"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-6e6c07976ce287bf",
+        "family": "nested_offset",
+        "prompt_sha256": "e3b77e15b923f2501d3f253d1692b5a66c92921a24c117ecd4c6fcdf7199c049",
+        "target_sha256": "d35260aafe272a7b5e8d06757529269914dce5f6ce0e57d83680fbf069c2878f"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-de619a126f9fc9cc",
+        "family": "nested_offset",
+        "prompt_sha256": "8b17f5207ea1e9a6d74f34cefe9535936ca0c491ee96d153e6a5f25ea0337afc",
+        "target_sha256": "7d68a57ddb46904d99bb26af5eb8c7d1b2cda8c134a09d447caf2a501f3158cb"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-b7a03bce8763a2d6",
+        "family": "nested_offset",
+        "prompt_sha256": "f36c0c040c33c2dd6f41229ee83e4ff565ca145110813b91b905a0cf645561d8",
+        "target_sha256": "a30f59d2037ae2e6aba78a4e73f045dbe5a0357fa2b2741c5267d1c3882b27ce"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-003b0f26089c3f90",
+        "family": "mixed_products",
+        "prompt_sha256": "ffd824ab40ee03a1055fcf8af9552355161dcc82ccb0ebb484ac4fb7491746b6",
+        "target_sha256": "710ce37e11d02c6af82e0f7675ebafc4e4f50bc13a1cf6d8ade404959b815275"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-8197bef3219279d3",
+        "family": "mixed_products",
+        "prompt_sha256": "f11cf8686c5c17f21b1616b83f8552a8869c281592dbd77e88a5c83593c44fc6",
+        "target_sha256": "b118a00765d24ad44e652ed821b336f5759c1289fada81f62f393c641f8ccba7"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-9e0bf000a9e9c839",
+        "family": "nested_offset",
+        "prompt_sha256": "af355c2d5d3e056cc84b8260c338e8688895f091c3ddc050db2d65630de9ffeb",
+        "target_sha256": "a8f714349bdb2e04e865806ab3b1e83c95f7074b1f3eb648a6765822f4752123"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-53221412ec5dc6f9",
+        "family": "repeated_operand",
+        "prompt_sha256": "5d5a4cac3a02a3ca265e2006837577768118b940912a9aeadf9faebd63fad84e",
+        "target_sha256": "76499fb909e1012ca6c5edf19dee3d32f1ec2a25330a485d15aa63c7c85dfe8c"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-1eec90811cc29d5e",
+        "family": "nested_offset",
+        "prompt_sha256": "cba4e329862dfb2bee5f791edf03b7af6e447db4ea3cb099b45512f7ca7af3a8",
+        "target_sha256": "ab5bd4b68fecee2e88389bfe183a46b6bc29a9e0cc2fd46c07e3add9389634be"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-9e362a107f895270",
+        "family": "repeated_operand",
+        "prompt_sha256": "9e33921954ae66655487c14bbfe521312cf691c08c76dc9d64abb5c05e4b4445",
+        "target_sha256": "8df5b38d033da26c54e4504d5720d3c3c019616de140bbbfcbf2e2c9b69af342"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-1713469cf10a9045",
+        "family": "mixed_products",
+        "prompt_sha256": "2041fb1fb859c87ccce1c5e170c4a6db6c93c5456189041693253cb320c1ebf2",
+        "target_sha256": "ce6e73455acc42b238a51c282e47730f54fc8a6e47205ed8a7c3683cf2a6a2e3"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-42e870c0f56f1612",
+        "family": "repeated_operand",
+        "prompt_sha256": "e8730d38ecd184bb4f8f79be5bcf7a1ae0d39d1194668a507ce21a42118cf7e6",
+        "target_sha256": "2011147e05cbde50d3309442d980520e0f5e2f7d2e0a8a2cc286652a29e18878"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-6776a9c92999dfc5",
+        "family": "exact_division",
+        "prompt_sha256": "8f3c1c8c129f9dd4c6414e07376bc185723065b302d9d2756e2ba5effdae68d6",
+        "target_sha256": "7c46dfada828bb2d6cb43f8850bb7ad7f4705b14af8920fe8e869ca71e349833"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-5930264bd6e49460",
+        "family": "mixed_products",
+        "prompt_sha256": "6f18d5c2b094bbc86e025d1a309196d0ca85a04f0eef7dde48e3ebf2e2dfed59",
+        "target_sha256": "75830e9f06a06d82839b064d0f175d71fcb1ded7b5b3a0b9f58e94ddd14a58fa"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-bc4f10ffe6fada46",
+        "family": "exact_division",
+        "prompt_sha256": "79dfedcb7c15ce9411d83d731f733b39df73811609c1f5fa6d7659a7a43e1ea3",
+        "target_sha256": "097c6556b4ffbde5e172ec9e7e39a2c66937f7bfaa98f8b89398c963749789d4"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-65549adea539d28a",
+        "family": "repeated_operand",
+        "prompt_sha256": "afb1adb0d43533be853976ca962fa38d29e271e597264c15e7b6a303226e1771",
+        "target_sha256": "eff1494879719f0dbef9b0246508fa3be6dd9f6e381a5d9a4644502f410ca4bd"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-67a9edfc034c2376",
+        "family": "mixed_products",
+        "prompt_sha256": "528d70baa161947964e54e9791aff2ef12c2800fb6a8a481d836426d429553a1",
+        "target_sha256": "0e2ea29b9beb41cf0545800616752f8450e05fad08b48256b263ccf30345b48b"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-74db0106a99cdcfa",
+        "family": "nested_offset",
+        "prompt_sha256": "32199f0c18e0c2ca293f97ecd0982bb0cd871cd0f76c7b019e5a6cfa425e75e6",
+        "target_sha256": "6bf2c9866a14e2ef98fa89dc951604343f7740b587c2a4b3365daf55eb483275"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-4b2d6a2a3e0b7fcc",
+        "family": "exact_division",
+        "prompt_sha256": "ea89e0409dd6babb4462ac0dc7c5ab4f88925d3947b0efc0039c07ef4eb5c8cb",
+        "target_sha256": "19e9c95d685418a412f1f90b01e5b38b3f0b9380d6d0142c28262177a37bb708"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-0637be854ba878df",
+        "family": "exact_division",
+        "prompt_sha256": "1953b4b028f454d6087730eb7d6161291d44a5d3aac6a7ce1059db4cebd3fade",
+        "target_sha256": "b473a5e9ce5a128463c57a239d400973896592d80d510a1f83c4efac97c006f1"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-0c0800a39349c832",
+        "family": "repeated_operand",
+        "prompt_sha256": "7fe1cc78d491c2cb09cb35a09ccbf7e040c98edf2ee4e581ba2ff5e14a8109be",
+        "target_sha256": "f89defebbbe0c4ac17784935079e6aa4388661517fbcd3cac0f89cd1456a7cff"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-a87342d3b6b1303c",
+        "family": "repeated_operand",
+        "prompt_sha256": "f51279f27c3e59848bf44297345bf634d2da5ae9bbf28fc11b36e6b1c8351f23",
+        "target_sha256": "698332edbc71aca454e3ac705126dde87daa9213c72a1559b104b43dcb889edb"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-5b0e3e515f58825b",
+        "family": "repeated_operand",
+        "prompt_sha256": "2405993c5c54c0e85da6719f4a836a687378dd4722bb43dbe51dcc84c5e6e485",
+        "target_sha256": "03d0df1aec75618669c1186f87d879a4fe44cad9fea699d1db449f1d442334c8"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-54aa11b4c3048057",
+        "family": "repeated_operand",
+        "prompt_sha256": "8c22bef1d3e61defe61a6fb62aea17049fe7159065ca7c02ad21a1cc7c2a1364",
+        "target_sha256": "54371c7fb9fb9fd8c13199c25f1543fe736b3f09f5cac143e75e2babcf78c7b5"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-ea975900a19bbe85",
+        "family": "repeated_operand",
+        "prompt_sha256": "6af2206ff52f38f91b9489e4a9d95e34ba2393f015eaa27ce88ec536edc0d454",
+        "target_sha256": "1fe1e763dfd466ef583e7a10b833143dd299d32e5a782b504a3377f6064e5242"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-08dcc62896b9b585",
+        "family": "exact_division",
+        "prompt_sha256": "0bd6f97665eaddc9e776e60d08a467587f7f729fb76743ca743c4a14ae4c1163",
+        "target_sha256": "94d0fe2022c234af314e375a2c061f73dcb5ff41ac4a2c145c1bbf07cfdf982f"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-c179285a80d17d14",
+        "family": "nested_offset",
+        "prompt_sha256": "545b3ae38a498c737541440ed738505acde2924957d04882d28ccbfb7d385efb",
+        "target_sha256": "b27b256d0b6992a31b5993df16ee7422492835bf48ff80b2ef2c7fb3685933bb"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-abc31d8bbcf567d2",
+        "family": "mixed_products",
+        "prompt_sha256": "00f6e53eb9ba31919e8927ce2bbce0b8b4b737cc66ee11420e3520b7819e6d5c",
+        "target_sha256": "1616e3118331b9f333a9c216ecc5a29f790779fc922604002119eb066e6c244f"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-9e0354eb5424b792",
+        "family": "mixed_products",
+        "prompt_sha256": "cb51a5aa6e6ffc6f41cfd6cd4d0991e7bbed61d3228316cf23e4554521e863a7",
+        "target_sha256": "ec9d9f280fce297a7f0fee5e6b298b809f7ad28457504fbffad62116a7918a5d"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-9431b25f90597cab",
+        "family": "nested_offset",
+        "prompt_sha256": "a0fa79eb1a3824837d7958af9c715f0551293b3731941acc3e41e56f1afd9d31",
+        "target_sha256": "6d2965882f4fdbd127c2269e4c6128091bb504b3f50d8ac79a9b244a04059ec8"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-7649f8277ac21ddf",
+        "family": "repeated_operand",
+        "prompt_sha256": "14e96270989991001172c8614227e3f4a89e4fb6f8f4fd0e642f2cbe0ba14548",
+        "target_sha256": "d3ba4464c21390a8e4551e116d1468656377ea7ce497d9576e04d50696f98ebe"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-be35f2ad68e9fcf5",
+        "family": "exact_division",
+        "prompt_sha256": "6f193310588cf4f0308cd05d1568cd651caaf5d071b5b1fe998d974b1b426f90",
+        "target_sha256": "04fd8180ee40e4b4d439def2a3d03c190e272276c1324d2da7f272878c82b290"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-90b0dea91f23b8d3",
+        "family": "repeated_operand",
+        "prompt_sha256": "3239345304286c11a900e24783b8bf569060793d0cd48c6ee4a18a68732d65b8",
+        "target_sha256": "098352f1217795e77c2c8b7b08e8f280f563d2576c0177a023b025073e6f8db9"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-9021e928a63ff98b",
+        "family": "exact_division",
+        "prompt_sha256": "c8487e5e2285731a3783055d871dfec74cb47d50920e4a33e6feacf582f4b141",
+        "target_sha256": "7fcf88f0eb43fc633349d557669a34f73c5787dc4c32a2598120d028fc07b8a2"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-34c8fc753f244b23",
+        "family": "repeated_operand",
+        "prompt_sha256": "efcbe14096502f034991f5f47c14277c2fc38daec99952b7f8f9fed173613d42",
+        "target_sha256": "04cea2b00ddad4282b2c2596d4372b7ed89d64a2e7275868a0dbfd19ab34c167"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-6f98c5df1e474c93",
+        "family": "repeated_operand",
+        "prompt_sha256": "61e85e7805755157a3dd54adbe8e0f70e571b6aaa57b70f5dfbdd398670774b4",
+        "target_sha256": "eabc4798036e371e69ab59c2ae9cd6a5f051836e10e275af74b5d19ba2d5b671"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-734e05cfa0fc56e9",
+        "family": "exact_division",
+        "prompt_sha256": "ebb4bdad81a8685412a3b80b365f40c5715f5f06ef482c9996a93e82cf1d1ff5",
+        "target_sha256": "2de50e224080e4eea266bf35be782be724d2c3f69e08da8ac4008eecf23f7c15"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-afa871e80cbf43be",
+        "family": "nested_offset",
+        "prompt_sha256": "0b752ed8db244b74a3f535680b4902623b9512c569e5ba81d77bdad0f4add4c8",
+        "target_sha256": "8cd086717e9b39c5312427400a6d4b4855d6b88942c047d5740b71505ab5487c"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-3933a2076b2da441",
+        "family": "mixed_products",
+        "prompt_sha256": "39b9591ad8f612fade43531d0f69f228eccdb7b0bff63e0fb477a447955875d9",
+        "target_sha256": "c5131a7fb95dbeb9dc00daaceb9e9bb2791a4cdb28b8a6877fe312052b0dc9ed"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-6b1e242e529812b8",
+        "family": "exact_division",
+        "prompt_sha256": "4480a2f1f97d38d5151a0f7b7a41db3fd469a2fb6a67c55216b37d1e98a31528",
+        "target_sha256": "fe6c2db23694776c9dbb770b4bded10614973ceb9fe8cde7732bc1c5ecd088b6"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-1a8ed0f26f4784a7",
+        "family": "exact_division",
+        "prompt_sha256": "b609e0d5b90e5aec6742db6bd5bc651443265519938d75ddfec0ccd46417498b",
+        "target_sha256": "b46c7c57a97d72b7ab2c5513ffb6299f925ab5ca890907f2aa5d4e9ec918c329"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-61809d9c0ed82f52",
+        "family": "exact_division",
+        "prompt_sha256": "51a06372772b3941558f30434f3277516305ab47339492a44b06eb2519598b04",
+        "target_sha256": "29d8f8ba51ad516803e3b1433e8f28d764264131fb46640d2dfd31245f752bea"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-d972d6331b848afd",
+        "family": "mixed_products",
+        "prompt_sha256": "99435ca6cc6c26598e3b8aba00f7bf0b0e7d508141585552ff47fc968cd7ea7c",
+        "target_sha256": "7aae7bda7139fa1f4f6fe21bb0c744f2972eba359f97885e627397d9d9ed5b2c"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-1c4cd3b823d1ac07",
+        "family": "repeated_operand",
+        "prompt_sha256": "dd0356145e1862666464d64c9bf81be34e7985c1f41ea1d439dab40014b71686",
+        "target_sha256": "1e9f0e7ebb73f1f8d333d6c0beb43691a087c8546e001949bc8ab643366660fa"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-b5dcde5ccea341e8",
+        "family": "nested_offset",
+        "prompt_sha256": "a7068c8ece7b5eaa621bd370115b67a8c18dc77cf54f799cdd0a9989ac15ab36",
+        "target_sha256": "2d9a22bb0186b19d029a90d75d8e0d3e1526052ffef2c33cf746b4312990c641"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-71404e783f05a6a7",
+        "family": "repeated_operand",
+        "prompt_sha256": "cf600062fc3115bd330ba02afc9a9f31d1903fd572286a057c6ea9c0f2fd3a49",
+        "target_sha256": "be23f621121e877a79954769ff506994c0f7460be9697e13cc4a4970842f372e"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-4360a95bca56177b",
+        "family": "nested_offset",
+        "prompt_sha256": "2d764f137d37a60fe40f96508108d1404cdd7d68e09ff7fc09d85f2e8084d75e",
+        "target_sha256": "5f99ba8ecfb766a018ed7f4abaaeaaaa2cb191bb5faf48f2d6824607d07f9d03"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-81a3dd8919d9985f",
+        "family": "repeated_operand",
+        "prompt_sha256": "495dc9c0610728ba1b3572e8efd4b0464f2b4dbe0a591abeeaf92567b0200712",
+        "target_sha256": "e910d6580d1d62c600250ddc450a44b888c2f8ec389ea8b0e6548ad5ee1850a0"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-c9b75c655d1c59dc",
+        "family": "repeated_operand",
+        "prompt_sha256": "d864c62d17c3b6ab464a9d5b96615a1810e051a45f64abe71aca488ea25611ab",
+        "target_sha256": "13139f7584a9c6f759a42d75116981d8d0919ebe51327126c7045aa5eda99512"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-b9e2fc2eea3418f5",
+        "family": "nested_offset",
+        "prompt_sha256": "9e76787cb760f1a60909308d050d5ad045e9dc9f1d10217bf2d3d06ef8474b8a",
+        "target_sha256": "02639f23e6464fceac3d07135f98911093718e178e2f8d4e3c4ae4f3fba2086f"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-f35650e0bd93a648",
+        "family": "exact_division",
+        "prompt_sha256": "9bd6b9592295973b9b3e5409d3db4ff95a38d2aa92a3aa3c02104d15a86bb20f",
+        "target_sha256": "7658bfcc9ca8ce3e6f30e5774ef5773db5e3bdca0faa61af75590782147e782f"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-b8f1ef10bcc3dd32",
+        "family": "repeated_operand",
+        "prompt_sha256": "5db604eeeff64cc0ff4884172493170e6fc692f9b2a62c6002d72fe46f3ea470",
+        "target_sha256": "e3a6e778f78decad8ca185d7ec5eb41b33b919dc76912855b20de97a84a4a239"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-e45a6bf4913ab89d",
+        "family": "mixed_products",
+        "prompt_sha256": "d3ca65518e9d7d9dee0a3e3ce81878a3d0790e4c76916c37ef39dd33d07a4bb0",
+        "target_sha256": "88ee85cf4c94e928b4029b3f0a4bc6cd7dfaaa85704e851206568c2ead8c4d3b"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-212c4d06eda8c5dc",
+        "family": "repeated_operand",
+        "prompt_sha256": "21f26453ecdded8b427ad6e2b57d215fc57b2d2ac0e3a583d99fe85aef571f76",
+        "target_sha256": "5c502d5e3fa87f0f7e3531a2c414e6e8632b660aeaf1972ceaa2526eeb95aba7"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-03a5348c753a5d50",
+        "family": "mixed_products",
+        "prompt_sha256": "a3126a0f0141bf881c69afc71b8956f02421d4cc309e05a86c46f33c8b843afd",
+        "target_sha256": "faffac57354792ccb93a8604a0c750619ba362a68c6ef86b60cee4f8845ade5c"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-741017e0ae942db9",
+        "family": "nested_offset",
+        "prompt_sha256": "0237dc78bfc3eb416646def0f3f2d93fed59f6a27ed852be6ca31a88cf0123b3",
+        "target_sha256": "0d76fb2b21504db39ca330eec528660264bc9af63db72957e06f7c27467ae840"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-612b863c1732050e",
+        "family": "exact_division",
+        "prompt_sha256": "5aebb8f557443133235709a1c25b3264498985cf1e312afaee8e83c6f4966645",
+        "target_sha256": "8b059dfe9f6c2f09ec9c6790097cc30fa535e716c62744f39bcde60a260667b1"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-18720d652a273ad2",
+        "family": "repeated_operand",
+        "prompt_sha256": "2a39cad8b99994d8fa1f169b1aeb2067250fcf1509b391ee3286fda78f481f88",
+        "target_sha256": "2e53d0f076d28332dba49826488e0d402dcfdbcf3536af3698608da8b42cf053"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-f9fbdbab61ada7dd",
+        "family": "repeated_operand",
+        "prompt_sha256": "951d9c801c0c4f0eb2e4aac445aad8c59ee2795f079acf4c4c7922a923495a4b",
+        "target_sha256": "60094cac13df1c1b819eb383de6f6860afc3f68f1c6bfd23b18069b51bcda71b"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-6b369c99e82aa93a",
+        "family": "mixed_products",
+        "prompt_sha256": "1a0240af707248c605b04b073ff1d2091fa7d3bdfd49af88ab6a189c627fe7a3",
+        "target_sha256": "4a8f8a9f6d5c62b3c76cf0e1db86f56b5fb146d6db62b1939906b98c6139a04f"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-ad3ae4723d2de81b",
+        "family": "exact_division",
+        "prompt_sha256": "07f6193ede703cf3850e6448818c97faea3631d32c48a8ff2e069034359ae56f",
+        "target_sha256": "da01b874cb6afbc2c535b9671759cb71172a23316cee897f8f77c185dda5a892"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-054246c1a482b82c",
+        "family": "exact_division",
+        "prompt_sha256": "c3ce71584471d2178d3b65faf3a2b0b441fa503d344b4aeb8117aad2108b53d0",
+        "target_sha256": "2f3002750c449f2ccfeddf0ac1c3900a42d1fea8491d4d484373e46ee133bd2d"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-593a24fa313a325c",
+        "family": "mixed_products",
+        "prompt_sha256": "30b987803515dca418afd310a2e946013889312b514b3f7e0d72ccc9de5cc2de",
+        "target_sha256": "475d0af5c85c9107299d43376d6daab207df2e70bae9440eef6addd6c0f25a21"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-a5e08ed62e6f8b20",
+        "family": "mixed_products",
+        "prompt_sha256": "5d17439d5f8a86da392f3967c8f49588e1b122c71c542b27b5b87d2348a0606d",
+        "target_sha256": "2d9d9e37990657f7d7a9dc56c636f0730b421a4e6a86d58b3a4ac53e29127b72"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-fb6f95c677091c85",
+        "family": "nested_offset",
+        "prompt_sha256": "647241a0153ba049404bb56df41e606a3e9b1198d614955a874a8f50ae82df71",
+        "target_sha256": "38be3d3a9a97319d8fca45a42e3e90fe19ac75942213a9f65d9227c261b10ffe"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-84f4c8789d56152b",
+        "family": "nested_offset",
+        "prompt_sha256": "1ae81bbb98613561645b954a797fca5a595baf0364477d86cd19997d93325f10",
+        "target_sha256": "aba4c805133547578b0a8a952c85221dc0f473e3edea25cabeeecea0a9cea91e"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-08310634b0f5d283",
+        "family": "nested_offset",
+        "prompt_sha256": "fdd8a3001d8599c5e0a15e1f198a1758a36ea2e1f4beae8742eec20d5302ce43",
+        "target_sha256": "94d65280fcdfedce314abb96952445b97537342c34867fcb1810c511cedf36c7"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-71f9065e91115074",
+        "family": "nested_offset",
+        "prompt_sha256": "4c87609bdd8cd2bf00256ae4678b013773f154b8dc9b30b6f996af1272109f1e",
+        "target_sha256": "307c89911be6163ae69f48a5dc3674b5b68c4de6112dd4e55b32e0b9b54d8997"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-e83135a285f323dd",
+        "family": "nested_offset",
+        "prompt_sha256": "ef301610b2793f3dd447977883f8a3a8473731130a120fc70262da727a3a209d",
+        "target_sha256": "7ea5813801e9f872caae0c88961d67009a1e66a898c7e077af2c9ee9ecbb0ffa"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-9400852227a78214",
+        "family": "exact_division",
+        "prompt_sha256": "ea94a884604c637b4b75c6e39be46787a1459f78f93ff84e0672661a4883a6b5",
+        "target_sha256": "be24c5f80245773ba78928bf486a8f36418e5334d719cd0fc146af8b85fa3ea0"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-6cdf954731153755",
+        "family": "nested_offset",
+        "prompt_sha256": "47045342e892d5d407a75575ca8403aa07eff21c279ca078f80eb5669dee99e1",
+        "target_sha256": "3751182a18a4b6cb5494b37da8c4d2f02bc7436b855896cfe2e86eaf42287f27"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-fe5d564e6ba635a0",
+        "family": "mixed_products",
+        "prompt_sha256": "0aff563cef98d4ece21f4ae58c76e617f39fc283433b361ea3879c92fd5b218d",
+        "target_sha256": "d0d172c3303a7c11d2f3db0c72f90761a2ee9344548b62b3d262729b3ba45294"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-81add381351c4398",
+        "family": "mixed_products",
+        "prompt_sha256": "62c9f7f0bbd0a0ef9e357159370bc1d879223dfdc0e2b37166ba737c414a4c53",
+        "target_sha256": "e2623cc5e9334764ff65ba121a1c477eff09a8367f618bb97b53313a0012a69b"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-3074346b29a54065",
+        "family": "mixed_products",
+        "prompt_sha256": "79e1650b073ec9a653588abec4939bfa18c6903efc1dbb7eeaa200a20372bd22",
+        "target_sha256": "f107df12efef7a678197d6313a4db8b8eb899eca508861c9b10c9c61836156a1"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-6414ca26ffc1a41d",
+        "family": "exact_division",
+        "prompt_sha256": "f91d71d190742faf478216e6e194e889ee274d96893318a945103c59b18b9a11",
+        "target_sha256": "1f79083e32333ed979cdef73a5347371b93fd6e221273abcbb7e8bd2c9b0c737"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-85a48b63ca5fa0c8",
+        "family": "repeated_operand",
+        "prompt_sha256": "1530c831d89cc6616d5f40d80e1b9fba1c3987ff079e01fa3a2972d5d834e494",
+        "target_sha256": "bb2512e22a7c6bceb76686777206b5ce1bbbdafcfb9cb53c41510efd79dd582d"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-896e4f322016c589",
+        "family": "nested_offset",
+        "prompt_sha256": "f24fcdd38a6c6364a6bb32575221a3305aea06a3de6bf9eda42f6390ac8128ca",
+        "target_sha256": "5d9f3f0d0e84c617cfdee532250c7250d0a19afd59018904f7e7c846efe627a4"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-b20fffef91981bbb",
+        "family": "repeated_operand",
+        "prompt_sha256": "773186335f4ad9f10ceacb9bec6567579e319d194aeb7b40dbf310aa4791f0a2",
+        "target_sha256": "bc34d686c6c2fd324b3620cb6a99ac3f8bda281c56a74cd9eae3969e70ed0107"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-ca513322f9e3258b",
+        "family": "mixed_products",
+        "prompt_sha256": "95b2eadac1736fdbf7e3db16a89a17a19e206a23dcbb5536e32c2e23ef962775",
+        "target_sha256": "74a714b8c55e9e7dd8b56fba40d5c4dfcc6783d6593ccd64f5a7c0802cfd7ea1"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-9ed4569aad231843",
+        "family": "nested_offset",
+        "prompt_sha256": "79e0c3c2a3615a40e607e4dce39b512493c6fcfd71fb13aaa0f03d2d59727daa",
+        "target_sha256": "e304b6c2578ecd30dc980d3aa5dccc6268f056a572e65951cdc73149d48d0edb"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-27b0a67ddc2527d2",
+        "family": "exact_division",
+        "prompt_sha256": "ae0cc7be15e49cb2f73fe432215c3a5a1a781e49322fdea93c9b8bea99dc38c3",
+        "target_sha256": "a94c001c4492d20f2bf4493e52a83e67acc53d5d6dd4e8c036f8639c214f4a32"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-0e2849ef762f79bf",
+        "family": "mixed_products",
+        "prompt_sha256": "162818db4a6b727a5bc5a8e1f400adbceff4f94961c944678604596b1c1f45c8",
+        "target_sha256": "e00e8edcb71055d2ce33e62b66634cb3a94bf34ce81dc5f59f221589e579c85e"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-09128c2007c0a04c",
+        "family": "nested_offset",
+        "prompt_sha256": "57e4b4e14bb41acba3a5dbbd7b918729d3adf3a0061c9743af415301063bff3a",
+        "target_sha256": "04db7a20c5a1b6013ec57749cee9f6ed6c2ed1f021f8f4c7761e1aac129bf882"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-860466149d3685e3",
+        "family": "mixed_products",
+        "prompt_sha256": "33cac2b2cd206e54acc4a5e19b8113112c488f16bd3c536df304baca5924002e",
+        "target_sha256": "d4dd3455818f342d33623101f0371eb7cd405f95d881051529abfab71e7fff71"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-136a2b1a73775a58",
+        "family": "repeated_operand",
+        "prompt_sha256": "c3065356f6c1bb21905c3946bcee15a8b813f6543f25333746bf0ce4e2e575a1",
+        "target_sha256": "fe108098f47662c2a5278c465ff9ffadc909dc245b9af3a7fb54eb96d0327164"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-3ce6ec3e13bad055",
+        "family": "mixed_products",
+        "prompt_sha256": "4ed05308ad22b85e3f906ca7a15827a7f85ae1b522016302bf5c144f29033664",
+        "target_sha256": "bc34d686c6c2fd324b3620cb6a99ac3f8bda281c56a74cd9eae3969e70ed0107"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-f04d54ee524198a6",
+        "family": "repeated_operand",
+        "prompt_sha256": "30170870578aa861f83c0c2235faf0e85041f33885a4d8dd608138220f7c69c9",
+        "target_sha256": "1970f88e92244eaecaf8015c898036b2d050085f6ddaa5f4a3c619e8f0318307"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-dce9ed6a5e8caecc",
+        "family": "repeated_operand",
+        "prompt_sha256": "311422323cf0ca990379bf177a03a2551ba7f66b70dbc4a29f3aa140a777f4f5",
+        "target_sha256": "58d438a2d3cff542496a92181dfb0845917eb65735098763f3430a0c2ad00446"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-ea1201926ee0b42f",
+        "family": "exact_division",
+        "prompt_sha256": "068ba61262b12ce0bc2be95ed7224b726e83d952972f964b793b869076c84222",
+        "target_sha256": "b3953d81d30a11a4997121a211e83fe1b9d4f0b80b961b14036e9cb351cdbe2f"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-bb846d221c4773e6",
+        "family": "mixed_products",
+        "prompt_sha256": "1aefa5735e7b3c4056a2b2ab239b39c23155b908618eee461fbd8ba1c0673213",
+        "target_sha256": "46b48321c823a2660959cd993ed88cfb7e556d1310da5cb2ef188596806ce6c0"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-8ccdac819ab6f241",
+        "family": "exact_division",
+        "prompt_sha256": "eb2a88d316adb6b4fb360bbcda9135b259390c1d81af129153d12d195825e11c",
+        "target_sha256": "19f0e2aaaa64a418bfcb9996fcbc967ce0992f541fc96aca3dea0df5eb7baa0c"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-323251d51e65a065",
+        "family": "exact_division",
+        "prompt_sha256": "777663648bb74bb760729bfa7e31583d33e8110ef7b63bb59731e15d7aa1d6f1",
+        "target_sha256": "3ba8bef208bd5f8d9f71b89f28e202ac6d2d301c0042c3a35ad8cae73f0e1dba"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-e1729b95e341dff3",
+        "family": "exact_division",
+        "prompt_sha256": "b0b208cf485d2bd00d53a05268413abf8b5b19a1c850e373f2b88eb3908fe41b",
+        "target_sha256": "71a763afe5cc863c2699c8ea70dc57d9c57a3864bb7096fdae032afbaf25faba"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-ab47f28a57d2ee50",
+        "family": "mixed_products",
+        "prompt_sha256": "3fd05545e1fb6cb0ee1ef32b84e7ecf7e8ca9a97db1d0ebc60ad448ee195016d",
+        "target_sha256": "9d49c990bba5daf5853666b418c4ebc5e52addc1d8e032cca854847a20ea479d"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-a87097036d9bf2e2",
+        "family": "exact_division",
+        "prompt_sha256": "93bbe97784c0a82b9d1da2551cce9662e20ada4ceabc87b82243138085ad97ce",
+        "target_sha256": "399b343497faf953e4d25724e465ce494ce949726076d7397d2ba14acb4ef28f"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-e331a18c2564947a",
+        "family": "mixed_products",
+        "prompt_sha256": "9c311bb406280be8846f50a830aca2dd993540c83c870a42e7743dae3e391436",
+        "target_sha256": "7e9c485335a7c769a086f295c49e93ac7799461dd7766cfd192a13acbfdc46ae"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-a2cc94db58676466",
+        "family": "mixed_products",
+        "prompt_sha256": "81241aeb1d255f8f3e34804b92cd3a7d825346ff0581c2c773fd541b902ea79c",
+        "target_sha256": "4c654a5a82f3cd4844b13ea2b913ca9fea35b98b7d8d7bfe7c38991d7b888322"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-58f3528092f1c4f1",
+        "family": "exact_division",
+        "prompt_sha256": "3dc26cc33642dab97f0ebbc8a2fe752972ab382374d32bf7e0cb96f84c29d1cb",
+        "target_sha256": "238a22133024f70c1352cae81b06bd369347c25e613940a321175bc191157eca"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-cd8d597ba9706732",
+        "family": "repeated_operand",
+        "prompt_sha256": "1f61867c69ef7f38db0abff4fdaa69c477e311eb7439650d62cde6af52bd4e5d",
+        "target_sha256": "bf920994c89cf027eb648e4d101b3f04b146702b9db53054891405c254862adc"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-6dc1af2835dfa15d",
+        "family": "mixed_products",
+        "prompt_sha256": "50acf2f04d96c456357983aacf3151dbd7f6efc0556e9daf521b96df4ccadb07",
+        "target_sha256": "17990d4face092cfe0efea6a0e703d7165cda97ec4590dce7e9deb35e336614b"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-72caeb3d6501307b",
+        "family": "repeated_operand",
+        "prompt_sha256": "303f9d654e0dc029ef1543599ff208beae7e4b25b56c95939aec0ab0e569d64d",
+        "target_sha256": "2f82545bfaf286fbdb6e93ac82328ebaefca37f3cb98c42ab49b5f3034252979"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-72f137b6e1ed0e70",
+        "family": "exact_division",
+        "prompt_sha256": "cb2b2a96e058e3fe222eaddae07eb20f2f3e69a422fa6e5cbc62381fb041ef25",
+        "target_sha256": "26c019639f4c7c2c725b0ebb1e972d8afe337afed8fcdd03fea2c04dc4c6fdf7"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-00cf9eecfa309640",
+        "family": "nested_offset",
+        "prompt_sha256": "248090542272a7269cce9431147ab9130ed3a1336fcfa9c0daa89fee5f5ef8b2",
+        "target_sha256": "cb92c6c6916feb2dbd9ea6e5ed39088fcf2c25062e2fd75624bb9c8a71994fe6"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-cb455758eb4265cc",
+        "family": "exact_division",
+        "prompt_sha256": "b43c7cfb3cba1afba36fd5ab8e133c203ffda4d64503c38b43c4341c36b3bb84",
+        "target_sha256": "af19fc6343f345f1f13f73a4f08306c6909d77d3cc8c07b00beed4060ad558cc"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-dfb3e2baa86e915e",
+        "family": "mixed_products",
+        "prompt_sha256": "ccfd79d8d498779b5c5867d043f49bf097063703e2153ba9083648c1bc901407",
+        "target_sha256": "5ec9e17fb7d9e6b70a461b9381d57fcccb37b53f7c5d294ac57c1ed3ac1acaf0"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-2c323ead0559bc96",
+        "family": "exact_division",
+        "prompt_sha256": "7857e90c811467fcaae54fb935ce1fb5ce471070c97dc16dfbc168f216ade4e2",
+        "target_sha256": "15f893dd5e150b68a65c7f15bc7a46df9e7dcb86778872a48467f5a99afbfb58"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-40a2f931c0122ffa",
+        "family": "nested_offset",
+        "prompt_sha256": "101a6b3843c4d9021497fcabd816134edc1f504069d8daffa120a8350709bf87",
+        "target_sha256": "047d05bf8adfd5d05593cf87feca9792653071c5cfa0b0ef57857ab6004564e7"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-9c5b0b3fea0fb6ca",
+        "family": "mixed_products",
+        "prompt_sha256": "7348b50165762db3f3efcdf4b32fd0e17a88cbe87719e99ff377021bce9085a7",
+        "target_sha256": "7f46d29c4b366fca953fd3a9e011baeeae62bf6481c65ce8e9dfd0a8ff6ac19c"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-6f5cf2b305b2d829",
+        "family": "nested_offset",
+        "prompt_sha256": "e2ce0a1e86a61197e2a11b2b86436125231fc64243b5a34e76e38db9608dddb1",
+        "target_sha256": "bd925c941ce19a8901280fa28d31d9e2bacdd8bf23c222ab7267aaf0eaef9697"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-140091b81fe8028a",
+        "family": "exact_division",
+        "prompt_sha256": "10a1844a9c611a6409bf14bfe123b52c4cbed567250dbe675b25d38baac77a16",
+        "target_sha256": "bb4734103480be3336a2373b1e176ba35056f7ce6c20091c058e593d257b27dc"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-2829ea7a00be012e",
+        "family": "repeated_operand",
+        "prompt_sha256": "9eac0ee95961d06ee3bfed9ec53fa2d0903f17b629ee31c192bc8b2e4156c201",
+        "target_sha256": "1186c6064cfa8b838f78d5e8363cae54551bd580db728e6dfb4ee005f302ab6d"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-e790cf0fd8c59590",
+        "family": "repeated_operand",
+        "prompt_sha256": "c8946e2d4863eadca27ef5f85539df9e3baa4fcefee32175f7574e1f6ea9f92d",
+        "target_sha256": "3925d403607abed23d7c69960ec616564de85996d2392bc178e263bcf66dcdb9"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-c5e076c9284d5adf",
+        "family": "exact_division",
+        "prompt_sha256": "80d1e7f9135ef370de95944a7b16065cfed55a71827479b626bbb3e6047258e3",
+        "target_sha256": "6c29932ec27ffa7b06acbbb7c4444aad530b77cc35eac5bdf18c5b839c6cc125"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-3ceea36a63eca66a",
+        "family": "nested_offset",
+        "prompt_sha256": "33f51f72ddf4fdf55f696982bd9940f9d75bb070386cb0c891666c3de9504115",
+        "target_sha256": "0b7ed6e23b9cf86abd405ef41c2baf7fb111c4baf677c00d3c2f6be889df2232"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-554c242c78174695",
+        "family": "mixed_products",
+        "prompt_sha256": "fc9a845d1d3314b51e64b5e92bb0ecdc604a8299e0faffe86e28c09617e7df9d",
+        "target_sha256": "4b1937571a3ed23b3260c15ae28262d592b54934b4cfc2334a7d115ccc96bc3b"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-9d145dd98f9b6d52",
+        "family": "mixed_products",
+        "prompt_sha256": "dd6c003b83e1ecd9a34463c5d3c96f29a4d7fbd2d9eaeaf5fd73b451268f75ac",
+        "target_sha256": "68dfb3a8c62d003d349c51574e5caed300612392506eb2a77f347fa54fe265a5"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-3191c96db726040a",
+        "family": "repeated_operand",
+        "prompt_sha256": "c3f435c176f808c7518c3f05237e9679528f87d9b5b9624522199cd061204637",
+        "target_sha256": "6c1f0c32222f27adc9a6c07e3643ea863005d90278a62c4ebf5c9f21bcb790cc"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-568a0efcad021778",
+        "family": "repeated_operand",
+        "prompt_sha256": "fb096865c56cc90be58463a15436c9ff30fc83c2e567ecfbec494a4eb154c9a1",
+        "target_sha256": "c3e497c35277a97e5e20e524d8910a06578edb5fa32e96928edd69e4ac33a491"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-3a13529e76e5c6c9",
+        "family": "repeated_operand",
+        "prompt_sha256": "1c80882b9d9a109ab93a0483104a60a93456c1de8a7e855d9fda005a4b8924b0",
+        "target_sha256": "2f144c84c1317c1fec35379528cd6ede8f087fad9017465390c6f7f157e315bf"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-3fba20fe95c6c3a5",
+        "family": "repeated_operand",
+        "prompt_sha256": "e0a7670b7ff150910545b398f5516c74db188f7056603c28f9bd9877985365ba",
+        "target_sha256": "89dc1abcbbb1cefec6d171a1c3423b79ef8ddf51ca8c268676aca6533366d540"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-56da3a9a6d68028e",
+        "family": "mixed_products",
+        "prompt_sha256": "c52b5cccdaf2da1d9ec250d20b4e1042a1b27cb5242c4a40f3cac3565825d06d",
+        "target_sha256": "e932b85d6f5a0b3a5d82bbd0e86b36c404bf3180f5e0cf73248c60a7873dd490"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-2d9b9e180b282232",
+        "family": "repeated_operand",
+        "prompt_sha256": "82820b21a01f5a0d03fd3d9a6d59ff011f3f386d93fac8e14509cc96e99c795e",
+        "target_sha256": "6af14bc039729dd2587a6bbf239368641ca27ed31a4d0b08844fc4d8f4464271"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-61b88036480458e5",
+        "family": "exact_division",
+        "prompt_sha256": "e847a362d82722a38e20c50c63bd08441aab4691ab695c531e4d6a5f3833aefb",
+        "target_sha256": "82c48b7694dbc9d531de250787bfd12550c277acde961bbef34ff5c04d3da55d"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-71ec93c36a8bbf4e",
+        "family": "repeated_operand",
+        "prompt_sha256": "8948f5114e756c6a0637075e206bf72c4fa0312863b13a141a0814bb405a5c90",
+        "target_sha256": "bba0ac2cce9d0311cc0a27df3777c9687c7f07f8c993aa763001b723bad4b13a"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-772f2e80847a4048",
+        "family": "repeated_operand",
+        "prompt_sha256": "2d0ae41e74a67874de94853e9a65938d2397797b6da15d1951b9e90b0bb2b621",
+        "target_sha256": "82169fb1bb47fc9ffc0913b5cb498bf4c1dc343b36082404f7850c0cf9241995"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-cb9bebea37117555",
+        "family": "mixed_products",
+        "prompt_sha256": "e9637d02c846b58558b1aab026e54aba8c13ea4a582624b8026ccbd67f782b50",
+        "target_sha256": "23906b32bd4bb17ab5b92b9399165517f6a92ac6d8aec364557aa06fb7b65079"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-d466a1bf58274308",
+        "family": "exact_division",
+        "prompt_sha256": "daccd7a591e059687e2d8fe92fd5c990f645c4815199b878af11a9c1cf2b94fb",
+        "target_sha256": "37faa9f60229b795c35249da581aaf942f5b607e0f9b2e2535739ce4ba98167d"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-1c4da11a1f371be4",
+        "family": "repeated_operand",
+        "prompt_sha256": "5317af007e9b884976d7b3fcae7d8815c8844086e14a24c1f4755421e42df054",
+        "target_sha256": "291ec76d7246b85587cf2bed0fe337ee5d70ea22f83b02308b4b77a44cb6830b"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-97d3205135e8e079",
+        "family": "exact_division",
+        "prompt_sha256": "457e52b7f0d4ac954706005f787dca8492b6c107fec7b2ec1cd870bd5a1bf481",
+        "target_sha256": "91175176fbc20b598b2be19974495d5dcc01582c77e2b6e4f78bf0bad46ffe16"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-ffb485c4e4920630",
+        "family": "repeated_operand",
+        "prompt_sha256": "4f68688ad8a9c59feb280b3d1bb5a544385a374aa14b061a7b00f2d55a67265e",
+        "target_sha256": "e72f04d3ede702e186ea6d7bc9d8980961e122e7f911e6df52b0e9c72dba6eed"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-0d214f27f397597d",
+        "family": "nested_offset",
+        "prompt_sha256": "414d6f8b354a148b7a46bf05e7dab7e38ad62532ee21fd77397939170fc0d8e7",
+        "target_sha256": "677607960704a84192be7a150702f779a4b447b731e1d95b78a19491f776ffea"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-4e05fb32735d00ff",
+        "family": "repeated_operand",
+        "prompt_sha256": "e3b26cdc178c45835e5cc5dbca7ce33557a7a5b785a14b56babc2758a790d1ab",
+        "target_sha256": "4b86f9e99168e09c690c0a5e9262d89cc13e2697bd0489b40b2b98d6cbf6ae9f"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-7041e61cbffb3331",
+        "family": "repeated_operand",
+        "prompt_sha256": "7c1d23fd9327d0bba653c4fb76285d35b363d00a6d09ed592b57d34910ce25ee",
+        "target_sha256": "17080003d106373275c9649c4b2ce3b7480481fe7e5a98d8158b3cb6ff4e0914"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-a10b77026aa23c1e",
+        "family": "mixed_products",
+        "prompt_sha256": "e641aff03a7071cecd76560fbbceff393797c44f55cec9e7136216f93ac8798a",
+        "target_sha256": "53a65ba4df9dba2850890746a286bfa080b1ae6e8e5899ca02e31c46b25272d5"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-06731c71dd240003",
+        "family": "nested_offset",
+        "prompt_sha256": "c115e2b61b0459304b36159f6d4ebf9bc2caf9927db69c79c8cfe0cc8fcb5206",
+        "target_sha256": "2cb6f55dd936de184067e0bb0ef599f9acd2e41db7596d3154aba84a2031555b"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-6dec1668d37185e4",
+        "family": "nested_offset",
+        "prompt_sha256": "4bdd9a4a3b0a995970017b935230e8335d0995f6ef5d89c5b58d6b2804f2432b",
+        "target_sha256": "08d99ac41392f03538fb454563a5a386702ba22cf1659f4d8ce2d0ada1bfcbc5"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-e7cc6a2a6c816642",
+        "family": "mixed_products",
+        "prompt_sha256": "7de8ab273daaa962e72fafcbafe01a2479e1776175558ef3f8cd6090a605204c",
+        "target_sha256": "040dfbd44e368857180dd651b4dd4119a826ab1b527eaf071b575f02b16fe563"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-d0b5a143bbf06025",
+        "family": "mixed_products",
+        "prompt_sha256": "3b899499b7fa5051c473bca2579eaf622773bcdd35b1f1c265ad12cbfc3a9d4c",
+        "target_sha256": "545e881f5ef141adeef47491e1f802ad5519ee9f09496e621d8b805b8adc3b88"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-0bc7ac6de27bd99c",
+        "family": "exact_division",
+        "prompt_sha256": "1189ecdb60fe6f1bfc4cd1d66803c8742d8e7cb32dbd5494ca10865d927af921",
+        "target_sha256": "efb5793be72ee0751497fd75d55ba40a50a90f0572fcc2dabe7fb9bb2240e279"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-a68bd5829f2470a4",
+        "family": "exact_division",
+        "prompt_sha256": "04c882b24d5fa0aa5189949ca5a3c35daae7d7dbf427005acbf2419a5a64d7e6",
+        "target_sha256": "51d6dafcff9a21f3919f6606df880cde82c1eebe32055b2a8b4a954db18e1c46"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-284a6a0e7738e255",
+        "family": "exact_division",
+        "prompt_sha256": "0754cc47d4845d3eb779ef159b83f71508e675e27331e8d667614ffca0362fb8",
+        "target_sha256": "e1e109c933102e27fee00b34898225bae964e2e9c89fbba6194bb7d785c98f27"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-e7f397da24422649",
+        "family": "nested_offset",
+        "prompt_sha256": "dcfba6e2bca8773cc177b87588167194c01f0befe6c7602113933750b1dcf2ec",
+        "target_sha256": "22c53c92bd0afe91f2be575be856b2806b03c41c235f587ef2fe021bdca272ce"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-70bcf976b3364379",
+        "family": "nested_offset",
+        "prompt_sha256": "6e5be7da8f5be06340f80915b5b4b0e287471e710500f4ffd2075dd55bf55aa0",
+        "target_sha256": "8ca3aac9e8324102a3aaf7ce8103e6787423f2f29a8bb4d387f844084cd066d7"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-42151059f854238b",
+        "family": "exact_division",
+        "prompt_sha256": "0be05e631c8bed3eecc969352b5ec3468e00bb5394f788de3eebcf310b4b3dea",
+        "target_sha256": "06a7a7f460eb992114add9328f8e0cb6a624948432543aa951378c75a01a318a"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-c6bc711f8637113c",
+        "family": "exact_division",
+        "prompt_sha256": "e195bb48a2b341ba0f5daf9529e5f08069846c924884b35a882391817ec8f50a",
+        "target_sha256": "4d2967ec8bf61d1cc8054a0ea8394af0a6a4f62631984e667ec14507aaa5f2d5"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-dc17f1a27025feb9",
+        "family": "nested_offset",
+        "prompt_sha256": "434ec2976459d35f9d330dd711f283cc591a8f01dfa44ade6989897cfe96e0b3",
+        "target_sha256": "f6126a6260341754244d997026a9bca0e439a98f864ad311f9cf56f001b62de7"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-53cfe6654dc0e9af",
+        "family": "exact_division",
+        "prompt_sha256": "fcade4f49f83a5b838288aaa1fd2fd86ad506fbf1f339c6b1802503cdb97f532",
+        "target_sha256": "5f0cec101243d2fc275ba62c133da2741bca7bcdca44fc4612dd9ed457bbfb18"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-4c02bf7320f4cefc",
+        "family": "mixed_products",
+        "prompt_sha256": "8b7c6e78595697e4caaaa8ff6aac1940ae6ec3ce3665f21c2020f7f53d1ef1b3",
+        "target_sha256": "6d94b42afa6230f9e22ccdd39bb990af6dd08a710f0f01cacf283aee79b95eef"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-5073340bcd6d3a2c",
+        "family": "repeated_operand",
+        "prompt_sha256": "42796fbae48fff0189ff00c272019fc41de95e80fb22fa1b2dc15c424ac1ac3d",
+        "target_sha256": "0f2b5275c8ad8b54088fc37cfd8deb093218ce902b15551800dd343b0a627b2c"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-e2721b3c35995a4f",
+        "family": "exact_division",
+        "prompt_sha256": "aa176276e0bfb4a44300535ec612ce63fdf54a960fafab6fc5257c0fd29f8ddf",
+        "target_sha256": "13d3b0be9e3f2826cfe159135b3a740f13b53b92f2ce10c4cc19760df82bc1c4"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-2864f31b47542ccd",
+        "family": "exact_division",
+        "prompt_sha256": "43c74eb7e413c30eaaa3bd15b24c0bc842238b6868f7ac9678741bcd6ac9b40a",
+        "target_sha256": "8b9b70dfc19ca0bd4d46fb575878c6042b808936e74fd746ae8050d90e4359be"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-45cf4a9b242c84de",
+        "family": "nested_offset",
+        "prompt_sha256": "90afc55bc4347ba67706546f39e9d4269c27c3c064ea4f10f48d0469fc7a9674",
+        "target_sha256": "f7990049ac9caa91eee99510e8f3894ad6ef6d45fac7b84ac1fdb9669e653a8e"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-6af0cd87e5730ea4",
+        "family": "exact_division",
+        "prompt_sha256": "6d0dc21ea58b5faf239e868ec035d7b8a78cf563423f9103b3231e40cae663b2",
+        "target_sha256": "2e28df2e67cdc73cffda7631937916b535355607d693a65ba9ef1394bbe30b69"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-8a078328f2717dcc",
+        "family": "nested_offset",
+        "prompt_sha256": "1a1491e3ae538b50c16680bdcdc9647bdc646fb846d4df7e8527b96be285d618",
+        "target_sha256": "d6f9c29ca3a45c2d7ebb46a5116e5271ff66a42720972cfd8579233bf2e11b8c"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-a6dcbaca61081f52",
+        "family": "mixed_products",
+        "prompt_sha256": "99ce12b4fc003b0f79461d9b73116b438822e3716f2c7ded1d51c4393e715815",
+        "target_sha256": "ce9d63ba3e1f717dc7690800f0ea157bf5f26b59a6a41e7edb1afda9e73898e8"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-054aae74f17c7f90",
+        "family": "mixed_products",
+        "prompt_sha256": "cf21b06a73ae7eb0c7cd1222f5956392dfa401117f34c72cc77b9e9619793e3e",
+        "target_sha256": "66c9b205ab9e6fa23b35b87d2520b5204ad240b7f49d149ce01e25051a496b4d"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-321f28f910fda458",
+        "family": "exact_division",
+        "prompt_sha256": "c486e6a3a4dc9ff30f4decbaae946c1a44a8fb80e0923b14eff1ab58d6398ac1",
+        "target_sha256": "4e94f8e49482fa99efa053fb1d01ec7e3a1f027ed4cb967ec54d11c9338f9b2d"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-dd1cbc9335cb2a0a",
+        "family": "nested_offset",
+        "prompt_sha256": "0d1cdbfb62972f82d648c2166795fff90746c5a7c748cd0d2f09a2267fa46f86",
+        "target_sha256": "7c9199aa54b6118370936f15366aa0d4ff326474cf370af1aabf1802f3205928"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-1f0b8dce71642891",
+        "family": "nested_offset",
+        "prompt_sha256": "8f23620f2edeaf2202088d32e2634255740b7b84aced985589cb1ccfcd00389d",
+        "target_sha256": "baeefbd160bcebf11690837a8f9f6926491a832cda9bc80f41590c4c7669943e"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-11ba76ad9e087198",
+        "family": "mixed_products",
+        "prompt_sha256": "ab348a1620299f97c39433a4c338c375727d72c7f88ebe3767d58f5123db4545",
+        "target_sha256": "e7603e9a3ca5d3a23fe16916ddeeba96652e034d04d0aa486900c3d6d0c213c9"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-f67eeaf07b601f32",
+        "family": "exact_division",
+        "prompt_sha256": "7f102895d62218e4fe932aab00f38c08c1e59a5967785bbfc63715ae8d38c8cd",
+        "target_sha256": "33ac76879227df7524affbfe78c4d404221c8e92c52046cb960707ba4e321f18"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-3ce5629a1b8d92c0",
+        "family": "repeated_operand",
+        "prompt_sha256": "f80f76c1c6c28d1ef6a28466168f9b60516bb9bb41c5f7a4213aadbdad70a262",
+        "target_sha256": "ad91a37ec8c0b62e3f72915b146819b1931293c5391d32d436adedf135dbbdd1"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-dbd4ace35c572b7f",
+        "family": "repeated_operand",
+        "prompt_sha256": "db4adb2a61f88e3d1204a7be590d00072fe0d8d2a6f70f98947cca7dad03bf30",
+        "target_sha256": "218c140c1b1b09808059ac6b59aa3e0f6f028fa204e6f211c59d251f0192dd1f"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-08c69b62b48d145f",
+        "family": "mixed_products",
+        "prompt_sha256": "799b028c085dddf0caeae66c89f1f682ca8b48dd1f2803a931f97e8f69692794",
+        "target_sha256": "ae0bfa2e96370cbc5ab26f2dd5d4cb17c33eaa779206b42615290d65a7909913"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-38fb8fbe99f1657e",
+        "family": "nested_offset",
+        "prompt_sha256": "bddb1c209d793b6d54068b60d43de0c242421d1fbda7a321f9827d511de96764",
+        "target_sha256": "b97ede3e9750b492d5938a4f759097737283869d7e774ed541a85d9ab83a6fe0"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-edaf6457fe0903a6",
+        "family": "repeated_operand",
+        "prompt_sha256": "5ea4fea140e2fc551192377340be1c5ae9ff5a55f72892e98c6600be02f70519",
+        "target_sha256": "84e8a3cb731b50b062ddae1b357c205f4274bdc3d86f42113f18129e6ca87398"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-52e4fe28edddfa9a",
+        "family": "mixed_products",
+        "prompt_sha256": "bcaebbdce897d9f2ee6c5b03e7c74f9448cb19ecf95eb3f6328e0a2efb9c3276",
+        "target_sha256": "3af27de2a6798734254ddfcc354cc2a89f9177c7c356f094b33b4b05f1fb5e1e"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-1b38572a80534afc",
+        "family": "nested_offset",
+        "prompt_sha256": "c49ed74a181d9234f7381e9b02c625dc094465751fcb4b9bcc3afc82328af835",
+        "target_sha256": "7a18a092695b4345a1bc6ccfc9345c14913a569a30965e12ffd4fe4f0734df3a"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-b159b8a236b55421",
+        "family": "exact_division",
+        "prompt_sha256": "a3fa2afaaee92d04109ae7d2483025705c5310121c0f0fc514d45c6723c117ed",
+        "target_sha256": "965660c4c8347c3b440174b5a3affea559deeb7c6997275476625d2cafda1352"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-7bae3b5af0b03cc2",
+        "family": "repeated_operand",
+        "prompt_sha256": "0312e900fb3dbec3f88da3b926f1c23777081b9fef180be27e01201ac4ce2ac5",
+        "target_sha256": "b2f74ff0c34d55867b8f359114e9cd7eace664461ca18a3ccacc235a7259ec16"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-fde1cad848a6af75",
+        "family": "nested_offset",
+        "prompt_sha256": "ed2f908146ce936bf38bfc839305ddcee42313f28a7438ee1ea7a6ef863eec0d",
+        "target_sha256": "7597631ea560db5c3ae909095c51b9f9bd55156d910c1af71b9f7af1b1a81627"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-ffe4c2eaffb181cf",
+        "family": "mixed_products",
+        "prompt_sha256": "c9c11e2dfa90a6e64e38a2132e7bf4464b055ee1745387eb49d2e6c665a0bf4b",
+        "target_sha256": "f5b2474f79cdfe0e7a05f2114aff03f48e4dee63ed70bd6ac8dadd5886b8742b"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-d4d9694988d895da",
+        "family": "exact_division",
+        "prompt_sha256": "bf2d7ce9c71a8abd7b233b04cfc0df451f23943b63a098de4e8c588dbaec713d",
+        "target_sha256": "456a45a8eb0e1e31e940fe01d5a2d453116e18c61635ed64f935bca087993139"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-ba5256a276959434",
+        "family": "mixed_products",
+        "prompt_sha256": "0ad08421ce7d6c8ba0f96cebce33d45e9b95ea11728a67c7ea998ac72daf24de",
+        "target_sha256": "ea65f7841c2b99555ba03f9e12d5b9869162b964e2fbb83e3dc1981b6bb8942a"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-d26c2050b85382cb",
+        "family": "exact_division",
+        "prompt_sha256": "f7327d656268640ef494bb1c79a11745dfc4301ea3027c8786390676e172c4e1",
+        "target_sha256": "2086a00f9b104186681faa768c67db809a077757a232e10e17037fbf3bb0b7eb"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-fad60fba8f3c724e",
+        "family": "mixed_products",
+        "prompt_sha256": "640e92aca0f40d5a8b64f517648d6297af65c6ea3019590d6afd7f70763352eb",
+        "target_sha256": "7fb59d4799e1e3c298fb384e1f3a1458ae1b903730d68bb60ede010e8f18bace"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-71bbda384646756b",
+        "family": "exact_division",
+        "prompt_sha256": "077bba4b661815424aad0104ff47e24e80e47c4c24e0c2bc4de3f006cff227d6",
+        "target_sha256": "c29f8b4a409c21f7390f9d9f41ef84f4fe6dca89a3198bbb04b9a2896b0339fc"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-1298f753aa6d820e",
+        "family": "exact_division",
+        "prompt_sha256": "7c82298159246057efdc71da2342a5da7845f7ef4a2ab554ec2ddb24190d0010",
+        "target_sha256": "935b2d871cfb45c09363784122d89e1feb698c6eb9a9e70336541b589209b5fa"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-4fe66046c30691ca",
+        "family": "nested_offset",
+        "prompt_sha256": "88ef9bf0cb30d12ac0244b50b505e02442e144cbdc892a7a140f33a3c96a5ff1",
+        "target_sha256": "0070d432d30a2987b079e006c6a4e4e4bbf78fe059206f17f800e8e131cf6cab"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-a63ae96f56640d5b",
+        "family": "exact_division",
+        "prompt_sha256": "ea16485ea64dbdc7cbff1ab92dd9a57a3920b8a16f3e858fc5897b1cceb0530d",
+        "target_sha256": "27ce990b6aabc79fc7f216c81a56d52ac09efdccb831d053a410138ce58ec753"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-3a0e26b4bee9ee80",
+        "family": "mixed_products",
+        "prompt_sha256": "08b0e1a3f30b1af3138f5f3cd5be86d5e95ca77cc8d71d9867bd96f31ac5ef21",
+        "target_sha256": "c9bf01aa85d96cbfa886885203f45bdf1a7e546b459716fe6438424540c9f378"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-d36881beabcec70f",
+        "family": "repeated_operand",
+        "prompt_sha256": "f1a53ac67406d7c8147633f0ed3e51c72a45993248f3c22a6e7a30ffda0b7739",
+        "target_sha256": "924b8f4cceb0bba34a926649787749a8582cab090d77173a7d14b0f0f9ab4784"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-801eb56024e4290a",
+        "family": "mixed_products",
+        "prompt_sha256": "49e91766df14823b909b1d4dd3b2df245be950eef6f16f8580408f568d62a86e",
+        "target_sha256": "380b09fa24ee7afc0374f0109cb1e66ff3f7b9c686649864f799a2046be4b7d0"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-4ed78b1e56ac21c2",
+        "family": "nested_offset",
+        "prompt_sha256": "134fa084e5e17f19bfb5790817d657ae087374541e83dde0d4462e93b32a45db",
+        "target_sha256": "d80820a86b52a50129e4bb05a6151d042d3a88299543fa725dddd007902bcf34"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-4f8a46a38b61abae",
+        "family": "repeated_operand",
+        "prompt_sha256": "ce2167821411b4126ff5b4bc89f7b80b4fb12c6c9b1dc531fc54510cbe098e74",
+        "target_sha256": "538e7c857e772d1aef4193c2cc0216cf8d91772463deaaae0f78008de2b92b3a"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-6d8dd6cd6875b584",
+        "family": "mixed_products",
+        "prompt_sha256": "e1540a34394b2005a7d5969f58173c075751db06539c6380f71920383012d170",
+        "target_sha256": "ec2d8e8e5b4fe81a2dff0ac0e420b68bc5d2c1eb6d77c228bf79db4a0ac7e18b"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-b26bd68e798aef84",
+        "family": "mixed_products",
+        "prompt_sha256": "d38018affa1831da0ebaf04b8f4e5685d8fa0a0aacb1d8e999660a62e783cf17",
+        "target_sha256": "e1ae508ec84089285339c6c9ea92f83df2b67db5573371a96797593471cd01de"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-26e19371f0c9bb0d",
+        "family": "exact_division",
+        "prompt_sha256": "8419c2f5a16359071a123eaf4d5f468102cbf3500ec125600d9eb61a9f076b7d",
+        "target_sha256": "9cf1d06c2fbf1b554c77a6a5a9a222588f606fe770fb0de8444ee54bf9e5af6b"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-17a672eb3a9525ea",
+        "family": "repeated_operand",
+        "prompt_sha256": "cfa31e475b4160fad7ec543818e6e5377d45aa499123373caa5ca55e04b064a5",
+        "target_sha256": "79d48f1b32ba619b1c4c82003022d863f0e17f6709ac83a0773e37b295693be3"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-17bf1a59cf0aed99",
+        "family": "mixed_products",
+        "prompt_sha256": "c4f7910c4965125da7888bebe0874274465b263f73520e0fbe2c0da3c2695cca",
+        "target_sha256": "2c6632ec3747cb5586a9927846226379bb9ff542c428cabb7d5d907bd0f6032c"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-3ec86ce260cdb094",
+        "family": "mixed_products",
+        "prompt_sha256": "dbf5aea78a33970aa6249ebea15750a50f54ab221c114da036c8e91a87ed3559",
+        "target_sha256": "74dbf3ce171de62d959eb6d5b22f1a0e20a1cf77bb34d79f54adfe541ce6ad65"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-c7ecaec81cbd1c09",
+        "family": "nested_offset",
+        "prompt_sha256": "faa17048bdabdf3ce3eab40012213e3d545525cab1669c18501a2501eb0ad1b6",
+        "target_sha256": "8f14622867a1cab63d6a1a61e7375fdb8ea4767e0a1f36b1270c8ad0880846c8"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-aa52da0bf4a4ceb7",
+        "family": "exact_division",
+        "prompt_sha256": "cbbc0b3315ee7540ee4b98a8b7956b82e1c00577970b6a061c70b9d8d6cb717b",
+        "target_sha256": "28907e15234cf525d97aa6f08bff80e431c64debd6da1a117bb80bd25c28b884"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-ef353744e516ce8e",
+        "family": "nested_offset",
+        "prompt_sha256": "fce094a25e9a8e739aae324d2c6f9b1039749644705f233cad8c58b0edb9322b",
+        "target_sha256": "fb743abe60e19c45530812a113991c2d011d517619eed3bdc29c989c28e6443b"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-c922bcbcf9f8ea95",
+        "family": "repeated_operand",
+        "prompt_sha256": "f8e22e45e502c5d7fc21c34438c3634596b17a0ebfe2ffbb1228252f6bb8bafe",
+        "target_sha256": "b806d42a8e4795c819278b6188e62f287aa89778335c3a7d604ac65b74c7262b"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-fe7858ad6373ac12",
+        "family": "exact_division",
+        "prompt_sha256": "83dacde84b6354466633a9bb75a02bbc475852c89820294095b8462da643859d",
+        "target_sha256": "b777ca6d03b8ae0bd9a618ab4adde43e8da030e8f8c7a43354103afa9c702dc6"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-c804529c57376bc4",
+        "family": "exact_division",
+        "prompt_sha256": "5f7a36743ae015f2fb80338d412d442fa41d500bb3aa6f1028f46b1ac0d5562e",
+        "target_sha256": "b4388bb2493f5f84d10c247f6f4f908a06fc533a75b0b0ed1468ec8af0f5c973"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-6c28f1f7039a010f",
+        "family": "mixed_products",
+        "prompt_sha256": "30b8bf2fd3682f2c65ae336a8cc58443f342cd202ec894c434978b5d194b978e",
+        "target_sha256": "d75b480d3670c3937b3f4349d4b3706f519f3859b29abe96ba46b44140075475"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-ab50c1e2c470519f",
+        "family": "nested_offset",
+        "prompt_sha256": "6023ae8e8e8d832f948f646b342e0cd38805d33e4bb0c893f591b588e93dbbad",
+        "target_sha256": "6ebd719bde19ba4dc9c4aa56919451e54d83e14239f6a9935ec9000a4e518903"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-f735ea05e0da96d8",
+        "family": "mixed_products",
+        "prompt_sha256": "2ca6c61c7de72b8b61c25eab3dd9cca8bd17519c0a98f69b4059d535821f6b25",
+        "target_sha256": "15756702ea22845cbf9ef095e7c0a2dbda6e3216163d4643d6ae2b2a85a65d16"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-11433d2cbb1c9399",
+        "family": "repeated_operand",
+        "prompt_sha256": "675bd364f1a81ffe7581dfe1c8e3c867db731acd38df318c2a1423732aebdae7",
+        "target_sha256": "753d0bcba9a674af1b5dc6bf1769ff5b2db7dba5855a98613a920fb138928cce"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-f1916b6f55ea4b03",
+        "family": "repeated_operand",
+        "prompt_sha256": "b4a753261d1375f150f8b0a28d6ab43781bc57cd501d6da5dc0ef98b22b63545",
+        "target_sha256": "77065cd46be10d19546da5cc172f9bcc567450b7d05c6e96ef1ecb3580152d12"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-572998b5cee98cd2",
+        "family": "nested_offset",
+        "prompt_sha256": "aa45221327e10b15a92a5a94ce665a9ee6f8159af2dd68501d512723eb967570",
+        "target_sha256": "c899be1fe2ec1e19ebab7e81fdb62fab57bab35bd538df38cc05fea9ca38a659"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-72b632d31e3eb9f4",
+        "family": "exact_division",
+        "prompt_sha256": "9c8abc59be61087d7c0b73e2e4f682e074c52e30a735dd8e51e08b5ba1445ddc",
+        "target_sha256": "b3e3d540345740402354126647108e03f6200c2ca08710850cea28d53956c78a"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-690aebbc89bef984",
+        "family": "nested_offset",
+        "prompt_sha256": "b1fdf7e76eda9e0c19a0f6c7ac51a877b0c139b924912a5cde9219167e3dc334",
+        "target_sha256": "86ba8abd39dc7f347edc2aeca0bcd58c6b3fe9fe79df10ab9ae6631b4bae153d"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-9ace3f9a6f06a6b3",
+        "family": "nested_offset",
+        "prompt_sha256": "7368c81c54188308c242404ebbc834f379c473acb23d71d93049d36ee1452809",
+        "target_sha256": "91acebf97b16ca32701b5f6e356655b4158e6a68b56c0a28384f166c13ee4639"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-3e7a8cba9d3eb64a",
+        "family": "repeated_operand",
+        "prompt_sha256": "1513d74549405c27271b7255c98d05ebaebc3f60c0e02106da6f5c74a8bc22d6",
+        "target_sha256": "6292945fea03182ccde162bb55bd0d96c6cf852f730043a549efcf274210cbd3"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-56b8bfe72662fa7c",
+        "family": "repeated_operand",
+        "prompt_sha256": "994d2617299e1ffd19a9ee2a4aa53e62442a6abc93304c2836133f01aa2d9c8a",
+        "target_sha256": "d0fe82e7ed74021c5a5b4e3e098ea0705fa815fdf3b177537a3f638f3fc35af5"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-15ab96add156e829",
+        "family": "mixed_products",
+        "prompt_sha256": "c62f0e4a05c10a9956be0ed76d163a2f09d268dae706ededcfd77addf200898f",
+        "target_sha256": "b04a5b7e95527cfe26f9badc666cd84fa004b28c0637e2af4e813daaefb29db0"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-503273d970b128f5",
+        "family": "mixed_products",
+        "prompt_sha256": "4356630b5a2f187717e173f378f929f8f4fbf276326de6bb6845d1a24a07f105",
+        "target_sha256": "75806c1288b4ed63e0da0f88193a379c5c4483886c8af857ed4a417026af2043"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-c5035828a9f21da9",
+        "family": "mixed_products",
+        "prompt_sha256": "1b1339ab6a212a1e2eff6b805f8ac62b9f2f6c9aa71510ec5828517897f35f57",
+        "target_sha256": "3d91f4863e3ddcb39b8b5f0231b728492796904930ad1a20289ff7e73a304c74"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-3b7a56148d64adb8",
+        "family": "exact_division",
+        "prompt_sha256": "55baa4d506df3e4a1f71e8362c95565874057f012aec38e3a3a14d77bb152922",
+        "target_sha256": "f1c70eeb61ef125ddc3f3e26d0c6049f3b754a6a5aa839260d16256bf6acac3d"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-220bd07d31275649",
+        "family": "nested_offset",
+        "prompt_sha256": "f1dcb5c7749ebea0c21e3ed6159c4ad040217a6a20bda8eebf1c7e054afe3bd0",
+        "target_sha256": "d369e6527f451dbc54df85ebddf8c57261dd112ce6e306ad97767c6cda8f5f2a"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-3efb42a062173ad6",
+        "family": "nested_offset",
+        "prompt_sha256": "0fde1442d8c868c04b877a4717b70edfbfcb370cf71345f660dff003187ca295",
+        "target_sha256": "2f86400a3163cf9741309f392ebdefc9aacb1b858e8736dd2cf8267987d9aa39"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-f16eec3b57027718",
+        "family": "nested_offset",
+        "prompt_sha256": "f8f53b9469ae4ec1ceed44f3dcc23d3a92cd4dc77658a5f24c60c58374ae85ad",
+        "target_sha256": "58ec9350a9f29280366aa9ac53be5c30154beeca47caccd04af00f2a99ab4ea8"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-1d19c76fee8534e8",
+        "family": "exact_division",
+        "prompt_sha256": "13ee561799dee15d733fc26d77d356b1e07d90b8fc6a20ebe8ea18cc5dc48ef7",
+        "target_sha256": "d0fcecddda22f806ac04931d2ef9990b67395619a0bba2e4ef97cb92ed8482c9"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-a21818a76c05d872",
+        "family": "mixed_products",
+        "prompt_sha256": "bbf613b20e636d86cd26fc63cc370f119fe0d42873e7cde97296091c1ab1f8a3",
+        "target_sha256": "050c323cb6f801612349124dce6dafcbad8720a40fee57f6adb9d6c612ea8ab8"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-5f88651a04357d97",
+        "family": "repeated_operand",
+        "prompt_sha256": "846a9fd5759859a72e18396e6f92883a1009a3514e4ebe0b2e5b0def649ecd5e",
+        "target_sha256": "df97554d8f41a57fbb2ff51f6b4c1fd96c7ffaad5e9ee1f5f8bc8639800149a5"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-d7befdfaffc09e44",
+        "family": "mixed_products",
+        "prompt_sha256": "de4c22a45122cd38e23d38473e76fc595bf771655e037a3fde09e42107f40488",
+        "target_sha256": "be215af29eca3544724b915147b01e7798949a0a37183da8a202822305649630"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-00272661e6d5082e",
+        "family": "mixed_products",
+        "prompt_sha256": "bd028f6811a6b8526205a50a7afc4ac656c5370467530d5a249ac796dd3b3ce8",
+        "target_sha256": "831d673b66212bbdbd10164b08a7633b81701c316e3982c0b77c076860d8cad2"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-b3f1287981f71824",
+        "family": "repeated_operand",
+        "prompt_sha256": "e640e1dc80e5f5ae15ac9bb336992289f5fe84d5c1542dfe7929d554ad6eb8f7",
+        "target_sha256": "ad2003833405278a9c5181a9ee35d0b98178c711218b00d792a9a85f8711d10c"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-25c74e83f81bfd88",
+        "family": "repeated_operand",
+        "prompt_sha256": "1f0a484d5543acf69a90cf56b6397fe7b451a004f27288a8869f5d12541d7652",
+        "target_sha256": "64637ca8a24378f10aeba0825251d3de0093d054ef6bff13751454c78d64d294"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-d76df4ecafb11d44",
+        "family": "exact_division",
+        "prompt_sha256": "d4dcb7f61aa8161154e3ee35f3a5b686251145963c7827a8f3a3daf78be811cb",
+        "target_sha256": "aa672ef6989f0b6fa4d3862a14ef4b7b011a6ebb0a5523adc509713e22333420"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-456d49dc542940b3",
+        "family": "mixed_products",
+        "prompt_sha256": "9aa104740e9e64fc640b9814149918b7ab6770e12f5ee4a17c02f6d34e3fcbd9",
+        "target_sha256": "00845b1aae39fc2ef1adc3a8ac8b1c2675ef3f811a5d88d02174f8d9fdeafbc6"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-66397422505eee79",
+        "family": "nested_offset",
+        "prompt_sha256": "90fcf0198ee9a5522c0a8244b7fb56b17632273d996f3220c772f97972c24ce5",
+        "target_sha256": "24e7483b9a61fe867396f0a321069fd6972b8a00135a6d3a082d37996d7fc13a"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-88c7fb0f447582bf",
+        "family": "mixed_products",
+        "prompt_sha256": "60a4f36754576aeddd639dae18f40373d42143255af53764bd4b1a0ce8ac5b38",
+        "target_sha256": "5458e7a3197ca6714533f5c5990e69d6957cca83770d9aceec429f4b665d24ef"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-29f7627535480f16",
+        "family": "nested_offset",
+        "prompt_sha256": "cda1ffc80acbb773415f82d9ec6d565f93adeee6732bc62fb7f4b294107992f2",
+        "target_sha256": "c9e8d42a9e0fa3ab17563aa3955ec580eb75e19324894ae13c95337f8c687501"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-a70150d9e42b092d",
+        "family": "exact_division",
+        "prompt_sha256": "94608ea53028d124f9672dc96ba809a8443ceed2935b4fb83f76af4fbde659b6",
+        "target_sha256": "dcb34228204256cbab8182ac34f827a1df8fe4791e99191a47715343eb447666"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-e63f2ed7f3d05d9d",
+        "family": "exact_division",
+        "prompt_sha256": "fdfa692db3e389342d6cd18bbd2c32ebba65c29103a88985fb637d479d06cdbe",
+        "target_sha256": "bff26efa09f386178776e34321ddc30c027e02ff293dc0abbd26764d901c6bed"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-c1e3475beabe9145",
+        "family": "nested_offset",
+        "prompt_sha256": "ad194e49591be44c917e28cf415117293f19f7d2c0b1534aeaf429b0db3f1111",
+        "target_sha256": "5f489e7a2c7ee2730fef7fb583ffeb7b032092c622fd9959ad7992c65b30fcee"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-efdda7be26e2e504",
+        "family": "repeated_operand",
+        "prompt_sha256": "b3860f6d8eaa21bbb0629ac233482d569a9fa108f1c76171d6e6e10d8f9935af",
+        "target_sha256": "7f0a33c7eee14d50c09e633ba261566d8e983aabd3e045ff73ac9c841b87ba75"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-9aa962ec9ef279f7",
+        "family": "mixed_products",
+        "prompt_sha256": "6d770ca1a55c87647eba4b8539dcc4831d6491d9eb63a79760594f434fedf4b2",
+        "target_sha256": "8af69d2c179504d77fa2cb0648c3f92fcbd641223b0cb02ca56aac1de3d55f3b"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-1dcd55ae04cb07cc",
+        "family": "exact_division",
+        "prompt_sha256": "76dec6b049f134ad00f1c856d42e0f622ff4b73801273f2c58c057e6d0f84ea1",
+        "target_sha256": "7fc11a9f728fe7a7f52590b6f2c4800dbbfa445dc82ba1e0ea13a898cc338dfb"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-6b94e2b00fbdd170",
+        "family": "nested_offset",
+        "prompt_sha256": "bcb150325877c676bc5842b94956b86942523bdd341d4cdf310bb56176b2f9fc",
+        "target_sha256": "93d792537ed8e8743b461cf3830323eddd028f36d8d9486c5923304ab2beedbf"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-27f839576f5a6887",
+        "family": "mixed_products",
+        "prompt_sha256": "a3e326b02c949da83761edcbaddd3e3f6961cda1d8466556b28ff1d9fb19f8c1",
+        "target_sha256": "2c0513f4dffe35cc3ebf01b95ebaab8f1596a7e6994a4bbf92e0ce614224fe16"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-a1cc59f6a5c01835",
+        "family": "nested_offset",
+        "prompt_sha256": "51e596ccf661bf7eb4dcfbc844f27ca1a52c85eaf059e3666dc5ff53c48f2f46",
+        "target_sha256": "f32c795b1a5f2ef90cc373c2abd5fcb66f053bca0b3fe7fedcfa135470f0df15"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-1ddca754472e67b3",
+        "family": "nested_offset",
+        "prompt_sha256": "39892e9e8d344ffa8b6b29b27f8382b29532d0049af2a79cb1e3a9e2b7a0ed3f",
+        "target_sha256": "a1508a5506fead50f9b74e2df34b62edfd91a29e091079d683885487627a3fcd"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-4ffce4f0a7790278",
+        "family": "repeated_operand",
+        "prompt_sha256": "65cd5447c5af595d2098f78063eb16d6e8db090f48f29c2c920c094ba47faad9",
+        "target_sha256": "6fdf1dbb0b992fcf2fe8ccf18a698de5d067e65da1a46579012aba1e35a23ca5"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-f730337b5fce74fd",
+        "family": "mixed_products",
+        "prompt_sha256": "ab3191bfa4aa8db4f380edc15bbf254dbc0dc0208717fd0b255a4d5d8b103f70",
+        "target_sha256": "f51b3c4a82ecbfd2918244cd362ced6aecc86ce255bf1321564df2a719f1fa1a"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-90e6080ad47558d0",
+        "family": "nested_offset",
+        "prompt_sha256": "1d466c5740bfbb2a18f294380271b691ae9a0e184c583e48da3a7a7bab343e70",
+        "target_sha256": "f3453e1327f40582a3311da515f7d5271aaada1a7f4b6631e695ff899ae85f42"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-43ab39a6387bf0ad",
+        "family": "exact_division",
+        "prompt_sha256": "e9d073da41de1d7ff654a3dccc65f5f91021be3c2505a969ebd0c51be71dd682",
+        "target_sha256": "2988a33dab73a63127fcb5e9b23f4f54bfff62bee8a80257f44c7125a9f57d78"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-5b442347554fa502",
+        "family": "nested_offset",
+        "prompt_sha256": "049e018cc2ffcce5ee8f353c3748208a570a510b96f4ef1c1735bd920383697d",
+        "target_sha256": "c711dfc1f16bfef0084ccd2a47f891100b31cca6b0fa8308c41cae2168890158"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-a8fd92e3c4ae11d9",
+        "family": "nested_offset",
+        "prompt_sha256": "821a08872264cc538cf0df6983d682067fe7ec58c8042d7a141327963d5fffc3",
+        "target_sha256": "42fa52ca8bfd24c836591e8c48470a1160d2f0a5620088a981382654ebe5fe7d"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-89c40eb7f540e9f4",
+        "family": "exact_division",
+        "prompt_sha256": "a15f05fe8fc63d96f2a0d764e9564ecf4537130f227f36c2ed56487823e80cc0",
+        "target_sha256": "e7c2849ead5512466883ca59f86a4c7d54e25c7ea021337523c914ec15a5ef14"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-675ca2c2cb155ab0",
+        "family": "repeated_operand",
+        "prompt_sha256": "ceaa53677ff95f7574ddfe58b080aab09f5be2212e9a5ce8328551f0e207c7a8",
+        "target_sha256": "7126caf2bf8a0de7ab95d0ace1d8a8739730fb142c9edf42569161440623bab8"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-cddffe15c8c70022",
+        "family": "exact_division",
+        "prompt_sha256": "c1aec53fc8b07110721196c4b78d93f8aa1f5ec1b43e1a8872bab556ef626dc1",
+        "target_sha256": "e0a3ba166a95f3b93253853eec6fd90db5e67705d8d4777f1edb0716aaad8cc4"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-638c0ac09b499cc3",
+        "family": "repeated_operand",
+        "prompt_sha256": "45bb6a58307bd5f3bff1170741f855442471b70a16b778a770fcd89314dbe53c",
+        "target_sha256": "d3f594c187ccd19d5ea4e4b2becef36ee6c90075c0111e742280df3b7c73f2b3"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-53fa7b3316b80096",
+        "family": "exact_division",
+        "prompt_sha256": "bce381125614d33bfe392e4deb07d669a495d41530a5f63fc871ae949a0400d9",
+        "target_sha256": "39ef72169e26f38b0e4bbc7a416689f0374923150407927eaaac1055ee0eb3b9"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-2e0fdd48d5a6bd89",
+        "family": "nested_offset",
+        "prompt_sha256": "6675b72a6d208da9a554f1b8a9f65cca18634e0463d4525061efde3b7bcafe51",
+        "target_sha256": "ae4f03adbb892b43b0d138c259ca9f31ea5e6b0404172fcf3dee9b7abf26d3c1"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-ab57d5da1f9dc98d",
+        "family": "mixed_products",
+        "prompt_sha256": "fecbadc1f2624701dc6d622632dd7bf386b704d0bc460c25e115b5a59b469906",
+        "target_sha256": "23827c6919a39a08863329d670d40fb020f86cf201c77e04c997fa3c1e5b882f"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-c885bbcec48f60e7",
+        "family": "nested_offset",
+        "prompt_sha256": "7cef2f6b40d5f05afded83cffd4056745d3fd1041aad22da07267bf14f16dd12",
+        "target_sha256": "a681b247293477e6ee7e189a9301f3394151d73ca3c1b11f666ffb8673c853d6"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-e5bb24d86b5c634c",
+        "family": "mixed_products",
+        "prompt_sha256": "3728d14eb29a59dc6d219d9b23341377dbd485253dd6319c1c669a87e926d2f9",
+        "target_sha256": "cf81319c1e3613fb8519366beb59869aa8cef58eb4adc27c9efa4dd9bf15e380"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-36be75413063646c",
+        "family": "mixed_products",
+        "prompt_sha256": "fbc34938f513841c43b4b4fc0007a2cdd08946bf593b6b78aeb5db3243a6934d",
+        "target_sha256": "7705ac8dd1f01f889aa0fbba8cae09135afd58cb040f2361d24f8416544c7ffa"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-73764ad4329c7135",
+        "family": "exact_division",
+        "prompt_sha256": "7da37762ba07ad182ea909c0cb05ddf9bd3d5c9499a9666bc81601492ec2e5c0",
+        "target_sha256": "58bfdb33432b17f401d8b70a7bac658bb013da8f7d4c245a6a32669eeadd3681"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-e89c3e17c5606f3e",
+        "family": "repeated_operand",
+        "prompt_sha256": "8b27ee5f2c93088f2813a53ba8706f9370f1c87ab3cf38d1c5a8565713dfe862",
+        "target_sha256": "a012a0529652694712e50d541802557d303bf516c01f07013faac08041e8d1ed"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-ba60bc0443dfa7a8",
+        "family": "nested_offset",
+        "prompt_sha256": "75a76a03b0fb2fdd49a886a71d034a40d02686c1316e223c1e6fd7ab88213f18",
+        "target_sha256": "2c1ca2fd1e32129f6a7331478c129d50de7623a8df7127e2e6b5abcee5163673"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-298daeb1c06f12b2",
+        "family": "nested_offset",
+        "prompt_sha256": "44685bf22a3e2cccd3af5ea81e4c884f70dfe3a020681ed2c0ee7ef0ecba88de",
+        "target_sha256": "a5fb824a998349afead3fffe530db0fcc1aef10c0add1d3db866c96d4afb9940"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-7d91714b87ef3793",
+        "family": "nested_offset",
+        "prompt_sha256": "bcd5f9b96394f5acd400f6fad79c051109b292f28e1646f958cc60592e211db9",
+        "target_sha256": "cfa86bb219dae29efa50ac0509cb6d99ec948fb2cfce6dd7616cd639dda3820e"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-49c48c1e72471dce",
+        "family": "exact_division",
+        "prompt_sha256": "410ddf2e1ad45ca22522c7b7a85109a54975dcc2588b1121a33280b19239a66a",
+        "target_sha256": "94626608cb4cd240a77c223bd29b8f059ac2c786044644c0cf62a454f6f21d2d"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-2ed16a6725fb83cc",
+        "family": "nested_offset",
+        "prompt_sha256": "d30d758f6541f7dd93e2ecbef1fb9c71ecb0c48dbaeb4eb5e8e1a68f35e88463",
+        "target_sha256": "433c35f9ab46ca04fe5cbb8ca6dc2363dabd43e619bc7425737a17fc57729f54"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-df3cdb3dc7446bdd",
+        "family": "nested_offset",
+        "prompt_sha256": "67986cd693521e1bbc836f91811ac5bab7f1d904cb74d454c07eb7a90fd86f28",
+        "target_sha256": "6c080209b7a50f9fa6ec5152774a040110b12b84380ecda10ed6017b0b1ecc61"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-fed3ab3b8fbdff03",
+        "family": "exact_division",
+        "prompt_sha256": "be28f96af1d7400b39b8fc5795dca438a9b3b27023aa291722d94b5f46f6ae23",
+        "target_sha256": "2298da3b189b473651a5d0e15dcee3d7d86ec20299673c5c2d9ad6e2e7b7b50c"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-9439ae031ccfa747",
+        "family": "repeated_operand",
+        "prompt_sha256": "c4f9b690df140058b6b3f52b2820e4afc656fadd5abdfcac33c4c49c80b97bf9",
+        "target_sha256": "174914a72b175f7895d0dbaeab167f570fad32d91dd18cbf590909fc806ea23c"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-b98425fecfe50502",
+        "family": "repeated_operand",
+        "prompt_sha256": "0c8c0a5d86adda033cad00ee975cdbd48cc50819805079f66b1d5620a43e655c",
+        "target_sha256": "46b48321c823a2660959cd993ed88cfb7e556d1310da5cb2ef188596806ce6c0"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-67c9e48015c28c08",
+        "family": "repeated_operand",
+        "prompt_sha256": "bda612ccce6b4f08030d6411d666a0ddb950814c33223f56e3d42469be6c731c",
+        "target_sha256": "a3715ed3cf80b89640d223dc1780ce6be5bcbc543bcab00f7cde3520fd83c317"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-9a1a9a795a7d9176",
+        "family": "exact_division",
+        "prompt_sha256": "4d57cb96c7c36dba5c1be24cf197215aaf10fa677a8080bdfff66efbcdb094a6",
+        "target_sha256": "950431b72cb854dceea79130707032a8ba8bdbab62aa5d5aa6b6a8459a2462b4"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-d9a3afed742d1705",
+        "family": "nested_offset",
+        "prompt_sha256": "d896af32b79052de8252dd9d7f2e03578ac4ab8734d4546a28b4dbc1d8464826",
+        "target_sha256": "529b5f37b2797479db8c6833b326461bdf9da8049bb3f6fb89482dff075b03f0"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-5b30aded452fdffc",
+        "family": "exact_division",
+        "prompt_sha256": "77f3d6b688277753a0e7a9b64cbd5ecc39fa419ce0e139399fe219efad961319",
+        "target_sha256": "7829b79cbf4533fbd7c5fa1c371cb862eb3d4f794c90e3787e1ec8511357df79"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-66943923fd610a52",
+        "family": "exact_division",
+        "prompt_sha256": "bf4471f3416af16b2d3507461358d81359c9897bf384637f1e13bb9499712de6",
+        "target_sha256": "5af7488938b4a120cdce076b11c1197fe6ca99c345cd6b91d1bc370ebeb13e5c"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-f9bfe07dcdb2f9a7",
+        "family": "mixed_products",
+        "prompt_sha256": "a4588e83de00c6af5d5041dd73f49eae56ec232662e218cf7b82147f1dda5e86",
+        "target_sha256": "851384022a59eb058bd058ac86141e2fc455aee9c1597e3edbb7694249d1c7eb"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-7bdb555f758ac54f",
+        "family": "nested_offset",
+        "prompt_sha256": "c887b7129e05f80b800166835ace6b428aeb2615136b90dae5f9bfb78064de42",
+        "target_sha256": "1efc684171ed60a3fe7a83128ec7330e4402e0e2f68c1db4707d6e9008d7fdd3"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-72cec81b6a087075",
+        "family": "nested_offset",
+        "prompt_sha256": "92074b1252362086caa403615574004a6a4dfd6059703908eae661475130aa76",
+        "target_sha256": "d3106f313c8132d9331511658658cca671e6098c104439b91a5ed619a21bc070"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-04ab7411e640e4e0",
+        "family": "mixed_products",
+        "prompt_sha256": "106fd9cd078838afd300054bf7cffb223ba53fa4d747bb40094f7a48afdeb393",
+        "target_sha256": "83a0e82529a4e27af40423d556af8b8957e8b95b808aeb7bb6392e4a2dbe9a10"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-cfe1543b91628dd5",
+        "family": "exact_division",
+        "prompt_sha256": "e62853074beeb7eda6520defba7436c8b0038218d702330694d024689ca9e18c",
+        "target_sha256": "82309dd04a70103e2e270535c63de8c718e269fc355e8d9c584738dad9f468e1"
+      },
+      {
+        "case_id": "scaled-quality-train-mixed_products-a8f9f0e982bcabbd",
+        "family": "mixed_products",
+        "prompt_sha256": "282b996a6d17e413b62f5b78e8bde92afc5031c062de9a7a9c4272a61ec82e56",
+        "target_sha256": "576a5123cada1dbd290555e6be3a652c1199d75c12faf18b85cd55586a14bdf4"
+      },
+      {
+        "case_id": "scaled-quality-train-exact_division-af3cb7f7c120da67",
+        "family": "exact_division",
+        "prompt_sha256": "ffaca6305d377b089cd11c4a834bc7852f32f84e69f2f8e347f55ce96c111308",
+        "target_sha256": "772c0646a71799955dc49d95f69a9a8c73d28004f72acf669be7f56a431c1dcb"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-0290a0880f37a859",
+        "family": "repeated_operand",
+        "prompt_sha256": "02e062802f822df77b2610b53d19a814636942ac7042f3d1fa05cabf20a76657",
+        "target_sha256": "88ae6c62dfa4b748463944c704ee4baca69a96c84197cff41a53b21e25f2be9b"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-de4c8c0e7c203733",
+        "family": "repeated_operand",
+        "prompt_sha256": "b1457ea659ae72493538c80211c39c80efece193da45e2fc0cabff3e989e41fd",
+        "target_sha256": "dd9280b9766f3ed192173389f602a91d62d3f944ddf71711f8e0a5f453e2f4fd"
+      },
+      {
+        "case_id": "scaled-quality-train-repeated_operand-9a803a2573c1d509",
+        "family": "repeated_operand",
+        "prompt_sha256": "b75e71ecaf9dde10592c16b007156e181e75d46089909f22cfc4611bc3129699",
+        "target_sha256": "79f12794b928b46f07f17a534a0d80bb4bb4aa021d0e00cc41932e7118398b8c"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-1271bb00eab3e0ac",
+        "family": "nested_offset",
+        "prompt_sha256": "f32ec231f12a167bfbbed6b6197443a7b4a2873f6d43d2d94fa0220e7a2b3c5c",
+        "target_sha256": "06390416f4cf0e7ff94d7099dd49f0d0ae36351ef3feb594606ef5787044e8ba"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-8280b02919e83a22",
+        "family": "nested_offset",
+        "prompt_sha256": "87a17d45f26aa41fe7820ce21df081737823f1c94a562aba2888e299ae630456",
+        "target_sha256": "9f7ddd9724e7a8f3e123d3d3a6f840d4fedebbd982da20e5f9db700ea12cbcbb"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-04abfc9cfe77e852",
+        "family": "nested_offset",
+        "prompt_sha256": "886b42f9daac23f82332709758369d96d67884c21a7063fe506b7ee8bff082c5",
+        "target_sha256": "4a9999c3fb18135d95ecf58899c8a7cb35e3ac5005f5bd7a41d0440f4e83f34a"
+      },
+      {
+        "case_id": "scaled-quality-train-nested_offset-47e1f9e3c27b2d84",
+        "family": "nested_offset",
+        "prompt_sha256": "6dce952bbef3fbf40fdda59f880e921db7d268da4ebe78bd08a040512a8303f8",
+        "target_sha256": "e3393db40e3215adcb0a1cad65145de21140540010ce2bb60a7c7dffd6d1795a"
+      }
+    ]
+  },
+  "decision_policy": {
+    "failed": "Preserve negative evidence and change mechanism or data on a new train/dev surface; do not tune on observed dev.",
+    "forbidden_after_observation": [
+      "dataset_change",
+      "train_dev_split_change",
+      "step_change",
+      "batch_change",
+      "learning_rate_change",
+      "seed_change",
+      "lora_scope_change",
+      "prompt_change",
+      "target_change",
+      "generation_budget_change",
+      "parser_change",
+      "adapter_weight_change",
+      "benchmark_access",
+      "canary_access",
+      "holdout_access"
+    ],
+    "passed": "Publish synthetic quality evidence and separately pre-register any canary treatment."
+  },
+  "evaluation": {
+    "bootstrap_samples": 10000,
+    "bootstrap_seed": 20260820,
+    "dev_rows": 96,
+    "generation_batch_size": 8,
+    "generation_max_new_tokens": 32,
+    "strict_exact_target": "FINAL: <integer>",
+    "temperature": 0.0
+  },
+  "execution_boundary": {
+    "benchmark_accessed": false,
+    "dev_observed": false,
+    "model_generation_started": false,
+    "this_commit_only_preregisters": true,
+    "training_started": false
+  },
+  "experiment_id": "qwen35-scaled-quality-sft-v1",
+  "identity": {
+    "code_revision": "8be842c6f957895fea4a351845c9bbd7503e1248",
+    "config_sha256": "23143a5363b222ba474fb5e7a08be4b95be899ddd5f82699b39c5e720e6c0df6",
+    "forbidden_evaluation_config_sha256": "5621bab71676a5dbfeb922f0851c22e099379aff2d36b628d27d6c87e07393f4",
+    "forbidden_evaluation_contract_sha256": "c9de0fcd02da9354aa38ac1f5c864f6bfc4bf6590bca3313d54232c1bac41e4b",
+    "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+    "model_index_sha256": "cf3f798ee02ba45f9622aa8892a47369ab667d0afbf154ee7c2212de42e6302d"
+  },
+  "schema_version": "nano_train_scaled_quality_sft_preregister_v1",
+  "training": {
+    "batch_size": 4,
+    "dtype": "float32",
+    "epochs": 1,
+    "every_train_row_exposed_exactly_once": true,
+    "gradient_checkpointing": true,
+    "learning_rate": 5e-05,
+    "lora_alpha": 16,
+    "lora_r": 8,
+    "lora_targets": [
+      "q_proj",
+      "v_proj"
+    ],
+    "model": "Qwen3.5-4B",
+    "optimizer_steps": 128,
+    "seed": 20260820,
+    "weight_decay": 0.0
+  }
+}

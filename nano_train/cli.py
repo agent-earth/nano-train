@@ -15,6 +15,9 @@ from nano_train.rl_opd_admission import (
 )
 from nano_train.rl_opd_admission import run as run_admission
 from nano_train.rl_opd_admission import validate_reload
+from nano_train.scaled_quality import load_config as load_scaled_quality_config
+from nano_train.scaled_quality import run as run_scaled_quality
+from nano_train.scaled_quality import validate_reload as validate_scaled_quality_reload
 from nano_train.sft import run_sft_smoke
 from nano_train.synthetic_quality import load_config as load_quality_config
 from nano_train.synthetic_quality import run_arm as run_quality_arm
@@ -40,6 +43,10 @@ def main() -> None:
     quality = subparsers.add_parser("synthetic-quality")
     quality.add_argument("--config", required=True)
     quality.add_argument("--arm", required=True)
+    scaled_quality = subparsers.add_parser("scaled-quality-sft")
+    scaled_quality.add_argument("--config", required=True)
+    scaled_quality_reload = subparsers.add_parser("scaled-quality-sft-reload")
+    scaled_quality_reload.add_argument("--config", required=True)
 
     args = parser.parse_args()
     if args.command == "anchored-continuation":
@@ -56,6 +63,14 @@ def main() -> None:
         result = run_quality_arm(
             load_quality_config(args.config),
             arm_id=args.arm,
+        )
+    elif args.command == "scaled-quality-sft":
+        result = run_scaled_quality(
+            load_scaled_quality_config(args.config)
+        )
+    elif args.command == "scaled-quality-sft-reload":
+        result = validate_scaled_quality_reload(
+            load_scaled_quality_config(args.config)
         )
     else:
         config = load_sft_smoke_config(args.config)

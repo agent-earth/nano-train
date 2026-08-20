@@ -1,0 +1,59 @@
+{
+  "batch_size": 4,
+  "bootstrap_samples": 10000,
+  "bootstrap_seed": 20260820,
+  "dev_cases_per_family": 24,
+  "dev_range_offset": 5000,
+  "dtype": "float32",
+  "experiment_id": "qwen35-scaled-quality-sft-v1",
+  "forbidden_evaluation_config_path": "configs/evaluation/qwen35_synthetic_quality_v1.json",
+  "forbidden_evaluation_config_sha256": "5621bab71676a5dbfeb922f0851c22e099379aff2d36b628d27d6c87e07393f4",
+  "forbidden_evaluation_contract_sha256": "c9de0fcd02da9354aa38ac1f5c864f6bfc4bf6590bca3313d54232c1bac41e4b",
+  "generation_batch_size": 8,
+  "generation_max_new_tokens": 32,
+  "gradient_checkpointing": true,
+  "learning_rate": 0.00005,
+  "lora_alpha": 16,
+  "lora_dropout": 0.0,
+  "lora_r": 8,
+  "lora_targets": [
+    "q_proj",
+    "v_proj"
+  ],
+  "max_length": 128,
+  "max_steps": 128,
+  "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+  "model_index_sha256": "cf3f798ee02ba45f9622aa8892a47369ab667d0afbf154ee7c2212de42e6302d",
+  "model_path": "../../../models/Qwen3.5-4B",
+  "output_dir": "artifacts/qwen35-scaled-quality-sft-v1",
+  "policy": {
+    "benchmark_access_after_result": false,
+    "contains_benchmark_outputs": false,
+    "contains_benchmark_rows": false,
+    "contains_canary_rows": false,
+    "contains_holdout_rows": false,
+    "contains_observed_quality_rows": false,
+    "training_allowed": true,
+    "uses_observed_quality_outputs": false
+  },
+  "prompt_template": "Compute the synthetic arithmetic expression exactly: {expression}. Return only one line in the form FINAL: <integer>.",
+  "schema_version": "nano_train_scaled_quality_sft_v1",
+  "seed": 20260820,
+  "system_prompt": "Follow the exact output contract. Solve internally without tools or external information.",
+  "target_template": "FINAL: {expected}",
+  "train_cases_per_family": 128,
+  "train_range_offset": 100,
+  "weight_decay": 0.0,
+  "weight_shards": [
+    {
+      "bytes": 5329398688,
+      "name": "model.safetensors-00001-of-00002.safetensors",
+      "sha256": "26a93f066e1916adb13453dae5a0c707c0fbc71299ed98779571a907b8e74c61"
+    },
+    {
+      "bytes": 3990429408,
+      "name": "model.safetensors-00002-of-00002.safetensors",
+      "sha256": "cb544bd9bfae93dc59b0f22b292f5933573854a7f9b97835c67060d7d910e188"
+    }
+  ]
+}
