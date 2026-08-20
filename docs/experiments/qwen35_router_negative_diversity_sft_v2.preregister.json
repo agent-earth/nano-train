@@ -1,0 +1,130 @@
+{
+  "acceptance": {
+    "actual_exposure_ids_exact": true,
+    "aggregate_post_exact_gt_baseline": true,
+    "benchmark_allowed_after_pass": false,
+    "canary_allowed_after_pass": false,
+    "every_c_subtype_non_regression": true,
+    "every_c_subtype_post_exact_at_least_60_of_64": true,
+    "every_label_non_regression": true,
+    "finite_loss_gradients_and_adapter": true,
+    "fresh_router_integration_preregistration_allowed_after_pass": true,
+    "holdout_allowed_after_pass": false,
+    "independent_reload_metrics_and_generations_exact": true,
+    "rl_allowed_after_pass": false,
+    "router_a_post_exact_at_least_480_of_512": true,
+    "router_b_post_exact_at_least_480_of_512": true,
+    "router_c_post_exact_at_least_496_of_512": true,
+    "serving_namespace_remap_required": true
+  },
+  "claim_boundary": "This pre-registers one bounded 40-step router SFT run on deterministic synthetic data. Passing is not benchmark or final routing evidence and does not authorize a second run.",
+  "data": {
+    "full_sequence_max": 150,
+    "scheduled_c_exposure_by_subtype": {
+      "box_total": 10,
+      "paired_average": 3,
+      "percentage_change": 7,
+      "quotient_remainder": 9,
+      "remaining_stock": 10,
+      "single_operation": 7,
+      "time_conversion": 9,
+      "weighted_total": 5
+    },
+    "scheduled_exposure_by_label": {
+      "router_a": 52,
+      "router_b": 48,
+      "router_c": 60
+    },
+    "scheduled_exposure_ids_sha256": "b6451354be276e92446a47b0b6b268af227db0b45c1300a4825800ef0264ec81",
+    "scheduled_exposures": 160,
+    "target_max": 3,
+    "train_rows": 6144,
+    "train_tokens": 766519,
+    "validation_by_label": {
+      "router_a": 512,
+      "router_b": 512,
+      "router_c": 512
+    },
+    "validation_c_by_subtype": {
+      "box_total": 64,
+      "paired_average": 64,
+      "percentage_change": 64,
+      "quotient_remainder": 64,
+      "remaining_stock": 64,
+      "single_operation": 64,
+      "time_conversion": 64,
+      "weighted_total": 64
+    },
+    "validation_rows": 1536,
+    "validation_sample_ids_sha256": "a18b116c2e3098e184fee430495388c44c5a6085ab48ac3d76a068ae5bf394ad"
+  },
+  "decision_policy": {
+    "failed": "Publish negative evidence and stop this recipe. Do not tune or rerun on the observed validation split.",
+    "forbidden_after_observation": [
+      "dataset_change",
+      "sample_schedule_change",
+      "step_change",
+      "learning_rate_change",
+      "seed_change",
+      "lora_target_change",
+      "lora_rank_change",
+      "generation_budget_change",
+      "prompt_change",
+      "label_or_subtype_parser_change",
+      "adapter_checkpoint_selection",
+      "adapter_weight_change",
+      "second_training_run",
+      "reuse_integration_v1_or_v2_rows_or_outputs"
+    ],
+    "passed": "Publish local SFT evidence, build a content-identical vLLM namespace remap, prove serving parity, and separately pre-register a fresh integration."
+  },
+  "execution_boundary": {
+    "adapter_exists": false,
+    "benchmark_accessed": false,
+    "canary_accessed": false,
+    "holdout_accessed": false,
+    "integration_rows_or_outputs_loaded": false,
+    "metrics_exist": false,
+    "model_generation_started": false,
+    "this_commit_only_preregisters": true,
+    "training_started": false
+  },
+  "experiment_id": "qwen35-router-negative-diversity-sft-v2",
+  "identity": {
+    "audit_sha256": "9aaa69de746dbdc5cefbb52fb271c8f9ec86716d10ada70704c7e346dc2f7c17",
+    "code_revision": "a49e0fd85aebfb553b08fe041b950abc0e45fc17",
+    "config_sha256": "d8081d1d565436987e5b94ee6cd6d00a2e113eed2af9dc0d2b84429fef3f3f52",
+    "contract_sha256": "c195a7373ea283546dde1866f70593f0912833d987ff5f1a8cb424c2bc340335",
+    "data_commit": "9374a9f67ab17623f4caf842f9d2546851aa60b2",
+    "dataset_canonical_sha256": "f63c58b54ef4747f274599784bad9ffe4143117482c22b33005a2dbf725b1f2f",
+    "dataset_file_sha256": "8c5975e3ceed494e20d0de54eb5654ab1af71163ed58489d42d98c8b54d0bad9",
+    "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+    "release_sha256": "5edd89701ff33db6eaef74475946abf79176c5c5a7c854a7eea4dd907e69c3f1",
+    "tokenizer_file_sha256": {
+      "chat_template.jinja": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715",
+      "tokenizer.json": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+      "tokenizer_config.json": "316230d6a809701f4db5ea8f8fc862bc3a6f3229c937c174e674ff3ca0a64ac8"
+    }
+  },
+  "schema_version": "nano_train_router_negative_diversity_preregister_v2",
+  "training": {
+    "dtype": "float32",
+    "effective_batch_size": 4,
+    "generation_max_new_tokens": 8,
+    "learning_rate": 0.0002,
+    "lora_alpha": 16,
+    "lora_r": 8,
+    "lora_targets": [
+      "q_proj",
+      "v_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "max_length": 256,
+    "model": "Qwen3.5-4B",
+    "recipe_source": "router-classification-sft-smoke-v1",
+    "seed": 20260827,
+    "steps": 40
+  }
+}

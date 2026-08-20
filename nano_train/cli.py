@@ -58,6 +58,12 @@ from nano_train.router_classification import (
     load_config as load_router_classification_config,
 )
 from nano_train.router_classification import run as run_router_classification
+from nano_train.router_negative_diversity import (
+    load_config as load_router_negative_diversity_config,
+)
+from nano_train.router_negative_diversity import (
+    run as run_router_negative_diversity,
+)
 from nano_train.scaled_quality import load_config as load_scaled_quality_config
 from nano_train.scaled_quality import run as run_scaled_quality
 from nano_train.scaled_quality import validate_reload as validate_scaled_quality_reload
@@ -128,6 +134,10 @@ def main() -> None:
         "router-classification-sft"
     )
     router_classification.add_argument("--config", required=True)
+    router_negative_diversity = subparsers.add_parser(
+        "router-negative-diversity-sft"
+    )
+    router_negative_diversity.add_argument("--config", required=True)
     anchor_policy_reload.add_argument("--arm", required=True)
 
     args = parser.parse_args()
@@ -204,6 +214,10 @@ def main() -> None:
     elif args.command == "router-classification-sft":
         result = run_router_classification(
             load_router_classification_config(args.config)
+        )
+    elif args.command == "router-negative-diversity-sft":
+        result = run_router_negative_diversity(
+            load_router_negative_diversity_config(args.config)
         )
     else:
         config = load_sft_smoke_config(args.config)
