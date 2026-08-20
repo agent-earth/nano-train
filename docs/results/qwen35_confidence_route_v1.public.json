@@ -1,0 +1,189 @@
+{
+  "arms": {
+    "anchor": {
+      "accuracy": 0.0078125,
+      "by_family": {
+        "exact_division": {
+          "cases": 64,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "mixed_products": {
+          "cases": 64,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "nested_offset": {
+          "cases": 64,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "repeated_operand": {
+          "cases": 64,
+          "correct": 2,
+          "parse_failures": 0
+        }
+      },
+      "cases": 256,
+      "correct": 2,
+      "parse_failures": 0
+    },
+    "consistency": {
+      "accuracy": 0.0078125,
+      "by_family": {
+        "exact_division": {
+          "cases": 64,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "mixed_products": {
+          "cases": 64,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "nested_offset": {
+          "cases": 64,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "repeated_operand": {
+          "cases": 64,
+          "correct": 2,
+          "parse_failures": 0
+        }
+      },
+      "cases": 256,
+      "correct": 2,
+      "parse_failures": 0
+    },
+    "routed": {
+      "accuracy": 0.0078125,
+      "by_family": {
+        "exact_division": {
+          "cases": 64,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "mixed_products": {
+          "cases": 64,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "nested_offset": {
+          "cases": 64,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "repeated_operand": {
+          "cases": 64,
+          "correct": 2,
+          "parse_failures": 0
+        }
+      },
+      "cases": 256,
+      "correct": 2,
+      "parse_failures": 0
+    }
+  },
+  "claim_boundary": "This fresh synthetic result can admit only the frozen selector to the pre-registered 211-case canary. It is not benchmark, holdout, or final 4B/9B superiority evidence.",
+  "comparison": {
+    "baseline_accuracy": 0.0078125,
+    "candidate_accuracy": 0.0078125,
+    "cases": 256,
+    "delta": 0.0,
+    "mcnemar_exact_p": 1.0,
+    "paired_bootstrap_95_ci": [
+      -0.01171875,
+      0.01171875
+    ],
+    "paired_counts": {
+      "baseline_only": 1,
+      "both_correct": 1,
+      "both_wrong": 253,
+      "candidate_only": 1
+    }
+  },
+  "contamination_audit": {
+    "benchmark_outputs_loaded": false,
+    "benchmark_prompt_overlap": 0,
+    "benchmark_rows_hashed": {
+      "gpqa_diamond": 198,
+      "gsm8k": 1319,
+      "mmlu": 14042
+    },
+    "canary_or_holdout_loaded": false,
+    "observed_quality_prompt_overlap": 0,
+    "passed": true
+  },
+  "decision": {
+    "benchmark_allowed": false,
+    "canary_allowed": false,
+    "gates": {
+      "all_scores_finite": true,
+      "every_family_non_regression": true,
+      "exact_mcnemar_p_lt_005": false,
+      "maximum_anchor_only_losses": false,
+      "minimum_candidate_only_wins": false,
+      "paired_bootstrap_ci_lower_gt_zero": false,
+      "parse_failures_non_regression": true,
+      "routed_accuracy_gt_anchor": false
+    },
+    "independent_holdout_allowed": false,
+    "local_route_admitted": false,
+    "next_action": "Reject this selector and preserve the result; do not tune on these cases.",
+    "route_tuning_allowed": false
+  },
+  "discordant_cases": {
+    "anchor_only_loss_case_ids": [
+      "confidence-route-repeated_operand-868de251171faef4"
+    ],
+    "candidate_only_win_case_ids": [
+      "confidence-route-repeated_operand-aa50166e3c9ac79d"
+    ]
+  },
+  "experiment_id": "qwen35-confidence-route-v1",
+  "identity": {
+    "case_contract_sha256": "3fce148ab84d3683d0527dc437242ef3d7714138106bfbd83a22c4641a649aad",
+    "config_sha256": "07c2accc1dbfef131ce822f6b02a55d1c631788da31a4c4f48485e0810e1cba0",
+    "generation": {
+      "anchor": {
+        "adapter_sha256": "7287cfcc9372894aae2c4081f6ccf7b18a9292a9e52160579c9ab199906eda45",
+        "raw_sha256": "5a644de18055ea48b8b8367caf07f78a2a9263cba724bce3e26699c7f75960a7",
+        "summary_sha256": "64934ceb13eab4e96a1cbb32ccbef2515a8bf7f7a284bd6b72764d89a19129d3"
+      },
+      "consistency": {
+        "adapter_sha256": "23c4760e9d6693c880859c1bd9984164eb5243742ed3517bad4929364643df49",
+        "raw_sha256": "b7a4cef28e482b193f931a3e7bfa05086bdcb6002da5e841588cf23fc912f9c6",
+        "summary_sha256": "7863b3369ded3e598c568ed93d03368467f26283353a33e147b87e56032adc19"
+      }
+    },
+    "preregister_revision": "26a343e411633a6d3a3b2d0cf14169c1d0a8c853",
+    "preregister_sha256": "038f9688ce3b05eb45f3d7500b266b6d3a6fef3a235237af4082363c77f536c8",
+    "result_revision": "59aa1d5fe480f89806daacf342385249403067a9",
+    "routed_raw_sha256": "b9b114d6324615b259336c40b072869fb60d07dcafb88cf3ce0d1abf003222da",
+    "scores": {
+      "anchor": {
+        "adapter_sha256": "7287cfcc9372894aae2c4081f6ccf7b18a9292a9e52160579c9ab199906eda45",
+        "raw_sha256": "6d5e9cc36acc1c0c3b04bd89c353feac69bbabe53f1aeca64a4ead309c917818",
+        "summary_sha256": "6ca8b9f619300570aa6d80ac1bebff81953c30523588a9b33e1ac9be09c87bd9"
+      },
+      "consistency": {
+        "adapter_sha256": "23c4760e9d6693c880859c1bd9984164eb5243742ed3517bad4929364643df49",
+        "raw_sha256": "800fff0485eb8ef52e8b939c45b334726ccdea52097a788a05b7c766e3763403",
+        "summary_sha256": "caa28c425c9938aba2337d2e7d91dfa1595423ca5b9072ba4929a2f9d01632af"
+      }
+    }
+  },
+  "schema_version": "nano_train_confidence_route_public_v1",
+  "selector": {
+    "all_scores_finite": true,
+    "anchor_routes": 3,
+    "consistency_routes": 253,
+    "scores_include_eos": true,
+    "selector": "cross_model_normalized_logprob_ratio_v1",
+    "tie_policy": "anchor",
+    "uses_case_correctness": false,
+    "uses_expected_answer": false,
+    "uses_model_output_for_feedback": false
+  }
+}

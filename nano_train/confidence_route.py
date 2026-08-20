@@ -266,6 +266,10 @@ def _load_model(
     return model, tokenizer, adapter
 
 
+def move_batch_to_device(batch: Any, device: torch.device) -> Any:
+    return batch.to(device)
+
+
 def generate_arm(
     config: ConfidenceRouteConfig,
     *,
@@ -290,7 +294,11 @@ def generate_arm(
                 add_special_tokens=False,
                 padding=True,
                 return_tensors="pt",
-            ).cuda()
+            )
+            batch = move_batch_to_device(
+                batch,
+                next(model.parameters()).device,
+            )
             generated = model.generate(
                 **batch,
                 do_sample=False,

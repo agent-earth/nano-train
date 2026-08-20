@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import importlib.util
 import json
 import tempfile
 import unittest
@@ -12,12 +13,21 @@ from nano_train.confidence_route import (
     combine,
     contamination_audit,
     load_config,
+    move_batch_to_device,
     public_contract,
 )
 
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "configs/confidence_route/qwen35_confidence_route_v1.json"
+RENDER_PATH = ROOT / "scripts/render_confidence_route_v1.py"
+RENDER_SPEC = importlib.util.spec_from_file_location(
+    "render_confidence_route_v1",
+    RENDER_PATH,
+)
+RENDER_MODULE = importlib.util.module_from_spec(RENDER_SPEC)
+assert RENDER_SPEC.loader is not None
+RENDER_SPEC.loader.exec_module(RENDER_MODULE)
 
 
 class ConfidenceRouteTests(unittest.TestCase):
@@ -140,6 +150,69 @@ class ConfidenceRouteTests(unittest.TestCase):
                     path.write_text(json.dumps(altered), encoding="utf-8")
                     with self.assertRaisesRegex(ValueError, error):
                         load_config(path)
+
+    def test_batch_device_transfer_uses_batch_to(self):
+        batch = mock.Mock()
+        device = mock.sentinel.device
+        batch.to.return_value = mock.sentinel.moved
+        self.assertIs(
+            move_batch_to_device(batch, device),
+            mock.sentinel.moved,
+        )
+        batch.to.assert_called_once_with(device)
+
+    def test_admission_gates_include_finite_scores_and_zero_losses(self):
+        paired = {
+            "candidate_accuracy": 0.5,
+            "baseline_accuracy": 0.4,
+            "paired_bootstrap_95_ci": [0.01, 0.2],
+            "mcnemar_exact_p": 0.01,
+            "paired_counts": {
+                "candidate_only": 6,
+                "baseline_only": 0,
+            },
+        }
+        anchor = {
+            "parse_failures": 1,
+            "by_family": {
+                family: {"correct": 1} for family in (
+                    "exact_division",
+                    "mixed_products",
+                    "nested_offset",
+                    "repeated_operand",
+                )
+            },
+        }
+        candidate = copy.deepcopy(anchor)
+        gates = RENDER_MODULE.admission_gates(
+            paired,
+            candidate,
+            anchor,
+            scores_finite=True,
+        )
+        self.assertTrue(all(gates.values()))
+        paired["paired_counts"]["baseline_only"] = 1
+        gates = RENDER_MODULE.admission_gates(
+            paired,
+            candidate,
+            anchor,
+            scores_finite=False,
+        )
+        self.assertFalse(gates["maximum_anchor_only_losses"])
+        self.assertFalse(gates["all_scores_finite"])
+
+    def test_score_finiteness_requires_both_fields(self):
+        valid = [{
+            "anchor_candidate_mean_logprob": -1.0,
+            "consistency_candidate_mean_logprob": -2.0,
+        }]
+        self.assertTrue(RENDER_MODULE.all_scores_finite(valid, valid))
+        self.assertFalse(
+            RENDER_MODULE.all_scores_finite(
+                valid,
+                [{"anchor_candidate_mean_logprob": float("nan")}],
+            )
+        )
 
 
 if __name__ == "__main__":
