@@ -1,0 +1,139 @@
+{
+  "claim_boundary": "This is a local synthetic-development preference-optimization result. It is not a GSM8K, MMLU, GPQA, 9B, 27B, or agent-benchmark result.",
+  "decision": {
+    "benchmark_allowed": false,
+    "candidate_admitted": false,
+    "gates": {
+      "bootstrap_ci_lower_positive": false,
+      "candidate_only_exceeds_baseline_only": false,
+      "every_stratum_non_regression": true,
+      "mcnemar_below_alpha": false,
+      "minimum_candidate_only_wins": false,
+      "point_delta_positive": false
+    },
+    "larger_training_allowed": false,
+    "next_action": "Stop preference-training dose search. Return to a frozen base-model harness and pre-register full-solve self-consistency on fresh non-benchmark development.",
+    "rerun_or_tuning_allowed": false
+  },
+  "evaluation": {
+    "baseline": {
+      "accuracy": 0.4322916666666667,
+      "by_stratum": {
+        "long": {
+          "correct": 18,
+          "parse_failures": 24,
+          "samples": 48
+        },
+        "medium": {
+          "correct": 38,
+          "parse_failures": 43,
+          "samples": 96
+        },
+        "short": {
+          "correct": 27,
+          "parse_failures": 14,
+          "samples": 48
+        }
+      },
+      "correct": 83,
+      "parse_failures": 81,
+      "samples": 192
+    },
+    "changed_outputs": 4,
+    "comparison": {
+      "baseline_accuracy": 0.4322916666666667,
+      "candidate_accuracy": 0.4322916666666667,
+      "cases": 192,
+      "delta": 0.0,
+      "mcnemar_exact_p": 1.0,
+      "paired_bootstrap_95_ci": [
+        0.0,
+        0.0
+      ],
+      "paired_counts": {
+        "baseline_only": 0,
+        "both_correct": 83,
+        "both_wrong": 109,
+        "candidate_only": 0
+      }
+    },
+    "correctness_changed": 0,
+    "parse_status_changed": 0,
+    "post_dpo": {
+      "accuracy": 0.4322916666666667,
+      "by_stratum": {
+        "long": {
+          "correct": 18,
+          "parse_failures": 24,
+          "samples": 48
+        },
+        "medium": {
+          "correct": 38,
+          "parse_failures": 43,
+          "samples": 96
+        },
+        "short": {
+          "correct": 27,
+          "parse_failures": 14,
+          "samples": 48
+        }
+      },
+      "correct": 83,
+      "parse_failures": 81,
+      "samples": 192
+    }
+  },
+  "experiment_id": "orca-math-verifier-dpo-suffix-v2",
+  "failed_attempt": {
+    "adapter_saved": false,
+    "attempt": 1,
+    "config_changed": false,
+    "error": "CUDA out of memory",
+    "metrics_written": false,
+    "objective_changed": false,
+    "optimizer_steps_completed": 0,
+    "repair": "compute scalar DPO coefficients without gradients, then recompute chosen and rejected forwards one at a time and apply mathematically identical split backward gradients",
+    "schema_version": "nano_train_orca_math_dpo_suffix_attempt_v2",
+    "selection_changed": false,
+    "stage": "second_reference_forward",
+    "status": "failed_before_optimizer_step"
+  },
+  "identity": {
+    "adapter_sha256": "ab06b37a0b40db4408ce7430d19210e95775d39bb60e863529754bc7a527ba3f",
+    "config_sha256": "627fbdcd6ea432b60b024e0425df6ab85cc44df049e12c01271cc04b944de5ef",
+    "dataset_file_sha256": "deae4dabda40dcb55cd046dd330387683bdec508cd3085d53974b508ed9ae320",
+    "failure_receipt_sha256": "c5e5bf2e6a0f0d8a16aa9ce856d6186bfaadd85bbbdaf24a912865317ddbcbb0",
+    "generations_sha256": "7dadaedc563d6abb6e82b84848c4e8c3880b64c10a578266b59cb5fb89f44795",
+    "metrics_sha256": "cb4f90575871ab26205d3c293eab96627c7157cb8e5b79a27f36c4b5cb3f31c3",
+    "preregister_sha256": "f38264475ad31179326402f70b57dd99dd91f823b223af13d1cc0e3def7c2ee9",
+    "prior_dpo_preregister_sha256": "3ac9308a3474ed41d13a7ce979a4f9085cf4a76847da106dc8c142b4769aa3e2",
+    "prior_dpo_result_sha256": "1d194753cc46fe170a8ed2ec9fd512800bc50c517446a88de24023b89045d8cf",
+    "release_manifest_sha256": "c451a5096333a36829e39603fa27a847e9bd50317ae8bdde1f5709b6ab6c4ed0",
+    "reload_receipt_sha256": "9e6d3f56cc83e455e9c9f1fb7e8804b808cf7a1c484a03e3ddbb5526872b64f4",
+    "result_revision": "12a6f3c79ad3c81aece639f2dba2fd3943d10265"
+  },
+  "mechanism_conclusion": "Masking shared trajectory tokens increased preference advantage by about two orders of magnitude versus v1, but the low-dose adapter changed only four output strings and changed no score or parse status. The training signal is now targeted but not large enough to move measured behavior under the frozen smoke; post-hoc dose or LR tuning is forbidden.",
+  "reload": {
+    "generations_exact": true,
+    "metrics_exact": true,
+    "peak_allocated_gib": 16.20376491546631,
+    "success": true
+  },
+  "schema_version": "nano_train_orca_math_dpo_suffix_public_v2",
+  "training": {
+    "advantage_first": 0.0,
+    "advantage_last": 0.006176948547363281,
+    "advantage_maximum": 0.006176948547363281,
+    "all_gradient_norms_finite": true,
+    "all_losses_finite": true,
+    "loss_first": 0.6931471824645996,
+    "loss_last": 0.6928383708000183,
+    "loss_minimum": 0.6928383708000183,
+    "optimizer_steps": 32,
+    "peak_allocated_gib": 18.203248977661133,
+    "supervised_tokens_max": 7,
+    "supervised_tokens_min": 2,
+    "trainable_parameters": 917504,
+    "wall_seconds": 1840.802119731903
+  }
+}

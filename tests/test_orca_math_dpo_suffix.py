@@ -13,6 +13,7 @@ from nano_train.orca_math_dpo_suffix import (
     tokenize_suffix_pair,
 )
 from scripts.preregister_orca_math_dpo_v2 import build_receipt
+from scripts.render_orca_math_dpo_v2 import build_report
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -111,6 +112,24 @@ class SuffixDPOTests(unittest.TestCase):
         self.assertTrue(
             torch.allclose(rejected_coefficient, direct_gradients[1])
         )
+
+    def test_public_report_recomputes_zero_behavior_change(self):
+        report = build_report()
+        self.assertFalse(report["decision"]["candidate_admitted"])
+        self.assertEqual(report["evaluation"]["changed_outputs"], 4)
+        self.assertEqual(report["evaluation"]["correctness_changed"], 0)
+        self.assertEqual(report["evaluation"]["parse_status_changed"], 0)
+        self.assertEqual(report["evaluation"]["comparison"]["delta"], 0.0)
+        self.assertTrue(report["reload"]["generations_exact"])
+        self.assertEqual(
+            report["failed_attempt"]["optimizer_steps_completed"],
+            0,
+        )
+        import json
+
+        serialized = json.dumps(report).lower()
+        self.assertNotIn("prompt_messages", serialized)
+        self.assertNotIn("expected", serialized)
 
 
 if __name__ == "__main__":
