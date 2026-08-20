@@ -16,6 +16,8 @@ from nano_train.rl_opd_admission import (
 from nano_train.rl_opd_admission import run as run_admission
 from nano_train.rl_opd_admission import validate_reload
 from nano_train.sft import run_sft_smoke
+from nano_train.synthetic_quality import load_config as load_quality_config
+from nano_train.synthetic_quality import run_arm as run_quality_arm
 
 
 def main() -> None:
@@ -35,6 +37,9 @@ def main() -> None:
     admission.add_argument("--config", required=True)
     admission_reload = subparsers.add_parser("rl-opd-admission-reload")
     admission_reload.add_argument("--config", required=True)
+    quality = subparsers.add_parser("synthetic-quality")
+    quality.add_argument("--config", required=True)
+    quality.add_argument("--arm", required=True)
 
     args = parser.parse_args()
     if args.command == "anchored-continuation":
@@ -47,6 +52,11 @@ def main() -> None:
         result = run_admission(load_admission_config(args.config))
     elif args.command == "rl-opd-admission-reload":
         result = validate_reload(load_admission_config(args.config))
+    elif args.command == "synthetic-quality":
+        result = run_quality_arm(
+            load_quality_config(args.config),
+            arm_id=args.arm,
+        )
     else:
         config = load_sft_smoke_config(args.config)
     if args.command == "validate-config":
