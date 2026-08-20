@@ -1,0 +1,356 @@
+{
+  "arms": {
+    "control": {
+      "baseline_dev": {
+        "accuracy": 0.0078125,
+        "by_family": {
+          "exact_division": {
+            "cases": 64,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "mixed_products": {
+            "cases": 64,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "nested_offset": {
+            "cases": 64,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "repeated_operand": {
+            "cases": 64,
+            "correct": 2,
+            "parse_failures": 0
+          }
+        },
+        "cases": 256,
+        "correct": 2,
+        "parse_failures": 0
+      },
+      "comparison_vs_anchor": {
+        "baseline_accuracy": 0.0078125,
+        "candidate_accuracy": 0.08203125,
+        "cases": 256,
+        "delta": 0.07421875,
+        "mcnemar_exact_p": 2.09808349609375e-05,
+        "paired_bootstrap_95_ci": [
+          0.04296875,
+          0.109375
+        ],
+        "paired_counts": {
+          "baseline_only": 1,
+          "both_correct": 1,
+          "both_wrong": 234,
+          "candidate_only": 20
+        }
+      },
+      "hardware": {
+        "gpu_name": "Tesla V100-SXM2-32GB",
+        "peak_allocated_gib": 16.393760204315186
+      },
+      "post_dev": {
+        "accuracy": 0.08203125,
+        "by_family": {
+          "exact_division": {
+            "cases": 64,
+            "correct": 18,
+            "parse_failures": 0
+          },
+          "mixed_products": {
+            "cases": 64,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "nested_offset": {
+            "cases": 64,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "repeated_operand": {
+            "cases": 64,
+            "correct": 3,
+            "parse_failures": 0
+          }
+        },
+        "cases": 256,
+        "correct": 21,
+        "parse_failures": 0
+      },
+      "reload": {
+        "adapter_sha256": "a7d99c7872109c9b59a0dad6f4fe0674314005868a096c7e7702f7cdae2a89b1",
+        "arm_id": "control",
+        "experiment_id": "qwen35-preservation-dual-view-v1",
+        "generations_exact": true,
+        "metrics_exact": true,
+        "peak_allocated_gib": 16.378989219665527,
+        "reload_success": true,
+        "schema_version": "nano_train_preservation_dual_view_reload_v1"
+      },
+      "training": {
+        "all_components_finite": true,
+        "final_replay_steps": 0,
+        "full_consistency_steps": 512,
+        "optimizer_steps": 512
+      }
+    },
+    "treatment": {
+      "baseline_dev": {
+        "accuracy": 0.0078125,
+        "by_family": {
+          "exact_division": {
+            "cases": 64,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "mixed_products": {
+            "cases": 64,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "nested_offset": {
+            "cases": 64,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "repeated_operand": {
+            "cases": 64,
+            "correct": 2,
+            "parse_failures": 0
+          }
+        },
+        "cases": 256,
+        "correct": 2,
+        "parse_failures": 0
+      },
+      "comparison_vs_anchor": {
+        "baseline_accuracy": 0.0078125,
+        "candidate_accuracy": 0.1171875,
+        "cases": 256,
+        "delta": 0.109375,
+        "mcnemar_exact_p": 5.774199962615967e-08,
+        "paired_bootstrap_95_ci": [
+          0.0703125,
+          0.1484375
+        ],
+        "paired_counts": {
+          "baseline_only": 1,
+          "both_correct": 1,
+          "both_wrong": 225,
+          "candidate_only": 29
+        }
+      },
+      "hardware": {
+        "gpu_name": "Tesla V100-SXM2-32GB",
+        "peak_allocated_gib": 16.39376163482666
+      },
+      "post_dev": {
+        "accuracy": 0.1171875,
+        "by_family": {
+          "exact_division": {
+            "cases": 64,
+            "correct": 17,
+            "parse_failures": 0
+          },
+          "mixed_products": {
+            "cases": 64,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "nested_offset": {
+            "cases": 64,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "repeated_operand": {
+            "cases": 64,
+            "correct": 13,
+            "parse_failures": 0
+          }
+        },
+        "cases": 256,
+        "correct": 30,
+        "parse_failures": 0
+      },
+      "reload": {
+        "adapter_sha256": "ab344ac6fa9c6b84633c6d56f4193b124ff58a18807df6f0f6eaa597ffbce753",
+        "arm_id": "treatment",
+        "experiment_id": "qwen35-preservation-dual-view-v1",
+        "generations_exact": true,
+        "metrics_exact": true,
+        "peak_allocated_gib": 16.378990650177002,
+        "reload_success": true,
+        "schema_version": "nano_train_preservation_dual_view_reload_v1"
+      },
+      "training": {
+        "all_components_finite": true,
+        "final_replay_steps": 256,
+        "full_consistency_steps": 256,
+        "optimizer_steps": 512
+      }
+    }
+  },
+  "claim_boundary": "This matched fresh synthetic ablation can admit only the frozen treatment adapter to the existing 211-case canary. It is not complete benchmark, holdout, or final 4B/9B superiority evidence.",
+  "data": {
+    "baseline_rows_exact_across_arms": true,
+    "benchmark_canary_holdout_rows_or_outputs": 0,
+    "benchmark_prompt_overlap": 0,
+    "dev_final_only_cases": 256,
+    "observed_quality_prompt_overlap": 0,
+    "train_pairs": 256
+  },
+  "decision": {
+    "benchmark_allowed": false,
+    "canary_allowed": false,
+    "further_tuning_on_observed_dev_allowed": false,
+    "gates": {
+      "both_arms_finite_and_reloadable": true,
+      "treatment_accuracy_gt_anchor": true,
+      "treatment_accuracy_gte_control": true,
+      "treatment_anchor_bootstrap_ci_lower_gt_zero": true,
+      "treatment_anchor_exact_mcnemar_p_lt_005": true,
+      "treatment_anchor_maximum_losses": false,
+      "treatment_anchor_minimum_wins": true,
+      "treatment_every_family_non_regression_vs_anchor": true,
+      "treatment_losses_lt_control": false,
+      "treatment_parse_non_regression_vs_anchor": true
+    },
+    "independent_holdout_allowed": false,
+    "next_action": "Reject this treatment and preserve both-arm evidence; do not tune or rerun on this dev surface.",
+    "treatment_admitted": false
+  },
+  "discordant_cases": {
+    "control": {
+      "baseline_only_loss_case_ids": [
+        "dual-view-dev-repeated_operand-da9bbe9e846eef82"
+      ],
+      "candidate_only_win_case_ids": [
+        "dual-view-dev-exact_division-023092b32d47bc1b",
+        "dual-view-dev-exact_division-063cacc786ba239f",
+        "dual-view-dev-exact_division-06e2b2113fd0c831",
+        "dual-view-dev-exact_division-13a5b64f8ef64a32",
+        "dual-view-dev-exact_division-1797691243969f73",
+        "dual-view-dev-exact_division-4e0f44787fa88b62",
+        "dual-view-dev-exact_division-5880e84632aaf9ec",
+        "dual-view-dev-exact_division-5d8b1e27b0f50b89",
+        "dual-view-dev-exact_division-837a24458fa22718",
+        "dual-view-dev-exact_division-8ad96e0639a8e035",
+        "dual-view-dev-exact_division-8fab6b8cdeb00d13",
+        "dual-view-dev-exact_division-a70763d10a6d3766",
+        "dual-view-dev-exact_division-adf04eb2999ab2b7",
+        "dual-view-dev-exact_division-b8bfb36d26018a43",
+        "dual-view-dev-exact_division-b90f9ee234aa1459",
+        "dual-view-dev-exact_division-d53af4c97f402cc1",
+        "dual-view-dev-exact_division-d8ee40bbfb3ce9e7",
+        "dual-view-dev-exact_division-dbc839f64c3f3f7c",
+        "dual-view-dev-repeated_operand-0529b7b4532f273f",
+        "dual-view-dev-repeated_operand-4bd340b57c03efcc"
+      ]
+    },
+    "treatment": {
+      "baseline_only_loss_case_ids": [
+        "dual-view-dev-repeated_operand-da9bbe9e846eef82"
+      ],
+      "candidate_only_win_case_ids": [
+        "dual-view-dev-exact_division-023092b32d47bc1b",
+        "dual-view-dev-exact_division-06e2b2113fd0c831",
+        "dual-view-dev-exact_division-13a5b64f8ef64a32",
+        "dual-view-dev-exact_division-1797691243969f73",
+        "dual-view-dev-exact_division-4e0f44787fa88b62",
+        "dual-view-dev-exact_division-5880e84632aaf9ec",
+        "dual-view-dev-exact_division-5d8b1e27b0f50b89",
+        "dual-view-dev-exact_division-81543eeaa3300683",
+        "dual-view-dev-exact_division-837a24458fa22718",
+        "dual-view-dev-exact_division-8ad96e0639a8e035",
+        "dual-view-dev-exact_division-8fab6b8cdeb00d13",
+        "dual-view-dev-exact_division-adf04eb2999ab2b7",
+        "dual-view-dev-exact_division-af4f737bcd9497cb",
+        "dual-view-dev-exact_division-b90f9ee234aa1459",
+        "dual-view-dev-exact_division-d53af4c97f402cc1",
+        "dual-view-dev-exact_division-d8ee40bbfb3ce9e7",
+        "dual-view-dev-exact_division-dbc839f64c3f3f7c",
+        "dual-view-dev-repeated_operand-0529b7b4532f273f",
+        "dual-view-dev-repeated_operand-26b678f9a72f2c90",
+        "dual-view-dev-repeated_operand-3ca53de36096a310",
+        "dual-view-dev-repeated_operand-41dc34b5fbd9e41f",
+        "dual-view-dev-repeated_operand-4aece3a783b6a3da",
+        "dual-view-dev-repeated_operand-5cf886acabcf8c9c",
+        "dual-view-dev-repeated_operand-64a1e485b8ac8fd2",
+        "dual-view-dev-repeated_operand-93301ea003cb54db",
+        "dual-view-dev-repeated_operand-ca7614d1b05577ab",
+        "dual-view-dev-repeated_operand-dce6efff8aa3ee02",
+        "dual-view-dev-repeated_operand-dd6f214b3283a806",
+        "dual-view-dev-repeated_operand-e179e1fcf790c2b5"
+      ]
+    },
+    "treatment_vs_control": {
+      "baseline_only_loss_case_ids": [
+        "dual-view-dev-exact_division-063cacc786ba239f",
+        "dual-view-dev-exact_division-a70763d10a6d3766",
+        "dual-view-dev-exact_division-b8bfb36d26018a43",
+        "dual-view-dev-repeated_operand-4bd340b57c03efcc"
+      ],
+      "candidate_only_win_case_ids": [
+        "dual-view-dev-exact_division-81543eeaa3300683",
+        "dual-view-dev-exact_division-af4f737bcd9497cb",
+        "dual-view-dev-repeated_operand-26b678f9a72f2c90",
+        "dual-view-dev-repeated_operand-3ca53de36096a310",
+        "dual-view-dev-repeated_operand-41dc34b5fbd9e41f",
+        "dual-view-dev-repeated_operand-4aece3a783b6a3da",
+        "dual-view-dev-repeated_operand-5cf886acabcf8c9c",
+        "dual-view-dev-repeated_operand-64a1e485b8ac8fd2",
+        "dual-view-dev-repeated_operand-93301ea003cb54db",
+        "dual-view-dev-repeated_operand-ca7614d1b05577ab",
+        "dual-view-dev-repeated_operand-dce6efff8aa3ee02",
+        "dual-view-dev-repeated_operand-dd6f214b3283a806",
+        "dual-view-dev-repeated_operand-e179e1fcf790c2b5"
+      ]
+    }
+  },
+  "experiment_id": "qwen35-preservation-dual-view-v1",
+  "identity": {
+    "arms": {
+      "control": {
+        "adapter_sha256": "a7d99c7872109c9b59a0dad6f4fe0674314005868a096c7e7702f7cdae2a89b1",
+        "generations_sha256": "9e8ca9823e5b5198dfc75398868757849111a2741d1b18ecd6fe50daf3e59ac2",
+        "metrics_sha256": "d674ba7b6836a2bb6ea90038be4888f36e24e5eedc5fb71b70ee81a3be4a0507",
+        "reload_sha256": "99cc996c9d892b5675affada763b0b19645cf7ea075f3e9c0f9ecf92cee806e2",
+        "schedule_sha256": "40eb5f69676f10b29ee1df9c82097df3c9fe85de65c982ddc220961355b9c47b"
+      },
+      "treatment": {
+        "adapter_sha256": "ab344ac6fa9c6b84633c6d56f4193b124ff58a18807df6f0f6eaa597ffbce753",
+        "generations_sha256": "6dd9062f51c159ddad7979c9c49c72bee64112dbb34cb08b3630fe5cfc9eeca1",
+        "metrics_sha256": "b5db28b5663be7536718cc9c0a13954411058654c77a2fbf4f127591c5375d95",
+        "reload_sha256": "b4e1a60a55a44c4423419383fb2825be48e6fae8cd108ee6721fe877536d3ede",
+        "schedule_sha256": "5867f2a5215f31b002fdf401fd231cb34a5b37de74f443352a880af07ea4e6b2"
+      }
+    },
+    "case_contract_identity": {
+      "dev_pair_ids_sha256": "9c2d023f69b2b3144ce09c6b23ca956f71c2c6f66c5d387d3aaf9cbd5c911f53",
+      "train_pair_ids_sha256": "8a668bf36666b284b37c72eee01bf51eedcaf44329dfefc06badfb086f8a6f90"
+    },
+    "config_sha256": "f746058deb503db91d772a3011ed7b965c984dadeb08becafe8b3d32afb8cb9e",
+    "preregister_revision": "c66f7a37ea769f1ede9047908811c9c1ea923576",
+    "preregister_sha256": "3acdb6b6f9d8bb779e6bfa5c326be31caacedbe508ed70c28bac29741508c86f",
+    "result_revision": "b192dda799f2a4c3bfb32eb4a9f2788f62be07d9"
+  },
+  "schema_version": "nano_train_preservation_dual_view_public_v1",
+  "treatment_vs_control": {
+    "baseline_accuracy": 0.08203125,
+    "candidate_accuracy": 0.1171875,
+    "cases": 256,
+    "delta": 0.03515625,
+    "mcnemar_exact_p": 0.049041748046875,
+    "paired_bootstrap_95_ci": [
+      0.00390625,
+      0.06640625
+    ],
+    "paired_counts": {
+      "baseline_only": 4,
+      "both_correct": 17,
+      "both_wrong": 222,
+      "candidate_only": 13
+    }
+  }
+}

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import importlib.util
 import json
 import tempfile
 import unittest
@@ -21,6 +22,14 @@ CONFIG = (
     / "configs/preservation_dual_view/"
     "qwen35_preservation_dual_view_v1.json"
 )
+RENDER_PATH = ROOT / "scripts/render_preservation_dual_view_v1.py"
+RENDER_SPEC = importlib.util.spec_from_file_location(
+    "render_preservation_dual_view_v1",
+    RENDER_PATH,
+)
+RENDER_MODULE = importlib.util.module_from_spec(RENDER_SPEC)
+assert RENDER_SPEC.loader is not None
+RENDER_SPEC.loader.exec_module(RENDER_MODULE)
 
 
 class PreservationDualViewTests(unittest.TestCase):
@@ -113,6 +122,81 @@ class PreservationDualViewTests(unittest.TestCase):
                     path.write_text(json.dumps(altered), encoding="utf-8")
                     with self.assertRaisesRegex(ValueError, error):
                         load_config(path)
+
+    def test_gate_requires_zero_treatment_losses_and_fewer_than_control(self):
+        family_metrics = {
+            family: {"cases": 64, "correct": 1, "parse_failures": 0}
+            for family in (
+                "exact_division",
+                "mixed_products",
+                "nested_offset",
+                "repeated_operand",
+            )
+        }
+        baseline = {
+            "accuracy": 4 / 256,
+            "parse_failures": 0,
+            "by_family": copy.deepcopy(family_metrics),
+        }
+        treatment_post = copy.deepcopy(baseline)
+        treatment_post["accuracy"] = 16 / 256
+        for row in treatment_post["by_family"].values():
+            row["correct"] = 4
+        control_post = copy.deepcopy(baseline)
+        control_post["accuracy"] = 14 / 256
+        metrics = {
+            "training": {
+                "all_components_finite": True,
+                "loss_curve": [
+                    {
+                        "objective": 1.0,
+                        "gradient_norm": 1.0,
+                    }
+                ],
+            },
+            "failure_receipt_exists": False,
+            "identity": {"adapter_sha256": "a" * 64},
+            "baseline_dev": baseline,
+            "post_dev": treatment_post,
+            "comparison": {
+                "candidate_accuracy": 16 / 256,
+                "baseline_accuracy": 4 / 256,
+                "paired_bootstrap_95_ci": [1 / 256, 20 / 256],
+                "mcnemar_exact_p": 0.001,
+                "paired_counts": {
+                    "candidate_only": 12,
+                    "baseline_only": 0,
+                },
+            },
+        }
+        treatment = copy.deepcopy(metrics)
+        control = copy.deepcopy(metrics)
+        control["post_dev"] = control_post
+        control["comparison"]["candidate_accuracy"] = 14 / 256
+        control["comparison"]["paired_counts"] = {
+            "candidate_only": 12,
+            "baseline_only": 2,
+        }
+        reload = {
+            "reload_success": True,
+            "metrics_exact": True,
+            "generations_exact": True,
+            "adapter_sha256": "a" * 64,
+        }
+        gates = RENDER_MODULE.admission_gates(
+            control,
+            treatment,
+            {"control": reload, "treatment": reload},
+        )
+        self.assertTrue(all(gates.values()))
+        treatment["comparison"]["paired_counts"]["baseline_only"] = 1
+        gates = RENDER_MODULE.admission_gates(
+            control,
+            treatment,
+            {"control": reload, "treatment": reload},
+        )
+        self.assertFalse(gates["treatment_anchor_maximum_losses"])
+        self.assertTrue(gates["treatment_losses_lt_control"])
 
 
 if __name__ == "__main__":
