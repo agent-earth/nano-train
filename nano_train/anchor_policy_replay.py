@@ -753,6 +753,36 @@ def inspect_teacher_cache(
     }
 
 
+def validate_teacher_cache_receipt(
+    config: AnchorPolicyReplayConfig,
+    dataset: dict[str, Any],
+    receipt: dict[str, Any],
+    summary: dict[str, Any],
+    cache_sha256: str,
+) -> None:
+    if (
+        receipt.get("schema_version") != CACHE_RECEIPT_SCHEMA
+        or receipt.get("experiment_id") != config.experiment_id
+        or receipt.get("identity", {}).get("teacher_cache_sha256")
+        != cache_sha256
+        or receipt.get("identity", {}).get("anchor_adapter_sha256")
+        != config.anchor_adapter_sha256
+        or receipt.get("dataset_identity") != dataset["identity"]
+        or receipt.get("summary") != summary
+        or receipt.get("execution_boundary", {}).get(
+            "arm_training_started"
+        )
+        is not False
+        or receipt.get("execution_boundary", {}).get("dev_observed")
+        is not False
+        or receipt.get("execution_boundary", {}).get("benchmark_accessed")
+        is not False
+        or receipt.get("execution_boundary", {}).get("canary_accessed")
+        is not False
+    ):
+        raise ValueError("anchor policy cache receipt differs")
+
+
 def load_teacher_cache(
     config: AnchorPolicyReplayConfig,
     dataset: dict[str, Any],
@@ -764,19 +794,13 @@ def load_teacher_cache(
     receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
     cache_sha256 = sha256_file(cache_path)
     summary = inspect_teacher_cache(config, dataset, cache)
-    if (
-        receipt.get("schema_version") != CACHE_RECEIPT_SCHEMA
-        or receipt.get("experiment_id") != config.experiment_id
-        or receipt.get("identity", {}).get("teacher_cache_sha256")
-        != cache_sha256
-        or receipt.get("identity", {}).get("anchor_adapter_sha256")
-        != config.anchor_adapter_sha256
-        or receipt.get("dataset_identity") != dataset["identity"]
-        or receipt.get("summary") != summary
-        or receipt.get("execution_boundary", {}).get("training_started")
-        is not False
-    ):
-        raise ValueError("anchor policy cache receipt differs")
+    validate_teacher_cache_receipt(
+        config,
+        dataset,
+        receipt,
+        summary,
+        cache_sha256,
+    )
     by_id = {row["pair_id"]: row for row in cache["rows"]}
     for pair_id, pair in tokenized.items():
         row = by_id[pair_id]
