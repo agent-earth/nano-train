@@ -1,0 +1,174 @@
+{
+  "claim_boundary": "The adapter establishes a significant fresh synthetic final-only gain but fails the stricter zero-loss admission rule. It does not authorize canary, benchmark, or holdout access.",
+  "data": {
+    "benchmark_canary_holdout_rows_or_outputs": 0,
+    "benchmark_prompt_overlap": 0,
+    "dev_final_only_cases": 192,
+    "observed_quality_prompt_overlap": 0,
+    "train_pairs": 256
+  },
+  "decision": {
+    "benchmark_allowed": false,
+    "canary_allowed": false,
+    "further_tuning_on_observed_dev_allowed": false,
+    "gates": {
+      "every_family_non_regression": true,
+      "exact_mcnemar_p_lt_005": true,
+      "finite_training": true,
+      "independent_reload_exact": true,
+      "maximum_baseline_only_losses": false,
+      "minimum_candidate_only_wins": true,
+      "paired_bootstrap_ci_lower_gt_zero": true,
+      "parse_failures_non_regression": true,
+      "post_accuracy_gt_baseline": true
+    },
+    "independent_holdout_allowed": false,
+    "next_action": "Preserve this first significant local consistency gain, but do not promote because two baseline-only losses violate the frozen zero-loss gate. Use a separately pre-registered conservative adapter-routing or rollback policy on a new fresh local surface; do not tune consistency on observed dev.",
+    "quality_consistency_candidate_admitted": false,
+    "statistically_significant_local_improvement": true
+  },
+  "evaluation": {
+    "baseline_dev": {
+      "accuracy": 0.010416666666666666,
+      "by_family": {
+        "exact_division": {
+          "cases": 48,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "mixed_products": {
+          "cases": 48,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "nested_offset": {
+          "cases": 48,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "repeated_operand": {
+          "cases": 48,
+          "correct": 2,
+          "parse_failures": 0
+        }
+      },
+      "cases": 192,
+      "correct": 2,
+      "parse_failures": 0
+    },
+    "baseline_only_loss_case_ids": [
+      "quality-consistency-repeated_operand-1d907cb4f8be03b5",
+      "quality-consistency-repeated_operand-3f523aff934b3c05"
+    ],
+    "candidate_only_win_case_ids": [
+      "quality-consistency-exact_division-1688d7a102567cff",
+      "quality-consistency-exact_division-27dbd40fd1db8120",
+      "quality-consistency-exact_division-6401f96ecf09d402",
+      "quality-consistency-exact_division-75d40e6b755c483f",
+      "quality-consistency-exact_division-775ceeb0889b0a87",
+      "quality-consistency-exact_division-9b958772456fb913",
+      "quality-consistency-exact_division-a951642040399b58",
+      "quality-consistency-exact_division-b4160d6eac7bfecb",
+      "quality-consistency-exact_division-f7757551dc4b9d36",
+      "quality-consistency-exact_division-ffb887ef583ffa13",
+      "quality-consistency-repeated_operand-1f6f312d5ae3b908",
+      "quality-consistency-repeated_operand-2d5cb0ef60990817",
+      "quality-consistency-repeated_operand-7a82e84070e05ccc",
+      "quality-consistency-repeated_operand-c4a9c11fbdd60564",
+      "quality-consistency-repeated_operand-c769ded3dbf8f493"
+    ],
+    "comparison": {
+      "baseline_accuracy": 0.010416666666666666,
+      "candidate_accuracy": 0.078125,
+      "cases": 192,
+      "delta": 0.06770833333333333,
+      "mcnemar_exact_p": 0.002349853515625,
+      "paired_bootstrap_95_ci": [
+        0.026041666666666668,
+        0.109375
+      ],
+      "paired_counts": {
+        "baseline_only": 2,
+        "both_correct": 0,
+        "both_wrong": 175,
+        "candidate_only": 15
+      }
+    },
+    "post_dev": {
+      "accuracy": 0.078125,
+      "by_family": {
+        "exact_division": {
+          "cases": 48,
+          "correct": 10,
+          "parse_failures": 0
+        },
+        "mixed_products": {
+          "cases": 48,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "nested_offset": {
+          "cases": 48,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "repeated_operand": {
+          "cases": 48,
+          "correct": 5,
+          "parse_failures": 0
+        }
+      },
+      "cases": 192,
+      "correct": 15,
+      "parse_failures": 0
+    }
+  },
+  "experiment_id": "qwen35-quality-consistency-v1",
+  "hardware": {
+    "gpu_name": "Tesla V100-SXM2-32GB",
+    "peak_allocated_gib": 16.512760639190674
+  },
+  "identity": {
+    "adapter_sha256": "23c4760e9d6693c880859c1bd9984164eb5243742ed3517bad4929364643df49",
+    "anchor_adapter_sha256": "7287cfcc9372894aae2c4081f6ccf7b18a9292a9e52160579c9ab199906eda45",
+    "config_sha256": "6d4495c9a4fce6f22e05be39831c10649c0738d52c1235de6fb8546699443809",
+    "dev_pair_ids_sha256": "2ae0a8d2b14d60201b01d645952853c6f2f5b4a4dabfd7c56d5b62878b43022a",
+    "generations_sha256": "aee53b77b98a1d719081babdac7a3b4516f7cdbef6f812245d81e7e247a0bc2f",
+    "metrics_sha256": "1745d27e4c1311d0f61c977b6535be480f6aeb1f5e691f3b882754701f0aed28",
+    "preregister_revision": "8bf0bd88ab281e0e2411d51b6248a981ec312c90",
+    "preregister_sha256": "648ee0ed68f4fca2714f684f405b2feccd9b97bd4df0bc6e9a7dbc49e8399cf1",
+    "reload_sha256": "935240f2122dfc8dec0ca6d01a22290fae11594a1f2c23caa24cfc12c48fe129",
+    "result_revision": "98f39427f04e225650317557a276c13ddd9b4899",
+    "train_pair_ids_sha256": "96719e3372918bdf7feb82230abb28e5d3a4b26d7f6f34291a78afd7c9c2ca63"
+  },
+  "reload": {
+    "adapter_sha256": "23c4760e9d6693c880859c1bd9984164eb5243742ed3517bad4929364643df49",
+    "experiment_id": "qwen35-quality-consistency-v1",
+    "generations_exact": true,
+    "metrics_exact": true,
+    "peak_allocated_gib": 16.376041889190674,
+    "reload_success": true,
+    "schema_version": "nano_train_quality_consistency_reload_v1"
+  },
+  "schema_version": "nano_train_quality_consistency_public_v1",
+  "training": {
+    "all_components_finite": true,
+    "first_step": {
+      "consistency_kl": 0.2374447137117386,
+      "final_ce": 0.1830972582101822,
+      "gradient_norm": 46.07467269897461,
+      "process_ce": 0.5501426458358765,
+      "step": 1
+    },
+    "last_step": {
+      "consistency_kl": 0.7757587432861328,
+      "final_ce": 0.7757704854011536,
+      "gradient_norm": 27.808500289916992,
+      "process_ce": 0.18300238251686096,
+      "step": 256
+    },
+    "maximum_gradient_norm": 106.80316162109375,
+    "minimum_consistency_kl": 0.00015599381003994495,
+    "optimizer_steps": 256
+  }
+}

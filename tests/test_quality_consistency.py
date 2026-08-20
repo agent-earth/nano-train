@@ -15,6 +15,7 @@ from nano_train.quality_consistency import (
     normalized_dataset_prompt_hashes,
     public_contract,
 )
+from scripts.render_quality_consistency_v1 import acceptance_gates
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -102,6 +103,57 @@ class QualityConsistencyTests(unittest.TestCase):
                     path.write_text(json.dumps(altered), encoding="utf-8")
                     with self.assertRaisesRegex(ValueError, error):
                         load_config(path)
+
+    def test_gate_rejects_significant_gain_with_two_losses(self):
+        by_family = {
+            family: {"correct": 0, "cases": 48, "parse_failures": 0}
+            for family in (
+                "repeated_operand",
+                "mixed_products",
+                "exact_division",
+                "nested_offset",
+            )
+        }
+        baseline_family = copy.deepcopy(by_family)
+        baseline_family["repeated_operand"]["correct"] = 2
+        post_family = copy.deepcopy(by_family)
+        post_family["repeated_operand"]["correct"] = 5
+        post_family["exact_division"]["correct"] = 10
+        metrics = {
+            "training": {"all_components_finite": True},
+            "failure_receipt_exists": False,
+            "comparison": {
+                "baseline_accuracy": 2 / 192,
+                "candidate_accuracy": 15 / 192,
+                "paired_bootstrap_95_ci": [5 / 192, 21 / 192],
+                "mcnemar_exact_p": 0.002349853515625,
+                "paired_counts": {
+                    "candidate_only": 15,
+                    "baseline_only": 2,
+                },
+            },
+            "baseline_dev": {
+                "by_family": baseline_family,
+                "parse_failures": 0,
+            },
+            "post_dev": {
+                "by_family": post_family,
+                "parse_failures": 0,
+            },
+            "identity": {"adapter_sha256": "a" * 64},
+        }
+        reload = {
+            "reload_success": True,
+            "metrics_exact": True,
+            "generations_exact": True,
+            "adapter_sha256": "a" * 64,
+        }
+        gates = acceptance_gates(metrics, reload)
+        self.assertTrue(gates["paired_bootstrap_ci_lower_gt_zero"])
+        self.assertTrue(gates["exact_mcnemar_p_lt_005"])
+        self.assertTrue(gates["minimum_candidate_only_wins"])
+        self.assertFalse(gates["maximum_baseline_only_losses"])
+        self.assertFalse(all(gates.values()))
 
 
 if __name__ == "__main__":
