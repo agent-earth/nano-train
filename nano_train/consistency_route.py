@@ -202,28 +202,53 @@ def contamination_audit(
             raise ValueError("consistency route forbidden identity mismatch")
         raw = json.loads(path.read_text(encoding="utf-8"))
         if source["kind"] == "synthetic_quality":
-            from nano_train.synthetic_quality import build_cases, load_config
+            from nano_train.synthetic_quality import (
+                build_cases as build_synthetic_cases,
+            )
+            from nano_train.synthetic_quality import (
+                load_config as load_synthetic_config,
+            )
 
             observed.update(
                 hashlib.sha256(row["prompt"].encode()).hexdigest()
-                for row in build_cases(load_config(path))
+                for row in build_synthetic_cases(
+                    load_synthetic_config(path)
+                )
             )
         elif source["kind"] == "scaled_quality":
-            from nano_train.scaled_quality import build_dataset, load_config
+            from nano_train.scaled_quality import (
+                build_dataset as build_scaled_dataset,
+            )
+            from nano_train.scaled_quality import (
+                load_config as load_scaled_config,
+            )
 
-            dataset = build_dataset(load_config(path))
+            dataset = build_scaled_dataset(load_scaled_config(path))
             observed.update(
                 hashlib.sha256(row["prompt"].encode()).hexdigest()
                 for row in (*dataset["train"], *dataset["dev"])
             )
         elif source["kind"] == "quality_consistency":
-            from nano_train.quality_consistency import build_dataset, load_config
+            from nano_train.quality_consistency import (
+                build_dataset as build_consistency_dataset,
+            )
+            from nano_train.quality_consistency import (
+                load_config as load_consistency_config,
+            )
 
-            dataset = build_dataset(load_config(path))
+            dataset = build_consistency_dataset(
+                load_consistency_config(path)
+            )
             observed.update(
                 hashlib.sha256(prompt.encode()).hexdigest()
                 for pair in (*dataset["train_pairs"], *dataset["dev_pairs"])
                 for prompt in (pair["process_prompt"], pair["final_prompt"])
+            )
+        elif source["kind"] == "consistency_route":
+            route_config = load_config(path)
+            observed.update(
+                hashlib.sha256(row["prompt"].encode()).hexdigest()
+                for row in build_cases(route_config)
             )
         else:
             raise ValueError("consistency route forbidden kind differs")

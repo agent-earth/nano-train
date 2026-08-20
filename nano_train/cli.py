@@ -3,6 +3,13 @@ from __future__ import annotations
 import argparse
 import json
 
+from nano_train.confidence_route import (
+    generate_arm as generate_confidence_route_arm,
+)
+from nano_train.confidence_route import (
+    load_config as load_confidence_route_config,
+)
+from nano_train.confidence_route import score_arm as score_confidence_route_arm
 from nano_train.consistency_route import (
     load_config as load_consistency_route_config,
 )
@@ -67,6 +74,12 @@ def main() -> None:
     consistency_route = subparsers.add_parser("consistency-route")
     consistency_route.add_argument("--config", required=True)
     consistency_route.add_argument("--arm", required=True)
+    confidence_generate = subparsers.add_parser("confidence-route-generate")
+    confidence_generate.add_argument("--config", required=True)
+    confidence_generate.add_argument("--arm", required=True)
+    confidence_score = subparsers.add_parser("confidence-route-score")
+    confidence_score.add_argument("--config", required=True)
+    confidence_score.add_argument("--arm", required=True)
 
     args = parser.parse_args()
     if args.command == "anchored-continuation":
@@ -104,6 +117,16 @@ def main() -> None:
         result = run_consistency_route_arm(
             load_consistency_route_config(args.config),
             arm_id=args.arm,
+        )
+    elif args.command == "confidence-route-generate":
+        result = generate_confidence_route_arm(
+            load_confidence_route_config(args.config),
+            arm_id=args.arm,
+        )
+    elif args.command == "confidence-route-score":
+        result = score_confidence_route_arm(
+            load_confidence_route_config(args.config),
+            scorer_arm=args.arm,
         )
     else:
         config = load_sft_smoke_config(args.config)
