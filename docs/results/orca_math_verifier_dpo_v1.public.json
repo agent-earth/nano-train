@@ -1,0 +1,119 @@
+{
+  "claim_boundary": "This is a local synthetic-development preference-optimization result. It is not a GSM8K, MMLU, GPQA, 9B, 27B, or agent-benchmark result.",
+  "decision": {
+    "benchmark_allowed": false,
+    "candidate_admitted": false,
+    "gates": {
+      "bootstrap_ci_lower_positive": false,
+      "candidate_only_exceeds_baseline_only": false,
+      "every_stratum_non_regression": true,
+      "mcnemar_below_alpha": false,
+      "minimum_candidate_only_wins": false,
+      "point_delta_positive": false
+    },
+    "larger_training_allowed": false,
+    "next_action": "Reject full-trajectory mean-log-probability DPO. Pre-register a FINAL-token-only preference objective on fresh, disjoint preference pairs and fresh local dev.",
+    "rerun_or_tuning_allowed": false
+  },
+  "evaluation": {
+    "baseline": {
+      "accuracy": 0.4739583333333333,
+      "by_stratum": {
+        "long": {
+          "correct": 12,
+          "parse_failures": 28,
+          "samples": 48
+        },
+        "medium": {
+          "correct": 40,
+          "parse_failures": 43,
+          "samples": 96
+        },
+        "short": {
+          "correct": 39,
+          "parse_failures": 8,
+          "samples": 48
+        }
+      },
+      "correct": 91,
+      "parse_failures": 79,
+      "samples": 192
+    },
+    "changed_outputs": 0,
+    "comparison": {
+      "baseline_accuracy": 0.4739583333333333,
+      "candidate_accuracy": 0.4739583333333333,
+      "cases": 192,
+      "delta": 0.0,
+      "mcnemar_exact_p": 1.0,
+      "paired_bootstrap_95_ci": [
+        0.0,
+        0.0
+      ],
+      "paired_counts": {
+        "baseline_only": 0,
+        "both_correct": 91,
+        "both_wrong": 101,
+        "candidate_only": 0
+      }
+    },
+    "post_dpo": {
+      "accuracy": 0.4739583333333333,
+      "by_stratum": {
+        "long": {
+          "correct": 12,
+          "parse_failures": 28,
+          "samples": 48
+        },
+        "medium": {
+          "correct": 40,
+          "parse_failures": 43,
+          "samples": 96
+        },
+        "short": {
+          "correct": 39,
+          "parse_failures": 8,
+          "samples": 48
+        }
+      },
+      "correct": 91,
+      "parse_failures": 79,
+      "samples": 192
+    }
+  },
+  "experiment_id": "orca-math-verifier-dpo-v1",
+  "identity": {
+    "adapter_sha256": "e283dd7e685d7766bb0a33895b6dbe90beeecc402bc63b3f71c61ca7dc6ecc75",
+    "config_sha256": "1dac9c5156769f4369927bc93e177a71e0dd1a0a149e26a38ffe84f7943ed15c",
+    "dataset_file_sha256": "deae4dabda40dcb55cd046dd330387683bdec508cd3085d53974b508ed9ae320",
+    "generations_sha256": "d4fe5bb3d07518c65f62c5381592e98fd350682e7fd0762fe3fb33d8a68103a4",
+    "metrics_sha256": "6c397500536f8825bd27665a52eef1d1714f4d4a51580dc2eacfffa42dc8258a",
+    "preregister_sha256": "3ac9308a3474ed41d13a7ce979a4f9085cf4a76847da106dc8c142b4769aa3e2",
+    "prior_sft_result_sha256": "3a469c1c47be36f173db0ddf3883aac6d680030aeed1d3459bb6416c82d315cc",
+    "release_manifest_sha256": "c451a5096333a36829e39603fa27a847e9bd50317ae8bdde1f5709b6ab6c4ed0",
+    "reload_receipt_sha256": "87060cac87e65c2c823824ab6dbdabbff8904ec4f83e2b0cb0e733d4b574d2a0",
+    "result_revision": "3dfadc03d9296d0b230786cd1627c1e3decb7fdc"
+  },
+  "mechanism_conclusion": "Chosen and rejected targets differ only in the FINAL suffix. Averaging log probability over the long shared trajectory diluted that signal: the final preference advantage remained near zero and no development output changed.",
+  "reload": {
+    "generations_exact": true,
+    "metrics_exact": true,
+    "peak_allocated_gib": 16.141242027282715,
+    "success": true
+  },
+  "schema_version": "nano_train_orca_math_dpo_public_v1",
+  "training": {
+    "advantage_first": 0.0,
+    "advantage_last": 5.435943603515625e-05,
+    "advantage_maximum": 0.0001500248908996582,
+    "all_gradient_norms_finite": true,
+    "all_losses_finite": true,
+    "loss_first": 0.6931471824645996,
+    "loss_last": 0.6931444406509399,
+    "loss_minimum": 0.6931396722793579,
+    "optimizer_steps": 32,
+    "peak_allocated_gib": 17.796947956085205,
+    "trainable_parameters": 917504,
+    "wall_seconds": 1900.6989147663116
+  }
+}

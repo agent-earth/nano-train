@@ -15,6 +15,7 @@ from nano_train.orca_math_dpo import (
     sequence_log_probability,
 )
 from scripts.preregister_orca_math_dpo_v1 import build_receipt
+from scripts.render_orca_math_dpo_v1 import build_report
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -99,6 +100,16 @@ class OrcaMathDPOTests(unittest.TestCase):
         dev = _dev_rows(self.selection)
         self.assertEqual(len(dev), 192)
         self.assertTrue(all(row["numeric_answer"] for row in dev))
+
+    def test_public_report_recomputes_stable_noop(self):
+        report = build_report()
+        self.assertFalse(report["decision"]["candidate_admitted"])
+        self.assertEqual(report["evaluation"]["changed_outputs"], 0)
+        self.assertEqual(report["evaluation"]["comparison"]["delta"], 0.0)
+        self.assertTrue(report["reload"]["generations_exact"])
+        serialized = json.dumps(report).lower()
+        self.assertNotIn("prompt_messages", serialized)
+        self.assertNotIn("expected", serialized)
 
 
 if __name__ == "__main__":
