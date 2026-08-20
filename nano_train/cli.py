@@ -10,6 +10,11 @@ from nano_train.paired_consistency import (
     load_config as load_paired_consistency_config,
 )
 from nano_train.paired_consistency import run as run_paired_consistency
+from nano_train.rl_opd_admission import (
+    load_config as load_admission_config,
+)
+from nano_train.rl_opd_admission import run as run_admission
+from nano_train.rl_opd_admission import validate_reload
 from nano_train.sft import run_sft_smoke
 
 
@@ -26,6 +31,10 @@ def main() -> None:
     continuation.add_argument("--config", required=True)
     paired = subparsers.add_parser("paired-consistency")
     paired.add_argument("--config", required=True)
+    admission = subparsers.add_parser("rl-opd-admission")
+    admission.add_argument("--config", required=True)
+    admission_reload = subparsers.add_parser("rl-opd-admission-reload")
+    admission_reload.add_argument("--config", required=True)
 
     args = parser.parse_args()
     if args.command == "anchored-continuation":
@@ -34,6 +43,10 @@ def main() -> None:
         result = run_paired_consistency(
             load_paired_consistency_config(args.config)
         )
+    elif args.command == "rl-opd-admission":
+        result = run_admission(load_admission_config(args.config))
+    elif args.command == "rl-opd-admission-reload":
+        result = validate_reload(load_admission_config(args.config))
     else:
         config = load_sft_smoke_config(args.config)
     if args.command == "validate-config":

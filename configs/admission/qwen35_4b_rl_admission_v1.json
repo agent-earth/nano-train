@@ -1,0 +1,99 @@
+{
+  "benchmark_sources": [
+    {
+      "name": "gsm8k",
+      "path": "../../../datasets/gsm8k/gsm8k/main/test-00000-of-00001.parquet",
+      "prompt_column": "question",
+      "sha256": "ee7b8da9e381df27b9e3f7758a159ab2bdaa4dbaa910546cbbc47e0cb44e4f59"
+    },
+    {
+      "name": "mmlu",
+      "path": "../../../datasets/mmlu_no_train/mmlu_no_train/all/test-00000-of-00001.parquet",
+      "prompt_column": "question",
+      "sha256": "02033371a64dbe5a0d8b6fb9d612900afcd0fea5140e53490993a4540b3a58fd"
+    },
+    {
+      "name": "gpqa_diamond",
+      "path": "../../../datasets/GPQA-Diamond/GPQA-Diamond/test/gpqa_diamond.parquet",
+      "prompt_column": "question",
+      "sha256": "fdd6e95117cdf87075f56bf673a5bae4680b143bc2d29b486470810122c33f39"
+    }
+  ],
+  "experiment_id": "qwen35-4b-rl-admission-v1",
+  "gradient_checkpointing": true,
+  "learning_rate": 1e-05,
+  "lora_alpha": 16,
+  "lora_dropout": 0.0,
+  "lora_r": 8,
+  "lora_targets": [
+    "q_proj",
+    "v_proj"
+  ],
+  "max_steps": 2,
+  "mode": "rl",
+  "output_dir": "artifacts/qwen35-4b-rl-admission-v1",
+  "policy": {
+    "benchmark_access_allowed_after_smoke": false,
+    "contains_benchmark_outputs": false,
+    "contains_benchmark_rows": false,
+    "contains_canary_rows": false,
+    "contains_holdout_rows": false,
+    "quality_claim_allowed": false,
+    "training_allowed": true,
+    "uses_model_generated_rollouts": true
+  },
+  "probe_tasks": [
+    {
+      "expected": "101",
+      "expression": "53 + 48",
+      "task_id": "synthetic-probe-rl-000"
+    },
+    {
+      "expected": "179",
+      "expression": "221 - 42",
+      "task_id": "synthetic-probe-rl-001"
+    }
+  ],
+  "prompt_template": "Compute this synthetic expression exactly: {expression}. Return only FINAL: <integer>.",
+  "reference_kl_weight": 0.02,
+  "rollout_max_new_tokens": 12,
+  "rollout_temperature": 0.8,
+  "rollout_top_p": 0.95,
+  "schema_version": "nano_train_rl_opd_admission_v1",
+  "seed": 20260820,
+  "student_dtype": "float32",
+  "student_model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+  "student_model_index_sha256": "cf3f798ee02ba45f9622aa8892a47369ab667d0afbf154ee7c2212de42e6302d",
+  "student_model_path": "../../../models/Qwen3.5-4B",
+  "student_weight_shards": [
+    {
+      "bytes": 5329398688,
+      "name": "model.safetensors-00001-of-00002.safetensors",
+      "sha256": "26a93f066e1916adb13453dae5a0c707c0fbc71299ed98779571a907b8e74c61"
+    },
+    {
+      "bytes": 3990429408,
+      "name": "model.safetensors-00002-of-00002.safetensors",
+      "sha256": "cb544bd9bfae93dc59b0f22b292f5933573854a7f9b97835c67060d7d910e188"
+    }
+  ],
+  "system_prompt": "Follow the exact output contract. Do not use tools or external information.",
+  "teacher_dtype": null,
+  "teacher_model_config_sha256": null,
+  "teacher_model_index_sha256": null,
+  "teacher_model_path": null,
+  "teacher_weight_shards": [],
+  "train_tasks": [
+    {
+      "expected": "42",
+      "expression": "17 + 25",
+      "task_id": "synthetic-train-rl-000"
+    },
+    {
+      "expected": "73",
+      "expression": "91 - 18",
+      "task_id": "synthetic-train-rl-001"
+    }
+  ],
+  "weight_decay": 0.0
+}

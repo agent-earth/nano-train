@@ -1,0 +1,284 @@
+{
+  "acceptance": {
+    "benchmark_allowed": false,
+    "each_experiment": {
+      "all_gradient_norms_finite": true,
+      "all_losses_finite": true,
+      "contamination_audit_passed": true,
+      "failure_receipt_absent": true,
+      "independent_reload_probe_logits_exact": true,
+      "nonzero_finite_adapter_tensors": true,
+      "optimizer_steps_exact": 2,
+      "probe_logits_changed_from_base": true
+    },
+    "joint_admission": "RL and OPD each pass every finite, effect, reload, identity, and contamination gate.",
+    "larger_training_allowed": false,
+    "quality_claim_allowed": false
+  },
+  "campaign_id": "qwen35-rl-opd-admission-v1",
+  "claim_boundary": "This receipt freezes two benchmark-free implementation admission smokes before generation or optimization. Passing proves only that the RL and OPD mechanisms run, update finite LoRA weights, and reload reproducibly.",
+  "decision_policy": {
+    "failed_smoke": "Preserve failure evidence and redesign the method on a new synthetic surface; do not tune on observed smoke outputs.",
+    "forbidden_after_observation": [
+      "synthetic_task_change",
+      "reward_change",
+      "teacher_change",
+      "rollout_temperature_change",
+      "rollout_top_p_change",
+      "rollout_budget_change",
+      "optimizer_change",
+      "learning_rate_change",
+      "step_change",
+      "seed_change",
+      "lora_scope_change",
+      "adapter_weight_change",
+      "benchmark_access",
+      "canary_access",
+      "independent_holdout_access"
+    ],
+    "passed_smoke": "Establishes implementation admission only. It does not establish model quality or unblock benchmarks."
+  },
+  "execution_boundary": {
+    "model_generation_started": false,
+    "opd_started": false,
+    "rl_started": false,
+    "this_commit_only_preregisters": true,
+    "training_started": false
+  },
+  "experiments": [
+    {
+      "config_path": "configs/admission/qwen35_4b_rl_admission_v1.json",
+      "config_sha256": "17ab5c2c9d4e58d0d178833713ca68a09db3b1b73bfbadedc2402150f3a5b7ca",
+      "contamination_audit": {
+        "benchmark_labels_loaded": false,
+        "benchmark_outputs_loaded": false,
+        "benchmark_rows_hashed": {
+          "gpqa_diamond": 198,
+          "gsm8k": 1319,
+          "mmlu": 14042
+        },
+        "canary_or_holdout_loaded": false,
+        "exact_normalized_prompt_overlap": 0,
+        "passed": true,
+        "probe_prompt_sha256": "e4488276ee745554bf735c3a914eaad1d853002d0f989670b7d881e196408685",
+        "synthetic_prompt_sha256": "b214f4ca4fcd2674fa19900b8eabc900e514e6831d46ebd2cb077b460b9a4735",
+        "synthetic_prompts": 4,
+        "train_prompt_sha256": "3a8a007b74605d46739702004bc840cf90254e14423074eae786cc7a5be845f8"
+      },
+      "experiment_id": "qwen35-4b-rl-admission-v1",
+      "mode": "rl",
+      "model_identities": {
+        "student": {
+          "config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+          "index_sha256": "cf3f798ee02ba45f9622aa8892a47369ab667d0afbf154ee7c2212de42e6302d",
+          "shards": [
+            {
+              "bytes": 5329398688,
+              "name": "model.safetensors-00001-of-00002.safetensors",
+              "sha256": "26a93f066e1916adb13453dae5a0c707c0fbc71299ed98779571a907b8e74c61",
+              "verified": true
+            },
+            {
+              "bytes": 3990429408,
+              "name": "model.safetensors-00002-of-00002.safetensors",
+              "sha256": "cb544bd9bfae93dc59b0f22b292f5933573854a7f9b97835c67060d7d910e188",
+              "verified": true
+            }
+          ]
+        },
+        "teacher": null
+      },
+      "objective": "REINFORCE exact-verifier reward plus detached base-policy KL on student-generated rollouts.",
+      "synthetic_tasks": {
+        "maximum_prompt_tokens": 53,
+        "probe": [
+          {
+            "expected": "101",
+            "expression": "53 + 48",
+            "task_id": "synthetic-probe-rl-000"
+          },
+          {
+            "expected": "179",
+            "expression": "221 - 42",
+            "task_id": "synthetic-probe-rl-001"
+          }
+        ],
+        "prompt_lengths": [
+          52,
+          52,
+          52,
+          53
+        ],
+        "train": [
+          {
+            "expected": "42",
+            "expression": "17 + 25",
+            "task_id": "synthetic-train-rl-000"
+          },
+          {
+            "expected": "73",
+            "expression": "91 - 18",
+            "task_id": "synthetic-train-rl-001"
+          }
+        ]
+      },
+      "training": {
+        "learning_rate": 1e-05,
+        "lora_alpha": 16,
+        "lora_r": 8,
+        "lora_targets": [
+          "q_proj",
+          "v_proj"
+        ],
+        "optimizer_steps": 2,
+        "reference_kl_weight": 0.02,
+        "rollout_max_new_tokens": 12,
+        "rollout_temperature": 0.8,
+        "rollout_top_p": 0.95,
+        "seed": 20260820,
+        "student_dtype": "float32",
+        "teacher_dtype": null
+      }
+    },
+    {
+      "config_path": "configs/admission/qwen35_4b_opd_admission_v1.json",
+      "config_sha256": "987c491501d28595eb0b1a812da107a4e47413be4959c6a193dad04f4f912913",
+      "contamination_audit": {
+        "benchmark_labels_loaded": false,
+        "benchmark_outputs_loaded": false,
+        "benchmark_rows_hashed": {
+          "gpqa_diamond": 198,
+          "gsm8k": 1319,
+          "mmlu": 14042
+        },
+        "canary_or_holdout_loaded": false,
+        "exact_normalized_prompt_overlap": 0,
+        "passed": true,
+        "probe_prompt_sha256": "76a314556c36c4949787a0fbd3c4fc401232616ea64d0960e1fffc47de3cabc1",
+        "synthetic_prompt_sha256": "d2762e62911ad40a9fa109751100485d68b1cf00315a4530602f6ed84815aeff",
+        "synthetic_prompts": 4,
+        "train_prompt_sha256": "61a87a03956fbe231029707f82e8734fa19bea4b7b7819f71f15b1f1275bb897"
+      },
+      "experiment_id": "qwen35-4b-opd-admission-v1",
+      "mode": "opd",
+      "model_identities": {
+        "student": {
+          "config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+          "index_sha256": "cf3f798ee02ba45f9622aa8892a47369ab667d0afbf154ee7c2212de42e6302d",
+          "shards": [
+            {
+              "bytes": 5329398688,
+              "name": "model.safetensors-00001-of-00002.safetensors",
+              "sha256": "26a93f066e1916adb13453dae5a0c707c0fbc71299ed98779571a907b8e74c61",
+              "verified": true
+            },
+            {
+              "bytes": 3990429408,
+              "name": "model.safetensors-00002-of-00002.safetensors",
+              "sha256": "cb544bd9bfae93dc59b0f22b292f5933573854a7f9b97835c67060d7d910e188",
+              "verified": true
+            }
+          ]
+        },
+        "teacher": {
+          "config_sha256": "d0883072e01861ed0b2d47be3c16c36a8e81c224c7ffaa310c6558fb3f932b05",
+          "index_sha256": "26d3539b516be613f39563617cb9d33b3f83d401298125be392c80cefb8f7fe5",
+          "shards": [
+            {
+              "bytes": 5276436216,
+              "name": "model.safetensors-00001-of-00004.safetensors",
+              "sha256": "db6f444b43d318c92f360a13a25561a6a65b10c0631b8ed305a426dbaa6c380e",
+              "verified": true
+            },
+            {
+              "bytes": 5335161512,
+              "name": "model.safetensors-00002-of-00004.safetensors",
+              "sha256": "31c7d7e2dd5d207840b31cc59083c8f4c4718959149e0358c0364052bb9a0330",
+              "verified": true
+            },
+            {
+              "bytes": 5368717440,
+              "name": "model.safetensors-00003-of-00004.safetensors",
+              "sha256": "7ec36ba3a4176a44c3c0876ad80c56a2f70c84bf008d82e9501df642f17dadec",
+              "verified": true
+            },
+            {
+              "bytes": 3325995712,
+              "name": "model.safetensors-00004-of-00004.safetensors",
+              "sha256": "b62b0c4cd7e44edee103ee8f4fe225f246d5e768e07bfd5f25b63a8aa1fdd0c6",
+              "verified": true
+            }
+          ]
+        }
+      },
+      "objective": "KL from frozen Qwen3.5-9B teacher logits to Qwen3.5-4B student logits on 4B on-policy rollouts.",
+      "synthetic_tasks": {
+        "maximum_prompt_tokens": 54,
+        "probe": [
+          {
+            "expected": "137",
+            "expression": "89 + 48",
+            "task_id": "synthetic-probe-opd-000"
+          },
+          {
+            "expected": "208",
+            "expression": "13 * 16",
+            "task_id": "synthetic-probe-opd-001"
+          }
+        ],
+        "prompt_lengths": [
+          52,
+          54,
+          52,
+          52
+        ],
+        "train": [
+          {
+            "expected": "58",
+            "expression": "31 + 27",
+            "task_id": "synthetic-train-opd-000"
+          },
+          {
+            "expected": "125",
+            "expression": "17 * 7 + 6",
+            "task_id": "synthetic-train-opd-001"
+          }
+        ]
+      },
+      "training": {
+        "learning_rate": 1e-05,
+        "lora_alpha": 16,
+        "lora_r": 8,
+        "lora_targets": [
+          "q_proj",
+          "v_proj"
+        ],
+        "optimizer_steps": 2,
+        "reference_kl_weight": 0.0,
+        "rollout_max_new_tokens": 12,
+        "rollout_temperature": 0.8,
+        "rollout_top_p": 0.95,
+        "seed": 20260820,
+        "student_dtype": "float32",
+        "teacher_dtype": "float16"
+      }
+    }
+  ],
+  "identity": {
+    "code_revision": "3b901fb6c5ce8a1c2c37adc0b62b19c3b633c5f2",
+    "config_sha256": {
+      "opd": "987c491501d28595eb0b1a812da107a4e47413be4959c6a193dad04f4f912913",
+      "rl": "17ab5c2c9d4e58d0d178833713ca68a09db3b1b73bfbadedc2402150f3a5b7ca"
+    }
+  },
+  "schema_version": "nano_train_rl_opd_admission_preregister_v1",
+  "tokenizer_contract": {
+    "eos_token_id_equal": true,
+    "pad_token_id_equal": true,
+    "student_class": "Qwen2Tokenizer",
+    "student_vocab_size": 248077,
+    "teacher_class": "Qwen2Tokenizer",
+    "teacher_vocab_size": 248077,
+    "vocab_size_equal": true
+  }
+}
