@@ -1,0 +1,154 @@
+{
+  "claim_boundary": "The result shows two fresh synthetic execution wins after scaled SFT but does not establish a stable quality gain, benchmark gain, or permission to access canary/holdout.",
+  "data": {
+    "benchmark_canary_holdout_rows_or_outputs": 0,
+    "dev_rows": 96,
+    "observed_quality_prompt_overlap": 0,
+    "train_dev_prompt_overlap": 0,
+    "train_rows": 512,
+    "unique_train_exposures": 512
+  },
+  "decision": {
+    "benchmark_allowed": false,
+    "canary_allowed": false,
+    "further_tuning_on_observed_dev_allowed": false,
+    "gates": {
+      "every_family_non_regression": true,
+      "exact_mcnemar_p_lt_005": false,
+      "finite_training": true,
+      "independent_reload_exact": true,
+      "maximum_baseline_only_losses": true,
+      "minimum_candidate_only_wins": false,
+      "paired_bootstrap_ci_lower_gt_zero": false,
+      "parse_failures_non_regression": true,
+      "post_accuracy_gt_baseline": true
+    },
+    "independent_holdout_allowed": false,
+    "next_action": "Reject this scaled SFT candidate because the directional 2/96 gain is not significant and is below the frozen 12-win gate. Do not tune on this dev; change the supervision mechanism or use a separately generated train/dev surface.",
+    "scaled_sft_quality_candidate_admitted": false
+  },
+  "evaluation": {
+    "baseline_dev": {
+      "accuracy": 0.0,
+      "by_family": {
+        "exact_division": {
+          "cases": 24,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "mixed_products": {
+          "cases": 24,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "nested_offset": {
+          "cases": 24,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "repeated_operand": {
+          "cases": 24,
+          "correct": 0,
+          "parse_failures": 0
+        }
+      },
+      "cases": 96,
+      "correct": 0,
+      "parse_failures": 0
+    },
+    "candidate_only_win_case_ids": [
+      "scaled-quality-dev-repeated_operand-d6d12b618faeac6e",
+      "scaled-quality-dev-exact_division-c1905af3d578cfad"
+    ],
+    "comparison": {
+      "baseline_accuracy": 0.0,
+      "candidate_accuracy": 0.020833333333333332,
+      "cases": 96,
+      "delta": 0.020833333333333332,
+      "mcnemar_exact_p": 0.5,
+      "paired_bootstrap_95_ci": [
+        0.0,
+        0.052083333333333336
+      ],
+      "paired_counts": {
+        "baseline_only": 0,
+        "both_correct": 0,
+        "both_wrong": 94,
+        "candidate_only": 2
+      }
+    },
+    "post_sft_dev": {
+      "accuracy": 0.020833333333333332,
+      "by_family": {
+        "exact_division": {
+          "cases": 24,
+          "correct": 1,
+          "parse_failures": 0
+        },
+        "mixed_products": {
+          "cases": 24,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "nested_offset": {
+          "cases": 24,
+          "correct": 0,
+          "parse_failures": 0
+        },
+        "repeated_operand": {
+          "cases": 24,
+          "correct": 1,
+          "parse_failures": 0
+        }
+      },
+      "cases": 96,
+      "correct": 2,
+      "parse_failures": 0
+    }
+  },
+  "experiment_id": "qwen35-scaled-quality-sft-v1",
+  "hardware": {
+    "gpu_name": "Tesla V100-SXM2-32GB",
+    "peak_allocated_gib": 16.9969425201416
+  },
+  "identity": {
+    "adapter_sha256": "7287cfcc9372894aae2c4081f6ccf7b18a9292a9e52160579c9ab199906eda45",
+    "config_sha256": "23143a5363b222ba474fb5e7a08be4b95be899ddd5f82699b39c5e720e6c0df6",
+    "dev_case_ids_sha256": "9da07908d3d9d1400c6409b972b5b62bb94bda723bf87ad466013722aea05491",
+    "generations_sha256": "fec43aad912017179aefc029ce15dd071a6c362ffed7e950926d37b75c2f0256",
+    "metrics_sha256": "625d86c1d9299bab3fb4e581e24438d3fbfbf01684426bce4676fbf6c724042f",
+    "preregister_revision": "8be842c6f957895fea4a351845c9bbd7503e1248",
+    "preregister_sha256": "267bcd69df6ce468e14f68326c05c92de92c1e9d859a15dd68e07fff5d097090",
+    "reload_sha256": "ebd4b2f25f18d704561935e9fc25b43c71bfd6bd9236cad554a2bd4d36cb9679",
+    "result_revision": "d2bedc27404150953964952522116a573b8a1be7",
+    "train_case_ids_sha256": "5891c3c40cd72dc29aed56568494907713f0c0bc86f8118f92b15139ce5fbcf4"
+  },
+  "reload": {
+    "adapter_sha256": "7287cfcc9372894aae2c4081f6ccf7b18a9292a9e52160579c9ab199906eda45",
+    "experiment_id": "qwen35-scaled-quality-sft-v1",
+    "generations_exact": true,
+    "metrics_exact": true,
+    "peak_allocated_gib": 16.382808208465576,
+    "reload_success": true,
+    "schema_version": "nano_train_scaled_quality_reload_v1"
+  },
+  "schema_version": "nano_train_scaled_quality_sft_public_v1",
+  "training": {
+    "all_gradient_norms_finite": true,
+    "all_losses_finite": true,
+    "first_loss": {
+      "gradient_norm": 2.058894634246826,
+      "loss": 1.2186167240142822,
+      "step": 1
+    },
+    "last_loss": {
+      "gradient_norm": 8.147566795349121,
+      "loss": 0.7478715181350708,
+      "step": 128
+    },
+    "maximum_gradient_norm": 16.472869873046875,
+    "minimum_loss": 0.22839803993701935,
+    "optimizer_steps": 128,
+    "trainable_parameters": 917504
+  }
+}
