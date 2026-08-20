@@ -15,6 +15,9 @@ from scripts.preregister_router_classification_sft_v1 import (
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "configs/sft/router_classification_smoke_v1.json"
+PUBLIC_RESULT = (
+    ROOT / "docs/results/qwen35_router_classification_sft_v1.public.json"
+)
 
 
 class RouterClassificationSFTTests(unittest.TestCase):
@@ -81,6 +84,39 @@ class RouterClassificationSFTTests(unittest.TestCase):
                     path.write_text(json.dumps(altered), encoding="utf-8")
                     with self.assertRaisesRegex(ValueError, error):
                         load_config(path)
+
+    def test_public_result_admits_only_fresh_integration(self):
+        report = json.loads(PUBLIC_RESULT.read_text(encoding="utf-8"))
+        self.assertEqual(report["validation"]["baseline_exact"], 112)
+        self.assertEqual(report["validation"]["post_exact"], 192)
+        self.assertEqual(report["validation"]["delta"], 80)
+        self.assertEqual(
+            {
+                family: row["post_exact"]
+                for family, row in report["validation"]["by_label"].items()
+            },
+            {"router_a": 64, "router_b": 64, "router_c": 64},
+        )
+        self.assertTrue(all(report["gates"].values()))
+        decision = report["decision"]
+        self.assertTrue(decision["router_sft_smoke_admitted"])
+        self.assertTrue(
+            decision["fresh_router_integration_preregistration_allowed"]
+        )
+        self.assertFalse(
+            decision["fresh_router_integration_generation_allowed"]
+        )
+        self.assertFalse(decision["benchmark_allowed"])
+        self.assertFalse(decision["canary_allowed"])
+        self.assertFalse(decision["independent_holdout_allowed"])
+        self.assertFalse(decision["rl_allowed"])
+        self.assertFalse(
+            decision["further_tuning_or_second_training_run_allowed"]
+        )
+        self.assertFalse(report["artifact_boundary"]["adapter_committed"])
+        self.assertFalse(
+            report["artifact_boundary"]["raw_generations_committed"]
+        )
 
 
 if __name__ == "__main__":

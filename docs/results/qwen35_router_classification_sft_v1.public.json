@@ -1,0 +1,105 @@
+{
+  "artifact_boundary": {
+    "adapter_committed": false,
+    "benchmark_accessed": false,
+    "canary_accessed": false,
+    "holdout_accessed": false,
+    "metrics_committed": false,
+    "raw_generations_committed": false,
+    "training_data_contains_benchmark_content": false
+  },
+  "claim_boundary": "This result establishes only local synthetic router classification learning. It is not real-task routing, benchmark, canary, holdout, or final model-superiority evidence.",
+  "decision": {
+    "benchmark_allowed": false,
+    "canary_allowed": false,
+    "fresh_router_integration_generation_allowed": false,
+    "fresh_router_integration_preregistration_allowed": true,
+    "further_tuning_or_second_training_run_allowed": false,
+    "independent_holdout_allowed": false,
+    "next_action": "Pre-register a fresh history-disjoint router integration using this exact adapter. Require A/B recall, C precision, typed execution, direct preservation, and zero losses before any real question scan.",
+    "rl_allowed": false,
+    "router_sft_smoke_admitted": true
+  },
+  "experiment_id": "qwen35-router-classification-sft-smoke-v1",
+  "gates": {
+    "adapter_identity_matches": true,
+    "aggregate_post_exact_gt_baseline": true,
+    "data_release_identity_matches": true,
+    "every_label_non_regression": true,
+    "finite_loss_curve": true,
+    "no_failure_receipt": true,
+    "reload_exact_metrics": true,
+    "reload_success": true,
+    "router_a_post_exact_at_least_48_of_64": true,
+    "router_b_post_exact_at_least_48_of_64": true,
+    "router_c_post_exact_at_least_60_of_64": true
+  },
+  "identity": {
+    "adapter_sha256": "48d72666cf269f64825791801c71aad5ae1d9e97cbc70574c216b12974e46e63",
+    "config_sha256": "8729bea1798e4e0d7c1299ff8f7f101db14649e11d14d0971a31af4ffa055689",
+    "dataset_canonical_sha256": "b9f4ef24f16c680f6c5d5999e3ca86cd7c044b83e093d18b39f7e220da70bfad",
+    "dataset_file_sha256": "dacd3663639fe9ddc054865b87afdd0c918f0fddb12c8c9355819d4bbce95d65",
+    "generations_sha256": "226d8ed88197ebb847d216364f4e84b6654e69150c4fdca75867d4297d9dcfff",
+    "metrics_sha256": "d65f323aafc6e4b4d5b680148aa8d8d3e8d22eae43109b75d154ed6ffc36ca99",
+    "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+    "preregister_revision": "9397470864d76016a174af7cbee098e72e5dcd9b",
+    "preregister_sha256": "ea796c34ca353e4d3463c968ba40cf220006cdc44dad17de6a1c745960c3f159",
+    "release_sha256": "fb265e125e181056856a196322cf5da3b1d7d890d60ad653839d2707ebe3781d",
+    "reload_sha256": "645b61a679b213e6bdb86d9c884e47c25049ad671051bd026050833ad97fd316",
+    "result_revision": "9397470864d76016a174af7cbee098e72e5dcd9b"
+  },
+  "schema_version": "nano_train_router_classification_public_v1",
+  "training": {
+    "dtype": "float32",
+    "effective_batch_size": 4,
+    "first_loss": 0.2482958774198778,
+    "last_loss": 1.0073062753690465e-05,
+    "learning_rate": 0.0002,
+    "lora_alpha": 16,
+    "lora_r": 8,
+    "lora_targets": [
+      "q_proj",
+      "v_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "peak_allocated_gib": 18.67263650894165,
+    "reload_peak_allocated_gib": 15.811262607574463,
+    "seed": 20260824,
+    "steps": 40,
+    "trainable_parameters": 9961472,
+    "wall_seconds": 324.5493187904358
+  },
+  "validation": {
+    "baseline_accuracy": 0.5833333333333334,
+    "baseline_exact": 112,
+    "by_label": {
+      "router_a": {
+        "baseline_exact": 24,
+        "delta": 40,
+        "post_exact": 64,
+        "reload_exact": 64,
+        "samples": 64
+      },
+      "router_b": {
+        "baseline_exact": 59,
+        "delta": 5,
+        "post_exact": 64,
+        "reload_exact": 64,
+        "samples": 64
+      },
+      "router_c": {
+        "baseline_exact": 29,
+        "delta": 35,
+        "post_exact": 64,
+        "reload_exact": 64,
+        "samples": 64
+      }
+    },
+    "delta": 80,
+    "post_accuracy": 1.0,
+    "post_exact": 192,
+    "samples": 192
+  }
+}
