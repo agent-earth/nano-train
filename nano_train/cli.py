@@ -54,6 +54,10 @@ from nano_train.rl_opd_admission import (
 )
 from nano_train.rl_opd_admission import run as run_admission
 from nano_train.rl_opd_admission import validate_reload
+from nano_train.router_classification import (
+    load_config as load_router_classification_config,
+)
+from nano_train.router_classification import run as run_router_classification
 from nano_train.scaled_quality import load_config as load_scaled_quality_config
 from nano_train.scaled_quality import run as run_scaled_quality
 from nano_train.scaled_quality import validate_reload as validate_scaled_quality_reload
@@ -120,6 +124,10 @@ def main() -> None:
         "anchor-policy-replay-reload"
     )
     anchor_policy_reload.add_argument("--config", required=True)
+    router_classification = subparsers.add_parser(
+        "router-classification-sft"
+    )
+    router_classification.add_argument("--config", required=True)
     anchor_policy_reload.add_argument("--arm", required=True)
 
     args = parser.parse_args()
@@ -192,6 +200,10 @@ def main() -> None:
         result = validate_anchor_policy_replay_reload(
             load_anchor_policy_replay_config(args.config),
             arm_id=args.arm,
+        )
+    elif args.command == "router-classification-sft":
+        result = run_router_classification(
+            load_router_classification_config(args.config)
         )
     else:
         config = load_sft_smoke_config(args.config)

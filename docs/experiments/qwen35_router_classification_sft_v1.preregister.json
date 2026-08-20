@@ -1,0 +1,101 @@
+{
+  "acceptance": {
+    "aggregate_post_exact_gt_baseline": true,
+    "benchmark_allowed_after_pass": false,
+    "canary_allowed_after_pass": false,
+    "every_label_non_regression": true,
+    "finite_loss_gradients_and_adapter": true,
+    "holdout_allowed_after_pass": false,
+    "independent_reload_exact_metrics": true,
+    "next_fresh_router_integration_preregistration_allowed_after_pass": true,
+    "rl_allowed_after_pass": false,
+    "router_a_post_exact_at_least_48_of_64": true,
+    "router_b_post_exact_at_least_48_of_64": true,
+    "router_c_post_exact_at_least_60_of_64": true
+  },
+  "claim_boundary": "This pre-registers one bounded router SFT smoke. Passing is local synthetic classification evidence only and does not establish benchmark or final routing quality.",
+  "data": {
+    "full_sequence_max": 130,
+    "scheduled_exposure_by_label": {
+      "router_a": 46,
+      "router_b": 61,
+      "router_c": 53
+    },
+    "scheduled_exposure_ids_sha256": "adb5aeabd7c8e9e298699c669bbb81ea87eed474c83e15ad46b777d28274e08e",
+    "scheduled_exposures": 160,
+    "target_max": 3,
+    "train_rows": 768,
+    "validation_by_label": {
+      "router_a": 64,
+      "router_b": 64,
+      "router_c": 64
+    },
+    "validation_rows": 192,
+    "validation_sample_ids_sha256": "395fe717b2a3fbec13dd1f588a6677447c30a313b4184c557ba84f761a896e82"
+  },
+  "decision_policy": {
+    "failed": "Publish negative evidence and stop this recipe. Do not tune or rerun on the observed validation split.",
+    "forbidden_after_observation": [
+      "dataset_change",
+      "sample_schedule_change",
+      "step_change",
+      "learning_rate_change",
+      "seed_change",
+      "lora_target_change",
+      "lora_rank_change",
+      "generation_budget_change",
+      "prompt_change",
+      "label_parser_change",
+      "adapter_checkpoint_selection",
+      "adapter_weight_change",
+      "second_training_run"
+    ],
+    "passed": "Publish local SFT smoke evidence and separately pre-register fresh router integration with the exact adapter identity."
+  },
+  "execution_boundary": {
+    "adapter_exists": false,
+    "benchmark_accessed": false,
+    "canary_accessed": false,
+    "holdout_accessed": false,
+    "metrics_exist": false,
+    "model_generation_started": false,
+    "this_commit_only_preregisters": true,
+    "training_started": false
+  },
+  "experiment_id": "qwen35-router-classification-sft-smoke-v1",
+  "identity": {
+    "code_revision": "e418ef03fa0f4538be652b6a902cd5f5936dd7c7",
+    "config_sha256": "8729bea1798e4e0d7c1299ff8f7f101db14649e11d14d0971a31af4ffa055689",
+    "data_commit": "c00231e616fd2bd6c69a46226745c0ab737bf823",
+    "dataset_canonical_sha256": "b9f4ef24f16c680f6c5d5999e3ca86cd7c044b83e093d18b39f7e220da70bfad",
+    "dataset_file_sha256": "dacd3663639fe9ddc054865b87afdd0c918f0fddb12c8c9355819d4bbce95d65",
+    "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+    "release_sha256": "fb265e125e181056856a196322cf5da3b1d7d890d60ad653839d2707ebe3781d",
+    "tokenizer_file_sha256": {
+      "chat_template.jinja": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715",
+      "tokenizer.json": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+      "tokenizer_config.json": "316230d6a809701f4db5ea8f8fc862bc3a6f3229c937c174e674ff3ca0a64ac8"
+    }
+  },
+  "schema_version": "nano_train_router_classification_preregister_v1",
+  "training": {
+    "dtype": "float32",
+    "effective_batch_size": 4,
+    "generation_max_new_tokens": 8,
+    "learning_rate": 0.0002,
+    "lora_alpha": 16,
+    "lora_r": 8,
+    "lora_targets": [
+      "q_proj",
+      "v_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "max_length": 256,
+    "model": "Qwen3.5-4B",
+    "recipe_source": "format-contract-sft-smoke-v3",
+    "seed": 20260824,
+    "steps": 40
+  }
+}
