@@ -1,0 +1,333 @@
+{
+  "arms": {
+    "control": {
+      "baseline_dev": {
+        "accuracy": 0.0078125,
+        "by_family": {
+          "exact_division": {
+            "cases": 64,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "mixed_products": {
+            "cases": 64,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "nested_offset": {
+            "cases": 64,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "repeated_operand": {
+            "cases": 64,
+            "correct": 2,
+            "parse_failures": 0
+          }
+        },
+        "cases": 256,
+        "correct": 2,
+        "parse_failures": 0
+      },
+      "comparison_vs_anchor": {
+        "baseline_accuracy": 0.0078125,
+        "candidate_accuracy": 0.0078125,
+        "cases": 256,
+        "delta": 0.0,
+        "mcnemar_exact_p": 1.0,
+        "paired_bootstrap_95_ci": [
+          -0.015625,
+          0.015625
+        ],
+        "paired_counts": {
+          "baseline_only": 2,
+          "both_correct": 0,
+          "both_wrong": 252,
+          "candidate_only": 2
+        }
+      },
+      "hardware": {
+        "gpu_name": "Tesla V100-SXM2-32GB",
+        "peak_allocated_gib": 16.393760204315186
+      },
+      "post_dev": {
+        "accuracy": 0.0078125,
+        "by_family": {
+          "exact_division": {
+            "cases": 64,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "mixed_products": {
+            "cases": 64,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "nested_offset": {
+            "cases": 64,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "repeated_operand": {
+            "cases": 64,
+            "correct": 2,
+            "parse_failures": 0
+          }
+        },
+        "cases": 256,
+        "correct": 2,
+        "parse_failures": 0
+      },
+      "reload": {
+        "adapter_sha256": "595bd9f2862aa6875e2aed22b0e8d8362f0bcd2d7dfaafcd9bd435c4e585aa4d",
+        "arm_id": "control",
+        "experiment_id": "qwen35-anchor-policy-replay-v1",
+        "generations_exact": true,
+        "metrics_exact": true,
+        "peak_allocated_gib": 16.378989219665527,
+        "reload_success": true,
+        "schema_version": "nano_train_anchor_policy_replay_reload_v1"
+      },
+      "training": {
+        "all_components_finite": true,
+        "anchor_policy_kl_weight": 0.0,
+        "final_replay_steps": 256,
+        "full_consistency_steps": 256,
+        "optimizer_steps": 512
+      }
+    },
+    "treatment": {
+      "baseline_dev": {
+        "accuracy": 0.0078125,
+        "by_family": {
+          "exact_division": {
+            "cases": 64,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "mixed_products": {
+            "cases": 64,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "nested_offset": {
+            "cases": 64,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "repeated_operand": {
+            "cases": 64,
+            "correct": 2,
+            "parse_failures": 0
+          }
+        },
+        "cases": 256,
+        "correct": 2,
+        "parse_failures": 0
+      },
+      "comparison_vs_anchor": {
+        "baseline_accuracy": 0.0078125,
+        "candidate_accuracy": 0.01171875,
+        "cases": 256,
+        "delta": 0.00390625,
+        "mcnemar_exact_p": 1.0,
+        "paired_bootstrap_95_ci": [
+          -0.01171875,
+          0.0234375
+        ],
+        "paired_counts": {
+          "baseline_only": 2,
+          "both_correct": 0,
+          "both_wrong": 251,
+          "candidate_only": 3
+        }
+      },
+      "hardware": {
+        "gpu_name": "Tesla V100-SXM2-32GB",
+        "peak_allocated_gib": 16.39376163482666
+      },
+      "post_dev": {
+        "accuracy": 0.01171875,
+        "by_family": {
+          "exact_division": {
+            "cases": 64,
+            "correct": 3,
+            "parse_failures": 0
+          },
+          "mixed_products": {
+            "cases": 64,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "nested_offset": {
+            "cases": 64,
+            "correct": 0,
+            "parse_failures": 0
+          },
+          "repeated_operand": {
+            "cases": 64,
+            "correct": 0,
+            "parse_failures": 0
+          }
+        },
+        "cases": 256,
+        "correct": 3,
+        "parse_failures": 0
+      },
+      "reload": {
+        "adapter_sha256": "f059f6b380654dc1d79a4c3b0709b79e437827574ae369726532cc15d2b103fc",
+        "arm_id": "treatment",
+        "experiment_id": "qwen35-anchor-policy-replay-v1",
+        "generations_exact": true,
+        "metrics_exact": true,
+        "peak_allocated_gib": 16.378990650177002,
+        "reload_success": true,
+        "schema_version": "nano_train_anchor_policy_replay_reload_v1"
+      },
+      "training": {
+        "all_components_finite": true,
+        "anchor_policy_kl_weight": 1.0,
+        "final_replay_steps": 256,
+        "full_consistency_steps": 256,
+        "optimizer_steps": 512
+      }
+    }
+  },
+  "claim_boundary": "This matched fresh synthetic ablation can admit only the frozen treatment adapter to the existing 211-case canary. It is not complete benchmark, holdout, or final 4B/9B superiority evidence.",
+  "data": {
+    "baseline_rows_exact_across_arms": true,
+    "benchmark_canary_holdout_rows_or_outputs": 0,
+    "benchmark_prompt_overlap": 0,
+    "dev_final_only_cases": 256,
+    "observed_quality_prompt_overlap": 0,
+    "train_pairs": 256
+  },
+  "decision": {
+    "benchmark_allowed": false,
+    "canary_allowed": false,
+    "further_tuning_on_observed_dev_allowed": false,
+    "gates": {
+      "both_arms_finite_and_reloadable": true,
+      "teacher_cache_finite_and_identity_verified": true,
+      "treatment_accuracy_gt_anchor": true,
+      "treatment_accuracy_gte_control": true,
+      "treatment_anchor_bootstrap_ci_lower_gt_zero": false,
+      "treatment_anchor_exact_mcnemar_p_lt_005": false,
+      "treatment_anchor_maximum_losses": false,
+      "treatment_anchor_minimum_wins": false,
+      "treatment_every_family_non_regression_vs_anchor": false,
+      "treatment_losses_lt_control": false,
+      "treatment_parse_non_regression_vs_anchor": true
+    },
+    "independent_holdout_allowed": false,
+    "next_action": "Reject this treatment and preserve both-arm evidence; do not tune or rerun on this dev surface.",
+    "treatment_admitted": false
+  },
+  "discordant_cases": {
+    "control": {
+      "baseline_only_loss_case_ids": [
+        "anchor-policy-dev-repeated_operand-19d82fc6e934f655",
+        "anchor-policy-dev-repeated_operand-243392cd962dd172"
+      ],
+      "candidate_only_win_case_ids": [
+        "anchor-policy-dev-repeated_operand-bb890eff702bc400",
+        "anchor-policy-dev-repeated_operand-f3b5e42813e09f72"
+      ]
+    },
+    "treatment": {
+      "baseline_only_loss_case_ids": [
+        "anchor-policy-dev-repeated_operand-19d82fc6e934f655",
+        "anchor-policy-dev-repeated_operand-243392cd962dd172"
+      ],
+      "candidate_only_win_case_ids": [
+        "anchor-policy-dev-exact_division-08cfee1a69f15166",
+        "anchor-policy-dev-exact_division-32692b0d36b3eb5a",
+        "anchor-policy-dev-exact_division-79e7a085dc3de869"
+      ]
+    },
+    "treatment_vs_control": {
+      "baseline_only_loss_case_ids": [
+        "anchor-policy-dev-repeated_operand-bb890eff702bc400",
+        "anchor-policy-dev-repeated_operand-f3b5e42813e09f72"
+      ],
+      "candidate_only_win_case_ids": [
+        "anchor-policy-dev-exact_division-08cfee1a69f15166",
+        "anchor-policy-dev-exact_division-32692b0d36b3eb5a",
+        "anchor-policy-dev-exact_division-79e7a085dc3de869"
+      ]
+    }
+  },
+  "experiment_id": "qwen35-anchor-policy-replay-v1",
+  "identity": {
+    "arms": {
+      "control": {
+        "adapter_sha256": "595bd9f2862aa6875e2aed22b0e8d8362f0bcd2d7dfaafcd9bd435c4e585aa4d",
+        "generations_sha256": "909b78fd35ffc9dfd079b366817abfcd8d94140a4888d0de52ed36f8ce50596e",
+        "metrics_sha256": "bb885da107360a9591b3758317a7c049b5faa92f6a92e1760901bf67361acbf8",
+        "reload_sha256": "01d49a3d9386d3ce1da8eacb197b5b497e9d4522613b3205048d6b9e7e7293c2",
+        "schedule_sha256": "188d86adcc83b0cf78f1c9e30012b43cb451753a6e9acefaf5c6aa7fdde0bf14"
+      },
+      "treatment": {
+        "adapter_sha256": "f059f6b380654dc1d79a4c3b0709b79e437827574ae369726532cc15d2b103fc",
+        "generations_sha256": "8e2c65821ac896af4631bebea785aaf79a03cdd6928e7e756725d61e7e49e9d5",
+        "metrics_sha256": "31b14e25d0439a44ad7ab8074e8684296aa24f139de1fddf02ea1bd5fb37bda4",
+        "reload_sha256": "084783f931c5c462e069460ee13aa6b9cbddce2e6eba20b8892c9641ad16c26d",
+        "schedule_sha256": "ff2d38377144523ac5056e0a779c46521e9d9f8e135b6a9e58df0434935491ea"
+      }
+    },
+    "cache_receipt_sha256": "6eff8e83b198579188d67c779c750d8592e93439ea1423e022294120edfb9fc6",
+    "case_contract_identity": {
+      "dev_pair_ids_sha256": "7356a7ba1a20f80cfb7a95ee76635c121ee7972edbd2763b0455b62395392636",
+      "train_pair_ids_sha256": "f2aa21f9e5915709585133ef31b2c95eee4aaac562097450d16ea5ca155d64b9"
+    },
+    "config_sha256": "47c2d1df78a4beca4ed41a7ef381dca5240eedb07834c349cb677a7b8249b3c6",
+    "preregister_revision": "eb943cc7d6706810cad49d648e37d9593fb1650e",
+    "preregister_sha256": "109e6fecd7e813b6474f737a77d8667e6d165e58fcfe96de8d570041f53a920d",
+    "result_revision": "b13529e875fea103bb6dc990361feb8f8c8bf48c",
+    "teacher_cache_sha256": "f30308453dcd0aff603b4aafffe59db177b4bf7c3fcbad915f7de3aa5523ebe3"
+  },
+  "schema_version": "nano_train_anchor_policy_replay_public_v1",
+  "teacher_cache": {
+    "contract": {
+      "final_target_positions_only": true,
+      "frozen_anchor_adapter": true,
+      "temperature": 1.0,
+      "top_k_plus_other_bucket": 64,
+      "uses_benchmark_rows_or_outputs": false,
+      "uses_case_correctness": false,
+      "uses_evaluation_expected_answer": false,
+      "uses_observed_quality_outputs": false,
+      "uses_training_target_prefix": true
+    },
+    "summary": {
+      "all_probabilities_finite": true,
+      "all_probability_sums_within_1e_5": true,
+      "experiment_id": "qwen35-anchor-policy-replay-v1",
+      "maximum_top_k_mass": 0.9999999949940559,
+      "mean_top_k_mass": 0.9999199777210024,
+      "minimum_top_k_mass": 0.9987352775195426,
+      "schema_version": "nano_train_anchor_policy_cache_summary_v1",
+      "target_token_positions": 2730,
+      "temperature": 1.0,
+      "top_k": 64,
+      "train_pairs": 256
+    }
+  },
+  "treatment_vs_control": {
+    "baseline_accuracy": 0.0078125,
+    "candidate_accuracy": 0.01171875,
+    "cases": 256,
+    "delta": 0.00390625,
+    "mcnemar_exact_p": 1.0,
+    "paired_bootstrap_95_ci": [
+      -0.01171875,
+      0.0234375
+    ],
+    "paired_counts": {
+      "baseline_only": 2,
+      "both_correct": 0,
+      "both_wrong": 251,
+      "candidate_only": 3
+    }
+  }
+}
