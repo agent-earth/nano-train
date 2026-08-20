@@ -1,0 +1,126 @@
+{
+  "anchor_adapter_path": "artifacts/qwen35-scaled-quality-sft-v1/adapter",
+  "anchor_adapter_sha256": "7287cfcc9372894aae2c4081f6ccf7b18a9292a9e52160579c9ab199906eda45",
+  "anchor_policy_temperature": 1.0,
+  "anchor_policy_top_k": 64,
+  "arms": [
+    "control",
+    "treatment"
+  ],
+  "benchmark_sources": [
+    {
+      "name": "gsm8k",
+      "path": "../../../datasets/gsm8k/gsm8k/main/test-00000-of-00001.parquet",
+      "prompt_column": "question",
+      "sha256": "ee7b8da9e381df27b9e3f7758a159ab2bdaa4dbaa910546cbbc47e0cb44e4f59"
+    },
+    {
+      "name": "mmlu",
+      "path": "../../../datasets/mmlu_no_train/mmlu_no_train/all/test-00000-of-00001.parquet",
+      "prompt_column": "question",
+      "sha256": "02033371a64dbe5a0d8b6fb9d612900afcd0fea5140e53490993a4540b3a58fd"
+    },
+    {
+      "name": "gpqa_diamond",
+      "path": "../../../datasets/GPQA-Diamond/GPQA-Diamond/test/gpqa_diamond.parquet",
+      "prompt_column": "question",
+      "sha256": "fdd6e95117cdf87075f56bf673a5bae4680b143bc2d29b486470810122c33f39"
+    }
+  ],
+  "bootstrap_samples": 10000,
+  "bootstrap_seed": 20260820,
+  "consistency_temperature": 1.0,
+  "consistency_weight": 1.0,
+  "control_anchor_policy_kl_weight": 0.0,
+  "control_second_step": "final_ce_only",
+  "dev_cases_per_family": 64,
+  "dev_range_offset": 70000,
+  "dtype": "float32",
+  "experiment_id": "qwen35-anchor-policy-replay-v1",
+  "final_ce_weight": 0.5,
+  "final_prompt_template": "Compute the synthetic arithmetic expression exactly: {expression}. Return only FINAL: <integer>.",
+  "final_target_template": "FINAL: {expected}",
+  "forbidden_config_paths": [
+    {
+      "kind": "synthetic_quality",
+      "path": "configs/evaluation/qwen35_synthetic_quality_v1.json",
+      "sha256": "5621bab71676a5dbfeb922f0851c22e099379aff2d36b628d27d6c87e07393f4"
+    },
+    {
+      "kind": "scaled_quality",
+      "path": "configs/scaled_quality/qwen35_scaled_quality_sft_v1.json",
+      "sha256": "23143a5363b222ba474fb5e7a08be4b95be899ddd5f82699b39c5e720e6c0df6"
+    },
+    {
+      "kind": "quality_consistency",
+      "path": "configs/quality_consistency/qwen35_quality_consistency_v1.json",
+      "sha256": "6d4495c9a4fce6f22e05be39831c10649c0738d52c1235de6fb8546699443809"
+    },
+    {
+      "kind": "consistency_route",
+      "path": "configs/consistency_route/qwen35_consistency_route_v1.json",
+      "sha256": "2faebc02f55ca82c978b5608e45b964d53560e14259f5e2b5412ef6b59301dd6"
+    },
+    {
+      "kind": "confidence_route",
+      "path": "configs/confidence_route/qwen35_confidence_route_v1.json",
+      "sha256": "07c2accc1dbfef131ce822f6b02a55d1c631788da31a4c4f48485e0810e1cba0"
+    },
+    {
+      "kind": "preservation_dual_view",
+      "path": "configs/preservation_dual_view/qwen35_preservation_dual_view_v1.json",
+      "sha256": "f746058deb503db91d772a3011ed7b965c984dadeb08becafe8b3d32afb8cb9e"
+    }
+  ],
+  "generation_batch_size": 8,
+  "generation_max_new_tokens": 32,
+  "learning_rate": 0.00005,
+  "max_length": 160,
+  "max_steps_per_arm": 512,
+  "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+  "model_index_sha256": "cf3f798ee02ba45f9622aa8892a47369ab667d0afbf154ee7c2212de42e6302d",
+  "model_path": "../../../models/Qwen3.5-4B",
+  "output_dir": "artifacts/qwen35-anchor-policy-replay-v1",
+  "policy": {
+    "benchmark_access_after_result": false,
+    "canary_access_after_result": false,
+    "contains_benchmark_outputs": false,
+    "contains_benchmark_rows": false,
+    "contains_canary_rows": false,
+    "contains_holdout_rows": false,
+    "contains_observed_quality_rows": false,
+    "teacher_uses_case_correctness": false,
+    "teacher_uses_evaluation_expected_answer": false,
+    "teacher_uses_training_target_prefix": true,
+    "training_allowed": true,
+    "uses_observed_quality_outputs": false
+  },
+  "process_ce_weight": 0.5,
+  "process_prompt_template": "Compute the synthetic arithmetic expression exactly: {expression}. Show one verified WORK line, then FINAL: <integer>.",
+  "process_target_template": "WORK: {expression} = {expected}\nFINAL: {expected}",
+  "replay_final_ce_weight": 0.5,
+  "schema_version": "nano_train_anchor_policy_replay_v1",
+  "seed": 20260820,
+  "steps_per_pair": 2,
+  "system_prompt": "Follow the exact output contract. Solve internally without tools or external information.",
+  "teacher_cache_path": "artifacts/qwen35-anchor-policy-replay-v1/teacher_cache.json",
+  "teacher_cache_receipt_path": "docs/experiments/qwen35_anchor_policy_teacher_cache_v1.public.json",
+  "teacher_detach": true,
+  "train_pairs_per_family": 64,
+  "train_range_offset": 60000,
+  "treatment_anchor_policy_kl_weight": 1.0,
+  "treatment_second_step": "final_ce_plus_anchor_policy_kl",
+  "weight_decay": 0.0,
+  "weight_shards": [
+    {
+      "bytes": 5329398688,
+      "name": "model.safetensors-00001-of-00002.safetensors",
+      "sha256": "26a93f066e1916adb13453dae5a0c707c0fbc71299ed98779571a907b8e74c61"
+    },
+    {
+      "bytes": 3990429408,
+      "name": "model.safetensors-00002-of-00002.safetensors",
+      "sha256": "cb544bd9bfae93dc59b0f22b292f5933573854a7f9b97835c67060d7d910e188"
+    }
+  ]
+}

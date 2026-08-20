@@ -3,6 +3,18 @@ from __future__ import annotations
 import argparse
 import json
 
+from nano_train.anchor_policy_replay import (
+    generate_teacher_cache as generate_anchor_policy_teacher_cache,
+)
+from nano_train.anchor_policy_replay import (
+    load_config as load_anchor_policy_replay_config,
+)
+from nano_train.anchor_policy_replay import (
+    run_arm as run_anchor_policy_replay_arm,
+)
+from nano_train.anchor_policy_replay import (
+    validate_reload as validate_anchor_policy_replay_reload,
+)
 from nano_train.confidence_route import (
     generate_arm as generate_confidence_route_arm,
 )
@@ -97,6 +109,18 @@ def main() -> None:
     )
     dual_view_reload.add_argument("--config", required=True)
     dual_view_reload.add_argument("--arm", required=True)
+    anchor_policy_cache = subparsers.add_parser(
+        "anchor-policy-teacher-cache"
+    )
+    anchor_policy_cache.add_argument("--config", required=True)
+    anchor_policy = subparsers.add_parser("anchor-policy-replay")
+    anchor_policy.add_argument("--config", required=True)
+    anchor_policy.add_argument("--arm", required=True)
+    anchor_policy_reload = subparsers.add_parser(
+        "anchor-policy-replay-reload"
+    )
+    anchor_policy_reload.add_argument("--config", required=True)
+    anchor_policy_reload.add_argument("--arm", required=True)
 
     args = parser.parse_args()
     if args.command == "anchored-continuation":
@@ -153,6 +177,20 @@ def main() -> None:
     elif args.command == "preservation-dual-view-reload":
         result = validate_preservation_dual_view_reload(
             load_preservation_dual_view_config(args.config),
+            arm_id=args.arm,
+        )
+    elif args.command == "anchor-policy-teacher-cache":
+        result = generate_anchor_policy_teacher_cache(
+            load_anchor_policy_replay_config(args.config)
+        )
+    elif args.command == "anchor-policy-replay":
+        result = run_anchor_policy_replay_arm(
+            load_anchor_policy_replay_config(args.config),
+            arm_id=args.arm,
+        )
+    elif args.command == "anchor-policy-replay-reload":
+        result = validate_anchor_policy_replay_reload(
+            load_anchor_policy_replay_config(args.config),
             arm_id=args.arm,
         )
     else:
