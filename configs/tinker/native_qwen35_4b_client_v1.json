@@ -1,0 +1,19 @@
+{
+  "schema_version": "nano_train_tinker_backend_v1",
+  "experiment_id": "native-tinker-qwen35-4b-client-v1",
+  "provider": "tinker",
+  "model_name": "Qwen/Qwen3.5-4B",
+  "renderer_name": "qwen3_5",
+  "lora_rank": 32,
+  "learning_rate": 0.0004905250962784578,
+  "submit_ahead": 1,
+  "api_key_env": "TINKER_API_KEY",
+  "base_url_env": "TINKER_BASE_URL",
+  "train_mlp": true,
+  "train_attn": true,
+  "train_unembed": true,
+  "source_revisions": {
+    "twinkle": "1040a02d08c390031800093336718589160b52af",
+    "tinker_cookbook": "600b802d09be13e03756bfdc31e8c864fed90e7b"
+  }
+}
