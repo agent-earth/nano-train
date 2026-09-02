@@ -71,7 +71,6 @@ from nano_train.sft import run_sft_smoke
 from nano_train.synthetic_quality import load_config as load_quality_config
 from nano_train.synthetic_quality import run_arm as run_quality_arm
 
-
 def main() -> None:
     parser = argparse.ArgumentParser(prog="nano-train")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -139,11 +138,23 @@ def main() -> None:
     )
     router_negative_diversity.add_argument("--config", required=True)
     anchor_policy_reload.add_argument("--arm", required=True)
+    tinker_compat = subparsers.add_parser("tinker-compat")
+    tinker_compat.add_argument("--config", required=True)
 
     args = parser.parse_args()
     if args.command == "anchored-continuation":
+        from nano_train.continuation import (
+            load_config as load_continuation_config,
+        )
+        from nano_train.continuation import run as run_continuation
+
         result = run_continuation(load_continuation_config(args.config))
     elif args.command == "paired-consistency":
+        from nano_train.paired_consistency import (
+            load_config as load_paired_consistency_config,
+        )
+        from nano_train.paired_consistency import run as run_paired_consistency
+
         result = run_paired_consistency(
             load_paired_consistency_config(args.config)
         )
@@ -219,7 +230,19 @@ def main() -> None:
         result = run_router_negative_diversity(
             load_router_negative_diversity_config(args.config)
         )
+    elif args.command == "tinker-compat":
+        from nano_train.tinker_api import (
+            inspect_tinker_runtime,
+            load_tinker_backend_config,
+        )
+
+        result = inspect_tinker_runtime(
+            load_tinker_backend_config(args.config)
+        )
     else:
+        from nano_train.config import load_sft_smoke_config
+        from nano_train.sft import run_sft_smoke
+
         config = load_sft_smoke_config(args.config)
     if args.command == "validate-config":
         result = {

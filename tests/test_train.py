@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import json
 import tempfile
 import unittest
@@ -44,6 +45,10 @@ from nano_train.sft import (
     _write_failure,
     evaluate_exact,
 )
+from nano_train.tinker_api import (
+    load_tinker_backend_config,
+    run_pipelined_training_step,
+)
 from scripts.run_generation_budget_audit import (
     load_config as load_audit_config,
     validate_contract as validate_audit_contract,
@@ -75,6 +80,78 @@ class FakeTokenizer:
 
 
 class TrainTests(unittest.TestCase):
+    def test_tinker_backend_configs_are_frozen(self):
+        twinkle = load_tinker_backend_config(
+            "configs/tinker/twinkle_qwen35_4b_client_v1.json"
+        )
+        native = load_tinker_backend_config(
+            "configs/tinker/native_qwen35_4b_client_v1.json"
+        )
+        self.assertEqual(twinkle.provider, "twinkle")
+        self.assertEqual(twinkle.api_key_env, "TWINKLE_SERVER_TOKEN")
+        self.assertEqual(twinkle.base_url_env, "TWINKLE_SERVER_URL")
+        self.assertEqual(native.provider, "tinker")
+        self.assertEqual(native.api_key_env, "TINKER_API_KEY")
+        self.assertEqual(native.base_url_env, "TINKER_BASE_URL")
+        self.assertEqual(twinkle.model_name, native.model_name)
+        self.assertEqual(twinkle.renderer_name, "qwen3_5")
+        self.assertEqual(twinkle.learning_rate, native.learning_rate)
+        self.assertEqual(twinkle.source_revisions, native.source_revisions)
+
+    def test_tinker_backend_config_does_not_embed_credentials(self):
+        raw = json.loads(
+            Path(
+                "configs/tinker/twinkle_qwen35_4b_client_v1.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertNotIn("api_key", raw)
+        self.assertEqual(raw["api_key_env"], "TWINKLE_SERVER_TOKEN")
+
+    def test_tinker_training_step_submits_before_waiting(self):
+        events = []
+
+        class FakeFuture:
+            def __init__(self, name):
+                self.name = name
+
+            async def result_async(self):
+                events.append(f"wait:{self.name}")
+                return self.name
+
+        class FakeTrainingClient:
+            async def forward_backward_async(
+                self,
+                data,
+                *,
+                loss_fn,
+                loss_fn_config,
+            ):
+                events.append("submit:forward")
+                self.data = data
+                self.loss_fn = loss_fn
+                self.loss_fn_config = loss_fn_config
+                return FakeFuture("forward")
+
+            async def optim_step_async(self, adam_params):
+                events.append("submit:optim")
+                self.adam_params = adam_params
+                return FakeFuture("optim")
+
+        class FakeAdamParams:
+            def __init__(self, **kwargs):
+                self.kwargs = kwargs
+
+        result = asyncio.run(
+            run_pipelined_training_step(
+                FakeTrainingClient(),
+                ["datum"],
+                tinker_module=SimpleNamespace(AdamParams=FakeAdamParams),
+                learning_rate=0.001,
+            )
+        )
+        self.assertEqual(result, ("forward", "optim"))
+        self.assertEqual(events[:2], ["submit:forward", "submit:optim"])
+
     def test_paired_consistency_config_and_selection_are_frozen(self):
         config = load_paired_consistency_config(
             "configs/paired_consistency/execution_target_consistency_v1.json"
