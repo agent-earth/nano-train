@@ -1,0 +1,31 @@
+{
+  "schema_version": "nano_train_swe_code_repair_harbor_qualification_v1",
+  "experiment_id": "evoloop-swe-code-repair-harbor-qualification-v1",
+  "source_sft_config_path": "configs/sft/swe_code_repair_smoke_v1.json",
+  "source_sft_config_sha256": "3eddb28a29192ff479b6c04120f983d20edc4c773304c12a4d4877f04feb6431",
+  "source_metrics_path": "artifacts/evoloop-swe-code-repair-sft-smoke-v1/metrics.json",
+  "source_metrics_sha256": "65c4650431af3d42fd8bd796e483c201cc6bd0a4883c3e6cd3198017c73834a9",
+  "source_reload_path": "artifacts/evoloop-swe-code-repair-sft-smoke-v1/reload_validation.json",
+  "source_reload_sha256": "296722515229571a000194be0dabc4ccc5e336905fbaecf064d42281c1382722",
+  "adapter_path": "artifacts/evoloop-swe-code-repair-sft-smoke-v1/adapter",
+  "adapter_sha256": "9fa9a9883e36bcf5d50ffc758a62709d38cc4e3b111a880a557dc61408be3e45",
+  "prior_dev_ids_sha256": "ffaba4db8bef0006410141fbfd75f4f4c31e0eaf41438741e8c085e6a455969e",
+  "terminus_parser_path": "../harbor-swebench-v3-traex-04/src/harbor/agents/terminus_2/terminus_json_plain_parser.py",
+  "terminus_parser_sha256": "ba7eeaeb28e2f72ecdc5850617c77cc571692c68698306637cc2cfed41130688",
+  "terminus_prompt_template_path": "../harbor-swebench-v3-traex-04/src/harbor/agents/terminus_2/templates/terminus-json-plain.txt",
+  "terminus_prompt_template_sha256": "89a3dc3a15752b748a99fb907c9251ab31a464e13386583fb48476b078b54a34",
+  "output_dir": "artifacts/evoloop-swe-code-repair-harbor-qualification-v1",
+  "seed": 20260911,
+  "selection_seed": "evoloop-swe-code-repair-harbor-qualification-v1:20260911",
+  "dev_rows_by_band": {
+    "short": 8,
+    "medium": 8,
+    "long": 8
+  },
+  "max_input_tokens": 7168,
+  "max_output_tokens": 768,
+  "minimum_relative_loss_improvement": 0.05,
+  "minimum_adapter_parser_valid": 23,
+  "minimum_adapter_only_wins": 1,
+  "maximum_base_only_losses": 0
+}

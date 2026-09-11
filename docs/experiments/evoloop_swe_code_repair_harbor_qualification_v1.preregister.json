@@ -1,0 +1,107 @@
+{
+  "admission": {
+    "adapter_generation_budget_not_exhausted": true,
+    "all_gates_required": true,
+    "maximum_base_only_losses": 0,
+    "minimum_adapter_only_wins": 1,
+    "minimum_adapter_parser_valid": 23,
+    "minimum_relative_loss_improvement": 0.05,
+    "per_band_non_regression": true,
+    "source_reload_exact": true
+  },
+  "claim_boundary": "This is a fresh local qualification of an unchanged adapter. Passing admits only the already frozen fresh-8 SWE-bench screen; it does not establish benchmark improvement or superiority.",
+  "decision_boundary": {
+    "complete_500_allowed": false,
+    "forbidden_after_observation": [
+      "case_selection_change",
+      "prompt_change",
+      "parser_change",
+      "loss_threshold_change",
+      "parser_valid_threshold_change",
+      "paired_win_threshold_change",
+      "per_band_gate_change",
+      "generation_budget_change",
+      "adapter_weight_change"
+    ],
+    "no_training_or_adapter_change": true,
+    "passing_unlocks_only_fresh8_sft_screening": true,
+    "rl_or_opd_allowed": false
+  },
+  "execution_boundary": {
+    "model_generation_started": false,
+    "qualification_started": false,
+    "this_commit_only_preregisters": true
+  },
+  "experiment_id": "evoloop-swe-code-repair-harbor-qualification-v1",
+  "identity": {
+    "adapter_sha256": "9fa9a9883e36bcf5d50ffc758a62709d38cc4e3b111a880a557dc61408be3e45",
+    "config_sha256": "4f5d8bd605580920dcc56c0f9f481d020fb6e7a695b04970ea46b69c325cce29",
+    "source_metrics_sha256": "65c4650431af3d42fd8bd796e483c201cc6bd0a4883c3e6cd3198017c73834a9",
+    "source_reload_sha256": "296722515229571a000194be0dabc4ccc5e336905fbaecf064d42281c1382722",
+    "source_sft_config_sha256": "3eddb28a29192ff479b6c04120f983d20edc4c773304c12a4d4877f04feb6431",
+    "terminus_parser_sha256": "ba7eeaeb28e2f72ecdc5850617c77cc571692c68698306637cc2cfed41130688",
+    "terminus_prompt_template_sha256": "89a3dc3a15752b748a99fb907c9251ab31a464e13386583fb48476b078b54a34"
+  },
+  "project_name": "EvoLoop",
+  "protocol": {
+    "arms": [
+      "Qwen3.5-4B base",
+      "Qwen3.5-4B plus frozen adapter"
+    ],
+    "max_input_tokens": 7168,
+    "max_output_tokens": 768,
+    "measurements": [
+      "teacher-forced loss on original training-style messages",
+      "Terminus parser validity",
+      "actionable command or completion",
+      "paired adapter-only wins and base-only losses",
+      "per-band non-regression",
+      "generation budget exhaustion"
+    ],
+    "parser": "exact pinned Terminus2 JSON parser",
+    "prompt": "exact pinned Terminus2 first-turn JSON template",
+    "temperature": 0,
+    "thinking": false
+  },
+  "schema_version": "nano_train_swe_code_repair_harbor_qualification_preregister_v1",
+  "selection": {
+    "dev_by_band": {
+      "long": 8,
+      "medium": 8,
+      "short": 8
+    },
+    "dev_sample_ids": [
+      "swe-repair-0cc05c20fb095797bad0cc5f",
+      "swe-repair-0d495581c13d59511ab8563e",
+      "swe-repair-127971716e38dbd8a2281ab9",
+      "swe-repair-1ae733f3318d96fa67d2292e",
+      "swe-repair-256c2d203692fad76e9385f5",
+      "swe-repair-323f729706d9b9021a06e00f",
+      "swe-repair-4c0b391465b229f9c3d217af",
+      "swe-repair-548f43a21a49b8a3938b7a09",
+      "swe-repair-5516feb0762ee39ee6508b65",
+      "swe-repair-5bbe21d27a0e9e60db82353d",
+      "swe-repair-5d402176dd705d7acbfa2b0c",
+      "swe-repair-68bef1ce802f0a833efceb45",
+      "swe-repair-77a19719ba0cf909b1ffc9de",
+      "swe-repair-972563c026bc3872dc6b343d",
+      "swe-repair-a0d6c22ab8b4ef208268ae63",
+      "swe-repair-a7624b86e007f9c19b88669a",
+      "swe-repair-af8963cd90066a223e182acc",
+      "swe-repair-b343e1f6fcb6145089dd6891",
+      "swe-repair-be625629db458db70961c3a8",
+      "swe-repair-d3f0a69a4f0a849765d89842",
+      "swe-repair-dd7153e901b6b7bc2eed65b7",
+      "swe-repair-ddd8662d896947c229910398",
+      "swe-repair-e0505315d7137a8d3c76150e",
+      "swe-repair-fca4ddb0f2eaee50b5782bc3"
+    ],
+    "dev_sample_ids_sha256": "c71eda762e93f4a2445fbbc593289234483cfa606a1f8e2eddfab975c0648431",
+    "dev_samples": 24,
+    "maximum_harbor_prompt_tokens": 2271,
+    "maximum_target_tokens": 619,
+    "maximum_training_style_sequence_tokens": 1917,
+    "overlap_with_prior_v1_dev": 0,
+    "prior_v1_dev_sample_ids_sha256": "ffaba4db8bef0006410141fbfd75f4f4c31e0eaf41438741e8c085e6a455969e"
+  }
+}

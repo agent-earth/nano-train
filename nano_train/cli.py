@@ -77,6 +77,12 @@ from nano_train.swe_code_repair_sft import (
 from nano_train.swe_code_repair_sft import (
     validate_reload as validate_swe_code_repair_sft_reload,
 )
+from nano_train.swe_code_repair_qualification import (
+    load_config as load_swe_code_repair_qualification_config,
+)
+from nano_train.swe_code_repair_qualification import (
+    run as run_swe_code_repair_qualification,
+)
 from nano_train.synthetic_quality import load_config as load_quality_config
 from nano_train.synthetic_quality import run_arm as run_quality_arm
 
@@ -98,6 +104,10 @@ def main() -> None:
     swe_repair.add_argument("--config", required=True)
     swe_repair_reload = subparsers.add_parser("swe-code-repair-sft-reload")
     swe_repair_reload.add_argument("--config", required=True)
+    swe_repair_qualification = subparsers.add_parser(
+        "swe-code-repair-qualification"
+    )
+    swe_repair_qualification.add_argument("--config", required=True)
     continuation = subparsers.add_parser("anchored-continuation")
     continuation.add_argument("--config", required=True)
     paired = subparsers.add_parser("paired-consistency")
@@ -266,6 +276,10 @@ def main() -> None:
     elif args.command == "swe-code-repair-sft-reload":
         result = validate_swe_code_repair_sft_reload(
             load_swe_code_repair_sft_config(args.config)
+        )
+    elif args.command == "swe-code-repair-qualification":
+        result = run_swe_code_repair_qualification(
+            load_swe_code_repair_qualification_config(args.config)
         )
     elif args.command == "tinker-compat":
         from nano_train.tinker_api import (
