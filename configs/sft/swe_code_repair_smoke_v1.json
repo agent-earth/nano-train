@@ -1,0 +1,42 @@
+{
+  "schema_version": "nano_train_swe_code_repair_sft_v1",
+  "experiment_id": "evoloop-swe-code-repair-sft-smoke-v1",
+  "model_path": "../../../models/Qwen3.5-4B",
+  "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+  "dataset_path": "../../../datasets/ultimate-distill/swe-code-repair-sft-v1/accepted.jsonl",
+  "dataset_file_sha256": "81192d47c645dd72d763f3d3eb3c2e8c46f99112127c04a0483ad88a93911abe",
+  "release_manifest_path": "../nano-data-pipeline-tinker-swe-sft-v1/manifests/swe_code_repair_sft_v1.release.json",
+  "release_manifest_sha256": "8dddacc49d4ec909d647b57e61b372ff5878ca74d4d036c9e0a6cad68c888787",
+  "output_dir": "artifacts/evoloop-swe-code-repair-sft-smoke-v1",
+  "seed": 20260911,
+  "selection_seed": "evoloop-swe-code-repair-sft-smoke-v1:20260911",
+  "dtype": "float32",
+  "max_length": 2048,
+  "max_steps": 40,
+  "batch_size": 1,
+  "gradient_accumulation_steps": 4,
+  "learning_rate": 0.00005,
+  "weight_decay": 0.0,
+  "warmup_steps": 2,
+  "lora_r": 8,
+  "lora_alpha": 16,
+  "lora_dropout": 0.0,
+  "lora_targets": [
+    "q_proj",
+    "v_proj"
+  ],
+  "gradient_checkpointing": true,
+  "generation_max_new_tokens": 768,
+  "train_rows_by_band": {
+    "short": 40,
+    "medium": 80,
+    "long": 40
+  },
+  "dev_rows_by_band": {
+    "short": 4,
+    "medium": 4,
+    "long": 4
+  },
+  "minimum_dev_loss_relative_improvement": 0.01,
+  "minimum_json_action_valid_rate": 0.5
+}

@@ -68,8 +68,18 @@ from nano_train.scaled_quality import load_config as load_scaled_quality_config
 from nano_train.scaled_quality import run as run_scaled_quality
 from nano_train.scaled_quality import validate_reload as validate_scaled_quality_reload
 from nano_train.sft import run_sft_smoke
+from nano_train.swe_code_repair_sft import (
+    load_config as load_swe_code_repair_sft_config,
+)
+from nano_train.swe_code_repair_sft import (
+    run as run_swe_code_repair_sft,
+)
+from nano_train.swe_code_repair_sft import (
+    validate_reload as validate_swe_code_repair_sft_reload,
+)
 from nano_train.synthetic_quality import load_config as load_quality_config
 from nano_train.synthetic_quality import run_arm as run_quality_arm
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(prog="nano-train")
@@ -80,6 +90,14 @@ def main() -> None:
 
     run = subparsers.add_parser("sft-smoke")
     run.add_argument("--config", required=True)
+    validate_swe_repair = subparsers.add_parser(
+        "validate-swe-code-repair-sft-config"
+    )
+    validate_swe_repair.add_argument("--config", required=True)
+    swe_repair = subparsers.add_parser("swe-code-repair-sft")
+    swe_repair.add_argument("--config", required=True)
+    swe_repair_reload = subparsers.add_parser("swe-code-repair-sft-reload")
+    swe_repair_reload.add_argument("--config", required=True)
     continuation = subparsers.add_parser("anchored-continuation")
     continuation.add_argument("--config", required=True)
     paired = subparsers.add_parser("paired-consistency")
@@ -229,6 +247,25 @@ def main() -> None:
     elif args.command == "router-negative-diversity-sft":
         result = run_router_negative_diversity(
             load_router_negative_diversity_config(args.config)
+        )
+    elif args.command == "validate-swe-code-repair-sft-config":
+        config = load_swe_code_repair_sft_config(args.config)
+        result = {
+            "ok": True,
+            "experiment_id": config.experiment_id,
+            "max_steps": config.max_steps,
+            "max_length": config.max_length,
+            "effective_batch_size": (
+                config.batch_size * config.gradient_accumulation_steps
+            ),
+        }
+    elif args.command == "swe-code-repair-sft":
+        result = run_swe_code_repair_sft(
+            load_swe_code_repair_sft_config(args.config)
+        )
+    elif args.command == "swe-code-repair-sft-reload":
+        result = validate_swe_code_repair_sft_reload(
+            load_swe_code_repair_sft_config(args.config)
         )
     elif args.command == "tinker-compat":
         from nano_train.tinker_api import (
