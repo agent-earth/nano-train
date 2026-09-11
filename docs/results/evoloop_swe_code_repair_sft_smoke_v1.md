@@ -16,20 +16,25 @@
   12.
 - Harbor Terminus parser validity:
   0/12.
+- Exact Harbor prompt ablation: base
+  11/12
+  versus LoRA
+  12/12
+  parser-valid responses.
 - Independent reload reproduced the loss and all 12 generations exactly.
 
 ## What Failed
 
-The model usually emitted a JSON-looking response, often inside a Markdown
-fence, but the real Harbor parser rejected the command entries. The base model
-mostly produced command strings. The LoRA shifted many outputs to
-`command`/`output` objects, while Terminus requires `keystrokes`/`duration`
-objects. Only one adapter response exhausted the 768-token budget, so simple
-truncation is not the main cause.
+Under the generic local prompt, the model usually emitted a JSON-looking
+response but used the wrong command schema. Replacing only that prompt with the
+exact Harbor first-turn template changed parser validity from 0/12 to 11/12 for
+the base model and 12/12 for the adapter. This proves the original local gate
+was badly misaligned with the deployed harness. It does not retroactively pass
+v1, because the prompt changed after observation.
 
 ## Conclusion
 
-Standard q/v-only SFT lowered held-out teacher-forced loss by 10.75% but did not teach the executable Terminus command schema. The dominant failure moved from command strings to command/output objects, while Harbor requires keystrokes/duration objects.
+Standard q/v-only SFT lowered held-out teacher-forced loss by 10.75%. Under the generic local prompt it did not emit the executable Terminus command schema, but under the exact Harbor first-turn prompt the same frozen adapter reached 12/12 parser-valid outputs versus 11/12 for the base model. This identifies prompt-schema alignment as the dominant local proxy mismatch; because the cases were already observed, it remains diagnostic rather than admission.
 
 Loss reduction alone is insufficient evidence for agent quality. The next run
 must change the supervision objective, use a fresh held-out slice, and preserve

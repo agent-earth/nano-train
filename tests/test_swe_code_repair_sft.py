@@ -306,6 +306,14 @@ class SWECodeRepairSFTTests(unittest.TestCase):
             ],
             0,
         )
+        prompt_ablation = report["heldout"][
+            "harbor_prompt_alignment_ablation"
+        ]
+        self.assertEqual(prompt_ablation["base"]["terminus_parser_valid"], 11)
+        self.assertEqual(
+            prompt_ablation["adapter"]["terminus_parser_valid"],
+            12,
+        )
         serialized = json.dumps(report).lower()
         self.assertNotIn("messages", serialized)
         self.assertNotIn("problem_statement", serialized)

@@ -20,6 +20,9 @@ METRICS = ARTIFACTS / "metrics.json"
 GENERATIONS = ARTIFACTS / "validation_generations.json"
 RELOAD = ARTIFACTS / "reload_validation.json"
 DIAGNOSTICS = ARTIFACTS / "generation_diagnostics.json"
+HARBOR_PROMPT_DIAGNOSTICS = (
+    ARTIFACTS / "harbor_prompt_diagnostics.json"
+)
 PUBLIC = (
     ROOT / "docs/results/evoloop_swe_code_repair_sft_smoke_v1.public.json"
 )
@@ -33,6 +36,9 @@ def build_report() -> dict:
     generations = json.loads(GENERATIONS.read_text(encoding="utf-8"))
     reload_receipt = json.loads(RELOAD.read_text(encoding="utf-8"))
     diagnostics = json.loads(DIAGNOSTICS.read_text(encoding="utf-8"))
+    harbor_prompt = json.loads(
+        HARBOR_PROMPT_DIAGNOSTICS.read_text(encoding="utf-8")
+    )
     if (
         preregister.get("schema_version")
         != "nano_train_swe_code_repair_sft_preregister_v1"
@@ -56,6 +62,11 @@ def build_report() -> dict:
         or reload_receipt.get("generation_metrics_exact") is not True
         or diagnostics.get("adapter_reproduction_exact") is not True
         or diagnostics.get("private_content_recorded") is not False
+        or harbor_prompt.get("schema_version")
+        != "nano_train_swe_code_repair_harbor_prompt_diagnostic_v1"
+        or harbor_prompt.get("identity", {}).get("adapter_sha256")
+        != metrics.get("adapter_sha256")
+        or harbor_prompt.get("private_content_recorded") is not False
     ):
         raise ValueError("SWE code-repair SFT result identity differs")
     exposure_ids = [
@@ -89,6 +100,9 @@ def build_report() -> dict:
             "generations_sha256": sha256_file(GENERATIONS),
             "reload_receipt_sha256": sha256_file(RELOAD),
             "diagnostics_sha256": sha256_file(DIAGNOSTICS),
+            "harbor_prompt_diagnostics_sha256": sha256_file(
+                HARBOR_PROMPT_DIAGNOSTICS
+            ),
             "adapter_sha256": metrics["adapter_sha256"],
             "terminus_parser_sha256": diagnostics["identity"][
                 "terminus_parser_sha256"
@@ -131,6 +145,14 @@ def build_report() -> dict:
             ],
             "base_terminus_parser": base_diagnostic,
             "adapter_terminus_parser": adapter_diagnostic,
+            "harbor_prompt_alignment_ablation": {
+                "claim_scope": "diagnostic_only",
+                "case_set": (
+                    "the same 12 already observed v1 local dev rows"
+                ),
+                "base": harbor_prompt["arms"]["base"]["summary"],
+                "adapter": harbor_prompt["arms"]["adapter"]["summary"],
+            },
         },
         "reload": {
             "success": reload_receipt["reload_success"],
@@ -153,15 +175,20 @@ def build_report() -> dict:
             "verdict": "reject_standard_sft_v1",
             "mechanism_conclusion": (
                 "Standard q/v-only SFT lowered held-out teacher-forced loss "
-                "by 10.75% but did not teach the executable Terminus command "
-                "schema. The dominant failure moved from command strings to "
-                "command/output objects, while Harbor requires "
-                "keystrokes/duration objects."
+                "by 10.75%. Under the generic local prompt it did not emit "
+                "the executable Terminus command schema, but under the exact "
+                "Harbor first-turn prompt the same frozen adapter reached "
+                "12/12 parser-valid outputs versus 11/12 for the base model. "
+                "This identifies prompt-schema alignment as the dominant "
+                "local proxy mismatch; because the cases were already "
+                "observed, it remains diagnostic rather than admission."
             ),
             "next_action": (
-                "Freeze a new train/dev selection and test an explicit "
-                "schema-preference or format-balanced objective. Do not "
-                "change v1 thresholds or reuse the observed 12-row dev set."
+                "Freeze a new held-out selection and evaluate the unchanged "
+                "adapter with the exact Harbor prompt and parser. Admit it "
+                "to fresh-8 only if parser validity and loss gates pass "
+                "without per-band regression. Do not change v1 thresholds "
+                "or reuse the observed 12-row dev set for admission."
             ),
         },
         "claim_boundary": (
@@ -194,16 +221,21 @@ def render_markdown(report: dict) -> str:
   {heldout['strict_json_action_samples']}.
 - Harbor Terminus parser validity:
   {heldout['adapter_terminus_parser']['terminus_parser_valid']}/12.
+- Exact Harbor prompt ablation: base
+  {heldout['harbor_prompt_alignment_ablation']['base']['terminus_parser_valid']}/12
+  versus LoRA
+  {heldout['harbor_prompt_alignment_ablation']['adapter']['terminus_parser_valid']}/12
+  parser-valid responses.
 - Independent reload reproduced the loss and all 12 generations exactly.
 
 ## What Failed
 
-The model usually emitted a JSON-looking response, often inside a Markdown
-fence, but the real Harbor parser rejected the command entries. The base model
-mostly produced command strings. The LoRA shifted many outputs to
-`command`/`output` objects, while Terminus requires `keystrokes`/`duration`
-objects. Only one adapter response exhausted the 768-token budget, so simple
-truncation is not the main cause.
+Under the generic local prompt, the model usually emitted a JSON-looking
+response but used the wrong command schema. Replacing only that prompt with the
+exact Harbor first-turn template changed parser validity from 0/12 to 11/12 for
+the base model and 12/12 for the adapter. This proves the original local gate
+was badly misaligned with the deployed harness. It does not retroactively pass
+v1, because the prompt changed after observation.
 
 ## Conclusion
 

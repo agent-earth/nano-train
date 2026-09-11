@@ -24,8 +24,8 @@
     "candidate_admitted_for_fresh8": false,
     "complete_500_allowed": false,
     "fresh8_run_allowed": false,
-    "mechanism_conclusion": "Standard q/v-only SFT lowered held-out teacher-forced loss by 10.75% but did not teach the executable Terminus command schema. The dominant failure moved from command strings to command/output objects, while Harbor requires keystrokes/duration objects.",
-    "next_action": "Freeze a new train/dev selection and test an explicit schema-preference or format-balanced objective. Do not change v1 thresholds or reuse the observed 12-row dev set.",
+    "mechanism_conclusion": "Standard q/v-only SFT lowered held-out teacher-forced loss by 10.75%. Under the generic local prompt it did not emit the executable Terminus command schema, but under the exact Harbor first-turn prompt the same frozen adapter reached 12/12 parser-valid outputs versus 11/12 for the base model. This identifies prompt-schema alignment as the dominant local proxy mismatch; because the cases were already observed, it remains diagnostic rather than admission.",
+    "next_action": "Freeze a new held-out selection and evaluate the unchanged adapter with the exact Harbor prompt and parser. Admit it to fresh-8 only if parser validity and loss gates pass without per-band regression. Do not change v1 thresholds or reuse the observed 12-row dev set for admission.",
     "rerun_or_posthoc_tuning_allowed": false,
     "rl_or_opd_allowed_for_this_adapter": false,
     "verdict": "reject_standard_sft_v1"
@@ -92,6 +92,59 @@
       "minimum_dev_loss_relative_improvement": true,
       "minimum_json_action_valid_rate": false
     },
+    "harbor_prompt_alignment_ablation": {
+      "adapter": {
+        "generation_budget_exhausted": 0,
+        "generation_tokens": {
+          "max": 306,
+          "mean": 229.66666666666666,
+          "min": 161
+        },
+        "prefix_class": {
+          "json_object": 4,
+          "markdown_fence": 8
+        },
+        "prompt_tokens": {
+          "max": 2225,
+          "mean": 1263.6666666666667,
+          "min": 886
+        },
+        "samples": 12,
+        "terminus_actionable_or_complete": 12,
+        "terminus_commands": 24,
+        "terminus_error_class": {
+          "none": 12
+        },
+        "terminus_parser_valid": 12
+      },
+      "base": {
+        "generation_budget_exhausted": 0,
+        "generation_tokens": {
+          "max": 265,
+          "mean": 226.66666666666666,
+          "min": 189
+        },
+        "prefix_class": {
+          "json_object": 2,
+          "markdown_fence": 10
+        },
+        "prompt_tokens": {
+          "max": 2225,
+          "mean": 1263.6666666666667,
+          "min": 886
+        },
+        "samples": 12,
+        "terminus_actionable_or_complete": 11,
+        "terminus_commands": 22,
+        "terminus_error_class": {
+          "invalid_json": 1,
+          "none": 11
+        },
+        "terminus_parser_valid": 11
+      },
+      "case_set": "the same 12 already observed v1 local dev rows",
+      "claim_scope": "diagnostic_only"
+    },
     "post_sft_dev_loss": 1.2106538613637288,
     "relative_dev_loss_improvement": 0.10750692273382113,
     "strict_json_action_samples": 12,
@@ -103,6 +156,7 @@
     "dataset_file_sha256": "81192d47c645dd72d763f3d3eb3c2e8c46f99112127c04a0483ad88a93911abe",
     "diagnostics_sha256": "5d24a0825b72a867b30cb9141452aedabd224abb44e26e912af03df3c0ab061a",
     "generations_sha256": "9a7dc22bbc24d0c187db49c6722631182f116987bed4277e2e9b5eedd47479a5",
+    "harbor_prompt_diagnostics_sha256": "a83880278e02adef5b247b1cc0e067210728ce21e9e6e367092d9c15f9169fc3",
     "metrics_sha256": "65c4650431af3d42fd8bd796e483c201cc6bd0a4883c3e6cd3198017c73834a9",
     "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
     "preregister_sha256": "2c2ce0a91cd2f08e577cb1ce33c52a28d1aec862a08a4716ff1ea517ec659bef",
