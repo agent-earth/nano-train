@@ -19,6 +19,7 @@ from nano_train.swe_code_repair_qualification import (
 )
 from nano_train.swe_code_repair_sft import build_selection_contract
 from scripts.preregister_swe_code_repair_harbor_sft_v2 import build_receipt
+from scripts.render_swe_code_repair_harbor_sft_v2 import build_report
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -160,6 +161,41 @@ class SWECodeRepairHarborSFTTests(unittest.TestCase):
         self.assertTrue(
             first["execution_boundary"]["this_commit_only_preregisters"]
         )
+
+    def test_public_report_admits_only_fresh8_without_private_content(self):
+        report = build_report()
+        self.assertEqual(
+            report["decision"]["verdict"],
+            "admit_to_frozen_fresh8_screening",
+        )
+        self.assertTrue(
+            report["decision"]["candidate_admitted_for_fresh8"]
+        )
+        self.assertGreater(
+            report["fresh_heldout"]["loss"][
+                "v2_relative_improvement_vs_base"
+            ],
+            0.14,
+        )
+        self.assertGreater(
+            report["fresh_heldout"]["loss"][
+                "v2_relative_improvement_vs_v1"
+            ],
+            0.10,
+        )
+        self.assertEqual(
+            report["fresh_heldout"]["structure"]["harbor_sft_v2"][
+                "terminus_parser_valid"
+            ],
+            24,
+        )
+        self.assertTrue(report["reload"]["loss_exact"])
+        self.assertTrue(report["reload"]["generations_exact"])
+        self.assertFalse(report["decision"]["complete_500_allowed"])
+        serialized = json.dumps(report).lower()
+        self.assertNotIn("messages", serialized)
+        self.assertNotIn("problem_statement", serialized)
+        self.assertNotIn("keystrokes\":", serialized)
 
 
 if __name__ == "__main__":

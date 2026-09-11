@@ -1,0 +1,201 @@
+{
+  "claim_boundary": "This is a fresh local training qualification, not a SWE-bench score. It admits one exact adapter only to the frozen fresh-8 development screen.",
+  "decision": {
+    "candidate_admitted_for_fresh8": true,
+    "complete_500_allowed": false,
+    "gates": {
+      "finite_losses": true,
+      "maximum_v1_only_losses": true,
+      "minimum_v2_loss_relative_improvement_vs_base": true,
+      "minimum_v2_loss_relative_improvement_vs_v1": true,
+      "minimum_v2_parser_valid": true,
+      "per_band_non_regression_vs_v1": true,
+      "private_content_absent": true,
+      "source_v1_reload_exact": true,
+      "v2_generation_budget_not_exhausted": true
+    },
+    "mechanism_conclusion": "Prompt-aligned SFT preserves perfect 24/24 executable Terminus responses while lowering fresh held-out loss by 14.51% versus base and 10.26% versus standard-prompt SFT v1. This supports the prompt-alignment mechanism, not yet SWE-bench task-resolution improvement.",
+    "next_action": "Serve this exact adapter with vLLM and run the frozen fresh-8 SFT-only arm first. Run harness+SFT only if the SFT-only result is non-regressing or reveals a specific complementary failure mode.",
+    "posthoc_tuning_allowed": false,
+    "rl_or_opd_allowed": false,
+    "verdict": "admit_to_frozen_fresh8_screening"
+  },
+  "experiment_id": "evoloop-swe-code-repair-harbor-sft-v2",
+  "fresh_heldout": {
+    "loss": {
+      "base": 1.3055245925982792,
+      "harbor_sft_v2": 1.1160450652241707,
+      "standard_sft_v1": 1.24361356596152,
+      "v2_relative_improvement_vs_base": 0.14513669711652302,
+      "v2_relative_improvement_vs_v1": 0.10257889124803621
+    },
+    "structure": {
+      "base": {
+        "by_band": {
+          "long": {
+            "samples": 8,
+            "terminus_actionable_or_complete": 8,
+            "terminus_parser_valid": 8
+          },
+          "medium": {
+            "samples": 8,
+            "terminus_actionable_or_complete": 8,
+            "terminus_parser_valid": 8
+          },
+          "short": {
+            "samples": 8,
+            "terminus_actionable_or_complete": 8,
+            "terminus_parser_valid": 8
+          }
+        },
+        "generation_budget_exhausted": 0,
+        "prefix_class": {
+          "json_object": 3,
+          "markdown_fence": 21
+        },
+        "samples": 24,
+        "terminus_actionable_or_complete": 24,
+        "terminus_commands": 41,
+        "terminus_error_class": {
+          "none": 24
+        },
+        "terminus_parser_valid": 24
+      },
+      "harbor_sft_v2": {
+        "by_band": {
+          "long": {
+            "samples": 8,
+            "terminus_actionable_or_complete": 8,
+            "terminus_parser_valid": 8
+          },
+          "medium": {
+            "samples": 8,
+            "terminus_actionable_or_complete": 8,
+            "terminus_parser_valid": 8
+          },
+          "short": {
+            "samples": 8,
+            "terminus_actionable_or_complete": 8,
+            "terminus_parser_valid": 8
+          }
+        },
+        "generation_budget_exhausted": 0,
+        "prefix_class": {
+          "json_object": 4,
+          "markdown_fence": 20
+        },
+        "samples": 24,
+        "terminus_actionable_or_complete": 24,
+        "terminus_commands": 40,
+        "terminus_error_class": {
+          "none": 24
+        },
+        "terminus_parser_valid": 24
+      },
+      "standard_sft_v1": {
+        "by_band": {
+          "long": {
+            "samples": 8,
+            "terminus_actionable_or_complete": 8,
+            "terminus_parser_valid": 8
+          },
+          "medium": {
+            "samples": 8,
+            "terminus_actionable_or_complete": 8,
+            "terminus_parser_valid": 8
+          },
+          "short": {
+            "samples": 8,
+            "terminus_actionable_or_complete": 8,
+            "terminus_parser_valid": 8
+          }
+        },
+        "generation_budget_exhausted": 0,
+        "prefix_class": {
+          "json_object": 3,
+          "markdown_fence": 21
+        },
+        "samples": 24,
+        "terminus_actionable_or_complete": 24,
+        "terminus_commands": 37,
+        "terminus_error_class": {
+          "none": 24
+        },
+        "terminus_parser_valid": 24
+      },
+      "v2_vs_base": {
+        "baseline_only": 0,
+        "both": 24,
+        "candidate_only": 0,
+        "neither": 0
+      },
+      "v2_vs_v1": {
+        "baseline_only": 0,
+        "both": 24,
+        "candidate_only": 0,
+        "neither": 0
+      }
+    }
+  },
+  "identity": {
+    "adapter_sha256": "d53815f016eb6d246cc74ef8fb9daeab24fbb3e88c4642f6a4d14603b54a7010",
+    "config_sha256": "98b3dd17e1d61eb5f558f297ba301b87c772418e2353ae0ab72b277c7165abda",
+    "metrics_sha256": "bae4e297c03ac259114bc94b6fe0ca29f326900037d657a814f1deff339db555",
+    "preregister_sha256": "025174624b917744d55a80b2142157f60bb812f396401512c212c2d71d11434a",
+    "reload_receipt_sha256": "5769bd7e37c71d6c415725072cbab1459e109dc7ca9fecc20511de275b98915f",
+    "source_v1_adapter_sha256": "9fa9a9883e36bcf5d50ffc758a62709d38cc4e3b111a880a557dc61408be3e45",
+    "structural_rows_sha256": "4ead3d762cbd6c0530ec5f4fedb17a07a681d940d981f43a10af89525e0f594a",
+    "terminus_parser_sha256": "ba7eeaeb28e2f72ecdc5850617c77cc571692c68698306637cc2cfed41130688",
+    "terminus_prompt_template_sha256": "89a3dc3a15752b748a99fb907c9251ab31a464e13386583fb48476b078b54a34",
+    "training_revision": "f742df63da406bac094a15adf3bbc3fa175903d5"
+  },
+  "project_name": "EvoLoop",
+  "reload": {
+    "generations_exact": true,
+    "loss_exact": true,
+    "peak_allocated_gib": 21.878092288970947,
+    "success": true
+  },
+  "schema_version": "nano_train_swe_code_repair_harbor_sft_public_v2",
+  "selection": {
+    "dev_by_band": {
+      "long": 8,
+      "medium": 8,
+      "short": 8
+    },
+    "dev_sample_ids_sha256": "55d3290ae1140aa70061e29f3c3d210683f1c0d38005fcba8ada2f6af8cabf86",
+    "dev_samples": 24,
+    "excluded_prior_dev_ids_sha256": "9645af87485c476477d5ed105f510931304228517fa2ba7bc7562b871e1528ed",
+    "train_by_band": {
+      "long": 40,
+      "medium": 80,
+      "short": 40
+    },
+    "train_sample_ids_sha256": "400b7db0ba817b39b83f3c2607077e381bca7b1ca20673f0089b9815378dc0dd",
+    "train_samples": 160
+  },
+  "single_variable": {
+    "changed": "Training prompt now exactly matches the deployed Harbor Terminus2 first-turn template.",
+    "length_adjustment": "max_length 2048 -> 2816 prevents truncation of 34 unchanged training rows; the longest selected sequence is 2638.",
+    "unchanged": [
+      "160 training sample IDs and order",
+      "40 optimizer steps and four micro-batches per step",
+      "learning rate, scheduler, seed, and FP32",
+      "q/v-only LoRA r=8 alpha=16",
+      "source dataset and release",
+      "greedy decoding and 768-token output budget"
+    ]
+  },
+  "training": {
+    "all_gradient_norms_finite": true,
+    "all_losses_finite": true,
+    "loss_first": 1.2927752435207367,
+    "loss_last": 1.0626738518476486,
+    "loss_minimum": 0.8369529992341995,
+    "optimizer_steps": 40,
+    "peak_allocated_gib": 26.291027069091797,
+    "trainable_parameters": 917504,
+    "unique_train_exposures": 160,
+    "wall_seconds": 1981.8789639472961
+  }
+}
