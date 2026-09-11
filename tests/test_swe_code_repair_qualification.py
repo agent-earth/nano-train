@@ -14,6 +14,9 @@ from nano_train.swe_code_repair_qualification import (
 from scripts.preregister_swe_code_repair_harbor_qualification_v1 import (
     build_receipt,
 )
+from scripts.render_swe_code_repair_harbor_qualification_v1 import (
+    build_report,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -147,6 +150,31 @@ class SWECodeRepairQualificationTests(unittest.TestCase):
         self.assertTrue(
             first["execution_boundary"]["this_commit_only_preregisters"]
         )
+
+    def test_public_report_preserves_failed_paired_gain_gate(self):
+        report = build_report()
+        self.assertEqual(
+            report["decision"]["verdict"],
+            "reject_on_preregistered_paired_gain_gate",
+        )
+        self.assertFalse(report["decision"]["candidate_admitted_for_fresh8"])
+        self.assertGreater(report["loss"]["relative_improvement"], 0.12)
+        self.assertEqual(
+            report["structure"]["base"]["terminus_parser_valid"],
+            24,
+        )
+        self.assertEqual(
+            report["structure"]["adapter"]["terminus_parser_valid"],
+            24,
+        )
+        self.assertEqual(
+            report["structure"]["comparison"]["adapter_only_wins"],
+            0,
+        )
+        serialized = json.dumps(report).lower()
+        self.assertNotIn("messages", serialized)
+        self.assertNotIn("problem_statement", serialized)
+        self.assertNotIn("keystrokes\":", serialized)
 
 
 if __name__ == "__main__":

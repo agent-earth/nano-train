@@ -1,0 +1,129 @@
+{
+  "claim_boundary": "This is a local parser/loss qualification, not a SWE-bench score. It rejects admission under the frozen gate despite directional loss improvement and perfect structural validity.",
+  "decision": {
+    "candidate_admitted_for_fresh8": false,
+    "complete_500_allowed": false,
+    "fresh8_allowed": false,
+    "gates": {
+      "adapter_generation_budget_not_exhausted": true,
+      "finite_losses": true,
+      "maximum_base_only_losses": true,
+      "minimum_adapter_only_wins": false,
+      "minimum_adapter_parser_valid": true,
+      "minimum_relative_loss_improvement": true,
+      "per_band_non_regression": true,
+      "private_content_absent": true,
+      "source_reload_exact": true
+    },
+    "mechanism_conclusion": "On 24 fresh held-out cases, the unchanged adapter reduced teacher-forced loss by 12.25% and preserved perfect 24/24 Harbor-parser validity with zero base-only losses. The base model also scored 24/24, so the pre-registered requirement for at least one adapter-only parser repair could not pass. The structural proxy has saturated and cannot establish incremental agent quality.",
+    "next_action": "Train one separately pre-registered adapter on the exact Harbor first-turn prompt while freezing optimizer, LoRA, step count, and source release. Compare base, standard-SFT v1, and Harbor-prompt SFT v2 on a third fresh held-out set before benchmark access.",
+    "posthoc_gate_change_allowed": false,
+    "rl_or_opd_allowed": false,
+    "verdict": "reject_on_preregistered_paired_gain_gate"
+  },
+  "experiment_id": "evoloop-swe-code-repair-harbor-qualification-v1",
+  "identity": {
+    "adapter_sha256": "9fa9a9883e36bcf5d50ffc758a62709d38cc4e3b111a880a557dc61408be3e45",
+    "config_sha256": "4f5d8bd605580920dcc56c0f9f481d020fb6e7a695b04970ea46b69c325cce29",
+    "evaluation_revision": "9404604ab26aab605df7212cf65b994889cadae4",
+    "metrics_sha256": "fb6a40b0c3f5b93f23fd1861f304757efd42b880a2d92df321eb161cc43af599",
+    "preregister_sha256": "c464cc3b0468b7e874c648e9fd288cdd2e6e520776e64894f65d6aa4c9e2545e",
+    "source_metrics_sha256": "65c4650431af3d42fd8bd796e483c201cc6bd0a4883c3e6cd3198017c73834a9",
+    "source_reload_sha256": "296722515229571a000194be0dabc4ccc5e336905fbaecf064d42281c1382722",
+    "structural_rows_sha256": "d026a4f60bef8b2b078b8b19b284a4cdfb2fe2885be33291d245a09e800a348e",
+    "terminus_parser_sha256": "ba7eeaeb28e2f72ecdc5850617c77cc571692c68698306637cc2cfed41130688",
+    "terminus_prompt_template_sha256": "89a3dc3a15752b748a99fb907c9251ab31a464e13386583fb48476b078b54a34"
+  },
+  "loss": {
+    "adapter": 1.1174711460868518,
+    "base": 1.2734577332933743,
+    "relative_improvement": 0.12249058852005643
+  },
+  "project_name": "EvoLoop",
+  "runtime": {
+    "peak_allocated_gib": 20.3467698097229,
+    "wall_seconds": 676.9732167720795
+  },
+  "schema_version": "nano_train_swe_code_repair_harbor_qualification_public_v1",
+  "selection": {
+    "dev_by_band": {
+      "long": 8,
+      "medium": 8,
+      "short": 8
+    },
+    "dev_sample_ids_sha256": "c71eda762e93f4a2445fbbc593289234483cfa606a1f8e2eddfab975c0648431",
+    "dev_samples": 24,
+    "overlap_with_prior_v1_dev": 0,
+    "prior_v1_dev_sample_ids_sha256": "ffaba4db8bef0006410141fbfd75f4f4c31e0eaf41438741e8c085e6a455969e"
+  },
+  "structure": {
+    "adapter": {
+      "by_band": {
+        "long": {
+          "samples": 8,
+          "terminus_actionable_or_complete": 8,
+          "terminus_parser_valid": 8
+        },
+        "medium": {
+          "samples": 8,
+          "terminus_actionable_or_complete": 8,
+          "terminus_parser_valid": 8
+        },
+        "short": {
+          "samples": 8,
+          "terminus_actionable_or_complete": 8,
+          "terminus_parser_valid": 8
+        }
+      },
+      "generation_budget_exhausted": 0,
+      "prefix_class": {
+        "json_object": 7,
+        "markdown_fence": 17
+      },
+      "samples": 24,
+      "terminus_actionable_or_complete": 24,
+      "terminus_commands": 38,
+      "terminus_error_class": {
+        "none": 24
+      },
+      "terminus_parser_valid": 24
+    },
+    "base": {
+      "by_band": {
+        "long": {
+          "samples": 8,
+          "terminus_actionable_or_complete": 8,
+          "terminus_parser_valid": 8
+        },
+        "medium": {
+          "samples": 8,
+          "terminus_actionable_or_complete": 8,
+          "terminus_parser_valid": 8
+        },
+        "short": {
+          "samples": 8,
+          "terminus_actionable_or_complete": 8,
+          "terminus_parser_valid": 8
+        }
+      },
+      "generation_budget_exhausted": 0,
+      "prefix_class": {
+        "json_object": 4,
+        "markdown_fence": 20
+      },
+      "samples": 24,
+      "terminus_actionable_or_complete": 24,
+      "terminus_commands": 37,
+      "terminus_error_class": {
+        "none": 24
+      },
+      "terminus_parser_valid": 24
+    },
+    "comparison": {
+      "adapter_only_wins": 0,
+      "base_only_losses": 0,
+      "both_actionable_or_complete": 24,
+      "neither_actionable_or_complete": 0
+    }
+  }
+}
