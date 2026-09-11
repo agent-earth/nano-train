@@ -1,0 +1,133 @@
+{
+  "claim_boundary": "This is a local held-out training result, not a SWE-bench score. It rejects one SFT recipe and supports only the next mechanism-level experiment.",
+  "data": {
+    "release_dev_rows": 512,
+    "release_repositories": 35,
+    "release_train_rows": 11000,
+    "release_train_tokens": 11861953,
+    "selected_dev_by_band": {
+      "long": 4,
+      "medium": 4,
+      "short": 4
+    },
+    "selected_dev_rows": 12,
+    "selected_train_by_band": {
+      "long": 40,
+      "medium": 80,
+      "short": 40
+    },
+    "selected_train_rows": 160,
+    "source": "SWE-bench train split, excluding all Verified-500",
+    "verified_exact_and_near_overlap": 0
+  },
+  "decision": {
+    "candidate_admitted_for_fresh8": false,
+    "complete_500_allowed": false,
+    "fresh8_run_allowed": false,
+    "mechanism_conclusion": "Standard q/v-only SFT lowered held-out teacher-forced loss by 10.75% but did not teach the executable Terminus command schema. The dominant failure moved from command strings to command/output objects, while Harbor requires keystrokes/duration objects.",
+    "next_action": "Freeze a new train/dev selection and test an explicit schema-preference or format-balanced objective. Do not change v1 thresholds or reuse the observed 12-row dev set.",
+    "rerun_or_posthoc_tuning_allowed": false,
+    "rl_or_opd_allowed_for_this_adapter": false,
+    "verdict": "reject_standard_sft_v1"
+  },
+  "experiment_id": "evoloop-swe-code-repair-sft-smoke-v1",
+  "heldout": {
+    "adapter_terminus_parser": {
+      "exact_json_valid": 0,
+      "generation_budget_exhausted": 1,
+      "generation_tokens": {
+        "max": 768,
+        "mean": 414.3333333333333,
+        "min": 203
+      },
+      "parse_status": {
+        "json_decode_error": 11,
+        "json_wrong_schema": 1
+      },
+      "prefix_class": {
+        "json_object": 1,
+        "markdown_fence": 10,
+        "prose_or_other": 1
+      },
+      "recoverable_json_action_substring": 0,
+      "samples": 12,
+      "terminus_actionable_or_complete": 0,
+      "terminus_error_class": {
+        "invalid_command": 11,
+        "no_valid_json": 1
+      },
+      "terminus_parser_valid": 0
+    },
+    "base_terminus_parser": {
+      "exact_json_valid": 0,
+      "generation_budget_exhausted": 1,
+      "generation_tokens": {
+        "max": 768,
+        "mean": 343.0833333333333,
+        "min": 167
+      },
+      "parse_status": {
+        "json_decode_error": 12
+      },
+      "prefix_class": {
+        "json_object": 1,
+        "markdown_fence": 11
+      },
+      "recoverable_json_action_substring": 0,
+      "samples": 12,
+      "terminus_actionable_or_complete": 0,
+      "terminus_error_class": {
+        "invalid_command": 11,
+        "no_valid_json": 1
+      },
+      "terminus_parser_valid": 0
+    },
+    "baseline_dev_loss": 1.3564854363600414,
+    "frozen_gate_results": {
+      "adapter_saved": true,
+      "all_gradient_norms_finite": true,
+      "all_losses_finite": true,
+      "dev_loss_improved": true,
+      "failure_receipt_absent": true,
+      "minimum_dev_loss_relative_improvement": true,
+      "minimum_json_action_valid_rate": false
+    },
+    "post_sft_dev_loss": 1.2106538613637288,
+    "relative_dev_loss_improvement": 0.10750692273382113,
+    "strict_json_action_samples": 12,
+    "strict_json_action_valid": 0
+  },
+  "identity": {
+    "adapter_sha256": "9fa9a9883e36bcf5d50ffc758a62709d38cc4e3b111a880a557dc61408be3e45",
+    "config_sha256": "3eddb28a29192ff479b6c04120f983d20edc4c773304c12a4d4877f04feb6431",
+    "dataset_file_sha256": "81192d47c645dd72d763f3d3eb3c2e8c46f99112127c04a0483ad88a93911abe",
+    "diagnostics_sha256": "5d24a0825b72a867b30cb9141452aedabd224abb44e26e912af03df3c0ab061a",
+    "generations_sha256": "9a7dc22bbc24d0c187db49c6722631182f116987bed4277e2e9b5eedd47479a5",
+    "metrics_sha256": "65c4650431af3d42fd8bd796e483c201cc6bd0a4883c3e6cd3198017c73834a9",
+    "model_config_sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+    "preregister_sha256": "2c2ce0a91cd2f08e577cb1ce33c52a28d1aec862a08a4716ff1ea517ec659bef",
+    "release_manifest_sha256": "8dddacc49d4ec909d647b57e61b372ff5878ca74d4d036c9e0a6cad68c888787",
+    "reload_receipt_sha256": "296722515229571a000194be0dabc4ccc5e336905fbaecf064d42281c1382722",
+    "terminus_parser_sha256": "ba7eeaeb28e2f72ecdc5850617c77cc571692c68698306637cc2cfed41130688",
+    "training_revision": "e437326503bc9ceaa4fa329201f6e808fbd2763d"
+  },
+  "project_name": "EvoLoop",
+  "reload": {
+    "generation_metrics_exact": true,
+    "generations_exact": true,
+    "peak_allocated_gib": 20.566839694976807,
+    "post_dev_loss_exact": true,
+    "success": true
+  },
+  "schema_version": "nano_train_swe_code_repair_sft_public_v1",
+  "training": {
+    "loss_first": 1.2324541807174683,
+    "loss_last": 1.0270174592733383,
+    "loss_minimum": 0.8042235374450684,
+    "optimizer_steps": 40,
+    "peak_allocated_gib": 23.701432704925537,
+    "trainable_parameters": 917504,
+    "unique_train_exposures": 160,
+    "wall_seconds": 942.7784745693207
+  }
+}

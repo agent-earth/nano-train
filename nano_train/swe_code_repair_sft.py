@@ -324,6 +324,51 @@ def valid_json_action(output: str) -> bool:
     )
 
 
+def diagnose_json_action_output(output: str) -> dict[str, Any]:
+    stripped = output.strip()
+    exact_json = None
+    parse_status = "empty"
+    if stripped:
+        try:
+            exact_json = json.loads(stripped)
+        except json.JSONDecodeError:
+            parse_status = "json_decode_error"
+        else:
+            parse_status = (
+                "exact_valid"
+                if valid_json_action(stripped)
+                else "json_wrong_schema"
+            )
+    first_brace = stripped.find("{")
+    last_brace = stripped.rfind("}")
+    recoverable = False
+    if first_brace >= 0 and last_brace > first_brace:
+        recoverable = valid_json_action(stripped[first_brace : last_brace + 1])
+    if not stripped:
+        prefix_class = "empty"
+    elif stripped.startswith("{"):
+        prefix_class = "json_object"
+    elif stripped.startswith("```"):
+        prefix_class = "markdown_fence"
+    elif stripped.startswith("<think>") or stripped.startswith("<analysis>"):
+        prefix_class = "reasoning_tag"
+    else:
+        prefix_class = "prose_or_other"
+    return {
+        "characters": len(output),
+        "parse_status": parse_status,
+        "prefix_class": prefix_class,
+        "starts_with_open_brace": stripped.startswith("{"),
+        "ends_with_close_brace": stripped.endswith("}"),
+        "contains_open_brace": "{" in stripped,
+        "contains_close_brace": "}" in stripped,
+        "recoverable_json_action_substring": recoverable,
+        "exact_json_type": (
+            type(exact_json).__name__ if exact_json is not None else None
+        ),
+    }
+
+
 @torch.inference_mode()
 def mean_teacher_forced_loss(
     model: Any,
@@ -635,9 +680,13 @@ def validate_reload(config: SWECodeRepairSFTConfig) -> dict[str, Any]:
     )
     if (
         source.get("adapter_sha256") != sha256_tree(adapter_dir)
-        or source.get("candidate_admitted_for_fresh8") is not True
+        or source.get("experiment_id") != config.experiment_id
+        or source.get("dataset_file_sha256") != config.dataset_file_sha256
+        or source.get("release_manifest_sha256")
+        != config.release_manifest_sha256
+        or source.get("model_config_sha256") != config.model_config_sha256
     ):
-        raise ValueError("SWE code-repair source candidate is not admitted")
+        raise ValueError("SWE code-repair source artifact identity differs")
     tokenizer = AutoTokenizer.from_pretrained(
         adapter_dir,
         local_files_only=True,
